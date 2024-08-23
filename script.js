@@ -1,0 +1,117 @@
+const audio = document.getElementById('audio');
+
+const playPauseBtn = document.getElementById('playPauseBtn');
+const syncBtn = document.getElementById('syncBtn');
+const volumeSlider = document.getElementById('volumeSlider');
+const loading = document.getElementById('loading');
+const metadata = document.getElementById('metadata');
+
+const seekBar = document.getElementById('seekBar');
+const currentTime = document.getElementById('currentTime');
+const duration = document.getElementById('duration');
+
+audio.addEventListener('progress', () => {
+    if (audio.buffered.length > 0) {
+        const bufferedEnd = audio.buffered.end(audio.buffered.length - 1);
+        const currentTime = audio.currentTime;
+        const bufferTime = bufferedEnd - currentTime;
+        // duration.textContent = bufferTime.toFixed(2);
+        duration.textContent = formatTime(bufferTime);
+    }
+});
+
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+}
+
+// Actualiza el slider con el progreso de la canción
+audio.addEventListener('timeupdate', () => {
+    seekBar.value = (audio.currentTime / (audio.duration - 10)) * 100;
+    console.log(audio.currentTime / (audio.duration - 10));
+    currentTime.textContent = formatTime(audio.currentTime);
+    // duration.textContent = formatTime(audio.duration);
+});
+
+// Actualiza la duración total de la canción
+// audio.addEventListener('timeupdate', () => {
+//     seekBar.max = 100;
+//     duration.textContent = audio.duration;
+// });
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Código a ejecutar cuando se carga la página
+    console.log('La página se ha cargado completamente.');
+});
+
+// Muestra el indicador de carga mientras el audio se está cargando
+audio.addEventListener('waiting', () => {
+    loading.style.display = 'block';
+});
+
+// Oculta el indicador de carga cuando el audio empieza a reproducirse
+audio.addEventListener('playing', () => {
+    loading.style.display = 'none';
+});
+
+// Para el caso de que la emisora transmita metadata adicional, puedes capturarla
+audio.addEventListener('timeupdate', () => {
+    const currentTime = new Date().toLocaleTimeString();
+
+    // Simulando metadata dinámica
+    const simulatedMetadata = `Canción actual a las ${currentTime}`;
+    metadata.textContent = simulatedMetadata;
+});
+
+// Función para reproducir en vivo
+const playLive = () => {
+    audio.pause();
+    audio.currentTime = 0;
+    audio.load();
+    audio.play().then(() => {
+        playPauseBtn.textContent = 'Pause';
+    }).catch(error => {
+        console.log('Error al intentar reproducir:', error);
+    });
+};
+
+playPauseBtn.addEventListener('click', () => {
+    if (audio.paused) {
+        audio.play();
+        playPauseBtn.textContent = 'Pause';
+    } else {
+        audio.pause();
+        playPauseBtn.textContent = 'Play';
+    }
+});
+
+syncBtn.addEventListener('click', () => {
+    playLive();
+});
+
+// Control de volumen
+volumeSlider.addEventListener('input', (e) => {
+    audio.volume = e.target.value;
+});
+
+audio.addEventListener('loadedmetadata', () => {
+    // if (audio.textTracks.length > 0) {
+    //     console.log('El stream contiene metadata.');
+    //     for (let i = 0; i < audio.textTracks.length; i++) {
+    //         const track = audio.textTracks[i];
+    //         track.mode = 'showing'; // Activa el track para leer la metadata
+    //         track.addEventListener('cuechange', () => {
+    //             const activeCue = track.activeCues[0];
+    //             if (activeCue) {
+    //                 console.log('Metadata:', activeCue.text);
+    //                 // Aquí puedes actualizar la interfaz con la metadata recibida
+    //             }
+    //         });
+    //     }
+    // } else {
+    //     console.log('El stream no contiene metadata.');
+    // }
+});
+
+
