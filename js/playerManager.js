@@ -29,7 +29,7 @@ function formatTime(seconds) {
 // Actualiza el slider con el progreso de la canción
 audio.addEventListener('timeupdate', () => {
     seekBar.value = (audio.currentTime / (audio.duration - 10)) * 100;
-    console.log(audio.currentTime / (audio.duration - 10));
+    // console.log(audio.currentTime / (audio.duration - 10));
     currentTime.textContent = formatTime(audio.currentTime);
     // duration.textContent = formatTime(audio.duration);
 });
@@ -40,8 +40,17 @@ audio.addEventListener('timeupdate', () => {
 //     duration.textContent = audio.duration;
 // });
 
+// se ejecuta cuando el DOM es cargado, no espera a que toda la pagina este cargada
 document.addEventListener('DOMContentLoaded', function() {
     // Código a ejecutar cuando se carga la página
+    const savedVolume = localStorage.getItem('audioVolume');
+    if (savedVolume !== null) {
+        volumeSlider.value = savedVolume;
+        audio.volume = savedVolume;
+    }
+});
+// debe esperar a que toda la pagina este completamente cargada
+window.addEventListener('load', function() {
     console.log('La página se ha cargado completamente.');
 });
 
@@ -93,6 +102,10 @@ syncBtn.addEventListener('click', () => {
 // Control de volumen
 volumeSlider.addEventListener('input', (e) => {
     audio.volume = e.target.value;
+    localStorage.setItem('audioVolume', audio.volume);
+    if(localStorage.getItem('audioVolume') !== null){
+        console.log("volumen saved");
+    }
 });
 
 audio.addEventListener('loadedmetadata', () => {
