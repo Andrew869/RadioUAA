@@ -1,36 +1,35 @@
-<nav>
-<?php
-    function printMenu($opciones){
-        echo "<ul>";
-        foreach ($opciones as $key => $value) {
-            // Si el valor es un arreglo, imprimimos la clave y luego llamamos a la función de nuevo para imprimir la sublista.
-            if (is_array($value)) {
-                echo '<li class="option">' .$key. '</li>';
-                printMenu($value);
-            }else
-                echo '<li class="option"><a href="' .$value. '">' .$key. '</a></li>';
-        }
-        echo "</ul>";
-    }
 
-    $opciones = [
-        "Inicio" => "index.php",
-        "Nosotros" => [
-            "Acerca de Radio UAA" => "#",
-            "Preguntas Frecuentes" => "#",
-            "Consejo Ciudadano" => "#"
-        ],
-        "Defensoria" => [
-            "opcion1" => "#",
-            "opcion2" => "#",
-            "opcion3" => "#"
-        ],
-        "programacion" => "programacion.php",
-        "Contenidos" => "#",
-        "Contacto" => "#"
-    ];
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
     
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="https://fontawesome.com/icons/bars?f=classic&s=solid">
+</head>
+<body>
+    <header class="header">
+        <nav >
+            <input type="checkbox" name="" id="check">
+            <label for="check" class="checkbtn">
+            <i class="fa-solid fa-bars"></i>
+            </label>
+            <a href="" class="enlace"><img src="img/logo_radio_uaa.png" alt="" class="logo"></a>
+            <ul class ="nav-links">
 
-    printMenu($opciones);
-?>
-</nav>
+                <li><a href="">inicio</a></li>
+                <li><a href="">nosotros</a></li>
+                <li><a href="">defensoria</a></li>
+                <li><a href="">programacion</a></li>
+                <li><a href="">contenidos</a></li>
+                <li><a href="">contacto</a></li>
+
+            </ul>
+
+        </nav>
+    </header>
+</body>
+</html>

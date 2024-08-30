@@ -4,7 +4,7 @@
 	<?php include "metaData.php"; ?>
 </head>
 <body>
-	<header class="nav-header">
+	<header class="header">
 		<?php include "nav.php";?>
 	</header>
 	<div class="player">
