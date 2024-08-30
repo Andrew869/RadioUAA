@@ -10,5 +10,6 @@
 	<div class="player">
 		<iframe src="player.html" title="player"></iframe>
 	</div>
+	<p>rafita y dinasai</p>
 </body>
 </html>
