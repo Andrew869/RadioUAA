@@ -16,5 +16,7 @@
 
 	<p>Alfredo CHinchilas Duardo</p>
 
+	<script src="js/tema.js"></script>
+
 </body>
 </html>
