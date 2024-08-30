@@ -1,8 +1,5 @@
 body, ul{
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    transition: all 2s ease;
-
 }
 
 .error {color: #FF0000;}
@@ -108,17 +105,28 @@ div.radio-player {
 #toggle{
     display: none;
 }
-    #label_toggle{
+
+#label_toggle{
     position: absolute;
-    top:10px;
+    bottom: 10px;
     right: 10px;
     font-size: 2em;
     color: rgb(0, 0, 0);
     cursor: pointer;
 }
-.dark{
-background-color: #333;
-color: white;
-transition: all 2s ease;
+
+.dark, .white{
+    transition: color 2s ease, background-color 2s ease;
 }
+
+.white{
+    background-color: white;
+    color: black;
+}
+
+.dark {
+    background-color: #333;
+    color: white;
+}
+
 /* fin */
