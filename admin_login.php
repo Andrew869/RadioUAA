@@ -11,6 +11,13 @@
         $data = htmlspecialchars($data);
         return $data;
     }
+
+    session_start();
+
+    if(isset($_SESSION['admin_id'])){
+        header('Location: admin_panel.php');
+        exit();
+    }
     
     $username_input = $password_input = "";
     $userErr = $passwdErr = "";
@@ -43,7 +50,8 @@
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             // echo "Connected successfully";
         } catch(PDOException $e) {
-            // echo "Connection failed: " . $e->getMessage();
+            echo "Connection failed: " . $e->getMessage();
+            exit();
         }
 
         // hacemos la peticion a la base de datos
