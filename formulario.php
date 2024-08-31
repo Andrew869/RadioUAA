@@ -1,11 +1,12 @@
 <h2>Radio UAA - Administracion</h2>
-<p><span class="error">* required field</span></p>
-<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
-  user: <input type="text" name="user" value="<?php echo $user;?>">
-  <span class="error">* <?php echo $userErr;?></span>
-  <br><br>
-  password: <input type="password" name="passwd" value="<?php echo $passwd;?>">
-  <span class="error">* <?php echo $passwdErr;?></span>
-  <br><br>
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+  <label for="username">Username</label>
+  <input type="text" id="username" name="username" value="<?php echo $username_input;?>">
+  <span class="error"><?php echo $userErr;?></span>
+  <br><br> <!-- temporal -->
+  <label for="password">Password</label>
+  <input type="password" id="password" name="password">
+  <span class="error"><?php echo $passwdErr;?></span>
+  <br><br> <!-- temporal -->
   <input type="submit" name="submit" value="Submit">  
 </form>
