@@ -1,22 +1,17 @@
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <?php include "metaData.php"; ?>
-    </head>
-<body>
-    <?php
+<?php
+    session_start();
+    date_default_timezone_set("America/Mexico_City");
+
+    if(isset($_SESSION['admin_id'])){
+        header('Location: admin_panel.php');
+        exit();
+    }
+
     function test_input($data) {
         $data = trim($data);
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
         return $data;
-    }
-
-    session_start();
-
-    if(isset($_SESSION['admin_id'])){
-        header('Location: admin_panel.php');
-        exit();
     }
     
     $username_input = $password_input = "";
@@ -39,36 +34,32 @@
             $password_input = test_input($_POST["password"]);
         }
 
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname='radio_db';
-        
-        try {
-            $conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8mb4", $username, $password);
-            // set the PDO error mode to exception
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            // echo "Connected successfully";
-        } catch(PDOException $e) {
-            echo "Connection failed: " . $e->getMessage();
-            exit();
-        }
+        include "db_connect.php";
 
-        // hacemos la peticion a la base de datos
-        $sql = 'SELECT id_admin, username, email, password_hash, rol FROM admins WHERE username = :username LIMIT 1';
+        // hacemos la peticion a la base de datos (Limit 1 indica cuantos resultados esperas)
+        $sql = 'SELECT id_admin, username, email, password_hash, rol, ultimo_acceso FROM admins WHERE username = :username LIMIT 1';
+        
         $stmt = $conn->prepare($sql);
+        // agrega el valor de $username al parametro :username que se encuentra en el codigo sql
         $stmt->bindParam(':username', $username_input);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         
         if ($user && hash_equals($user['password_hash'], hash('sha256', $password_input))) {
             // La contraseña es correcta
-            session_start();
             $_SESSION['admin_id'] = $user['id_admin'];
             $_SESSION['admin_username'] = $user['username'];
             $_SESSION['admin_email'] = $user['email'];
             $_SESSION['admin_rol'] = $user['rol'];
-        
+            $_SESSION['admin_ultimo_acceso'] = $user['ultimo_acceso'];
+
+            // modifica el ultimo acceso
+            $sql = 'UPDATE admins SET ultimo_acceso = :ultimo_acceso WHERE username = :username LIMIT 1';
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':ultimo_acceso', date("Y-m-d H:i:s"));
+            $stmt->bindParam(':username', $username_input);
+            $stmt->execute();
+
             // Redirigir al panel de administración
             header('Location: admin_panel.php');
             exit();
@@ -76,10 +67,18 @@
             // La contraseña o el usuario es incorrecto
             echo 'Nombre de usuario o contraseña incorrectos';
         }
+        $conn = null;
     }
 
-    include "formulario.php";
+?>
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <?php include "metaData.php"; ?>
+    </head>
+<body>
+    <?php
+        include "formulario.php";
     ?>
-
 </body>
 </html>

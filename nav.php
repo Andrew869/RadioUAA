@@ -1,3 +1,12 @@
+<?php
+    date_default_timezone_set("America/Mexico_City");
+    $until = strtotime("december 2");
+    $remaining = abs(ceil(($until-time())/60/60/24));
+    $percentage = $remaining * 100 / 90;
+    echo '<code class="days-left">Days Left: <span class="'
+    .(($percentage >= 66)? "text-success" : (($percentage >= 33)? "text-warning" : "text-danger")).
+    '">' . $remaining ."</span></code>";
+?>
 <nav>
     <input type="checkbox" name="" id="check">
     <label for="check" class="checkbtn">

@@ -3,7 +3,8 @@
 session_start();
 
 // Destruir todas las variables de sesión
-$_SESSION = array();
+// $_SESSION = array();
+session_unset();
 
 // Si se desea destruir la cookie de sesión
 // if (ini_get("session.use_cookies")) {

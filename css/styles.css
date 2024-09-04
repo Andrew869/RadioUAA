@@ -1,5 +1,47 @@
+:root{
+    --success: rgb(0, 255, 0);
+    --warning: yellow;
+    --danger: red;
+}
+
+.text-success{
+    color: var(--success);
+}
+.text-warning{
+    color: var(--warning);
+}
+.text-danger{
+    color: var(--danger);
+}
+
 body, ul{
     margin: 0;
+}
+
+table, td, th{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+tr th{
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+}
+
+td, th{
+    padding: 5px;
+}
+
+.days-left{
+    background-color: black;
+    color: white;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+    position: absolute;
+    bottom: 30px;
+    /* border: 2px solid black; */
+    border-radius: 0 20px 20px 0;
+    padding: 10px 20px 10px 10px;
 }
 
 .error {color: #FF0000;}
