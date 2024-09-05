@@ -36,8 +36,8 @@
 
         include "db_connect.php";
 
-        // hacemos la peticion a la base de datos (Limit 1 indica cuantos resultados esperas)
-        $sql = 'SELECT id_admin, username, email, password_hash, rol, ultimo_acceso FROM admins WHERE username = :username LIMIT 1';
+        // hacemos la peticion a la base de datos (LIMIT 1 indica cuantos resultados esperas)
+        $sql = 'SELECT id_admin, username, email, password_hash, rol, ultimo_acceso, activo FROM admins WHERE username = :username LIMIT 1';
         
         $stmt = $conn->prepare($sql);
         // agrega el valor de $username al parametro :username que se encuentra en el codigo sql
@@ -45,7 +45,7 @@
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        if ($user && hash_equals($user['password_hash'], hash('sha256', $password_input))) {
+        if ($user && hash_equals($user['password_hash'], hash('sha256', $password_input)) && $user['activo']) {
             // La contraseña es correcta
             $_SESSION['admin_id'] = $user['id_admin'];
             $_SESSION['admin_username'] = $user['username'];
@@ -65,7 +65,7 @@
             exit();
         } else {
             // La contraseña o el usuario es incorrecto
-            echo 'Nombre de usuario o contraseña incorrectos';
+            echo $user['activo'] ? 'Nombre de usuario o contraseña incorrectos' : 'Cuenta Inactiva :\'(';
         }
         $conn = null;
     }

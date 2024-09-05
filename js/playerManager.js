@@ -1,14 +1,15 @@
 const audio = document.getElementById('audio');
 
 const playPauseBtn = document.getElementById('playPauseBtn');
+const playPauseIcon = document.getElementById('playPauseIcon');
 const syncBtn = document.getElementById('syncBtn');
 const volumeSlider = document.getElementById('volumeSlider');
 const loading = document.getElementById('loading');
 const metadata = document.getElementById('metadata');
 
-const seekBar = document.getElementById('seekBar');
-const currentTime = document.getElementById('currentTime');
-const duration = document.getElementById('duration');
+// const seekBar = document.getElementById('seekBar');
+// const currentTime = document.getElementById('currentTime');
+// const duration = document.getElementById('duration');
 
 audio.addEventListener('progress', () => {
     if (audio.buffered.length > 0) {
@@ -16,7 +17,7 @@ audio.addEventListener('progress', () => {
         const currentTime = audio.currentTime;
         const bufferTime = bufferedEnd - currentTime;
         // duration.textContent = bufferTime.toFixed(2);
-        duration.textContent = formatTime(bufferTime);
+        // duration.textContent = formatTime(bufferTime);
     }
 });
 
@@ -27,12 +28,12 @@ function formatTime(seconds) {
 }
 
 // Actualiza el slider con el progreso de la canción
-audio.addEventListener('timeupdate', () => {
-    seekBar.value = (audio.currentTime / (audio.duration - 10)) * 100;
-    // console.log(audio.currentTime / (audio.duration - 10));
-    currentTime.textContent = formatTime(audio.currentTime);
-    // duration.textContent = formatTime(audio.duration);
-});
+// audio.addEventListener('timeupdate', () => {
+//     seekBar.value = (audio.currentTime / (audio.duration - 10)) * 100;
+//     // console.log(audio.currentTime / (audio.duration - 10));
+//     currentTime.textContent = formatTime(audio.currentTime);
+//     // duration.textContent = formatTime(audio.duration);
+// });
 
 // Actualiza la duración total de la canción
 // audio.addEventListener('timeupdate', () => {
@@ -79,7 +80,7 @@ const playLive = () => {
     audio.currentTime = 0;
     audio.load();
     audio.play().then(() => {
-        playPauseBtn.textContent = 'Pause';
+        playPauseIcon.className = 'fa-solid fa-pause';
     }).catch(error => {
         console.log('Error al intentar reproducir:', error);
     });
@@ -88,10 +89,11 @@ const playLive = () => {
 playPauseBtn.addEventListener('click', () => {
     if (audio.paused) {
         audio.play();
-        playPauseBtn.textContent = 'Pause';
+        // playLive();
+        // playPauseIcon.className = 'fa-solid fa-pause';
     } else {
         audio.pause();
-        playPauseBtn.textContent = 'Play';
+        // playPauseIcon.className = 'fa-solid fa-play';
     }
 });
 
@@ -127,4 +129,12 @@ audio.addEventListener('loadedmetadata', () => {
     // }
 });
 
+audio.addEventListener('play', () => {
+    playPauseIcon.className = 'fa-solid fa-pause';
+    console.log("has played");
+});
 
+audio.addEventListener('pause', () => {
+    playPauseIcon.className = 'fa-solid fa-play';
+    console.log("has paused");
+});
