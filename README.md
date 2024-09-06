@@ -68,16 +68,17 @@ CREATE TABLE horarios (
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
 
-CREATE TABLE admins (
-    id_admin INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE users (
+    id_user INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(255) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     nombre_completo VARCHAR(255),
-    rol ENUM('SuperAdmin', 'Editor', 'Moderador') NOT NULL,
+    rol ENUM('Admin', 'Editor', 'Moderador') NOT NULL,
+    cuenta_activa BOOLEAN DEFAULT TRUE,
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     ultimo_acceso TIMESTAMP,
-    activo BOOLEAN DEFAULT TRUE
+    seccion_activa BOOLEAN DEFAULT false
 )
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
@@ -88,7 +89,6 @@ COLLATE utf8mb4_unicode_ci;
 
 #### Insertions:
 ```sql
-
 -- Insertar programas
 INSERT INTO programas (nombre_programa, url_imagen, descripcion) 
 VALUES ('Mañanas en la Radio', 'http://ejemplo.com/imagen1.jpg', 'Programa matutino con noticias y entrevistas.'),
@@ -130,15 +130,14 @@ VALUES (1, 'Lunes', '08:00:00', '10:00:00', FALSE),  -- "Mañanas en la Radio" e
        (3, 'Miércoles', '16:00:00', '18:00:00', FALSE); -- "Deportes en Vivo" en vivo los Miércoles de 16:00 a 18:00
 
 -- Insertar un SuperAdmin (Acceso completo a todas las funciones.)
-INSERT INTO admins (username, email, password_hash, nombre_completo, rol, ultimo_acceso, activo) 
-VALUES ('admin1', 'admin1@example.com', SHA2('SuperAdminPassword123', 256), 'Juan Admin', 'SuperAdmin', '2024-08-30 09:00:00', TRUE);
+INSERT INTO users (username, email, password_hash, nombre_completo, rol,  cuenta_activa) 
+VALUES ('admin1', 'admin1@example.com', SHA2('Admin123', 256), 'Juan Admin', 'Admin', TRUE);
 
 -- Insertar un Editor (Puede modificar contenido.)
-INSERT INTO admins (username, email, password_hash, nombre_completo, rol, ultimo_acceso, activo) 
-VALUES ('editor1', 'editor1@example.com', SHA2('EditorPassword123', 256), 'Ana Editor', 'Editor', '2024-08-30 10:00:00', TRUE);
+INSERT INTO users (username, email, password_hash, nombre_completo, rol,  cuenta_activa)  
+VALUES ('editor1', 'editor1@example.com', SHA2('Editor123', 256), 'Ana Editor', 'Editor', TRUE);
 
 -- Insertar un Moderador (Puede gestionar comentarios y usuarios.)
-INSERT INTO admins (username, email, password_hash, nombre_completo, rol, ultimo_acceso, activo) 
-VALUES ('moderador1', 'moderador1@example.com', SHA2('ModeradorPassword123', 256), 'Carlos Moderador', 'Moderador', '2024-08-30 11:00:00', TRUE);
-
+INSERT INTO users (username, email, password_hash, nombre_completo, rol,  cuenta_activa) 
+VALUES ('moderador1', 'moderador1@example.com', SHA2('Moderador123', 256), 'Carlos Moderador', 'Moderador', TRUE);
 ```

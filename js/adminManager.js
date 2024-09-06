@@ -1,17 +1,20 @@
 const rec_Form = document.getElementById('rec_form');
 const rec_legend = document.getElementById('rec_legend');
-const rec_id_admin_container = document.getElementById('rec_id_admin_container');
+// Containers
+const rec_id_user_container = document.getElementById('rec_id_user_container');
 const rec_username_container = document.getElementById('rec_username_container');
 const rec_email_container = document.getElementById('rec_email_container');
 const rec_password_container = document.getElementById('rec_password_container');
 const rec_nombre_container = document.getElementById('rec_nombre_container');
 const rec_rol_container = document.getElementById('rec_rol_container');
-const rec_activo_container = document.getElementById('rec_activo_container');
-const rec_id_admin = document.getElementById('rec_id_admin');
+const rec_cuenta_activa_container = document.getElementById('rec_cuenta_activa_container');
+// inputs
+const rec_id_user = document.getElementById('rec_id_user');
 const rec_username = document.getElementById('rec_username');
 const rec_email = document.getElementById('rec_email');
 const rec_password = document.getElementById('rec_password');
 const rec_nombre = document.getElementById('rec_nombre');
+const rec_rol0 = document.getElementById('rec_rol0');
 const rec_rol1 = document.getElementById('rec_rol1');
 const rec_rol2 = document.getElementById('rec_rol2');
 const rec_rol3 = document.getElementById('rec_rol3');
@@ -20,46 +23,50 @@ const rec_true = document.getElementById('rec_true');
 const rec_false = document.getElementById('rec_false');
 const rec_submit = document.getElementById('rec_sumbit');
 
+const containers = [
+    rec_username_container,
+    rec_email_container,
+    rec_password_container,
+    rec_nombre_container,
+    rec_rol_container,
+    rec_cuenta_activa_container
+];
 
-function showForm(record = ['0','','','','','1']){
+const inputs = [
+    rec_username,
+    rec_email,
+    rec_password,
+    rec_nombre,
+    rec_rol,
+    rec_true,
+    rec_false
+];
+
+
+function showFullForm(){
     rec_Form.style.display = "initial";
-    if(record[0] === '0'){
-        legend.textContent = "Crear administrador";
-        rec_submit.value = "Crear";
-    }else{
-        legend.textContent = "Actualizar administrador";
-        rec_submit.value = "Actualizar";
-    }
-    rec_username.value = record[1];
-    rec_email.value = record[2];
-    rec_nombre.value = record[3];
-    switch (record[4]) {
-        case "SuperAdmin":
-            superAdmin.selected = true;
-            break;
-        case "Editor":
-            editor.selected = true;
-            break;
-        case "Moderador":
-            moderador.selected = true;
-            break;
-    }
+    
+    rec_legend.textContent = "Crear administrador";
+    rec_submit.value = "Crear";
+        
+    rec_id_user.value = "";
+    rec_username.value = "";
+    rec_email.value = "";
+    rec_password.value = "";
+    rec_nombre.value = "";
 
-    switch (record[5]) {
-        case '0':
-            rec_false.checked = true;
-            break;
-        case '1':
-            rec_true.checked = true;
-            break;
-    }
-    // console.log(rec_row.join(" "));
-    // if(primary_key > 0){
-    //     legend.textContent = "Actualizar administrador";
-    //     rec_username.value = "asd";
-    // }else{
-    //     legend.textContent = "Crear administrador";
-    // }
+    rec_rol0.selected = true;
+    rec_true.checked = true;
+
+    rec_id_user_container.style.display = "none";
+
+    containers.forEach(element => {
+        element.style.display = "initial";
+    });
+
+    inputs.forEach(element => {
+        element.disabled = false;
+    });
 }
 
 function showUpdateForm(primary_key, field, value){
@@ -67,22 +74,17 @@ function showUpdateForm(primary_key, field, value){
     rec_Form.style.display = 'initial';
     rec_submit.value = "Actualizar";
     
-    rec_id_admin_container.style.display = 'initial';
-    rec_id_admin.value = primary_key;
+    rec_id_user_container.style.display = 'initial';
 
-    rec_username_container.style.display = 'none';
-    rec_username.disabled = true;
-    rec_email_container.style.display = 'none';
-    rec_email.disabled = true;
-    rec_password_container.style.display = 'none';
-    rec_password.disabled = true;
-    rec_nombre_container.style.display = 'none';
-    rec_nombre.disabled = true;
-    rec_rol_container.style.display = 'none';
-    rec_rol.disabled = true;
-    rec_activo_container.style.display = 'none';
-    rec_true.disabled = true;
-    rec_false.disabled = true;
+    containers.forEach(element => {
+        element.style.display = "none";
+    });
+
+    inputs.forEach(element => {
+        element.disabled = true;
+    });
+
+    rec_id_user.value = primary_key;
 
     switch (field) {
         case 'username':
@@ -130,9 +132,9 @@ function showUpdateForm(primary_key, field, value){
                 }
             }
             break;
-        case 'activo':
+        case 'cuenta_activa':
             {
-                rec_activo_container.style.display = 'initial';
+                rec_cuenta_activa_container.style.display = 'initial';
                 rec_true.disabled =  false;
                 rec_false.disabled = false;
                 switch (value) {
@@ -148,35 +150,7 @@ function showUpdateForm(primary_key, field, value){
     }
 }
 
-function deleteRecord(primary_key){
-    console.log("TODO: delete record with key " + primary_key + "!");
-    // Variable a enviar
-    let data = {
-        id_admin: primary_key
-    };
-
-    // Enviar datos al servidor usando fetch
-    fetch("ruta-del-servidor", {
-        method: "POST", // Método de envío
-        headers: {
-            "Content-Type": "application/json", // Especificamos que estamos enviando JSON
-        },
-        body: JSON.stringify(data) // Convertimos los datos a JSON
-    })
-    .then(response => {
-        if (response.ok) {
-            // Recargar la página si la respuesta del servidor es exitosa
-            location.reload();
-        } else {
-            console.error("Error al enviar los datos");
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
-
-function enviarDato(primary_key) {
+function deleteRecord(primary_key) {
     console.log("Dato recibido en JS: " + primary_key);
 
     // Crear una petición POST para enviar el dato de vuelta al servidor
