@@ -1,25 +1,49 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<!-- los que quieran poner aqui, mejor agregenlo al archivo metaData.php ;) -->
+	<link rel="stylesheet" href="css\styleIndex.css">
 	<?php include "metaData.php"; ?>
+	
 </head>
 <body id="mainBody">
 	<header class="header">
 		<!-- los que quieran poner aqui, mejor agregenlo al archivo nav.php ;) -->
 		<?php include "nav.php";?>
-	</header>
+		</header>
+		<div class="container"> 
+		<div class="titulos">
+		<h2>RADIO UAA</h2>
+		<h3>PROYECCION DE LA VOZ UNIVERSITARIA</h3>
+		</div>
+
+		<div class="slider-box">
+			<ul>
+				<li>
+					<img src="img/img-carru1.jpg" alt="">
+				</li>
+				<li>
+					<img src="img/img-carru1.2.jpg" alt="">
+				</li>
+				<li>
+					<img src="img/img-carri1.3.jpg" alt="">
+				</li>
+				<li>
+					<img src="img/img-carru1.4.jpeg" alt="">
+				</li>
+			</ul>
+		</div>
+
+
+		</div>
+	
+
 	<div class="player">
 		<iframe src="player.html" title="player"></iframe>
 	</div>
-	<main>
-		<section>
-			Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci dolor error dolorum dignissimos tempora veritatis repudiandae officia repellendus culpa. Impedit ipsum inventore et doloribus laborum dolore maiores temporibus voluptatem. Nostrum.
-			Expedita quas similique, iste quo assumenda magni! Laborum est quam enim id quo sunt doloremque illum? Labore illo dolores quo! Animi, dignissimos assumenda. Corrupti laboriosam tempore molestias voluptatum enim officia.
-			Minus laudantium sed rerum quidem ipsa dolorum nemo sit illo officiis alias delectus, deleniti itaque molestiae porro, quibusdam nulla natus eligendi dicta dolore eius magni doloribus tempora. Animi, architecto consequatur!
-		</section>
-	</main>
-	<script src="js/tema.js"></script>
-	<script src="https://kit.fontawesome.com/9b86802e8e.js" crossorigin="anonymous"></script>
+
+	<p>rafita y dinasai</p>
+
+	<p>Alfredo CHinchilas Duardo</p>
+
 </body>
 </html>
