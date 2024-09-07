@@ -77,7 +77,7 @@ CREATE TABLE users (
     rol ENUM('Admin', 'Editor', 'Moderador') NOT NULL,
     cuenta_activa BOOLEAN DEFAULT TRUE,
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    ultimo_acceso TIMESTAMP,
+    ultimo_acceso TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     seccion_activa BOOLEAN DEFAULT false
 )
 CHARACTER SET utf8mb4
