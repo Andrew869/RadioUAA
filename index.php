@@ -41,9 +41,53 @@
 		<iframe src="player.html" title="player"></iframe>
 	</div>
 
-	<p>rafita y dinasai</p>
+	<div class="programacion_cont">
+		<div class="programas_div_par">
+			<img src="img\tu_espacio.png" class="imgprog" alt="">
+			<div class="descrip">
+			<p class="title_descrip">   Tu Espacio</p>
+			<p>   con Vladimir Guerrero</p>
+			<p>   lunes 12:00 - 13:00</p>
+			</div>
+			
+		</div>
+		<div class="programas_div_impar">
+			<img src="img\dilemas eticos.png" class="imgprog" alt="">
+			<div class="descrip">
+			<p class="title_descrip">   Dilemas Eticos</p>
+			<p>   con Juan Jose Lariz</p>
+			<p>   lunes 11:00 - 12:00</p>
+			</div>
 
-	<p>Alfredo CHinchilas Duardo</p>
+		</div>
+
+		<div class="programas_div_par">
+			<img src="img\estacionPolitica.jpg" class="imgprog" alt="">
+			<div class="descrip">
+			<p class="title_descrip">   Estacion Politica</p>
+			<p>   Administrador del sitio</p>
+			<p>   lunes 14:00 - 15:00</p>
+			</div>
+			
+		</div>
+		<div class="programas_div_impar">
+			<img src="img\dialogoporlacu.png" class="imgprog" alt="">
+			<div class="descrip">
+			<p class="title_descrip">   DIalogospor la Cultura</p>
+			<p>   con Irlanda Godina</p>
+			<p>   lunes 15:00 - 16:00</p>
+			</div>
+
+		</div>
+
+		</div>
+
+		<div class="enlaces">
+		
+			<a href="https://www.uaa.mx/portal/"><img src="img\uaa.png" alt=""></a>
+			<a href="https://www.uaa.mx/dgdv/"><img src="img\difusionyvinculacion.jpeg" alt=""></a>
+			<a href="https://www.facebook.com/uaatvoficial/?locale=es_LA"><img src="img\uaaTv.png" alt=""></a>
+		</div>
 
 </body>
 </html>
