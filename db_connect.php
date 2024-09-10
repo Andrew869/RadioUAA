@@ -1,5 +1,5 @@
 <?php
-    $servername = "localhost";
+    $servername = "localhost:3309";
     $username = "root";
     $password = "";
     $dbname='radio_db';
@@ -14,3 +14,7 @@
         exit();
     }
 ?>
+
+
+
+
