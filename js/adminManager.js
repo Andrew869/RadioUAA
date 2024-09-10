@@ -105,7 +105,7 @@ function showUpdateForm(primary_key, field, value){
             {
                 rec_password_container.style.display = 'initial';
                 rec_password.disabled = false;
-                rec_password.value = value;
+                // rec_password.value = value;
             }
             break;
         case 'nombre_completo':
@@ -159,7 +159,7 @@ function deleteRecord(primary_key) {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
-      body: "id_admin=" + encodeURIComponent(primary_key) + "&action=" + encodeURIComponent("Eliminar")
+      body: "id_user=" + encodeURIComponent(primary_key) + "&action=" + encodeURIComponent("Eliminar")
     })
     .then(response => response.text())
       .then(data => {

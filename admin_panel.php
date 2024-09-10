@@ -39,11 +39,10 @@
                             case 'rol':
                             case 'cuenta_activa':
                                 $sql = str_replace("field", $key, $sql);
-                                $value = $x;
-                                    break;
+                                $value = ($key === "password_hash" ? hash('sha256', $x) : $x);
+                                break;
                         }
                     }
-                    echo $sql;
                     $stmt = $conn->prepare($sql);
                     $stmt->bindParam(":val", $value);
                     $stmt->bindParam(':id_user', $_POST['id_user']);
@@ -55,6 +54,14 @@
                     $stmt = $conn->prepare("DELETE FROM users WHERE id_user = :id_user");
                     $stmt->bindParam(':id_user', $_POST['id_user']);
                     $stmt->execute();
+
+                    $sql = "SELECT MAX(id_user) AS max_id FROM users";
+                    $stmt = $conn->query($sql);
+                    // accedemos a la key max_id del arreglo que arroja la funcion fetch(), despues lo convertimos a entero y por ultimo le sumamos 1
+                    $max_id = (int)$stmt->fetch(PDO::FETCH_ASSOC)['max_id'] + 1;
+
+                    $sql = "ALTER TABLE users AUTO_INCREMENT = " . $max_id;
+                    $stmt = $conn->exec($sql);
                 }
                 break;
         }   
@@ -69,13 +76,15 @@
 <body>
 <?php
     echo "Acceso permitido!<br>";
+    echo 'IP Address - ' . $_SERVER['REMOTE_ADDR'] . "<br>";
     // echo date("d-m-Y h:i:sa")."<br>";
 
     echo "ID: " .$_SESSION['id_user']. "<br>";
     echo "Username: " .$_SESSION['username']. "<br>";
     echo "Eamil: " .$_SESSION['email']. "<br>";
     echo "Rol: " .$_SESSION['rol']. "<br>";
-    echo "Ultimo accesso: " .date("d/m/Y h:i:sa" ,strtotime($_SESSION['ultimo_acceso'])). "<br>";
+    echo "Fecha creacion " . $_SESSION['fecha_creacion'] . "<br>";
+    echo "Ultimo accesso: " . ($_SESSION['fecha_creacion'] === $_SESSION['ultimo_acceso'] ? "ahora" : date("d/m/Y h:i:sa" ,strtotime($_SESSION['ultimo_acceso']))) . "<br>";
     
     // echo var_dump($_SESSION['admin_ultimo_acceso']). "<br>";
     // echo date("Y/m/d - l - h:i:sa"). "<br>";
@@ -93,6 +102,7 @@
             <th>id_user</th>
             <th>username</th>
             <th>email</th>
+            <th>password_hash</th>
             <th>nombre_completo</th>
             <th>rol</th>
             <th>cuenta_activa</th> 
@@ -103,6 +113,7 @@
     
         class TableRows extends RecursiveIteratorIterator {
             private $primary_key;
+            private $fecha_creacion;
             private $db_row;
 
             function __construct($it) {
@@ -110,11 +121,22 @@
             }
 
             function current() {
-                if(parent::key() === "id_user") $this->primary_key = parent::current();
                 $this->db_row[parent::key()] = parent::current();
                 $parameters = "'" . $this->primary_key . "',";
                 $parameters .= "'" . parent::key() . "'," . "'" . parent::current() . "'";
-                return "<td>" . parent::current(). (!(parent::key() === "id_user" || parent::key() === "fecha_creacion" || parent::key() === "ultimo_acceso")? '<div><a href="javascript:showUpdateForm(' .$parameters. ')">editar</a></div>' : "") . "</td>";
+                switch (parent::key()) {
+                    case 'id_user':
+                        $this->primary_key = parent::current();
+                        break;
+                    case 'fecha_creacion':
+                        $this->fecha_creacion = parent::current();
+                        break;
+                    case 'ultimo_acceso':
+                        if($this->fecha_creacion === parent::current())
+                            return "<td>nunca</td>";
+                        break;
+                }
+                return "<td>" . (parent::key() === "password_hash"? "••••••••" : parent::current()) . (!(parent::key() === "id_user" || parent::key() === "fecha_creacion" || parent::key() === "ultimo_acceso")? '<div><a href="javascript:showUpdateForm(' .$parameters. ')">editar</a></div>' : "") . "</td>";
             }
         
             function beginChildren() {
@@ -129,7 +151,7 @@
             }
         } 
 
-        $stmt = $conn->prepare("SELECT id_user, username, email, nombre_completo, rol, cuenta_activa, fecha_creacion, ultimo_acceso FROM users WHERE id_user <> :id");
+        $stmt = $conn->prepare("SELECT id_user, username, email, password_hash, nombre_completo, rol, cuenta_activa, fecha_creacion, ultimo_acceso FROM users WHERE id_user <> :id");
         $stmt->bindParam(':id', $_SESSION['id_user']);
         $stmt->execute();
 
@@ -149,30 +171,32 @@
         <fieldset>
             <legend id="rec_legend"></legend>
             <div id="rec_id_user_container">
-                <label for="id_user">id_user</label>
+                <label for="rec_id_user">id_user</label>
                 <input id="rec_id_user" type="text" id="id_user" name="id_user" value="" readonly>
             </div>
             <div id="rec_username_container">
-                <label for="username">Username</label>
+                <label for="rec_username">Username</label>
                 <input id="rec_username" type="text" id="username" name="username" value="">
             </div>
             <div id="rec_email_container">    
-                <label for="email">Email</label>
+                <label for="rec_email">Email</label>
                 <input id="rec_email" type="text" id="email" name="email" value="">
             </div>
             <div id="rec_password_container">    
-                <label for="password">Password</label>
-                <input id="rec_password" type="password" name="password" id="password">
+                <label for="rec_password">Password</label>
+                <input id="rec_password" type="password" name="password_hash">
+                <!-- <label for="rec_password_2">Password</label>
+                <input id="rec_password_2" type="password" name="password" id="password"> -->
             </div>
             <div id="rec_nombre_container">
-                <label for="nombre_completo">Nombre completo</label>
+                <label for="rec_nombre">Nombre completo</label>
                 <input id="rec_nombre" type="text" id="nombre_completo" name="nombre_completo" value="">
             </div>
             <div id="rec_rol_container">
                 <label for="rol">Rol</label>
                 <select id="rec_rol" name="rol" id="rol" required>
                     <option id="rec_rol0" value="">Seleccione un rol</option>
-                    <option id="rec_rol1" value="SuperAdmin">SuperAdmin</option>
+                    <option id="rec_rol1" value="Admin">Admin</option>
                     <option id="rec_rol2" value="Editor">Editor</option>
                     <option id="rec_rol3" value="Moderador">Moderador</option>
                 </select>

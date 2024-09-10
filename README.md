@@ -78,7 +78,7 @@ CREATE TABLE users (
     cuenta_activa BOOLEAN DEFAULT TRUE,
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     ultimo_acceso TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    seccion_activa BOOLEAN DEFAULT false
+    sesion_activa BOOLEAN DEFAULT false
 )
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;

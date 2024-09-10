@@ -1,6 +1,12 @@
 <?php
 // Asegúrate de que la sesión esté iniciada
 session_start();
+include "db_connect.php";
+
+$sql = 'UPDATE users SET sesion_activa = FALSE WHERE id_user = :id_user LIMIT 1';
+$stmt = $conn->prepare($sql);
+$stmt->bindParam(':id_user', $_SESSION['id_user']);
+$stmt->execute();
 
 // Destruir todas las variables de sesión
 // $_SESSION = array();
