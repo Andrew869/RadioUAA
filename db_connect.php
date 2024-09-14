@@ -1,7 +1,12 @@
 <?php
-    $servername = "34.123.144.250";
-    $username = "admin";
-    $password = "@`y_{ZY*-?:&'j^e";
+    // $servername = "34.123.144.250";
+    // $username = "admin";
+    // $password = "@`y_{ZY*-?:&'j^e";
+    // $dbname='radio_db';
+
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
     $dbname='radio_db';
     
     try {

@@ -1,0 +1,19 @@
+table, td, th{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+tr th{
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+}
+
+td, th{
+    padding: 5px;
+}
+
+#rec_form{
+    display: none;
+    /* visibility: hidden; */
+}

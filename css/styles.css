@@ -19,36 +19,16 @@ body, ul{
    
 }
 
-table, td, th{
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-
-tr th{
-    background-color: black;
-    color: white;
-    border: 1px solid white;
-}
-
-td, th{
-    padding: 5px;
-}
-
 .days-left{
     background-color: black;
     color: white;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
-    position: absolute;
+    position: fixed;
     bottom: 30px;
     /* border: 2px solid black; */
     border-radius: 0 20px 20px 0;
     padding: 10px 20px 10px 10px;
     pointer-events: none;
-}
-
-#rec_form{
-    display: none;
-    /* visibility: hidden; */
 }
 
 .error {color: #FF0000;}
@@ -74,7 +54,6 @@ div.player{
 /* ########## Player ######### */
 body.radio-player {
     font-family: Arial, sans-serif;
-    /* display: flex; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -160,7 +139,7 @@ div.radio-player {
 }
 
 #label_toggle{
-    position: absolute;
+    position: fixed;
     bottom: 10px;
     right: 10px;
     font-size: 2em;

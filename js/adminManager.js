@@ -61,7 +61,7 @@ function showFullForm(){
     rec_id_user_container.style.display = "none";
 
     containers.forEach(element => {
-        element.style.display = "initial";
+        element.style.display = "block";
     });
 
     inputs.forEach(element => {
@@ -74,7 +74,7 @@ function showUpdateForm(primary_key, field, value){
     rec_Form.style.display = 'initial';
     rec_submit.value = "Actualizar";
     
-    rec_id_user_container.style.display = 'initial';
+    rec_id_user_container.style.display = 'block';
 
     containers.forEach(element => {
         element.style.display = "none";
@@ -89,35 +89,35 @@ function showUpdateForm(primary_key, field, value){
     switch (field) {
         case 'username':
             {
-                rec_username_container.style.display = 'initial';
+                rec_username_container.style.display = 'block';
                 rec_username.disabled = false;
                 rec_username.value = value;
             }
             break;
         case 'email':
             {
-                rec_email_container.style.display = 'initial';
+                rec_email_container.style.display = 'block';
                 rec_email.disabled = false;
                 rec_email.value = value;
             }
             break;
         case 'password_hash':
             {
-                rec_password_container.style.display = 'initial';
+                rec_password_container.style.display = 'block';
                 rec_password.disabled = false;
                 // rec_password.value = value;
             }
             break;
         case 'nombre_completo':
             {
-                rec_nombre_container.style.display = 'initial';
+                rec_nombre_container.style.display = 'block';
                 rec_nombre.disabled = false;
                 rec_nombre.value = value;
             }
             break;
         case 'rol':
             {
-                rec_rol_container.style.display = 'initial';
+                rec_rol_container.style.display = 'block';
                 rec_rol.disabled = false;
                 switch (value) {
                     case "SuperAdmin":
@@ -134,7 +134,7 @@ function showUpdateForm(primary_key, field, value){
             break;
         case 'cuenta_activa':
             {
-                rec_cuenta_activa_container.style.display = 'initial';
+                rec_cuenta_activa_container.style.display = 'block';
                 rec_true.disabled =  false;
                 rec_false.disabled = false;
                 switch (value) {
@@ -162,12 +162,28 @@ function deleteRecord(primary_key) {
       body: "id_user=" + encodeURIComponent(primary_key) + "&action=" + encodeURIComponent("Eliminar")
     })
     .then(response => response.text())
-      .then(data => {
-        // console.log("Respuesta del servidor:", data);
-        // Recargar la página después de enviar los datos exitosamente
-        location.reload(); // Recarga la página actual
-      })
-      .catch(error => {
+        .then(data => {
+            // console.log("Respuesta del servidor:", data);
+            // Recargar la página después de enviar los datos exitosamente
+            location.reload(); // Recarga la página actual
+        })
+        .catch(error => {
         console.error("Error:", error);
-      });
-  }
+    });
+}
+
+setInterval(checkActiveSession, 5000); // Verificar cada 5 segundos
+
+function checkActiveSession() {
+    fetch('check_session.php')
+        .then(response => response.json())
+        .then(data => {
+            if (!data.sesion_valida) {
+                if(!data.token_expired)
+                    alert('Tu sesión ha sido cerrada desde otro dispositivo.');
+                else
+                    alert('Tu sesión ha caducado.');
+                window.location.href = 'admin_panel.php';
+            }
+        });
+}

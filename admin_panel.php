@@ -9,6 +9,21 @@
 
     include "db_connect.php";
 
+    $sql = 'SELECT session_token FROM users WHERE id_user = ?';
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$_SESSION['id_user']]);
+
+    $db_token = $stmt->fetchColumn();
+
+    if($_SESSION['session_token'] !== $db_token || !isset($_COOKIE['session_token'])){
+        setcookie("session_token", "", time() - 3600);
+        session_unset();
+        session_destroy();
+        
+        header("Location: admin_login.php");
+        exit();
+    }
+
     if ($_SERVER["REQUEST_METHOD"] == "POST" && $_SESSION['rol'] === "Admin"){
         
         switch ($_POST['action']) {
@@ -72,16 +87,18 @@
 <html lang="es">
 <head>
     <?php include "metaData.php"; ?>
+    <link rel="stylesheet" href="css/stylePanel.css">
 </head>
 <body>
 <?php
     echo "Acceso permitido!<br>";
     echo 'IP Address - ' . $_SERVER['REMOTE_ADDR'] . "<br>";
+    echo $_SESSION['session_token'] . "<br>";
     // echo date("d-m-Y h:i:sa")."<br>";
 
     echo "ID: " .$_SESSION['id_user']. "<br>";
     echo "Username: " .$_SESSION['username']. "<br>";
-    echo "Eamil: " .$_SESSION['email']. "<br>";
+    echo "Email: " .$_SESSION['email']. "<br>";
     echo "Rol: " .$_SESSION['rol']. "<br>";
     echo "Fecha creacion " . $_SESSION['fecha_creacion'] . "<br>";
     echo "Ultimo accesso: " . ($_SESSION['fecha_creacion'] === $_SESSION['ultimo_acceso'] ? "ahora" : date("d/m/Y h:i:sa" ,strtotime($_SESSION['ultimo_acceso']))) . "<br>";
@@ -102,7 +119,7 @@
             <th>id_user</th>
             <th>username</th>
             <th>email</th>
-            <th>password_hash</th>
+            <th>password</th>
             <th>nombre_completo</th>
             <th>rol</th>
             <th>cuenta_activa</th> 
@@ -176,7 +193,7 @@
             </div>
             <div id="rec_username_container">
                 <label for="rec_username">Username</label>
-                <input id="rec_username" type="text" id="username" name="username" value="">
+                <input id="rec_username" type="text" id="username" name="username" autocomplete="off" value="">
             </div>
             <div id="rec_email_container">    
                 <label for="rec_email">Email</label>
@@ -184,7 +201,7 @@
             </div>
             <div id="rec_password_container">    
                 <label for="rec_password">Password</label>
-                <input id="rec_password" type="password" name="password_hash">
+                <input id="rec_password" type="password" name="password_hash" autocomplete="off">
                 <!-- <label for="rec_password_2">Password</label>
                 <input id="rec_password_2" type="password" name="password" id="password"> -->
             </div>

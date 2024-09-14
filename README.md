@@ -70,15 +70,15 @@ COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE users (
     id_user INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(255) UNIQUE NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    nombre_completo VARCHAR(255),
+    username VARCHAR(64) UNIQUE NOT NULL,
+    email VARCHAR(64) UNIQUE NOT NULL,
+    password_hash CHAR(64) NOT NULL,
+    nombre_completo VARCHAR(64),
     rol ENUM('Admin', 'Editor', 'Moderador') NOT NULL,
     cuenta_activa BOOLEAN DEFAULT TRUE,
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     ultimo_acceso TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    sesion_activa BOOLEAN DEFAULT false
+    session_token CHAR(32)
 )
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;

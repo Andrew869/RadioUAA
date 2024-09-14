@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<link rel="stylesheet" href="css\styleIndex.css">
 	<?php include "metaData.php"; ?>
-	
+	<link rel="stylesheet" href="css/styleIndex.css">
+	<link rel="stylesheet" href="css/nav.css">
+	<link rel="stylesheet" href="css/styles.css">
 </head>
 <body id="mainBody">
 	<header class="header">
@@ -88,6 +89,8 @@
 			<a href="https://www.uaa.mx/dgdv/"><img src="img\difusionyvinculacion.jpeg" alt=""></a>
 			<a href="https://www.facebook.com/uaatvoficial/?locale=es_LA"><img src="img\uaaTv.png" alt=""></a>
 		</div>
-
+	</div>
+	<script src="js/tema.js"></script>
+	<script src="https://kit.fontawesome.com/9b86802e8e.js" crossorigin="anonymous"></script>
 </body>
 </html>
