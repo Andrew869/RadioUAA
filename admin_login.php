@@ -39,9 +39,9 @@
         include "db_connect.php";
 
         // hacemos la peticion a la base de datos (LIMIT 1 indica cuantos resultados esperas)
-        $sql = 'SELECT id_user, username, email, password_hash, rol, fecha_creacion, ultimo_acceso, cuenta_activa, session_token FROM users WHERE username = :username LIMIT 1';
+        $sql = 'SELECT id_user, username, email, password_hash, rol, fecha_creacion, ultimo_acceso, cuenta_activa, session_token FROM user WHERE username = :username LIMIT 1';
         
-        $stmt = $conn->prepare($sql);
+        $stmt = SQL::$conn->prepare($sql);
         // agrega el valor de $username al parametro :username que se encuentra en el codigo sql
         $stmt->bindParam(':username', $username_input);
         $stmt->execute();
@@ -65,8 +65,8 @@
                     setcookie("session_token", $token, time() + 60 * (30) , "/", "", false, true);
 
                     // modifica el ultimo acceso
-                    $sql = 'UPDATE users SET ultimo_acceso = :ultimo_acceso, session_token = :session_token WHERE username = :username LIMIT 1';
-                    $stmt = $conn->prepare($sql);
+                    $sql = 'UPDATE user SET ultimo_acceso = :ultimo_acceso, session_token = :session_token WHERE username = :username LIMIT 1';
+                    $stmt = SQL::$conn->prepare($sql);
                     $stmt->bindParam(':ultimo_acceso', date("Y-m-d H:i:s"));
                     $stmt->bindParam(':session_token', $token);
                     $stmt->bindParam(':username', $username_input);
@@ -82,7 +82,7 @@
                 // La contraseña o el usuario es incorrecto
                 $overallErr = 'Nombre de usuario o contraseña incorrectos';
             }
-        $conn = null;
+            SQL::$conn = null;
     }
 
 ?>

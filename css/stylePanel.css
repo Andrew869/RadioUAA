@@ -17,3 +17,7 @@ td, th{
     display: none;
     /* visibility: hidden; */
 }
+
+#rec_submit {
+    cursor: pointer;
+}

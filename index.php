@@ -44,7 +44,7 @@
 
 	<div class="programacion_cont">
 		<div class="programas_div_par">
-			<img src="img\tu_espacio.png" class="imgprog" alt="">
+			<img src="resources/img/tu_espacio.png" class="imgprog" alt="">
 			<div class="descrip">
 			<p class="title_descrip">   Tu Espacio</p>
 			<p>   con Vladimir Guerrero</p>

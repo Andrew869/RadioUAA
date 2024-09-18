@@ -9,11 +9,7 @@
 
     include "db_connect.php";
 
-    $sql = 'SELECT session_token FROM users WHERE id_user = ?';
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([$_SESSION['id_user']]);
-
-    $db_token = $stmt->fetchColumn();
+    $db_token = SQL::Select(SQL::USER, $_SESSION['id_user'], "session_token")->fetchColumn();
 
     if($_SESSION['session_token'] !== $db_token || !isset($_COOKIE['session_token'])){
         setcookie("session_token", "", time() - 3600);
@@ -25,27 +21,16 @@
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST" && $_SESSION['rol'] === "Admin"){
-        
         switch ($_POST['action']) {
-            case 'Crear':
+            case SQL::CREATE:
                 {
-                    $stmt = $conn->prepare("INSERT INTO users (username, email, password_hash, nombre_completo, rol, cuenta_activa)
-                    VALUES (:username, :email, SHA2(:password_hash, 256), :nombre_completo, :rol, :cuenta_activa)");
-                    $stmt->bindParam(':username', $_POST['username']);
-                    $stmt->bindParam(':email', $_POST['email']);
-                    $stmt->bindParam(':password_hash', $_POST['password']);
-                    $stmt->bindParam(':nombre_completo', $_POST['nombre_completo']);
-                    $stmt->bindParam(':rol', $_POST['rol']);
-                    // $stmt->bindParam(':ultimo_acceso', $unixEpoch);
-                    $stmt->bindParam(':cuenta_activa', $_POST['cuenta_activa']);
-                    $stmt->execute();
+                    SQL::Create(SQL::USER, $_POST);
                 }
                 break;
-            case 'Actualizar':
+            case SQL::UPDATE:
                 {
-                    $sql = 'UPDATE users SET field = :val WHERE id_user = :id_user';
-                    $value = "";
-                    foreach ($_POST as $key => $x) {
+                    $flag = 0;
+                    foreach ($_POST as $key => $value) {
                         switch ($key) {
                             case "username":
                             case 'email':
@@ -53,35 +38,32 @@
                             case 'nombre_completo':
                             case 'rol':
                             case 'cuenta_activa':
-                                $sql = str_replace("field", $key, $sql);
-                                $value = ($key === "password_hash" ? hash('sha256', $x) : $x);
+                                // $value = ($key === "password_hash" ? hash('sha256', $x) : $x);
+                                $flag = 1;
+                                SQL::Update(SQL::USER, $_POST['id_user'], $key, $value);
                                 break;
                         }
+                        if($flag) break;
                     }
-                    $stmt = $conn->prepare($sql);
-                    $stmt->bindParam(":val", $value);
-                    $stmt->bindParam(':id_user', $_POST['id_user']);
-                    $stmt->execute();
                 }
                 break;
-            case 'Eliminar':
+            case SQL::DELETE:
                 {
-                    $stmt = $conn->prepare("DELETE FROM users WHERE id_user = :id_user");
-                    $stmt->bindParam(':id_user', $_POST['id_user']);
-                    $stmt->execute();
-
-                    $sql = "SELECT MAX(id_user) AS max_id FROM users";
-                    $stmt = $conn->query($sql);
-                    // accedemos a la key max_id del arreglo que arroja la funcion fetch(), despues lo convertimos a entero y por ultimo le sumamos 1
-                    $max_id = (int)$stmt->fetch(PDO::FETCH_ASSOC)['max_id'] + 1;
-
-                    $sql = "ALTER TABLE users AUTO_INCREMENT = " . $max_id;
-                    $stmt = $conn->exec($sql);
+                    SQL::Delete(SQL::USER, $_POST['id_user']);
                 }
                 break;
         }   
     }
 
+    class Records extends RecursiveIteratorIterator{
+        private $primary_key;
+
+        function __construct($table_name){
+            $stmt = SQL::$conn->prepare("SELECT id_user, username, email, password_hash, nombre_completo, rol, cuenta_activa, fecha_creacion, ultimo_acceso FROM ? WHERE id_user <> ?");
+            $stmt->bindParam(':id', $_SESSION['id_user']);
+            $stmt->execute();
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -113,21 +95,8 @@
     // $d2=ceil(($d1-time())/60/60/24);
     // echo "There are " . $d2 ." days until Xmas <br>";
     if($_SESSION['rol'] === "Admin"){
-        echo "<table>";
-        echo "
-        <tr>
-            <th>id_user</th>
-            <th>username</th>
-            <th>email</th>
-            <th>password</th>
-            <th>nombre_completo</th>
-            <th>rol</th>
-            <th>cuenta_activa</th> 
-            <th>fecha_creacion</th>
-            <th>ultimo_acceso</th>
-            <th></th>
-        </tr>";
-    
+
+
         class TableRows extends RecursiveIteratorIterator {
             private $primary_key;
             private $fecha_creacion;
@@ -135,12 +104,27 @@
 
             function __construct($it) {
                 parent::__construct($it, self::LEAVES_ONLY);
+                echo "<table>";
+                echo "
+                    <tr>
+                        <th>id_user</th>
+                        <th>username</th>
+                        <th>email</th>
+                        <th>password</th>
+                        <th>nombre_completo</th>
+                        <th>rol</th>
+                        <th>cuenta_activa</th> 
+                        <th>fecha_creacion</th>
+                        <th>ultimo_acceso</th>
+                        <th></th>
+                    </tr>
+                ";
             }
 
             function current() {
                 $this->db_row[parent::key()] = parent::current();
                 $parameters = "'" . $this->primary_key . "',";
-                $parameters .= "'" . parent::key() . "'," . "'" . parent::current() . "'";
+                $parameters .= "'" . parent::key() . "'," . "'" . (parent::key() === "password_hash" ? "" : parent::current()) . "'";
                 switch (parent::key()) {
                     case 'id_user':
                         $this->primary_key = parent::current();
@@ -164,23 +148,24 @@
                 // echo '<td><a href="javascript:edit(' . $this->primary_key . ')">editar</a></td></tr>' . "\n";
                 // echo '<td><button onclick="showForm(['.$record.'])">editar</button></td></tr>' . "\n";
                 // $this->db_row = array();
-                echo '<td><button onclick="deleteRecord('.$this->primary_key.')">eliminar</button></td></tr>' . "\n";
+                echo '<td><button onclick="deleteRecord('.$this->primary_key.')">eliminar</button></td></tr>';
+            }
+
+            function endIteration(){
+                echo "</table>";
             }
         } 
 
-        $stmt = $conn->prepare("SELECT id_user, username, email, password_hash, nombre_completo, rol, cuenta_activa, fecha_creacion, ultimo_acceso FROM users WHERE id_user <> :id");
+        $stmt = SQL::$conn->prepare("SELECT id_user, username, email, password_hash, nombre_completo, rol, cuenta_activa, fecha_creacion, ultimo_acceso FROM user WHERE id_user <> :id");
         $stmt->bindParam(':id', $_SESSION['id_user']);
         $stmt->execute();
 
         // set the resulting array to associative
-        $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-
-        // echo var_dump($stmt->fetchAll());
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
 
         foreach(new TableRows(new RecursiveArrayIterator($stmt->fetchAll())) as $k=>$v) {
             echo $v;
         }
-        echo "</table>";
 ?>
     <button onclick="showFullForm()">Crear nuevo admin</button>
 
@@ -225,7 +210,10 @@
                 <input id="rec_false" type="radio" name="cuenta_activa" id="false" value="0">
                 <label for="false">no</label>
             </div>
-            <input id="rec_sumbit" type="submit" name="action" value="Crear">
+            <button id="rec_submit" type="submit" name="action" value="<?php SQL::CREATE; ?>">
+                Enviar formulario
+            </button>
+            <!-- <input id="rec_submit" type="submit" name="action" value="<?php SQL::CREATE; ?>"> -->
         </fieldset>
     </form>
     <?php 

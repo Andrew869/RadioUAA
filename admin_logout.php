@@ -3,10 +3,7 @@
 session_start();
 include "db_connect.php";
 
-$sql = 'UPDATE users SET session_token = NULL WHERE id_user = :id_user';
-$stmt = $conn->prepare($sql);
-$stmt->bindParam(':id_user', $_SESSION['id_user']);
-$stmt->execute();
+SQL::Update(SQL::USER, $_SESSION['id_user'], "session_token", SQL::NULL);
 
 // Destruir todas las variables de sesión
 // $_SESSION = array();

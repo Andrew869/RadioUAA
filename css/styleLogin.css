@@ -94,6 +94,7 @@ form{
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .input_box #label_toggle svg{
@@ -115,6 +116,12 @@ form{
     background-color: #1D2A35;
     color: white;
     padding: 0;
+    cursor: pointer;
+    transition: color 2s ease;
+}
+
+.input_box [type="submit"]:hover{
+    color: #04AA6D;
 }
 
 .output_err{
@@ -133,7 +140,11 @@ form{
 }
 
 .forget_link a{
-    text-decoration: underline;
+    text-decoration: none;
     color: #1D2A35;
     font-weight: bold;
+}
+
+.forget_link a:hover{
+    text-decoration: underline;
 }

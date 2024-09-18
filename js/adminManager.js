@@ -21,7 +21,7 @@ const rec_rol3 = document.getElementById('rec_rol3');
 const rec_rol = document.getElementById('rec_rol');
 const rec_true = document.getElementById('rec_true');
 const rec_false = document.getElementById('rec_false');
-const rec_submit = document.getElementById('rec_sumbit');
+const rec_submit = document.getElementById('rec_submit');
 
 const containers = [
     rec_username_container,
@@ -47,7 +47,8 @@ function showFullForm(){
     rec_Form.style.display = "initial";
     
     rec_legend.textContent = "Crear administrador";
-    rec_submit.value = "Crear";
+    rec_submit.value = "1"; //1 = Crear
+    rec_submit.textContent = "Crear";
         
     rec_id_user.value = "";
     rec_username.value = "";
@@ -59,6 +60,7 @@ function showFullForm(){
     rec_true.checked = true;
 
     rec_id_user_container.style.display = "none";
+    rec_id_user.disabled = true;
 
     containers.forEach(element => {
         element.style.display = "block";
@@ -72,9 +74,11 @@ function showFullForm(){
 function showUpdateForm(primary_key, field, value){
     rec_legend.textContent = "Actualizando " + field;
     rec_Form.style.display = 'initial';
-    rec_submit.value = "Actualizar";
+    rec_submit.value = "2"; // 2 = Actualizar
+    rec_submit.textContent = "Actualizar";
     
     rec_id_user_container.style.display = 'block';
+    rec_id_user.disabled = false;
 
     containers.forEach(element => {
         element.style.display = "none";
@@ -159,7 +163,7 @@ function deleteRecord(primary_key) {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
-      body: "id_user=" + encodeURIComponent(primary_key) + "&action=" + encodeURIComponent("Eliminar")
+      body: "id_user=" + encodeURIComponent(primary_key) + "&action=" + encodeURIComponent("3") // 3 = Eliminar
     })
     .then(response => response.text())
         .then(data => {

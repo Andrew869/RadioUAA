@@ -4,11 +4,7 @@
     }
     include_once "db_connect.php";
 
-    $sql = 'SELECT session_token FROM users WHERE id_user = ?';
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([$_SESSION['id_user']]);
-
-    $db_token = $stmt->fetchColumn();
+    $db_token = SQL::Select(SQL::USER, $_SESSION['id_user'], "session_token")->fetchColumn();
 
     $tmp = array();
 
