@@ -37,43 +37,25 @@
         }
 
         include "db_connect.php";
-
-        // hacemos la peticion a la base de datos (LIMIT 1 indica cuantos resultados esperas)
-        $sql = 'SELECT id_user, username, email, password_hash, rol, fecha_creacion, ultimo_acceso, cuenta_activa, session_token FROM user WHERE username = :username LIMIT 1';
         
-        $stmt = SQL::$conn->prepare($sql);
-        // agrega el valor de $username al parametro :username que se encuentra en el codigo sql
-        $stmt->bindParam(':username', $username_input);
-        $stmt->execute();
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $user = SQL::Select(SQL::USER, "username", $username_input)->fetch(PDO::FETCH_ASSOC);
         
         if(!$user)
             $overallErr = 'Nombre de usuario o contraseña incorrectos';
         else
             if (hash_equals($user['password_hash'], hash('sha256', $password_input))) {
                 if($user['cuenta_activa']){
-                    // La contraseña es correcta
-                    $_SESSION['id_user'] = $user['id_user'];
-                    $_SESSION['username'] = $user['username'];
-                    $_SESSION['email'] = $user['email'];
-                    $_SESSION['rol'] = $user['rol'];
-                    $_SESSION['fecha_creacion'] = $user['fecha_creacion'];
-                    $_SESSION['ultimo_acceso'] = $user['ultimo_acceso'];
+                    foreach ($user as $key => $value) {
+                        $_SESSION[$key] = $value;
+                    }
                     
                     $token = bin2hex(random_bytes(16));
                     $_SESSION['session_token'] = $token;
                     setcookie("session_token", $token, time() + 60 * (30) , "/", "", false, true);
 
-                    // modifica el ultimo acceso
-                    $sql = 'UPDATE user SET ultimo_acceso = :ultimo_acceso, session_token = :session_token WHERE username = :username LIMIT 1';
-                    $stmt = SQL::$conn->prepare($sql);
-                    $stmt->bindParam(':ultimo_acceso', date("Y-m-d H:i:s"));
-                    $stmt->bindParam(':session_token', $token);
-                    $stmt->bindParam(':username', $username_input);
-                    $stmt->execute();
-
-                    // Redirigir al panel de administración
-                    header('Location: admin_panel.php');
+                    SQL::Update(SQL::USER, $user['id_user'], ["ultimo_acceso" => date("Y-m-d H:i:s"), "session_token" => $token]); // modifica el ultimo acceso y añadiendo el token
+                    
+                    header('Location: admin_panel.php'); // Redirigir al panel de administración
                     exit();
                 }
                 else

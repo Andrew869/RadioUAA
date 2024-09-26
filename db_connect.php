@@ -8,7 +8,8 @@
         public static $password = "";
         public static $dbname='radio_db';
 
-        CONST NULL = "null";
+        const NULL = "null";
+        const ALL = "*";
 
         const SELECT = "0";
         const CREATE = "1";
@@ -20,6 +21,9 @@
         const PRESENTADOR = "presentador";
         const PROGRAMA = "programa";
         const USER = "user";
+        const PROGRAMA_PRESENTADOR = "programa_presentador";
+        const PROGRAMA_GENERO = "programa_genero";
+
 
         function __construct($asf){
             echo "hello world $asf" . "<br>";
@@ -42,7 +46,17 @@
             }
         }
 
-        public static function Select($table_name, $primary_key, ...$fields){
+        public static function GetFields($table_name): array{
+            $field_names = [];
+            $sql = "SHOW COLUMNS FROM $table_name";
+            self::$stmt = self::$conn->query($sql);
+            while($row = self::$stmt->fetch(PDO::FETCH_ASSOC)){
+                $field_names[] = $row['Field'];
+            }
+            return $field_names;
+        }
+
+        public static function Select($table_name, $primary_key_name, $primary_key, ...$fields){
             $length = count($fields);
             $tmp = ($length > 0 ? ' ' : " * ");
             for ($i = 0; $i < $length; $i++) { 
@@ -51,17 +65,16 @@
                 else 
                     $tmp .= $fields[$i] . ' ';
             }
-            $id = "id_" . $table_name;
-            $sql = 'SELECT' . $tmp . 'FROM ' . $table_name . ' WHERE ' . $id . ' = ?';
+            // $id = "id_" . $table_name;
+            $where = ($primary_key === self::ALL) ? "" : " WHERE $primary_key_name = '$primary_key'";
+            $sql = 'SELECT' . $tmp . 'FROM ' . $table_name . $where;
             // echo $sql . "<br>";
             self::$stmt = self::$conn->prepare($sql);
-            self::$stmt->execute([$primary_key]);
+            self::$stmt->execute();
             return self::$stmt;
         }
 
-        public static function Create($table_name, $post){
-            array_pop($post);
-            $record = array_values($post);
+        public static function Create($table_name, $record) : int{
             $length = count($record);
             
             foreach ($record as $key => $value) {
@@ -86,6 +99,12 @@
                     $sql .= self::USER . " (username, email, password_hash, nombre_completo, rol, cuenta_activa)";
                     $record[2] = 'SHA2(' . $record[2] . ', 256)';
                     break;
+                case self::PROGRAMA_PRESENTADOR:
+                    $sql .= self::PROGRAMA_PRESENTADOR . " (id_programa, id_presentador)";
+                    break;
+                case self::PROGRAMA_GENERO:
+                    $sql .= self::PROGRAMA_GENERO . " (id_programa, id_genero)";
+                    break;
             }
             
             $sql_values = "VALUES (";
@@ -98,31 +117,51 @@
             $sql .= $sql_values;
             // echo $sql;
             self::$conn->exec($sql);
+            return self::$conn->lastInsertId();
         }
 
-        public static function Update($table_name, $primary_key, $key, $value){
-            if($key === "password_hash") $value = hash('sha256', $value);
-            if($value !== self::NULL) $value = "'$value'";
-            // echo $value;
+        public static function Update($table_name, $primary_key, $fields){
+            $text_fields = "";
+            $lastKey = array_key_last($fields);
+            foreach ($fields as $key => $value) {
+                if($key === "password_hash") $value = hash('sha256', $value);
+                if($value !== self::NULL) $value = "'$value'";
+                $text_fields .= "$key = $value" . ($key === $lastKey ? "" : ", " );
+            }
             $id = "id_" . $table_name;
-            $sql = "UPDATE $table_name SET $key = $value WHERE $id = '$primary_key'";
-            // echo $sql . "<br>";
+            $sql = "UPDATE $table_name SET $text_fields WHERE $id = '$primary_key'";
             self::$stmt = self::$conn->prepare($sql);
             self::$conn->exec($sql);
+        }
+
+        public static function GetPrimaryKeyName($table_name) : string{
+            $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = '$table_name' AND CONSTRAINT_NAME = 'PRIMARY' AND TABLE_SCHEMA = 'radio_db'";
+            self::$stmt = self::$conn->query($sql);
+            return self::$stmt->fetchColumn();
+        }
+
+        public static function GetCurrentIdIndex($table_name, $id_name) : int{
+            $sql = "SELECT MAX($id_name) AS max_id FROM $table_name";
+            self::$stmt = self::$conn->query($sql);
+            // return (int)self::$stmt->fetch(PDO::FETCH_ASSOC)['max_id'];
+            return (int)self::$stmt->fetchColumn();
         }
 
         public static function Delete($table_name, $primary_key){
-            $id = "id_" . $table_name;
-            $sql = "DELETE FROM $table_name WHERE $id = '$primary_key'";
+            // $id = "id_" . $table_name;
+            if($table_name === self::PROGRAMA){
+                self::Delete(self::PROGRAMA_PRESENTADOR, $primary_key);
+                self::Delete(self::PROGRAMA_GENERO, $primary_key);
+            }
+            $id_name = self::GetPrimaryKeyName($table_name);
+            $sql = "DELETE FROM $table_name WHERE $id_name = '$primary_key'";
             echo $sql . "<br>";
             self::$stmt = self::$conn->prepare($sql);
             self::$conn->exec($sql);
-
-            $sql = "SELECT MAX(id_user) AS max_id FROM user";
-            self::$stmt = self::$conn->query($sql);
-            // accedemos a la key max_id del arreglo que arroja la funcion fetch(), despues lo convertimos a entero y por ultimo le sumamos 1
-            $max_id = (int)self::$stmt->fetch(PDO::FETCH_ASSOC)['max_id'] + 1;
-            $sql = "ALTER TABLE user AUTO_INCREMENT = " . $max_id;
+            
+            if(self::PROGRAMA_PRESENTADOR)
+            $next_id = self::GetCurrentIdIndex($table_name, $id_name) + 1;
+            $sql = "ALTER TABLE $table_name AUTO_INCREMENT = $next_id";
             $stmt = self::$conn->exec($sql);
         }
     }

@@ -3,7 +3,7 @@
 session_start();
 include "db_connect.php";
 
-SQL::Update(SQL::USER, $_SESSION['id_user'], "session_token", SQL::NULL);
+SQL::Update(SQL::USER, $_SESSION['id_user'], ["session_token" => SQL::NULL]);
 
 // Destruir todas las variables de sesión
 // $_SESSION = array();

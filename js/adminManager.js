@@ -176,18 +176,21 @@ function deleteRecord(primary_key) {
     });
 }
 
-setInterval(checkActiveSession, 5000); // Verificar cada 5 segundos
+//setInterval(checkActiveSession, 5000); // Verificar cada 5 segundos
 
 function checkActiveSession() {
     fetch('check_session.php')
         .then(response => response.json())
         .then(data => {
             if (!data.sesion_valida) {
-                if(!data.token_expired)
-                    alert('Tu sesión ha sido cerrada desde otro dispositivo.');
-                else
-                    alert('Tu sesión ha caducado.');
-                window.location.href = 'admin_panel.php';
+                if(!data.token_expired){
+                    // alert('Tu sesión ha sido cerrada desde otro dispositivo.');
+                    window.location.href = 'admin_panel.php';
+                }
+                else{
+                    // alert('Tu sesión ha caducado.');
+                    window.location.href = 'admin_logout.php';
+                }
             }
         });
 }
