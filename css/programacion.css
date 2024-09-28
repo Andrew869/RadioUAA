@@ -1,0 +1,33 @@
+body{
+    margin: 0;
+    height: 200vh;
+    background: linear-gradient(to right,#f3e8d6,#b0d7e6);
+    
+}
+#main-container{
+    width: 90rem;
+    margin: 10rem auto;
+
+}
+table{
+    background-color: white;
+    text-align: left;
+    border-collapse: collapse;
+    width: 100%;    
+}
+
+th,td{
+    padding: 20px;
+}
+
+thead{
+    background-color: bisque;
+    border-bottom: solid 5px ;
+    color: white;
+}
+tr:nth-child(even){
+    background-color:#ddd ;
+}
+tr:hover td{
+    background-color: #f3e8d6;
+}
