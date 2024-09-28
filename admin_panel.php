@@ -9,7 +9,7 @@
 
     include "db_connect.php";
 
-    $db_token = SQL::Select(SQL::USER, "id_user", $_SESSION['id_user'], "session_token")->fetchColumn();
+    $db_token = SQL::Select(SQL::USER, "id_user", $_SESSION['id_user'], ["session_token"])->fetchColumn();
 
     if($_SESSION['session_token'] !== $db_token){
         setcookie("session_token", "", time() - 3600);
@@ -167,7 +167,7 @@
                 $this->current_index = 0;
                 // $this->stmt = SQL::Select($table_name, SQL::ALL, SQL::ALL, "id_user", "username", "email", "password_hash", "nombre_completo", "rol", "cuenta_activa", "fecha_creacion", "ultimo_acceso");
                 $this->field_names = SQL::GetFields($table_name);
-                $this->stmt = SQL::Select($table_name, SQL::ALL, SQL::ALL);
+                $this->stmt = SQL::Select($table_name);
                 $this->stmt->setFetchMode(PDO::FETCH_ASSOC); // set the resulting array to associative
                 parent::__construct(new RecursiveArrayIterator($this->stmt->fetchAll()), self::LEAVES_ONLY);
                 echo "<table>";

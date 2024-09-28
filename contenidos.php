@@ -89,7 +89,7 @@
                             echo "<br>";
                             
                             echo "Horarios: <br>";
-                            $horarios = SQL::Select(SQL::HORARIO, "id_programa", $value)->fetchAll(PDO::FETCH_ASSOC);
+                            $horarios = SQL::Select(SQL::HORARIO, "id_programa", $value, [], "dia_semana", SQL::ASCENDANT)->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($horarios as $horario) {
                                 echo $horario['dia_semana'] . ($horario['es_retransmision'] ? " (Retrasmision) " : "" ) . "<br>";
                                 echo "De " . $horario['hora_inicio'] . " a " . $horario['hora_fin'] . "<br>";
@@ -98,15 +98,15 @@
                             echo "<br>";
                             
                             echo "presentado por: <br>";
-                            $presentadores = SQL::Select(SQL::PROGRAMA_PRESENTADOR, "id_programa", $value, "id_presentador")->fetchAll(PDO::FETCH_ASSOC);
+                            $presentadores = SQL::Select(SQL::PROGRAMA_PRESENTADOR, "id_programa", $value, ["id_presentador"])->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($presentadores as $presentador) {
-                                echo '<a href="'. htmlspecialchars($_SERVER["PHP_SELF"]) . "?presentador=". $presentador["id_presentador"] .'">' . SQL::Select(SQL::PRESENTADOR, "id_presentador", $presentador["id_presentador"], "nombre_presentador")->fetchColumn() . '</a> <br>';
+                                echo '<a href="'. htmlspecialchars($_SERVER["PHP_SELF"]) . "?presentador=". $presentador["id_presentador"] .'">' . SQL::Select(SQL::PRESENTADOR, "id_presentador", $presentador["id_presentador"], ["nombre_presentador"])->fetchColumn() . '</a> <br>';
                             }
                             echo "<br>";
                             echo "Generos: <br>";
-                            $generos = SQL::Select(SQL::PROGRAMA_GENERO, 'id_programa', $value, "id_genero")->fetchAll(PDO::FETCH_ASSOC);
+                            $generos = SQL::Select(SQL::PROGRAMA_GENERO, 'id_programa', $value, ["id_genero"])->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($generos as $genero) {
-                                echo SQL::Select(SQL::GENERO, "id_genero", $genero["id_genero"], "nombre_genero")->fetchColumn() . "<br>";
+                                echo SQL::Select(SQL::GENERO, "id_genero", $genero["id_genero"], ["nombre_genero"])->fetchColumn() . "<br>";
                             }
                         }
                         break;   

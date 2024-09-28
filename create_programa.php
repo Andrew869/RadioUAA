@@ -1,6 +1,7 @@
 <?php
     include "db_connect.php";
-    // SQL::Delete(SQL::PROGRAMA, 4);
+    // SQL::Delete(SQL::PROGRAMA, 6);
+
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
         if(isset($_FILES)){
@@ -26,6 +27,11 @@
         }
 
         $id_programa = SQL::Create(SQL::PROGRAMA, [$_POST['nombre_programa'], $target_file, $_POST['descripcion']]);
+        foreach ($_POST['horarios'] as $value) {
+            foreach (explode(',', $value['dias']) as $dia) {
+                SQL::Create(SQL::HORARIO, [$id_programa, $dia, $value['hora_inicio'], $value['hora_fin'], $value['es_retransmision']]);
+            }
+        }
         foreach (explode(',', $_POST['presentadores']) as $value) {
             SQL::Create(SQL::PROGRAMA_PRESENTADOR, [$id_programa, $value]);
         }
@@ -50,28 +56,36 @@
                 <label for="nombre_programa">nombre del programa</label>
                 <input type="text" name="nombre_programa" id="nombre_programa">
             </div>
-            <div class="drop-zone" id="drop-zone">
+            <div class="drop-zone" id="drop-zone" for="fileInput">
                 Arrastra y suelta tu archivo aquí o haz clic para seleccionar
             </div>
-            <input type="file" name="fileToUpload" id="fileInput" accept="image/*" style="display:none;" required>
+            <input type="file" name="fileToUpload" id="fileInput" accept="image/*" style="display:none;">
             <div>
                 <label for="descripcion">descripcion</label>
                 <textarea name="descripcion" id="descripcion"></textarea>
             </div>
-            <div>
-                <select id="rec_rol" name="dia_semana" id="dia_semana">
-                    <option id="rec_rol0" value="">Seleccione un dia</option>
-                    <option id="rec_rol1" value="Admin">Lunes</option>
-                    <option id="rec_rol2" value="Editor">Martes</option>
-                    <option id="rec_rol3" value="Moderador">Miercoles</option>
-                    <option id="rec_rol3" value="Moderador">Jueves</option>
-                    <option id="rec_rol3" value="Moderador">Viernes</option>
-                    <option id="rec_rol3" value="Moderador">Sabado</option>
-                    <option id="rec_rol3" value="Moderador">Domingo</option>
-                </select>
-                <input type="time" name="" id="">
-                <input type="time" name="" id="">
+            <div id="times_container">
+                <div class="times">
+                    <div class="days_container">
+                        <ul class="days_list" class="0">
+                            <?php 
+                                foreach (SQL::GetEnumValues(SQL::HORARIO, "dia_semana") as $dia) {
+                                    echo '<li dia_semana="' . $dia . '">' . $dia . '</li>';
+                                }
+                            ?>
+                        </ul>
+                        <input type="hidden" name="horarios[0][dias]" class="diasSelectedInput" field_name="dias">
+                    </div>
+                    <label for="">Hora inicio</label>
+                    <input type="time" name="horarios[0][hora_inicio]" field_name="hora_inicio">
+                    <label for="">Hora final</label>
+                    <input type="time" name="horarios[0][hora_fin]" field_name="hora_fin">
+                    <label for="">Es retrasmision</label>
+                    <input type="checkbox" name="horarios[0][es_retransmision]" field_name="es_retransmision" value="1" class="chk">
+                    <input type="checkbox" name="horarios[0][es_retransmision]" field_name="es_retransmision" value="0" class="chk" checked>
+                </div>
             </div>
+            <a id="button_addNew">añadir nuevo horario</a>
             <h3>Presentador(es)</h3>
             <div class="container">
                 <div>
@@ -84,7 +98,7 @@
                     <h3>Presentadores disponibles</h3>
                     <ul id="presentadoresAvailable" class="presentadores">
                         <?php
-                            $presentadores = SQL::Select(SQL::PRESENTADOR, SQL::ALL, SQL::ALL, "id_presentador", "nombre_presentador")->fetchAll(PDO::FETCH_ASSOC);
+                            $presentadores = SQL::Select(SQL::PRESENTADOR, SQL::ALL, SQL::ALL, ["id_presentador", "nombre_presentador"])->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($presentadores as $presentador) {
                                 echo '<li id_presentador="' . $presentador["id_presentador"] . '">' . $presentador["nombre_presentador"] . '</li>';
                             }
@@ -106,7 +120,7 @@
                     <h3>Generos disponibles</h3>
                     <ul id="generosAvailable" class="generos">
                         <?php
-                            $generos = SQL::Select(SQL::GENERO, SQL::ALL, SQL::ALL, "id_genero", "nombre_genero")->fetchAll(PDO::FETCH_ASSOC);
+                            $generos = SQL::Select(SQL::GENERO, SQL::ALL, SQL::ALL, ["id_genero", "nombre_genero"])->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($generos as $genero) {
                                 echo '<li id_genero="' . $genero["id_genero"] . '">' . $genero["nombre_genero"] . '</li>';
                             }

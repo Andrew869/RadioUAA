@@ -28,20 +28,33 @@
 ul {
     list-style-type: none;
     padding: 0;
-    width: 200px;
+    margin: 0;
+    /* width: 200px; */
 }
 li {
-    margin: 5px;
-    padding: 10px;
+    margin: 2px 0;
+    /* padding: 10px; */
     background-color: #f1f1f1;
     cursor: pointer;
     text-align: center;
     border: 1px solid #ccc;
 }
-.selected {
-    background-color: #d4edda;
-    border-color: #28a745;
-}
 button {
     margin: 20px 0;
+}
+.selected {
+    background-color: lightblue;
+    color: white;
+}
+
+.days_container {
+    width: 100px;
+    height: 80px;
+    border: 1px solid black;
+    overflow: auto;
+    display: inline-block;
+}
+
+#button_addNew{
+    cursor: pointer;
 }

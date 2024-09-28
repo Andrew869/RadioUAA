@@ -3,6 +3,24 @@ const dropZone = document.getElementById('drop-zone');
 const fileInput = document.getElementById('fileInput');
 const uploadForm = document.getElementById('uploadForm');
 
+// Obtener las listas
+const presentadoresAvailable = document.getElementById('presentadoresAvailable');
+const presentadoresSelected = document.getElementById('presentadoresSelected');
+const presentadoresSelectedInput = document.getElementById('presentadoresSelectedInput');
+const generosAvailable = document.getElementById('generosAvailable');
+const generosSelected = document.getElementById('generosSelected');
+const generosSelectedInput = document.getElementById('generosSelectedInput');
+
+let times_container = document.getElementById('times_container');
+
+const days_list = document.getElementsByClassName('days_list');
+const items = days_list[0].getElementsByTagName('li');
+
+const chks = document.getElementsByClassName('chk');
+
+let index_list = 0;
+let name_submit = 'horarios[x]'
+
 // Cambiar apariencia del área de arrastre cuando el archivo está sobre ella
 dropZone.addEventListener('dragover', (e) => {
     e.preventDefault();
@@ -38,14 +56,6 @@ fileInput.addEventListener('change', () => {
         dropZone.textContent = fileInput.files[0].name;
     }
 });
-
-// Obtener las listas
-const presentadoresAvailable = document.getElementById('presentadoresAvailable');
-const presentadoresSelected = document.getElementById('presentadoresSelected');
-const presentadoresSelectedInput = document.getElementById('presentadoresSelectedInput');
-const generosAvailable = document.getElementById('generosAvailable');
-const generosSelected = document.getElementById('generosSelected');
-const generosSelectedInput = document.getElementById('generosSelectedInput');
 
 function MoveOption(e) {
     if (e.target.tagName !== 'LI') return;
@@ -87,4 +97,87 @@ function GetSelectedOptions() {
         selected.push(li.getAttribute('id_genero'));
     });
     generosSelectedInput.value = selected.join(',');
+
+    let replicans = times_container.querySelectorAll('.times');
+
+    replicans.forEach(element => {
+        selected = [];
+        element.querySelectorAll('.selected').forEach(function(item) {
+            selected.push(item.textContent);
+        });
+        element.querySelector('.diasSelectedInput').value = selected.join(',');
+    });
 }
+
+document.getElementById('button_addNew').addEventListener('click', function() {
+    // Obtener el elemento a clonar
+    let bloqueOriginal = times_container.querySelector('.times');
+    
+    // Clonar el bloque (con sus hijos)
+    let bloqueClonado = bloqueOriginal.cloneNode(true);
+    let inputs = bloqueClonado.querySelectorAll('input');
+    let checkboxes = bloqueClonado.querySelectorAll('.chk');
+
+    // Reiniciando valores en la replica
+    inputs.forEach(element => {
+        if(element.type !== 'checkbox')
+        element.value = null;
+    });
+    checkboxes[0].checked = false;
+    checkboxes[1].checked = true;
+
+    checkboxes[0].addEventListener('click', function(){
+        checkboxes[1].checked = !this.checked;
+    });
+
+    // Cambiando la clase de la lista
+    let days_list_clone = bloqueClonado.querySelector('.days_list')
+    days_list_clone.className = ++index_list;
+
+    // Cambia los name de los input
+    inputs.forEach(element => {
+        let name_text = name_submit + "["+ element.getAttribute('field_name') + "]";
+        element.name = name_text.replace('[x]', '[' + index_list + ']');
+    });
+
+    // Asignacion de event listeners a las opciones de la lista
+    let items_clone = days_list_clone.querySelectorAll('li');
+
+    items_clone.forEach(element => {
+        element.classList.remove('selected');
+        element.addEventListener('click', function() {
+            // Alternar la clase 'selected' al hacer clic
+            this.classList.toggle('selected');
+        });
+    });
+    
+    // agregar el bloque a contenedor padre
+    times_container.appendChild(bloqueClonado);
+});
+
+// Obtener la lista y el botón
+
+
+// Añadir un evento de clic a cada elemento de la lista
+for (let i = 0; i < items.length; i++) {
+    items[i].addEventListener('click', function() {
+        // Alternar la clase 'selected' al hacer clic
+        this.classList.toggle('selected');
+    });
+}
+
+chks[0].addEventListener('click', function(){
+    chks[1].checked = !this.checked;
+});
+
+// Evento para mostrar los elementos seleccionados
+// document.getElementById('mostrarSeleccion').addEventListener('click', function() {
+//     const seleccionados = document.querySelectorAll('#lista .selected');
+//     let seleccion = [];
+    
+//     seleccionados.forEach(function(item) {
+//         seleccion.push(item.textContent);
+//     });
+    
+//     alert("Has seleccionado: " + seleccion.join(", "));
+// });

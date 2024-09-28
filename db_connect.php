@@ -10,6 +10,9 @@
 
         const NULL = "null";
         const ALL = "*";
+        const NONE = "";
+        const ASCENDANT = "ASC";
+        const DESCENDANT = "DESC";
 
         const SELECT = "0";
         const CREATE = "1";
@@ -56,7 +59,7 @@
             return $field_names;
         }
 
-        public static function Select($table_name, $primary_key_name, $primary_key, ...$fields){
+        public static function Select($table_name, $key_name = self::ALL, $key = self::ALL, $fields = [], $order_by = self::NONE, $order_type = self::ASCENDANT){
             $length = count($fields);
             $tmp = ($length > 0 ? ' ' : " * ");
             for ($i = 0; $i < $length; $i++) { 
@@ -66,8 +69,9 @@
                     $tmp .= $fields[$i] . ' ';
             }
             // $id = "id_" . $table_name;
-            $where = ($primary_key === self::ALL) ? "" : " WHERE $primary_key_name = '$primary_key'";
-            $sql = 'SELECT' . $tmp . 'FROM ' . $table_name . $where;
+            $where = ($key_name === self::ALL) ? "" : " WHERE $key_name = '$key'";
+            $order = ($order_by === self::NONE) ? "" : " ORDER BY $order_by $order_type";
+            $sql = 'SELECT' . $tmp . 'FROM ' . $table_name . $where . $order;
             // echo $sql . "<br>";
             self::$stmt = self::$conn->prepare($sql);
             self::$stmt->execute();
@@ -147,19 +151,36 @@
             return (int)self::$stmt->fetchColumn();
         }
 
+        public static function GetEnumValues($table_name, $id_name) : array{
+            $sql = "SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '$table_name' AND COLUMN_NAME = '$id_name' AND TABLE_SCHEMA = 'radio_db'";
+            self::$stmt = self::$conn->query($sql);
+            $result = self::$stmt->fetch(PDO::FETCH_ASSOC);
+                
+            // Extraer los valores del ENUM
+            $enumList = str_replace("enum('", "", $result['COLUMN_TYPE']);
+            $enumList = str_replace("')", "", $enumList);
+            $enumValues = explode("','", $enumList);
+            
+            return $enumValues;
+        }
+
         public static function Delete($table_name, $primary_key){
             // $id = "id_" . $table_name;
             if($table_name === self::PROGRAMA){
+                self::Delete(self::HORARIO, $primary_key);
                 self::Delete(self::PROGRAMA_PRESENTADOR, $primary_key);
                 self::Delete(self::PROGRAMA_GENERO, $primary_key);
-            }
-            $id_name = self::GetPrimaryKeyName($table_name);
+                // Borrar imagen
+                $image_path = self::Select(self::PROGRAMA, self::GetPrimaryKeyName(self::PROGRAMA), $primary_key, ["url_imagen"])->fetchColumn();
+                if(file_exists($image_path)) unlink($image_path);
+            } 
+            $id_name = self::GetPrimaryKeyName(($table_name === self::HORARIO ? SQL::PROGRAMA : $table_name));
             $sql = "DELETE FROM $table_name WHERE $id_name = '$primary_key'";
             echo $sql . "<br>";
             self::$stmt = self::$conn->prepare($sql);
             self::$conn->exec($sql);
             
-            if(self::PROGRAMA_PRESENTADOR)
+            // if(self::PROGRAMA_PRESENTADOR)
             $next_id = self::GetCurrentIdIndex($table_name, $id_name) + 1;
             $sql = "ALTER TABLE $table_name AUTO_INCREMENT = $next_id";
             $stmt = self::$conn->exec($sql);
