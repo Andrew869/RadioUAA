@@ -67,7 +67,7 @@
             <div id="times_container">
                 <div class="times">
                     <div class="days_container">
-                        <ul class="days_list" class="0">
+                        <ul class="days_list">
                             <?php 
                                 foreach (SQL::GetEnumValues(SQL::HORARIO, "dia_semana") as $dia) {
                                     echo '<li dia_semana="' . $dia . '">' . $dia . '</li>';
@@ -82,7 +82,8 @@
                     <input type="time" name="horarios[0][hora_fin]" field_name="hora_fin">
                     <label for="">Es retrasmision</label>
                     <input type="checkbox" name="horarios[0][es_retransmision]" field_name="es_retransmision" value="1" class="chk">
-                    <input type="checkbox" name="horarios[0][es_retransmision]" field_name="es_retransmision" value="0" class="chk" checked>
+                    <input type="checkbox" name="horarios[0][es_retransmision]" field_name="es_retransmision" value="0" class="chk" checked hidden>
+                    <div class="txtHint"></div>
                 </div>
             </div>
             <a id="button_addNew">añadir nuevo horario</a>
@@ -98,7 +99,7 @@
                     <h3>Presentadores disponibles</h3>
                     <ul id="presentadoresAvailable" class="presentadores">
                         <?php
-                            $presentadores = SQL::Select(SQL::PRESENTADOR, SQL::ALL, SQL::ALL, ["id_presentador", "nombre_presentador"])->fetchAll(PDO::FETCH_ASSOC);
+                            $presentadores = SQL::Select(SQL::PRESENTADOR, [], ["id_presentador", "nombre_presentador"])->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($presentadores as $presentador) {
                                 echo '<li id_presentador="' . $presentador["id_presentador"] . '">' . $presentador["nombre_presentador"] . '</li>';
                             }
@@ -120,7 +121,7 @@
                     <h3>Generos disponibles</h3>
                     <ul id="generosAvailable" class="generos">
                         <?php
-                            $generos = SQL::Select(SQL::GENERO, SQL::ALL, SQL::ALL, ["id_genero", "nombre_genero"])->fetchAll(PDO::FETCH_ASSOC);
+                            $generos = SQL::Select(SQL::GENERO, [], ["id_genero", "nombre_genero"])->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($generos as $genero) {
                                 echo '<li id_genero="' . $genero["id_genero"] . '">' . $genero["nombre_genero"] . '</li>';
                             }

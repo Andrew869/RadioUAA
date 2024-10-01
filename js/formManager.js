@@ -13,13 +13,16 @@ const generosSelectedInput = document.getElementById('generosSelectedInput');
 
 let times_container = document.getElementById('times_container');
 
+const bloqueOriginal = times_container.querySelector('.times');
 const days_list = document.getElementsByClassName('days_list');
 const items = days_list[0].getElementsByTagName('li');
 
 const chks = document.getElementsByClassName('chk');
 
 let index_list = 0;
-let name_submit = 'horarios[x]'
+let name_submit = 'horarios[x]';
+
+let txtHint = null;
 
 // Cambiar apariencia del área de arrastre cuando el archivo está sobre ella
 dropZone.addEventListener('dragover', (e) => {
@@ -110,13 +113,13 @@ function GetSelectedOptions() {
 }
 
 document.getElementById('button_addNew').addEventListener('click', function() {
-    // Obtener el elemento a clonar
-    let bloqueOriginal = times_container.querySelector('.times');
-    
     // Clonar el bloque (con sus hijos)
     let bloqueClonado = bloqueOriginal.cloneNode(true);
     let inputs = bloqueClonado.querySelectorAll('input');
     let checkboxes = bloqueClonado.querySelectorAll('.chk');
+
+    bloqueClonado.addEventListener('click', ChechTimes);
+    bloqueClonado.addEventListener('keyup', ChechTimes);
 
     // Reiniciando valores en la replica
     inputs.forEach(element => {
@@ -155,7 +158,36 @@ document.getElementById('button_addNew').addEventListener('click', function() {
     times_container.appendChild(bloqueClonado);
 });
 
-// Obtener la lista y el botón
+function ChechTimes(e) {
+    selected = [];
+    txtHint = e.currentTarget.querySelector(".txtHint");
+    e.currentTarget.querySelectorAll('.selected').forEach(function(item) {
+        selected.push(item.textContent);
+    });
+
+    // let times = e.currentTarget.querySelectorAll('[type="time"]').forEach(element => {
+    //     console.log(element.value);
+    // });
+
+    let times = e.currentTarget.querySelectorAll('[type="time"]')
+
+
+    // console.log(e.currentTarget.tagName);
+
+    if (!selected.length || times[0].value === "" || times[1].value === "") {
+        txtHint.innerHTML = "Completa todos los campos del horario";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                txtHint.innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET","horarios.php?dias=" + selected.join(',') + "&hora_inicio=" + times[0].value + "&hora_fin=" + times[1].value ,true);
+        xmlhttp.send();
+    }
+  }
 
 
 // Añadir un evento de clic a cada elemento de la lista
@@ -170,14 +202,8 @@ chks[0].addEventListener('click', function(){
     chks[1].checked = !this.checked;
 });
 
-// Evento para mostrar los elementos seleccionados
-// document.getElementById('mostrarSeleccion').addEventListener('click', function() {
-//     const seleccionados = document.querySelectorAll('#lista .selected');
-//     let seleccion = [];
-    
-//     seleccionados.forEach(function(item) {
-//         seleccion.push(item.textContent);
-//     });
-    
-//     alert("Has seleccionado: " + seleccion.join(", "));
-// });
+// days_list[0].addEventListener('click', ChechTimes);
+
+bloqueOriginal.addEventListener('click', ChechTimes);
+bloqueOriginal.addEventListener('keyup', ChechTimes);
+  

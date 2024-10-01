@@ -59,7 +59,7 @@
             return $field_names;
         }
 
-        public static function Select($table_name, $key_name = self::ALL, $key = self::ALL, $fields = [], $order_by = self::NONE, $order_type = self::ASCENDANT){
+        public static function Select($table_name, $wheres = [], $fields = [], $order_by = self::NONE, $order_type = self::ASCENDANT){
             $length = count($fields);
             $tmp = ($length > 0 ? ' ' : " * ");
             for ($i = 0; $i < $length; $i++) { 
@@ -69,7 +69,17 @@
                     $tmp .= $fields[$i] . ' ';
             }
             // $id = "id_" . $table_name;
-            $where = ($key_name === self::ALL) ? "" : " WHERE $key_name = '$key'";
+            // $where = (count($keys)) ? " WHERE $key_name = '$key' " : "";
+            $where = "";
+            if(count($wheres)){
+                $where = " WHERE";
+                foreach ($wheres as $key => $value) {
+                    $where .= " $key = '$value'";
+                    if(array_key_last($wheres) !== $key){
+                        $where .= " AND";
+                    }
+                }
+            }
             $order = ($order_by === self::NONE) ? "" : " ORDER BY $order_by $order_type";
             $sql = 'SELECT' . $tmp . 'FROM ' . $table_name . $where . $order;
             // echo $sql . "<br>";
