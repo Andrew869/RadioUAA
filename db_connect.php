@@ -175,6 +175,7 @@
         }
 
         public static function Delete($table_name, $primary_key){
+            exit();
             // $id = "id_" . $table_name;
             if($table_name === self::PROGRAMA){
                 self::Delete(self::HORARIO, $primary_key);

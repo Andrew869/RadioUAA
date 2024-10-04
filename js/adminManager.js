@@ -176,7 +176,7 @@ function deleteRecord(primary_key) {
     });
 }
 
-//setInterval(checkActiveSession, 5000); // Verificar cada 5 segundos
+setInterval(checkActiveSession, 5000); // Verificar cada 5 segundos
 
 function checkActiveSession() {
     fetch('check_session.php')
