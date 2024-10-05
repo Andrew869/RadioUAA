@@ -1,0 +1,150 @@
+*{
+    padding: 0;
+    margin:0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+body{
+    /* background-image: url("../img/IMG_0716.jpg"); */
+    /* background-size: cover; */
+    /* background-position: bottom; */
+    /* background-repeat: no-repeat; */
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+
+h2{
+    color: #1D2A35;
+    margin-bottom: 14px;
+    font-size: 24px;
+    height: 28px;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    /* width: 270px; */
+}
+
+.login{
+    /* background-color: rgba(255, 255, 255, 0.25); */
+    /* backdrop-filter: blur(8px); */
+    border-radius: 10px;
+    padding: 50px;
+    width: 370px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.329);
+    /* border-top: 1px solid rgba(255, 255, 255, 0.25); */
+    /* border-bottom: 1px solid rgba(255, 255, 255, 0.25); */
+}
+
+@media (max-width: 400px){
+    .login{
+        width: initial;
+    }
+}
+
+.input_box{
+    margin: 10px 0;
+    height: 40px;
+}
+
+.input_box input{
+    width: 100%;
+    height: 100%;
+    padding-left: 10px;
+    border-radius: 3px;
+    background-color: rgba(230, 230, 230, 0.2);
+    border: none;
+    border-bottom: 2px solid rgba(199, 199, 199, 0.315);
+    outline: none;
+}
+
+.input_box:has([type="checkbox"]){
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+
+.input_box input[type="password"]{
+    /* display: grid;
+    grid-template-columns: auto auto; */
+    /* flex-direction: row; */
+    /* width: 220px; */
+}
+.input_box input[type="checkbox"]{
+    display: none;
+}
+
+.input_box #label_toggle{
+    /* display: block; */
+    width: 50px;
+    height: 40px;
+    color: #1D2A35;
+    font-size: 16px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.input_box #label_toggle svg{
+    width: 50%;
+    height: 50%;
+    fill: #04AA6D;
+}
+/* .input_box #label_toggle svg:hover{
+    width: 60%;
+    height: 60%;
+} */
+
+
+.input_box:has([type="submit"]){
+    height: 50px;
+}
+
+.input_box [type="submit"]{
+    background-color: #1D2A35;
+    color: white;
+    padding: 0;
+    cursor: pointer;
+    transition: color 2s ease;
+}
+
+.input_box [type="submit"]:hover{
+    color: #04AA6D;
+}
+
+.output_err{
+    text-align: right;
+    height: 14px;
+    font-size: 12px;
+    color: rgb(255, 0, 55);
+    color: #1D2A35;
+    text-decoration: underline;
+}
+
+.forget_link{
+    height: 18px;
+    font-size: 12px;
+    text-align: right;
+}
+
+.forget_link a{
+    text-decoration: none;
+    color: #1D2A35;
+    font-weight: bold;
+}
+
+.forget_link a:hover{
+    text-decoration: underline;
+}
