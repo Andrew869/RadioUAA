@@ -27,6 +27,12 @@
         const PROGRAMA_PRESENTADOR = "programa_presentador";
         const PROGRAMA_GENERO = "programa_genero";
 
+        const TEXT = "text";
+        const PASSWORD = "password";
+        const IMAGE = "image";
+        const DATE = "date";
+        const TIME = "time";
+        const BOOLEAN = "boolean";
 
         function __construct($asf){
             echo "hello world $asf" . "<br>";

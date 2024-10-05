@@ -27,6 +27,12 @@
         echo "404: pagina no encontrada";
     }
 
+    // ShowField($key, $value, $presentador, 'nombre_presentador', SQL::TEXT);
+
+    function ShowField($table_name, $primary_key, $current_content, $key, $type) : void{
+        echo "$current_content[$key] <button class='updateBtn' onclick=\"showUpdateForm('$table_name', '$primary_key', '$key', '" . addslashes($current_content[$key]) . "', '$type')\">Editar</button><br>";
+    }
+
     class TableRows extends RecursiveIteratorIterator {
         const TEXT = 0;
         const PASSWORD = 1;
@@ -186,9 +192,13 @@
                             Display404();
                             break;
                         }
-                        echo $presentador['nombre_presentador'] . "<button id='UpdateBtn' class='modalBtn'>Editar</button><br>";
-                        echo $presentador['biografia'] . "<br>";
-                        echo '<img src="'.$presentador['url_foto'].'" style="display: block;" alt="imagen_programa" width="50" height="50">';
+                        ShowField($key, $value, $presentador, 'nombre_presentador', SQL::TEXT);
+                        ShowField($key, $value, $presentador, 'biografia', SQL::TEXT);
+                        ShowField($key, $value, $presentador, 'url_foto', SQL::IMAGE);
+                        
+                        
+                        // echo $presentador['biografia'] . "<button class='updateBtn'>Editar</button><br>";
+                        // echo '<img src="'.$presentador['url_foto'].'" style="display: block;" alt="imagen_programa" width="50" height="50">' . "<button class='updateBtn'>Editar</button>";
                         break;
                     case SQL::GENERO:
                         $genero = SQL::Select(SQL::GENERO, ['id_genero' => $value])->fetch(PDO::FETCH_ASSOC);
@@ -217,6 +227,30 @@
                 }
             }
             ?>
+            <div id="updateModal" class="modal">
+                <span class="close">&times;</span>
+                <div class="modal-content">
+                    <div class="container">
+                        <div id="text" class="inputs">
+                            <label for="">text</label>
+                            <input type="text" name="" id="">
+                        </div>
+                        <div id="password" class="inputs">
+                            <label for="">password</label>
+                            <input type="text" name="" id="">
+                        </div>
+                        <div id="image" class="inputs">
+                            <label for="">image</label>
+                            <input type="text" name="" id="">
+                        </div>
+                        <div class="clearfix">
+                            <button type="button" id="cancelBtn" class="modalBtn">Cancel</button>
+                            <button type="button" id="confirmBtn" class="modalBtn" <?php echo "content='$content' pk='$pk'" ?>>Actualizar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <button id='deleteBtn' class="modalBtn">Eliminar</button>
             <div id="deleteModal" class="modal">
                 <!-- <span onclick="document.getElementById('deleteModal').style.display='none'" class="close" title="Close Modal">&times;</span> -->
