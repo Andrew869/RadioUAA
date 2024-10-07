@@ -184,11 +184,11 @@ function checkActiveSession() {
         .then(data => {
             if (!data.sesion_valida) {
                 if(!data.token_expired){
-                    // alert('Tu sesión ha sido cerrada desde otro dispositivo.');
+                    alert('Tu sesión ha sido cerrada desde otro dispositivo.');
                     window.location.href = 'admin_panel.php';
                 }
                 else{
-                    // alert('Tu sesión ha caducado.');
+                    alert('Tu sesión ha caducado.');
                     window.location.href = 'admin_logout.php';
                 }
             }

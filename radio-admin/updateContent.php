@@ -57,7 +57,20 @@
 
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $length = count($_POST);
-        if($length === 4) // types: text, password, enumList y boolean
+        if($length === 5){ //types: schedules
+            $id = $_POST['id'];
+            $newDays = explode(',', $_POST['days']);
+            $inicios = explode(',', $_POST['inicio']);
+            $fins = explode(',', $_POST['fin']);
+            $retra = strtoupper($_POST['retra']);
+            
+            
+            SQL::Delete(SQL::HORARIO, ['id_programa' => $_POST['id'], 'hora_inicio' => $inicios[0], 'hora_fin' => $fins[0]]);
+            foreach ($newDays as $day) {
+                SQL::Create(SQL::HORARIO, [$id, $day, $inicios[1], $fins[1], $retra]);
+            }
+        }
+        else if($length === 4) // types: text, password, enumList y boolean
             SQL::Update($_POST[0],$_POST[1],[$_POST[2] => $_POST[3]]);
         else if($length === 3){ // types: list y img
             if(count($_FILES)){

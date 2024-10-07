@@ -96,38 +96,89 @@
             return self::$stmt;
         }
 
+        public static function GetFieldType($table_name, $field){
+            // $sql = "SELECT COLUMN_NAME, DATA_TYPE FROM information_schema.COLUMNS WHERE TABLE_NAME = '$table_name' AND COLUMN_NAME = '$field'";
+            $sql = "SELECT DATA_TYPE FROM information_schema.COLUMNS WHERE TABLE_NAME = '$table_name' AND COLUMN_NAME = '$field'";
+            self::$stmt = self::$conn->query($sql);
+            return self::$stmt->fetchColumn();
+        }
+
         public static function Create($table_name, $record) : int{
+
+            $fields = self::GetFields($table_name);
+            if($table_name !== SQL::PROGRAMA_PRESENTADOR && $table_name !== SQL::PROGRAMA_GENERO){
+                array_shift($fields);
+            }
+
             $length = count($record);
             
-            foreach ($record as $key => $value) {
-                $record[$key] = '\'' . $value . '\'';
+            for ($i = 0; $i < $length; $i++) { 
+                switch (self::GetFieldType($table_name, $fields[$i])) {
+                    case 'varchar':
+                    case 'char':
+                    case 'text':
+                    case 'date':
+                    case 'time':
+                    case 'datetime':
+                    case 'timestamp':
+                    case 'enum':
+                    case 'json':
+                    case 'uuid':
+                        $record[$i] = '\'' . $record[$i] . '\'';
+                        break;
+                }
             }
             
-            $sql = "INSERT INTO ";
-            switch ($table_name) {
-                case self::GENERO:
-                    $sql .= self::GENERO . " (nombre_genero)";
-                    break;
-                case self::HORARIO:
-                    $sql .= self::HORARIO . " (id_programa, dia_semana, hora_inicio, hora_fin, es_retransmision)";
-                    break;
-                case self::PRESENTADOR:
-                    $sql .= self::PRESENTADOR . " (nombre_presentador, biografia, url_foto)";
-                    break;
-                case self::PROGRAMA:
-                    $sql .= self::PROGRAMA . " (nombre_programa, url_imagen, descripcion)";
-                    break;
-                case self::USER:
-                    $sql .= self::USER . " (username, email, password_hash, nombre_completo, rol, cuenta_activa)";
-                    $record[2] = 'SHA2(' . $record[2] . ', 256)';
-                    break;
-                case self::PROGRAMA_PRESENTADOR:
-                    $sql .= self::PROGRAMA_PRESENTADOR . " (id_programa, id_presentador)";
-                    break;
-                case self::PROGRAMA_GENERO:
-                    $sql .= self::PROGRAMA_GENERO . " (id_programa, id_genero)";
-                    break;
+            // foreach ($record as $key => $value) {
+            //     switch (self::GetFieldType($table_name, $value)) {
+            //         case 'varchar':
+            //         case 'char':
+            //         case 'text':
+            //         case 'date':
+            //         case 'time':
+            //         case 'datetime':
+            //         case 'timestamp':
+            //         case 'json':
+            //         case 'uuid':
+            //             $record[$key] = '\'' . $value . '\'';
+            //             break;
+            //     }
+            // }
+            
+            $sql = "INSERT INTO $table_name ";
+            $str_fields = '(';
+            for ($i = 0; $i < $length; $i++) { 
+                if($i < $length-1)
+                    $str_fields .= $fields[$i] . ', ';
+                else 
+                    $str_fields .= $fields[$i] . ')';
             }
+            $sql .= $str_fields;
+            
+            // switch ($table_name) {
+            //     case self::GENERO:
+            //         $sql .= self::GENERO . " (nombre_genero)";
+            //         break;
+            //     case self::HORARIO:
+            //         $sql .= self::HORARIO . " (id_programa, dia_semana, hora_inicio, hora_fin, es_retransmision)";
+            //         break;
+            //     case self::PRESENTADOR:
+            //         $sql .= self::PRESENTADOR . " (nombre_presentador, biografia, url_foto)";
+            //         break;
+            //     case self::PROGRAMA:
+            //         $sql .= self::PROGRAMA . " (nombre_programa, url_imagen, descripcion)";
+            //         break;
+            //     case self::USER:
+            //         $sql .= self::USER . " (username, email, password_hash, nombre_completo, rol, cuenta_activa)";
+            //         $record[2] = 'SHA2(' . $record[2] . ', 256)';
+            //         break;
+            //     case self::PROGRAMA_PRESENTADOR:
+            //         $sql .= self::PROGRAMA_PRESENTADOR . " (id_programa, id_presentador)";
+            //         break;
+            //     case self::PROGRAMA_GENERO:
+            //         $sql .= self::PROGRAMA_GENERO . " (id_programa, id_genero)";
+            //         break;
+            // }
             
             $sql_values = "VALUES (";
             for ($i=0; $i < $length; $i++) { 

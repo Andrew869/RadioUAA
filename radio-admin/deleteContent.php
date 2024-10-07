@@ -25,7 +25,7 @@
 
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
         foreach ($_POST as $key => $value) {
-            SQL::DELETE($key, $_POST[$key]);
+            SQL::DELETE($key, [SQL::GetPrimaryKeyName($key) => $_POST[$key]]);
         }
     }
 ?>

@@ -1,48 +1,3 @@
-let defaultTab = document.getElementById("defaultOpen");
-let rows = document.getElementsByClassName('values');
-let currentContent;
-let currentPK;
-
-for (let i = 0; i < rows.length; i++) {
-	rows[i].addEventListener('click', function () {
-		// console.log(rows[i].querySelector('.pk').textContent);
-		// console.log("Ruta (como PHP_SELF): " + window.location.pathname);
-		currentPK = rows[i].querySelector('.pk').textContent;
-		window.location.href = window.location.pathname + '?' + currentContent + '=' + currentPK;
-	});
-}
-
-function ShowContent(evt, content) {
-	// Declare all variables
-	var i, tabcontent, tablinks;
-
-	currentContent = content;
-
-	// Get all elements with class="tabcontent" and hide them
-	tabcontent = document.getElementsByClassName("tabcontent");
-	for (i = 0; i < tabcontent.length; i++) {
-		tabcontent[i].style.display = "none";
-	}
-
-	// Get all elements with class="tablinks" and remove the class "active"
-	tablinks = document.getElementsByClassName("tablinks");
-	for (i = 0; i < tablinks.length; i++) {
-		tablinks[i].className = tablinks[i].className.replace(" active", "");
-	}
-
-	// Show the current tab, and add an "active" class to the button that opened the tab
-	document.getElementById(content).style.display = "block";
-	evt.currentTarget.className += " active";
-}
-
-if(defaultTab)
-	defaultTab.click();
-
-// function DeleteContent(e, content) {
-
-// }
-
-
 // Get the modal
 let deleteModal = document.getElementById("deleteModal");
 let updateModal = document.getElementById("updateModal");
@@ -50,52 +5,52 @@ let updateModal = document.getElementById("updateModal");
 let inputs;
 let input;
 
-
 // Get the button that opens the modal
-var deleteBtn = document.getElementById("deleteBtn");
-var updateBtns = document.getElementsByClassName("updateBtn");
+let deleteBtn = document.getElementById("deleteBtn");
+let updateBtns = document.getElementsByClassName("updateBtn");
+
+// variables para el control de seleccion en dias
+let days_list = updateModal.querySelector('.days_list');
+let currentListOption, targetListOption;
+let isDragging = false;
 
 function HideModal(modal){
-    updateModal.classList.remove('show');
-    updateModal.classList.add('hide');
-
-    setTimeout(() => {
-        modal.style.display = 'none';
-    }, 500);
+    modal.style.display = 'none';
+    // setTimeout(() => {
+    // }, 500);
 }
 
-// When the user clicks the button, open the modal 
-if(deleteBtn){
-    inputs = updateModal.querySelectorAll('.inputModal');;
+inputs = updateModal.querySelectorAll('.inputModal');;
 
-	deleteBtn.onclick = function() {
-		deleteModal.style.display = "block";
 
-        let deleteX = deleteModal.querySelector('SPAN');
-        let cancelBtn = deleteModal.querySelector('#cancelBtn');
-        let confirmBtn = deleteModal.querySelector('#confirmBtn');
 
-        deleteX.onclick = function() {
-            HideModal(deleteModal);
+// LLamar al modal de eliminacion
+deleteBtn.onclick = function() {
+    deleteModal.style.display = "block";
+
+    let deleteX = deleteModal.querySelector('SPAN');
+    let cancelBtn = deleteModal.querySelector('#cancelBtn');
+    let confirmBtn = deleteModal.querySelector('#confirmBtn');
+
+    deleteX.onclick = function() {
+        HideModal(deleteModal);
+    }
+
+    cancelBtn.addEventListener('click', function(){ 
+        HideModal(deleteModal);
+    });
+
+    confirmBtn.addEventListener('click', deleteContent);
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == deleteModal) {
+            deleteModal.style.display = "none";
         }
-
-	    cancelBtn.addEventListener('click', function(){ 
-            HideModal(deleteModal);
-        });
-
-	    confirmBtn.addEventListener('click', deleteContent);
-
-        // When the user clicks anywhere outside of the modal, close it
-	    window.onclick = function(event) {
-	    	if (event.target == deleteModal) {
-	    		deleteModal.style.display = "none";
-	    	}
-	    }
-	}
-
-	
+    }
 }
 
+// Encargada de enviar la informacion al archivo php que se encarga de eliminar
 function deleteContent(e) {
 	currentContent = e.currentTarget.getAttribute('content');
 	currentPK = e.currentTarget.getAttribute('pk');
@@ -166,6 +121,27 @@ function UpdateImg(table_name, primary_key, field, file) {
     });
 }
 
+function updateSchedules(primary_key, days, inicio, fin, retra){
+    fetch("updateContent.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "id=" + encodeURIComponent(primary_key) +
+        "&days=" + encodeURIComponent(days) +
+        "&inicio=" + encodeURIComponent(inicio) +
+        "&fin=" + encodeURIComponent(fin) +
+        "&retra=" + encodeURIComponent(retra)
+    })
+    .then(response => response.text())
+    .then(data => {
+        window.location.href = window.location.href;
+    })
+    .catch(error => {
+    console.error("Error:", error);
+    });
+}
+
 function UpdateRelationships(table_name ,primary_key, table_name_list, str_selected){
     fetch("updateContent.php", {
         method: "POST",
@@ -177,12 +153,10 @@ function UpdateRelationships(table_name ,primary_key, table_name_list, str_selec
         '&' + encodeURIComponent(table_name_list) + '=' + encodeURIComponent(str_selected)
     })
     .then(response => response.text())
-        .then(data => {
-            // console.log("Respuesta del servidor:", data);
-            // Recargar la página después de enviar los datos exitosamente
-            window.location.href = window.location.href;
-        })
-        .catch(error => {
+    .then(data => {
+        window.location.href = window.location.href;
+    })
+    .catch(error => {
         console.error("Error:", error);
     });
 }
@@ -200,16 +174,21 @@ function SwapInOrden(current_opction, target_list){
     });
     if(flag)
         target_list.appendChild(current_opction);
-    current_opction.classList.add('selected');
+    // current_opction.classList.add('selected');
 }
 
 function MoveOption(e) {
     if (e.target.tagName !== 'LI') return;
     const optionList = e.target;
-    if(e.currentTarget.id === 'optionsAvailable')
+    if(e.currentTarget.id === 'optionsAvailable'){
         SwapInOrden(optionList, optionsSelected);
-    else
+        optionList.classList.add('selected');
+    }
+
+    else{
         SwapInOrden(optionList, optionsAvailable);
+        optionList.classList.remove('selected');
+    }
 }
 
 const optionsSelected = document.getElementById('optionsSelected');
@@ -238,19 +217,21 @@ function SetupModal(type){
 
     exitOptions.forEach(element => {
         element.addEventListener('click', function(){
-                HideModal(updateModal);
-                // if(type !== "list") return;
-                    DeleteLists();
+            HideModal(updateModal);
+            DeleteLists();
         });
     });
 
     window.onclick = function(event) {
 		if (event.target == deleteModal || event.target == updateModal) {
             HideModal(updateModal);
-            // if(type === "list") return;
-                DeleteLists();
+            DeleteLists();
 		}
 	}
+
+    window.addEventListener('mouseup', function(){
+        isDragging = false;
+    });
 
     inputs.forEach(element => {
         if(element.id !== type)
@@ -422,7 +403,7 @@ function ToHours(minutes) {
 
 function showUpdateSchedules(primary_key, days, inicio_fin, retra){
     let confirmBtn = SetupModal("schedules");
-    let days_list = input.querySelector('.days_list');
+    // let days_list = input.querySelector('.days_list');
     let hora_inputs = input.querySelectorAll('[type="time"]');
     let checkbox = input.querySelector('[type="checkbox"]');
 
@@ -457,6 +438,8 @@ function showUpdateSchedules(primary_key, days, inicio_fin, retra){
     })
     .catch(error => console.error("Error:", error));
 
+    isDragging = false;
+
     let minutes = inicio_fin.split(',');
     let inicio = ToHours(minutes[0]);
     let fin = ToHours(minutes[1]);
@@ -466,7 +449,41 @@ function showUpdateSchedules(primary_key, days, inicio_fin, retra){
 
     checkbox.checked = parseInt(retra, 10);
 
+    confirmBtn.addEventListener('click', function(){
+        let selected = [];
+        
+        days_list.querySelectorAll('.selected').forEach((li) => {
+            selected.push(li.textContent);
+        });
+        let str_selected = selected.join(',');
+
+        inicio += ',' + hora_inputs[0].value;
+        fin += ',' + hora_inputs[1].value;
+
+        updateSchedules(primary_key, str_selected, inicio, fin, checkbox.checked);
+    });
 }
+
+days_list.addEventListener('mousedown', function(e){
+    targetListOption = e.target;
+    if(targetListOption.tagName === 'LI'){
+        isDragging = true;
+        targetListOption.classList.toggle('selected');
+        currentListOption = targetListOption;
+    }
+});
+days_list.addEventListener('mousemove', function(e){
+    if (isDragging) {  // Solo se ejecuta si el ratón está presionado
+        targetListOption = e.target;
+        if(targetListOption.tagName === 'LI' && currentListOption != targetListOption){
+            currentListOption = targetListOption;
+            targetListOption.classList.toggle('selected');
+        }
+    }
+});
+days_list.addEventListener('mouseup', function(){
+    isDragging = false;
+});
 
 function ShowUpdateList(primary_key, table_name, selected, available){
     let confirmBtn = SetupModal("list");
@@ -528,7 +545,7 @@ function ShowUpdateList(primary_key, table_name, selected, available){
             selected.push(li.getAttribute('id'));
             // table_name_list = li.getAttribute('name_t');
         });
-        str_selected = selected.join(',');
+        let str_selected = selected.join(',');
         UpdateRelationships(table_name ,primary_key, table_name_list, str_selected);
     });
 }

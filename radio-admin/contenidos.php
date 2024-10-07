@@ -422,7 +422,7 @@
 
             <?php
 
-            
+            echo '<script src="../js/contentManager.js"></script>';
         }
         if($flag){
     ?>
@@ -475,12 +475,12 @@
             }
         ?>
         </div>
+        <script src="../js/tabsManager.js"></script>
         <?php
         }
         ?>
 
     </main>
-    <script src="../js/contentManager.js"></script>
 </body>
 
 </html>
