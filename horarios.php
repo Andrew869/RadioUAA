@@ -5,12 +5,6 @@ include "db_connect.php";
 // $hora_inicio = $_GET['hora_inicio'];
 // $hora_fin = $_GET['hora_fin'];
 
-function ToMinutes($time) {
-    // Convierte el formato HH:MM en minutos totales desde la medianoche
-    list($hours, $minutes) = explode(':', $time);
-    return ($hours * 60) + $minutes;
-}
-
 function Intersect($hi_1,$hf_1,$hi_2,$hf_2) : bool{
     $hi_1 = ToMinutes($hi_1);
     $hf_1 = ToMinutes($hf_1);

@@ -103,8 +103,8 @@ td.pk {
 /* Float cancel and delete buttons and add an equal width */
 #cancelBtn,
 #confirmBtn {
-    float: left;
-    width: 50%;
+    /* float: left;
+    width: 50%; */
 }
 
 /* Add a color to the cancel button */
@@ -198,12 +198,18 @@ hr {
     cursor: pointer;
 }
 
+.clearfix{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
 /* Clear floats */
-.clearfix::after {
+/* .clearfix::after {
     content: "";
     clear: both;
     display: table;
-}
+} */
 
 /* Change styles for cancel button and delete button on extra small screens */
 @media screen and (max-width: 300px) {
@@ -211,4 +217,59 @@ hr {
     .deletebtn {
         width: 100%;
     }
+}
+
+.modal .inputs{
+    display: none;
+}
+
+div#list>div{
+    float: left;
+    width: 50%;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    /* width: 200px; */
+}
+li {
+    margin: 2px 0;
+    /* padding: 10px; */
+    background-color: #f1f1f1;
+    cursor: pointer;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
+.days_container {
+    /* width: 100px; */
+    /* height: 80px; */
+    /* border: 1px solid black; */
+    /* overflow: auto; */
+    /* display: inline-block; */
+    user-select: none;
+}
+
+.selected {
+    background-color: lightblue;
+    color: white;
+}
+
+.drop-zone {
+    /* width: 100%; */
+    /* max-width: 400px; */
+    height: 200px;
+    padding: 20px;
+    border: 2px dashed #007bff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.drop-zone.dragover {
+    background-color: #e9ecef;
 }

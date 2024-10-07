@@ -33,6 +33,8 @@
         const DATE = "date";
         const TIME = "time";
         const BOOLEAN = "boolean";
+        const ENUM = "enum";
+        const LIST = "list";
 
         function __construct($asf){
             echo "hello world $asf" . "<br>";
@@ -180,20 +182,31 @@
             return $enumValues;
         }
 
-        public static function Delete($table_name, $primary_key){
-            exit();
+        public static function Delete($table_name, $wheres = []){
             // $id = "id_" . $table_name;
             if($table_name === self::PROGRAMA){
-                self::Delete(self::HORARIO, $primary_key);
-                self::Delete(self::PROGRAMA_PRESENTADOR, $primary_key);
-                self::Delete(self::PROGRAMA_GENERO, $primary_key);
+                self::Delete(self::HORARIO, $wheres);
+                self::Delete(self::PROGRAMA_PRESENTADOR, $wheres);
+                self::Delete(self::PROGRAMA_GENERO, $wheres);
                 // Borrar imagen
-                $image_path = self::Select(self::PROGRAMA, self::GetPrimaryKeyName(self::PROGRAMA), $primary_key, ["url_imagen"])->fetchColumn();
-                if(file_exists($image_path)) unlink($image_path);
-            } 
+                // $image_path = self::Select(self::PROGRAMA, self::GetPrimaryKeyName(self::PROGRAMA), $primary_key, ["url_imagen"])->fetchColumn();
+                // if(file_exists($image_path)) unlink($image_path);
+            }
+            $where = "";
+            if(count($wheres)){
+                $where = " WHERE";
+                foreach ($wheres as $key => $value) {
+                    $where .= " $key = '$value'";
+                    if(array_key_last($wheres) !== $key){
+                        $where .= " AND";
+                    }
+                }
+            }
+
             $id_name = self::GetPrimaryKeyName(($table_name === self::HORARIO ? SQL::PROGRAMA : $table_name));
-            $sql = "DELETE FROM $table_name WHERE $id_name = '$primary_key'";
-            echo $sql . "<br>";
+            // $sql = "DELETE FROM $table_name WHERE $id_name = '$primary_key'";
+            $sql = "DELETE FROM $table_name" . $where;
+            // return;
             self::$stmt = self::$conn->prepare($sql);
             self::$conn->exec($sql);
             
@@ -203,13 +216,13 @@
             $stmt = self::$conn->exec($sql);
         }
     }
-    // $clase = new SQL("asd");
+    
     SQL::Connect();
-    // SQL::Update(SQL::GENERO, "1", "password_hash", "Admin123");
-    // $asd = SQL::Select("user","1")->fetch(PDO::FETCH_ASSOC);
-    // foreach ($asd as $key => $value) {
-    //     echo "$key -> $value" . "<br>";
-    // }
-    // $clase = null;
-    // SQL::Create(SQL::GENERO, ["nom" => "Kids", "asd"=>"asd"])
+
+    function ToMinutes($time) {
+        // Convierte el formato HH:MM en minutos totales desde la medianoche
+        list($hours, $minutes) = explode(':', $time);
+        return ($hours * 60) + $minutes;
+    }
+
 ?>

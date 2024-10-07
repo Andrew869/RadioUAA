@@ -4,7 +4,7 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
-        if(isset($_FILES)){
+        if(isset($_FILES)){ // una variable superglobal siempre esta declarada y diferente a null
             $next_id = SQL::GetCurrentIdIndex(SQL::PROGRAMA, SQL::GetPrimaryKeyName(SQL::PROGRAMA)) + 1;
             $target_dir = "resources/uploads/img/";
             $imageFileType = strtolower(pathinfo(basename($_FILES["fileToUpload"]["name"]),PATHINFO_EXTENSION));
@@ -14,8 +14,8 @@
             if (!file_exists($target_file)) { // Check if file already exists
                 if ($_FILES["fileToUpload"]["size"] <= 500000) { // Check file size
                     if($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "jpeg" || $imageFileType == "gif" ) { // Allow certain file formats
-                        $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-                        if($check !== false) { // Check if image file is a actual image or fake image
+                        $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]); // Check if image file is a actual image or fake image
+                        if($check !== false) { 
                             if (!move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
                                 // echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
                                 $target_file = "resources/img/programa_default.jpg";
