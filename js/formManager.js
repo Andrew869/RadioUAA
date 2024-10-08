@@ -118,8 +118,8 @@ document.getElementById('button_addNew').addEventListener('click', function() {
     let inputs = bloqueClonado.querySelectorAll('input');
     let checkboxes = bloqueClonado.querySelectorAll('.chk');
 
-    bloqueClonado.addEventListener('click', ChechTimes);
-    bloqueClonado.addEventListener('keyup', ChechTimes);
+    bloqueClonado.addEventListener('click', CheckTimes);
+    bloqueClonado.addEventListener('keyup', CheckTimes);
 
     // Reiniciando valores en la replica
     inputs.forEach(element => {
@@ -158,7 +158,7 @@ document.getElementById('button_addNew').addEventListener('click', function() {
     times_container.appendChild(bloqueClonado);
 });
 
-function ChechTimes(e) {
+function CheckTimes(e) {
     selected = [];
     txtHint = e.currentTarget.querySelector(".txtHint");
     e.currentTarget.querySelectorAll('.selected').forEach(function(item) {
@@ -204,6 +204,6 @@ chks[0].addEventListener('click', function(){
 
 // days_list[0].addEventListener('click', ChechTimes);
 
-bloqueOriginal.addEventListener('click', ChechTimes);
-bloqueOriginal.addEventListener('keyup', ChechTimes);
+bloqueOriginal.addEventListener('click', CheckTimes);
+bloqueOriginal.addEventListener('keyup', CheckTimes);
   

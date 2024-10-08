@@ -1,4 +1,4 @@
-<?php
+<?php 
     session_start();
     date_default_timezone_set("America/Mexico_City");
 
@@ -24,8 +24,14 @@
     }
 
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
-        foreach ($_POST as $key => $value) {
-            SQL::DELETE($key, [SQL::GetPrimaryKeyName($key) => $_POST[$key]]);
+        $fun = array_key_first($_POST);
+        $args = explode(',', $_POST[$fun]);
+        switch ($fun) {
+            case 'GetEnumValues':
+                $output = SQL::GetEnumValues($args[0], $args[1]);
+                echo json_encode($output);
+                break;
         }
+
     }
 ?>
