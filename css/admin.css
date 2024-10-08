@@ -1,0 +1,257 @@
+
+html{
+    background-color: #F0EDE5;
+}
+
+.nav_admin{
+    background-color:#F0EDE5;
+    margin-right: 2rem;
+    margin-left: 2rem;
+    position: relative;
+    display: flex;
+    justify-content: right;
+    font-size: 1.4rem;
+    text-align: left;
+    padding-top: .5rem;
+    align-items: center;
+    padding-bottom: 1.5rem;
+
+    
+
+}
+.nav_admin a{
+    color:#1d2a35 ;
+}
+.nav_admin_item{
+    text-decoration: none;
+    margin: 1rem;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    justify-content: space-between;
+    border-radius:.5rem ;
+    padding: 0 .5rem;
+    position: relative;
+
+    transition: transform 0.3s ease;
+}
+
+.nav_admin_item:hover{
+    background-color:#04aa6d ;
+    
+    transform: rotate(7deg) scale(1.2); 
+}
+.nav_icono{
+    position: relative;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+}
+h1{
+    color: #c33d4b;
+    font-size: 3rem;
+    transition: color 0.4s ease;
+}
+h2{
+    color: #04aa6d;
+    font-size: 1.6rem;
+    transition: color 0.4s ease;
+}
+h2:hover{
+    color: #FF5733;
+}
+
+.main{
+    margin: 2rem;
+    text-align: center;
+    width: 100%;
+}
+.ultimos_anadidos{
+    margin-left: 13rem;
+    width: 70%;
+    height: auto;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 1rem;
+    transition: background-color 0.5s ease;
+    transition: box-shadow 0.3s ease;
+
+}
+.ultimos_anadidos:hover{
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+
+}
+.contenidos{
+    height: auto;
+    width: 100%;
+    display: flex;
+
+}
+.programas{
+    margin-right: 3rem;
+    margin-left: 3rem;
+    height:auto ;
+    padding-left:2rem ;
+    padding-right: 2rem;
+}
+.presentadores{
+    margin-right: 3rem;
+    margin-left: 3rem;
+    height:auto ;
+    padding-left:2rem ;
+    padding-right: 2rem;
+}
+.genero{
+    margin-right: 3rem;
+    margin-left: 3rem;
+    height:auto ;
+    padding-left:2rem ;
+    padding-right: 2rem;
+}
+.comentarios{
+    margin-top: 5rem;
+}
+.comentarios-con{
+    margin-top: 3rem;
+    height: auto;
+    width: 70%;
+    margin-left: 13rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.comentarios-con:hover {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.main {
+    animation: fadeIn 1s ease forwards;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+}
+
+
+td,th{
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+
+}
+th{
+    background-color: #603313;
+    color: #fff;
+}
+tr:hover{
+    background-color: #f1f1f1;
+}
+td.pk{
+    font-weight: bold;
+}
+tr.values:nth-child(even){
+    background-color: #f9f9f9;
+}
+button.updateBtn {
+    background-color: #008CBA;
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    cursor: pointer;
+}
+.modalBtn{
+    width: 60%;
+    border-radius: 2rem;
+    color:white;
+    background-color: #c33d4b;
+}
+.modalBtn:hover{
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    
+}
+.modal-content{
+    text-align: center;
+
+}
+.submenu{
+    display:none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    position: absolute;
+    z-index: 1;
+    background-color: #fff;
+    list-style: none;
+    padding: 10px;
+    min-width: 150px;
+    top: 100%;
+    margin-top: 0px;
+    padding-top:0 ;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    pointer-events:auto;
+}
+.submenu:hover{
+    display: block;
+    opacity: 1;
+}
+
+.submenu_opener{
+    float: right;
+    margin-left: 5px;
+    transition: transform 0.3s ease-in-out;
+}
+.nav_admin_item:hover .submenu_opener{
+    transform: rotate(180deg);
+}
+.nav_admin_item_wrapper{
+    position: relative;
+    padding: 0;
+    margin: 0;
+    
+
+}
+
+.nav_admin_item_wrapper:hover .submenu {
+    display: block; 
+    opacity: 1; 
+}
+.submenu li a{
+    text-decoration: none;
+    
+}
+.submenu li a:hover{
+    background-color: #04aa6d;
+    
+}
+.nav_admin_item_wrapper-usuario{
+    position: relative;
+    
+
+    
+
+}
+
+.nav_admin_item_wrapper-usuario:hover .submenu {
+    display: block;
+    opacity: 1;
+    position: absolute;
+    right: 0; 
+    top: 100%; 
+    min-width: 150px; 
+}
