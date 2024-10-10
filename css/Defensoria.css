@@ -1,0 +1,449 @@
+:root {
+    --Blanco: #fff;
+    --AzulCLaro: #3498db;
+    --VerdeClaro: #2ecc71;
+    --Rojo: #e74c3c;
+    --GrisClaro: #dfe9f3;
+    --obscuro: #333;
+    --AzulGris: #2c3e50;
+    --seagreen: #2E8B57;
+    --VerdeObscuro: #006400;
+    --verdeaqua: #66CDAA;
+    --Azulligero: #ADD8E6;
+    --verdemasclaro: #4bb578;
+    --Amarillo: #FFD700;
+}
+
+html {
+    height: 100%;
+}
+*,*:before,*:after{
+    box-sizing: inherit;
+}
+
+body {
+    background-size: cover;
+    background: radial-gradient(circle, #E0FFFF 0%, #ADD8E6 25%, #F0F8FF 70%);
+    font-family: Arial, Helvetica, sans-serif;
+    /* transition: all 2s ease; */
+    margin: 0;
+    padding: 0;
+}
+
+@keyframes colorChange {
+    0% {
+        color: var(--Rojo);
+    }
+    33% {
+        color: var(--VerdeClaro);
+    }
+    66% {
+        color: var(--AzulCLaro);
+    }
+    100% {
+        color: var(--Rojo);
+    }
+}
+
+h1 {
+    animation: colorChange 5s infinite;
+    text-align: center;
+}
+
+h2, p {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+h2 {
+    font-size: 35px;
+    margin-bottom: 0;
+}
+
+h3, p {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+h3 {
+    text-align: justify;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+p {
+    margin-top: 0;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+/* Botones de redes sociales inicio */
+.social-buttons {
+    position: fixed;
+    bottom: 20%;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.social-button {
+    text-decoration: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--Blanco);
+    font-size: 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.social-button i {
+    font-size: 25px;
+}
+
+.whatsapp {
+    background: linear-gradient(145deg, #25D366, #128C7E); /* Verde de WhatsApp */
+}
+
+.instagram {
+    background: linear-gradient(145deg, #F58529, #DD2A7B, #8134B8); /* Colores de Instagram */
+}
+
+.facebook {
+    background: linear-gradient(145deg, #4267B2, #3B5998); /* Azul de Facebook */
+}
+
+.spotify {
+    background: linear-gradient(145deg, #1DB954, #1ED760); /* Verde de Spotify */
+}
+
+.social-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    background-color: var(--Amarillo);
+}
+/* Botones de redes sociales fin */
+
+/* uaa inicio */
+.container-uaa {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.container-uaa a {
+    text-decoration: none;
+}
+
+.container-uaa img {
+    border-radius: 6px;
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    padding: 20px;
+}
+
+.container-uaa img .dark {
+    background-color: var(--GrisClaro);
+} 
+
+.container-uaa img:hover {
+    transform: scale(1.2);
+}
+/* uaa fin */
+
+footer {
+    background-color: var(--VerdeClaro);
+    text-align: center;
+    font-weight: bold;
+    padding-left: 15%;
+}
+
+html body footer p {
+    margin: 0;
+    padding: 5px 0;
+}
+/*nuevo*/
+.defensoria-fondo{
+    background-image: url(../imgs/defaudi.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 450px;
+    position: relative;
+    z-index: -1;
+}
+
+.contenido-defensoria-fondo{
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0 0 0 / 0.3);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.contenido-defensoria-fondo h2,
+.contenido-defensoria-fondo p{
+    animation: colorChange 5s infinite;
+}
+
+.new-boton{
+    background-color: var(--seagreen);
+    color: var(--blanco);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    display: inline-block;
+    margin: 0;
+    margin-top: 0.5rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: .5rem;
+    text-align: center;
+    border: none;
+    margin-left: 10%;
+}
+.new-boton:hover{
+    cursor: pointer;
+    color: var(--Blanco);
+}
+@media (prefers-color-scheme: dark) {
+    .new-boton:hover {
+        color: var(--obscuro); 
+    }
+}
+.new-boton p{
+    color: var(--Blanco);
+}
+.contenedor-Lic {
+    display: flex;
+    justify-content: space-between; 
+    align-items: flex-start; 
+    gap: 10px; 
+}
+
+.lado-derecho-Lic figure {
+    text-align: center;
+}
+
+.lado-derecho-Lic img {
+    width: 450px;
+    height: 300px;
+}
+
+.lado-izqueirdo-Lic {
+    flex: 1; /* El lado derecho tomará el espacio restante */
+    margin-left: 3.75%;
+}
+.normatividad {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.archivo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    margin-left: 10%;
+}
+.archivo a{
+    color: var(--seagreen);
+}
+.archivo strong{
+    color: var(--obscuro);
+}
+
+.enlace-pdf {
+    display: flex;
+    align-items: center;
+    color: var(--obscuro);
+    margin-right: 20px;
+    font-size: 16px;
+}
+
+.icono-pdf {
+    width: 20px;
+    height: auto;
+    margin-right: 10px;
+}
+.derechos{
+    margin-left: 11%;
+}
+
+.derechos ul li{
+    position: relative;
+    list-style: none;
+    margin-left: 20px;
+    margin-top: 1rem;
+}
+
+.derechos ul li::before {
+    content: '';
+    position: absolute;
+    left: -20px; 
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle, var(--seagreen), var(--VerdeObscuro),var(--VerdeClaro),var(--verdemasclaro));
+    border-radius: 50%;
+}
+.container-quejas {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+.izquierda-quejas,
+.derecha-quejas {
+    width: 48%; /* Ambas columnas tendrán un 48% de ancho */
+}
+
+/* Estilos para la Columna Izquierda */
+.izquierda-quejas h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+
+.izquierda-quejas h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.izquierda-quejas p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+.derecha-quejas h2{
+    margin-left: 40%;
+}
+.formulario{
+    background-color: var(--seagreen);
+    width: min( 60rem, 100%);
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: 1rem;
+}
+.formulario fieldset {
+    border: none;
+}
+.formulario legend {
+    text-align: center;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: var(--Blanco);
+}
+
+
+.campo{
+    margin-bottom: 1rem;
+}
+.campo label {
+    color: var(--blanco);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+.campo textarea{
+    height: 15rem;
+}
+.w-sm-100{
+    width: 100%;
+}
+@media (min-width: 768px) {
+    .w-sm-100{
+        width: auto;
+    }
+}
+.input-text{
+    width: 80%;
+    border: none;
+    padding: 1.5rem;
+    border-radius: .5rem;
+}
+
+.flex{
+    display: flex;
+}
+.alinear-derecha{
+    justify-content: flex-end;
+}
+
+.new-boton-formulario{
+    background-color: var(--VerdeObscuro);
+    color: var(--Blanco);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    display: inline-block;
+    margin: 0;
+    margin-top: 0.5rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: .5rem;
+    text-align: center;
+    border: none;
+    margin-left: 80%;
+}
+.new-boton:hover{
+    cursor: pointer;
+    color: var(--Blanco);
+}
+@media (prefers-color-scheme: dark) {
+    .new-boton:hover {
+        color: var(--obscuro); 
+    }
+}
+.new-boton p{
+    color: var(--Blanco);
+}
+.opciones-transparencia{
+    margin-left: 10%;
+}
+.lista-op{
+    margin-left: 10%;
+}
+
+.lista-op ul {
+    counter-reset: list-counter; /* Reinicia el contador */
+}
+.lista-op a{
+    color: var(--seagreen);
+}
+
+.lista-op ul li {
+    position: relative;
+    list-style: none;
+    margin-left: 30px; 
+    counter-increment: list-counter; 
+    margin-top: 0.5rem;
+}
+
+.lista-op ul li::before {
+    content: counter(list-counter) '. ';
+    position: absolute;
+    left: -30px; /* Ajusta la posición del número */
+    display: inline-block;
+    margin-right: 10px;
+    padding: 2px;
+    color: black;
+    font-weight: bold;
+}
