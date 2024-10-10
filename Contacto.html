@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
 
     <title>Consejo Ciudadano</title>
-    <link rel="stylesheet" href="css/Contacto.css">
+    <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/Contacto.css">
 
 
@@ -19,39 +19,66 @@
     <nav class="navbar">
         <div class="logo">
             <a href="Inicio.html">
-                <img src="imgs/logo-radio-uaa-blanco.png" alt="Logo" />
-            </a>
+                <img src="resources/img/logo-radio-uaa-blanco.png" alt="Radio UAA Logo" />
+            </a>        
         </div>
 
-        <ul class="nav-links">
-            <li><a href="Inicio.html">Inicio</a></li>
+        <!-- Botón Hamburguesa -->
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <ul class="nav-links" id="nav-links">
+            <li><a href="Index.html">Inicio</a></li>
             <li class="dropdown">
-                <a href="Acerca de Radio UAA.html">Nosotros ⏷</a>
+                <a href="#" class="arrow-down">Nosotros</a>
                 <ul class="dropdown-content">
                     <li><a href="Acerca de Radio UAA.html">Acerca de Radio UAA</a></li>
-                    <li><a href="Preguntas_Frecuentes.html">Preguntas Frecuentes</a></li>
+                    <li><a href="Preguntas Frecuentes.html">Preguntas Frecuentes</a></li>
                     <li><a href="Consejo Ciudadano.html">Consejo Ciudadano</a></li>
                 </ul>
             </li>
             <li class="dropdown">
-                <a href="#">Defensoría ⏷</a>
+                <a href="#" class="arrow-down">Defensoría</a>
                 <ul class="dropdown-content">
-                    <li><a href="#">Defensoría de las Audiencias</a></li>
-                    <li><a href="#">Derechos de las Audiencia</a></li>
-                    <li><a href="#">Quejas y Sugerencias</a></li>
-                    <li><a href="#">Transparencía</a></li>
-                    <li><a href="#">Politicas de privacidad</a></li>
+                    <li><a href="Defensoria.html">Defensoría de las Audiencias</a></li>
+                    <li><a href="Derechos de las Audiencias.html">Derechos de las Audiencias</a></li>
+                    <li><a href="Quejas y Sugerencias.html">Quejas y Sugerencias</a></li>
+                    <li><a href="Transparencia.html">Transparencia</a></li>
+                    <li><a href="Politicas de Privacidad.html">Políticas de privacidad</a></li>
                 </ul>
-            </li> 
-            <li><a href="#">Programación</a></li>
+            </li>         
+            <li><a href="Programacion.html">Programación</a></li>
             <li><a href="#">Contenido</a></li>
             <li><a href="Contacto.html">Contacto</a></li>
         </ul>
+
         <!-- Botón Modo Oscuro -->
-        <div>
-            <label for="toggle" id="label_toggle"><i id="theme-icon" class="fa-solid fa-moon"></i></label>
-            <input type="checkbox" id="toggle" style="display:none;">
+        <div class="dark-mode-toggle">
+            <label for="toggle" id="label_toggle" aria-label="Toggle Dark Mode">
+                <i id="theme-icon" class="fa-solid fa-moon"></i>
+            </label>
+            <input type="checkbox" id="toggle" aria-hidden="true">
         </div>
+
+        <!-- Search Icon -->
+        <div id="cont-icon-search" aria-label="Search">
+            <i class="fas fa-search" id="icon-search"></i>
+        </div>
+        <!-- Search Bar -->
+        <div id="cont-bars-search">
+            <input type="text" id="inputSearch" placeholder="Buscar en Radio UAA..." aria-label="Search">
+        </div>
+        <!-- Search Suggestions -->
+    <ul id="box-search">
+        <li><a href="Inicio.html"><i class="fas fa-search"></i>Inicio</a></li>
+        <li><a href="Acerca de Radio UAA.html"><i class="fas fa-search"></i>Acerca de Radio UAA</a></li>
+        <li><a href="Preguntas_Frecuentes.html"><i class="fas fa-search"></i>Preguntas Frecuentes</a></li>
+        <li><a href="Consejo Ciudadano.html"><i class="fas fa-search"></i>Consejo Ciudadano</a></li>
+        <li><a href="Contacto.html"><i class="fas fa-search"></i>Contacto</a></li>
+    </ul>
     </nav>
 
     <!-- Sección Consejo Ciudadano -->
@@ -114,15 +141,7 @@
         </a>
     </div>
     
-    <div class="ContenedorBoton">
-        <form id="search-form" onsubmit="return handleSearch(event);">
-            <input type="text" placeholder="Buscar en Radio UAA..." id="search-input">
-            <div class="boton" onclick="handleSearch(event)">
-                <i class="fa fa-search"></i>
-            </div>
-        </form>
-        <div id="search-results" style="display: none;"></div>
-    </div>
+    
     <br>
             <hr>
             <br>
