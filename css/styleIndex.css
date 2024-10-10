@@ -24,22 +24,23 @@ h2{
     padding-top:10rem;
     padding-bottom: 2rem;
     color:#f4a8a8;
-    font-size: 4rem;
+    font-size: 2rem;
 }
  h3{
     color:#f4a8a8;
     padding-left: 2rem;
     font-size: 2rem;
-    padding-bottom: 4rem;
+    padding-bottom: 2rem;
 
 }
 .player{
-    margin-top: 4rem;
+    margin-top: 2rem;
 }
 .slider-box{
     width: 50%; 
     box-sizing: border-box;
     overflow: hidden;
+    padding-right: 2rem;
 }
 .slider-box ul{
     display:flex;
@@ -82,7 +83,7 @@ h2{
 .programas_div_impar{
     background-color: #008080;
     height: 7rem;
-    width: 40rem;
+    width: auto;
     display: flex;
     align-items: left;
     padding: 1rem;

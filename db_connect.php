@@ -1,16 +1,10 @@
 <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname='radio_db';
-    
-    try {
-        $conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8mb4", $username, $password);
-        // set the PDO error mode to exception
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        // echo "Connected successfully";
-    } catch(PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
-        exit();
-    }
+$dsn='mysql:host=localhost;port=3309;dbname=radio_db';
+$usuario='root';
+$contrasenia= '';
+try {
+    $conn = new PDO($dsn, $usuario, $contrasenia);
+} catch (PDOException $e) {
+    echo 'Connection failed: ' . $e->getMessage();
+}
 ?>

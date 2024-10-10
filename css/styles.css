@@ -72,13 +72,13 @@ div.player{
 }
 
 /* ########## Player ######### */
-body.radio-player {
+.radio-player {
     font-family: Arial, sans-serif;
     /* display: flex; */
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 6rem;
     margin: 0;
     background-color: #282c34;
 }
