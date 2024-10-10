@@ -27,7 +27,9 @@
         echo "404: pagina no encontrada";
     }
 
-    // ShowField($key, $value, $presentador, 'nombre_presentador', SQL::TEXT);
+    function createCreateBtn($table_name){
+        echo "<button class='modalBtn createBtn' onclick=\"showCreateForm('$table_name')\">Crear $table_name</button>";
+    }
 
     function ShowField($table_name, $primary_key, $current_content, $key, $type) : void{
         $value_field = '';
@@ -138,7 +140,7 @@
         private $pk_name;
 
         private const fiels = [
-            SQL::PROGRAMA => [["id_programa", "nombre_programa", "descripcion"], [self::TEXT, self::TEXT, self::TEXT], ["id", "nombre", "descripción"]],
+            SQL::PROGRAMA => [["id_programa", "nombre_programa"], [self::TEXT, self::TEXT], ["id", "nombre"]],
             SQL::PRESENTADOR => [["id_presentador", "nombre_presentador", "biografia"], [self::TEXT, self::TEXT, self::TEXT], ["id", "nombre", "biografia"]],
             SQL::GENERO => [["id_genero", "nombre_genero"], [self::TEXT, self::TEXT], ["id", "genero"]],
             SQL::USER => [["id_user", "username" ,"rol"], [self::TEXT, self::TEXT, self::TEXT], ["id", "username", "rol"]]
@@ -152,6 +154,7 @@
             $this->stmt = SQL::Select($table_name, [], self::fiels[$table_name][0]);
             $this->stmt->setFetchMode(PDO::FETCH_ASSOC); // set the resulting array to associative
             parent::__construct(new RecursiveArrayIterator($this->stmt->fetchAll()), self::LEAVES_ONLY);
+            echo createCreateBtn($table_name);
             echo "<table>";
             foreach (self::fiels[$table_name][2] as $value) {
                 echo "<th>" . $value . "</th>";
@@ -330,12 +333,15 @@
                             <input type="password" name="" id="">
                         </div>
                         <div id="image" class="inputModal">
-                            <label for=""></label>
-                            <div class="drop-zone" id="drop-zone" for="fileInput">
-                                Arrastra y suelta tu archivo aquí o haz clic para seleccionar
+                            <div id="input_file">
+                                <label for=""></label>
+                                <div class="drop-zone" id="drop-zone" for="fileInput">
+                                    <!-- Arrastra y suelta tu archivo aquí o haz clic para seleccionar -->
+                                    TODO: ARREGLAR ARRASTRADO DE ARCHIVO!!!
+                                </div>
+                                <input type="file" name="fileToUpload" id="fileInput" accept="image/*" style="display:none;">
+                                <div id="feedback_file"></div>
                             </div>
-                            <input type="file" name="fileToUpload" id="fileInput" accept="image/*" style="display:none;">
-                            <div id="feedback_img"></div>
                         </div>
                         <div id="enum" class="inputModal">
                             <label for=""></label>
@@ -397,7 +403,7 @@
                 </div>
             </div>
 
-            <button id='deleteBtn' class="modalBtn">Eliminar</button>
+            <button id='deleteBtn' class="modalBtn" <?php echo "onclick=\"ShowConfirmationModal('$content','$pk')\"" ?>>Eliminar</button>
             <div id="deleteModal" class="modal">
                 <!-- <span onclick="document.getElementById('deleteModal').style.display='none'" class="close" title="Close Modal">&times;</span> -->
                 <span class="close">&times;</span>
@@ -408,7 +414,7 @@
 
                         <div class="clearfix">
                             <button type="button" id="cancelBtn" class="modalBtn">Cancel</button>
-                            <button type="button" id="confirmBtn" class="modalBtn" <?php echo "content='$content' pk='$pk'" ?>>Delete</button>
+                            <button type="button" id="confirmBtn" class="modalBtn">Delete</button>
                         </div>    
                     </div>
                 </div>
@@ -421,8 +427,6 @@
             </div> -->
 
             <?php
-
-            echo '<script src="../js/contentManager.js"></script>';
         }
         if($flag){
     ?>
@@ -431,7 +435,6 @@
             <button id="defaultOpen" class="tablinks" onclick="ShowContent(event, 'programa')">Programas</button>
             <button class="tablinks" onclick="ShowContent(event, 'presentador')">Presentadores</button>
             <button class="tablinks" onclick="ShowContent(event, 'genero')">Generos</button>
-            <button class="tablinks" onclick="ShowContent(event, 'comentario')">Comentarios</button>
             <button class="tablinks" onclick="ShowContent(event, 'user')">Usuarios</button>
         </div>
 
@@ -443,7 +446,7 @@
             }
         ?>
         </div>
-
+        
         <div id="presentador" class="tabcontent">
         <?php
             foreach(new TableRows(SQL::PRESENTADOR) as $k => $v) {
@@ -453,14 +456,6 @@
         </div>
 
         <div id="genero" class="tabcontent">
-        <?php
-            foreach(new TableRows(SQL::GENERO) as $k => $v) {
-                echo $v;
-            }
-        ?>
-        </div>
-    
-        <div id="comentario" class="tabcontent">
         <?php
             foreach(new TableRows(SQL::GENERO) as $k => $v) {
                 echo $v;
@@ -478,8 +473,10 @@
         <script src="../js/tabsManager.js"></script>
         <?php
         }
+        include "createForms.php";
         ?>
-
+        <script src="../js/contentManager.js"></script>
+        <!-- <script src="../js/createManager.js"></script> -->
     </main>
 </body>
 

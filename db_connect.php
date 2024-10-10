@@ -3,9 +3,9 @@
         public static $conn = NULL;
         public static $stmt = NULL;
         
-        public static $servername = "34.123.144.250";
-        public static $username = "admin";
-        public static $password = "1234";
+        public static $servername = "localhost";
+        public static $username = "root";
+        public static $password = "";
         public static $dbname='radio_db';
 
         const NULL = "null";

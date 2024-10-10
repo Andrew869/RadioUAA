@@ -187,7 +187,7 @@ function CheckTimes(e) {
         xmlhttp.open("GET","horarios.php?dias=" + selected.join(',') + "&hora_inicio=" + times[0].value + "&hora_fin=" + times[1].value ,true);
         xmlhttp.send();
     }
-  }
+}
 
 
 // Añadir un evento de clic a cada elemento de la lista
