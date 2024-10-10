@@ -236,6 +236,20 @@ p {
     background-color: var(--seagreen);
 }
 
+.archivos-Consejo{
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    margin-left: 10%;
+}
+.archivos-Consejo a{
+    color: var(--seagreen);
+}
+.archivos-Consejo strong{
+    color: var(--obscuro);
+}
+
+
 /* consejo ciudadano fin */
 
 footer {
