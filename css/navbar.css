@@ -31,16 +31,20 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: var(--VerdeClaro);
-    padding: 10px 20px;
+    background: linear-gradient(90deg, #66ff99 0%, #00cc44 50%, #006600 100%);
+    padding: 12px 25px;
     border-radius: 4rem;
     margin: 20px;
+    box-shadow: 0 4px 15px rgba(0, 255, 128, 0.4); /* Efecto de sombra con color */
+    transition: all 0.4s ease-in-out; /* Transición suave */
 }
 
 .logo img {
     width: 60px;
     height: auto;
     margin-right: 20px;
+    /* border: solid 2px var(--obscuro);
+    padding: 6px; */
 }
 
 .nav-links {
@@ -61,11 +65,13 @@
     color: var(--Blanco);
     text-decoration: none;
     font-size: 15px;
+    transition:  transform 0.4s ease; 
 }
 
 .nav-links a:hover {
     color: var(--obscuro);
     background-color: var(--verdeaqua);
+    transform: scale(1.2); 
     text-decoration: underline;
 }
 
@@ -142,9 +148,13 @@
     z-index: -1;
 }
 
-.zchange{
-    -webkit-animation: zchange .5s forwards;
+.zchange {
+    animation: zchange .5s forwards; /* Animación estándar */
+    -webkit-animation: zchange .5s forwards; /* Prefijo para WebKit (Safari, Chrome) */
+    -moz-animation: zchange .5s forwards; /* Prefijo para Firefox */
+    -o-animation: zchange .5s forwards; /* Prefijo para Opera */
 }
+
 
 @keyframes zchange {
     0% {

@@ -17,7 +17,7 @@
 
 /* * {box-sizing:border-box} */
 
-body, html {
+html {
     height: 100%;
 } 
  
@@ -54,13 +54,11 @@ h3{
     font-weight: bold;
     font-size: 2rem;
 }
-h3, p, a{
+h3, p, a, li{
     text-align: center;
     margin: 0 auto;
 }
-a {
-    color: var(--Blanco);
-}
+
 
 
 /* Galeria container */
@@ -74,12 +72,14 @@ a {
 }
 
 .mySlides img {
-    border-radius: 2%;
+    border-radius: 12px;
     text-align: center;
     width: 50%;
-    border: 5px solid var(--VerdeObscuro); /* Marco para las imágenes */
-    padding: 6px; /* Espacio entre imagen y borde */
-    margin: 20px auto; /* Centra las imágenes */
+    /* border: 5px solid var(--VerdeObscuro); */
+    padding: 6px;
+    margin: 20px auto;
+    box-shadow: 0 4px 15px rgba(0, 128, 0, 0.4);
+    background: linear-gradient(145deg, #66ff99, #00cc44, #006600); 
 }
 .mySlides {
   display: none;
