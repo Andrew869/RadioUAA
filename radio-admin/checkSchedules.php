@@ -1,5 +1,5 @@
 <?php 
-include "db_connect.php";
+include "../db_connect.php";
 
 // $dia_semana = $_GET['dia_semana'];
 // $hora_inicio = $_GET['hora_inicio'];

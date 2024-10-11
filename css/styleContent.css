@@ -124,6 +124,10 @@ td.pk {
     text-align: center;
 }
 
+#original_forms {
+    display: none;
+}
+
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
@@ -147,14 +151,22 @@ td.pk {
     border: 1px solid #888;
     width: 80%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -webkit-animation-name: animatetop;
+    -webkit-animation-name: fadein;
     -webkit-animation-duration: 0.4s;
-    animation-name: animatetop;
+    animation-name: fadein;
+    animation-duration: 0.4s;
+}
+
+.fadeout{
+    position: relative;
+    -webkit-animation-name: fadeout;
+    -webkit-animation-duration: 0.4s;
+    animation-name: fadeout;
     animation-duration: 0.4s;
 }
 
 /* Add Animation */
-@-webkit-keyframes animatetop {
+@-webkit-keyframes fadein {
     from {
         top: -300px;
         opacity: 0;
@@ -165,7 +177,7 @@ td.pk {
     }
 }
 
-@keyframes animatetop {
+@keyframes fadein {
     from {
         top: -300px;
         opacity: 0;
@@ -173,6 +185,29 @@ td.pk {
     to {
         top: 0;
         opacity: 1;
+    }
+}
+
+/* Add Animation */
+@-webkit-keyframes fadeout {
+    from {
+        top: 0px;
+        opacity: 1;
+    }
+    to {
+        top: -300px;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        top: 0px;
+        opacity: 1;
+    }
+    to {
+        top: -300px;
+        opacity: 0;
     }
 }
 
@@ -198,7 +233,7 @@ hr {
     cursor: pointer;
 }
 
-.clearfix{
+.btns_container{
     display: flex;
     flex-direction: row;
     width: 100%;

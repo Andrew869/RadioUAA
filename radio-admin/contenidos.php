@@ -28,7 +28,8 @@
     }
 
     function createCreateBtn($table_name){
-        echo "<button class='modalBtn createBtn' onclick=\"showCreateForm('$table_name')\">Crear $table_name</button>";
+        // echo "<button class='modalBtn createBtn' onclick=\"AddContent('$table_name')\">Crear $table_name</button>";
+        echo "<button id=\"createBtn\" class='modalBtn' content_name=\"$table_name\">Crear $table_name</button>";
     }
 
     function ShowField($table_name, $primary_key, $current_content, $key, $type) : void{
@@ -227,6 +228,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radio Admin</title>
     <link rel="stylesheet" href="../css/styleContent.css">
+    <script type="module" src="../js/utilities.js"></script>
 </head>
 
 <body>
@@ -389,7 +391,7 @@
                                     <?php
                                         // $presentadores = SQL::Select(SQL::PRESENTADOR, [], ["id_presentador", "nombre_presentador"])->fetchAll(PDO::FETCH_ASSOC);
                                         // foreach ($presentadores as $presentador) {
-                                        //     echo '<li id_presentador="' . $presentador["id_presentador"] . '">' . $presentador["nombre_presentador"] . '</li>';
+                                        //     echo '<li id_presentador="1">Juan Pérez</li>';
                                         // }
                                     ?>
                                 </ul>
@@ -477,6 +479,21 @@
         ?>
         <script src="../js/contentManager.js"></script>
         <!-- <script src="../js/createManager.js"></script> -->
+        <button onclick="AddContent('programa')">crear</button>
+        <div id="modals_container">
+            <div class="modal">
+                <span class="close">&times;</span>
+                <div class="modal-content">
+                    <div class="container">
+                        <div class="btns_container">
+                            <button type="button" id="cancelBtn" class="modalBtn">Cancel</button>
+                            <button type="button" id="confirmBtn" class="modalBtn" onclick="CreateModal()" >Crear</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="module" src="../js/modalsManager.js"></script>
     </main>
 </body>
 
