@@ -29,7 +29,7 @@
 
     function createCreateBtn($table_name){
         // echo "<button class='modalBtn createBtn' onclick=\"AddContent('$table_name')\">Crear $table_name</button>";
-        echo "<button id=\"createBtn\" class='modalBtn' content_name=\"$table_name\">Crear $table_name</button>";
+        echo "<button class='modalBtn createBtn' contentName=\"$table_name\">Crear $table_name</button>";
     }
 
     function ShowField($table_name, $primary_key, $current_content, $key, $type) : void{
@@ -321,114 +321,7 @@
                         break;
                 }
             }
-            ?>
-            <div id="updateModal" class="modal">
-                <span class="close">&times;</span>
-                <div class="modal-content">
-                    <div class="container">
-                        <div id="text" class="inputModal">
-                            <label for="">text</label>
-                            <input type="text" name="" id="">
-                        </div>
-                        <div id="password" class="inputModal">
-                            <label for="">password</label>
-                            <input type="password" name="" id="">
-                        </div>
-                        <div id="image" class="inputModal">
-                            <div id="input_file">
-                                <label for=""></label>
-                                <div class="drop-zone" id="drop-zone" for="fileInput">
-                                    <!-- Arrastra y suelta tu archivo aquí o haz clic para seleccionar -->
-                                    TODO: ARREGLAR ARRASTRADO DE ARCHIVO!!!
-                                </div>
-                                <input type="file" name="fileToUpload" id="fileInput" accept="image/*" style="display:none;">
-                                <div id="feedback_file"></div>
-                            </div>
-                        </div>
-                        <div id="enum" class="inputModal">
-                            <label for=""></label>
-                            <select id="enumContent" name="">
-                            </select>
-                        </div>
-                        <div id="boolean" class="inputModal">
-                            <label></label>
-                            <input id="true" type="radio" class="radio" name="opction" value="1">
-                            <label for="true">si</label>
-                            <input id="false" type="radio" class="radio" name="opction" value="0">
-                            <label for="false">no</label>
-                            <input type="text" id="radioMaster" name="">
-                        </div>
-                        <div id="schedules" class="inputModal">
-                            <div class="days_container">
-                                <ul class="days_list">
-                                    <?php 
-                                        // foreach (SQL::GetEnumValues(SQL::HORARIO, "dia_semana") as $dia) {
-                                        //     echo '<li dia_semana="' . $dia . '">' . $dia . '</li>';
-                                        // }
-                                    ?>
-                                </ul>
-                                <input type="hidden" name="horarios[0][dias]" class="diasSelectedInput" field_name="dias">
-                            </div>
-                            <label for="">Hora inicio</label>
-                            <input type="time" name="horarios[0][hora_inicio]" field_name="hora_inicio">
-                            <label for="">Hora final</label>
-                            <input type="time" name="horarios[0][hora_fin]" field_name="hora_fin">
-                            <label for="">Es retrasmision</label>
-                            <input type="checkbox">
-                            <!-- <input type="checkbox" name="horarios[0][es_retransmision]" field_name="es_retransmision" value="0" class="chk" checked hidden> -->
-                            <div class="txtHint"></div>
-                        </div>
-                        <div id="list" class="inputModal">
-                            <div>
-                                <h3>Seleccionados</h3>
-                                <ul id="optionsSelected" class="options">
-
-                                </ul>
-                            </div>
-                            <div>
-                                <h3>Disponibles</h3>
-                                <ul id="optionsAvailable" class="options">
-                                    <?php
-                                        // $presentadores = SQL::Select(SQL::PRESENTADOR, [], ["id_presentador", "nombre_presentador"])->fetchAll(PDO::FETCH_ASSOC);
-                                        // foreach ($presentadores as $presentador) {
-                                        //     echo '<li id_presentador="1">Juan Pérez</li>';
-                                        // }
-                                    ?>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="clearfix">
-                            <button type="button" id="cancelBtn" class="modalBtn">Cancel</button>
-                            <button type="button" id="confirmBtn" class="modalBtn">Actualizar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <button id='deleteBtn' class="modalBtn" <?php echo "onclick=\"ShowConfirmationModal('$content','$pk')\"" ?>>Eliminar</button>
-            <div id="deleteModal" class="modal">
-                <!-- <span onclick="document.getElementById('deleteModal').style.display='none'" class="close" title="Close Modal">&times;</span> -->
-                <span class="close">&times;</span>
-                <div class="modal-content">
-                    <div class="container">
-                        <h1>Delete Content</h1>
-                        <p>Are you sure you want to delete this content?</p>
-
-                        <div class="clearfix">
-                            <button type="button" id="cancelBtn" class="modalBtn">Cancel</button>
-                            <button type="button" id="confirmBtn" class="modalBtn">Delete</button>
-                        </div>    
-                    </div>
-                </div>
-            </div>
-            <!-- <div id="deleteModal" class="modal">
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <p>Some text in the Modal..</p>
-                </div>
-            </div> -->
-
-            <?php
+            echo "<button class='modalBtn deleteBtn' contentName='$content' pk='$pk' >Eliminar</button>";
         }
         if($flag){
     ?>
@@ -475,23 +368,12 @@
         <script src="../js/tabsManager.js"></script>
         <?php
         }
-        include "createForms.php";
+        // include "createForms.php";
         ?>
         <script src="../js/contentManager.js"></script>
         <!-- <script src="../js/createManager.js"></script> -->
-        <button onclick="AddContent('programa')">crear</button>
+        <!-- <button onclick="AddContent('programa')">crear</button> -->
         <div id="modals_container">
-            <div class="modal">
-                <span class="close">&times;</span>
-                <div class="modal-content">
-                    <div class="container">
-                        <div class="btns_container">
-                            <button type="button" id="cancelBtn" class="modalBtn">Cancel</button>
-                            <button type="button" id="confirmBtn" class="modalBtn" onclick="CreateModal()" >Crear</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <script type="module" src="../js/modalsManager.js"></script>
     </main>

@@ -158,7 +158,6 @@ td.pk {
 }
 
 .fadeout{
-    position: relative;
     -webkit-animation-name: fadeout;
     -webkit-animation-duration: 0.4s;
     animation-name: fadeout;

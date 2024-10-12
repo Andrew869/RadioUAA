@@ -1,4 +1,156 @@
+const modals_container = document.getElementById('modals_container');
 let isDragging = false;
+
+let currentLayer;
+const layers = [];
+
+export function GetInputValues(input){
+    const data = [];
+    let inputType = input.getAttribute('inputType');
+    switch (inputType) {
+        case 'text':
+        case 'email':
+        case 'password':
+            {
+                let inputTag = input.querySelector('INPUT');
+                let keyvalue = {name: inputTag.id, value: inputTag.value};
+                data.push(keyvalue);
+            }
+            break;
+        case 'textarea':
+            {
+                let inputTag = input.querySelector('TEXTAREA');
+                let keyvalue = {name: inputTag.id, value: inputTag.value};
+                data.push(keyvalue);
+            }
+            break;
+        case 'file':
+            {
+                let inputTag = input.querySelector('INPUT');
+                let keyvalue = {name: inputTag.id, value: inputTag.files[0]};
+                data.push(keyvalue);
+            }
+            break;
+        case 'enum':
+            {
+                let inputTag = input.querySelector('SELECT');
+                let keyvalue = {name: inputTag.id, value: inputTag.value};
+                data.push(keyvalue);
+            }
+            break;
+        case 'boolean':
+            {
+                let inputTag = input.querySelector('INPUT');
+                let checkbox = inputTag.checked;
+                let keyvalue = {name: inputTag.id, value: checkbox.toString().toUpperCase()};
+                data.push(keyvalue);
+            }
+            break;
+        case 'schedules':
+            {
+                // let data = [
+                //     {name: "horarios[0][dias]", value: "Lunes,Martes"},
+                //     {name: "horarios[0][hora_inicio]", value: "11:00"},
+                //     {name: "horarios[0][hora_fin]", value: "12:00"},
+                //     {name: "horarios[0][es_retransmision]", value: "0"},
+                //     {name: "horarios[1][dias]", value: "Miércoles,Jueves"},
+                //     {name: "horarios[1][hora_inicio]", value: "20:00"},
+                //     {name: "horarios[1][hora_fin]", value: "09:00"},
+                //     {name: "horarios[1][es_retransmision]", value: "0"}
+                // ];
+                // data.forEach(datum => {
+                //     formData.append(datum.name, datum.value);
+                // });
+                // data.push({name: "horarios[0][dias]", value: "Lunes,Martes"});
+
+                let schedulesContainer = input.querySelector('#schedules_container');
+                
+                let schedules = schedulesContainer.querySelectorAll('.schedule');
+
+                let scheduleIndex = 0;
+                schedules.forEach(schedule => {                    
+                    let daysSelected = schedule.querySelectorAll('.selected');
+                    let arrayDays = [];
+                    daysSelected.forEach(day => {
+                        arrayDays.push(day.textContent);
+                    });
+                    let strDays = arrayDays.join(',');
+                    data.push({name: "horarios[" + scheduleIndex + "][dias]", value: strDays});
+
+                    let hora_inicio = schedule.querySelector('.hora_inicio').value;
+                    data.push({name: "horarios[" + scheduleIndex + "][hora_inicio]", value: hora_inicio});
+
+                    let hora_fin = schedule.querySelector('.hora_fin').value;
+                    data.push({name: "horarios[" + scheduleIndex + "][hora_fin]", value: hora_fin});
+
+                    let es_retra = schedule.querySelector('.es_retransmision').checked;
+                    data.push({name: "horarios[" + scheduleIndex + "][es_retransmision]", value: es_retra})
+
+                    scheduleIndex++;
+                });
+            }
+            break;
+        case 'list':
+            {
+                let optionsSelected = input.querySelectorAll('.selected');
+                let contentName = input.id;
+                let ids = [];
+                optionsSelected.forEach(options => {
+                    ids.push(options.id);
+                });
+                data.push({name: contentName, value: ids.join(',')});
+            }
+            break;
+    }
+
+    return data;
+}
+
+export function SendDataBaseRequest(action, contentName, inputs){
+    let formData = new FormData();
+    formData.append('contentName', contentName);
+    // switch (action) {
+    //     case 0: //create
+    //         {
+                
+    //         }
+    //         break;
+    //     case 1:
+    //         {
+
+    //         }
+    //         break;
+    // }
+
+    inputs.forEach(input => {
+        let data = GetInputValues(input);
+        data.forEach(datum => {
+            formData.append(datum.name, datum.value);
+        });
+    });
+
+    
+    // //FILES
+    // formData.append('fileToUpload', file); // Añadir el archivo de imagen al FormData
+    // //POST
+    // formData.append('table_name', table_name);
+    // formData.append('primary_key', primary_key);
+    // formData.append('field', field);
+
+    // Hacer la petición fetch con el FormData
+    fetch('createContent.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text()) // Procesar la respuesta como texto
+    .then(data => {
+        // message.textContent = data; // Mostrar el mensaje del servidor
+        // window.location.href = window.location.href;
+    })
+    .catch(error => {
+        console.error('Error al subir la imagen:', error);
+    });
+}
 
 export function CreateInput(inputType, id, classes, inputTitle, tableName){
     let container = document.createElement('div');
@@ -11,6 +163,8 @@ export function CreateInput(inputType, id, classes, inputTitle, tableName){
     label.setAttribute('for', id);
 
     container.appendChild(label);
+
+    container.setAttribute('inputType', inputType);
 
     let element;
     switch (inputType) {
@@ -36,19 +190,21 @@ export function CreateInput(inputType, id, classes, inputTitle, tableName){
                 element = document.createElement('div');
                 let input = document.createElement('input');
                 input.type = inputType;
-                input.id = id;
+                input.id = "fileToUpload";
                 input.accept = 'image/*';
                 element.appendChild(input);
 
                 let feedback_file = document.createElement('div');
                 feedback_file.id = 'feedback_file';
                 element.appendChild(feedback_file);
+                
+                InputFileManager(element);
                 break;
             }
         case 'enum':
             {
                 element = document.createElement('select');
-                element.id = 'enumContent';
+                element.id = id;
 
                 EnumToList(element, tableName, id, 'option');
 
@@ -92,7 +248,7 @@ export function CreateInput(inputType, id, classes, inputTitle, tableName){
 
                 let inputHoraInicio = document.createElement('input');
                 inputHoraInicio.type = 'time';
-                inputHoraInicio.id = 'hora_inicio';
+                inputHoraInicio.classList.add('hora_inicio');
                 originalSchedule.appendChild(inputHoraInicio);
 
                 let labelHoraFin = document.createElement('label');
@@ -101,7 +257,7 @@ export function CreateInput(inputType, id, classes, inputTitle, tableName){
 
                 let inputHoraFin = document.createElement('input');
                 inputHoraFin.type = 'time';
-                inputHoraFin.id = 'hora_fin';
+                inputHoraFin.classList.add('hora_fin');
                 originalSchedule.appendChild(inputHoraFin);
 
                 let labelRetransmision = document.createElement('label');
@@ -110,7 +266,7 @@ export function CreateInput(inputType, id, classes, inputTitle, tableName){
 
                 let inputRetransmision = document.createElement('input');
                 inputRetransmision.type = 'checkbox';
-                inputRetransmision.id = 'es_retransmision';
+                inputRetransmision.classList.add('es_retransmision');
                 originalSchedule.appendChild(inputRetransmision);
 
                 let feedbackSchedules = document.createElement('div');
@@ -129,6 +285,7 @@ export function CreateInput(inputType, id, classes, inputTitle, tableName){
             }
         case 'list':
             {
+                container.id = id;
                 element = document.createElement('div');
                 element.classList.add('lists-container');
 
@@ -168,6 +325,49 @@ export function CreateInput(inputType, id, classes, inputTitle, tableName){
     return container;
 }
 
+function HideModal(modal){
+    if(layers[layers.length - 1] === currentLayer){
+        console.log("Closing...");
+        modal.querySelector('.modal-content').classList.add('fadeout');
+        layers.pop();
+        setTimeout(function() {
+            modal.style.display = 'none';
+            modal.remove();
+            if(layers){
+                currentLayer = layers[layers.length - 1];
+            }
+        }, 400);
+    }
+}
+
+function SetupModal(modal){
+    let currentModal = modal;
+
+    currentModal.style.display = 'block';
+
+    setTimeout(function() {
+        let xBtn = currentModal.querySelector('.close');
+        xBtn.addEventListener('click', () => {
+            HideModal(currentModal);
+        });
+
+        let cancelBtn = currentModal.querySelector('#cancelBtn');
+        cancelBtn.addEventListener('click', () => {
+            HideModal(currentModal);
+        });
+
+        window.addEventListener('click', (event) => {
+            if(event.target === currentModal){
+                HideModal(currentModal);
+            }
+        });
+    }, 400);
+
+    modals_container.appendChild(currentModal);
+    layers.push(currentModal);
+    currentLayer = currentModal;
+}
+
 export function CreateModal(){
     let modal = document.createElement('div');
     modal.classList.add('modal');
@@ -201,8 +401,24 @@ export function CreateModal(){
     confirmBtn.id = 'confirmBtn';
     confirmBtn.classList.add('modalBtn');
     confirmBtn.textContent = 'Confirmar';
+    // confirmBtn.addEventListener('click', function () {
+    //     CreateModal();
+    // });
     btns_container.appendChild(confirmBtn);
 
+    // let originalModal = modals_container.querySelector('.originalModal');
+
+    
+    // let replicant = originalModal.cloneNode(true);
+    // replicant.classList.remove('originalModal');
+
+    // let confirmBtn = replicant.querySelector('#confirmBtn');
+
+    // confirmBtn.addEventListener('click', function(){
+    //     CreateModal();
+    // });
+
+    SetupModal(modal);
     return modal;
 }
 
@@ -295,7 +511,7 @@ export function CloneSchedule(schedulesContainer, originalschedule, newScheduleB
     // Clonar el bloque (con sus hijos)
     const replicant = originalschedule.cloneNode(true);
     const inputs = replicant.querySelectorAll('input');
-    const checkbox = replicant.querySelector('#es_retransmision');
+    const checkbox = replicant.querySelector('.es_retransmision');
 
     replicant.addEventListener('click', CheckSchedules);
     replicant.addEventListener('keyup', CheckSchedules);
@@ -324,10 +540,10 @@ export function CloneSchedule(schedulesContainer, originalschedule, newScheduleB
 
     items_clone.forEach(element => {
         element.classList.remove('selected');
-        element.addEventListener('click', function() {
-            // Alternar la clase 'selected' al hacer clic
-            this.classList.toggle('selected');
-        });
+        // element.addEventListener('click', function() {
+        //     // Alternar la clase 'selected' al hacer clic
+        //     this.classList.toggle('selected');
+        // });
     });
     
     // agregar el bloque a contenedor padre
@@ -337,52 +553,51 @@ export function CloneSchedule(schedulesContainer, originalschedule, newScheduleB
 }
 
 export function InputFileManager(input_file){
-    const dropZone = input_file.querySelector('#drop-zone');
-    const actual_input = input_file.querySelector('#fileInput')
+    // const dropZone = input_file.querySelector('#drop-zone');
+    const actual_input = input_file.querySelector('[type="file"]')
     const feedback = input_file.querySelector('#feedback_file');
     
     // Cambiar apariencia del área de arrastre cuando el archivo está sobre ella
-    dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('dragover');
-    });
+    // dropZone.addEventListener('dragover', (e) => {
+    //         e.preventDefault();
+    //         dropZone.classList.add('dragover');
+    // });
 
-    dropZone.addEventListener('dragleave', (e) => {
-        e.preventDefault();
-        dropZone.classList.remove('dragover');
-    });
+    // dropZone.addEventListener('dragleave', (e) => {
+    //     e.preventDefault();
+    //     dropZone.classList.remove('dragover');
+    // });
 
     // Manejar el evento de soltar
-    dropZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        dropZone.classList.remove('dragover');
+    // dropZone.addEventListener('drop', (e) => {
+    //     e.preventDefault();
+    //     dropZone.classList.remove('dragover');
 
-        // Obtener archivo soltado
-        const files = e.dataTransfer.files;
-        if (files.length) {
-            console.log("asd");
-            actual_input.files = files; // Asignar archivos al input file
-            // Disparar manualmente el evento change
-            const event = new Event('change', { bubbles: true });
-            actual_input.dispatchEvent(event);
-            // dropZone.textContent = actual_input.files[0].name;
-        }
-    });
+    //     // Obtener archivo soltado
+    //     const files = e.dataTransfer.files;
+    //     if (files.length) {
+    //         console.log("asd");
+    //         actual_input.files = files; // Asignar archivos al input file
+    //         // Disparar manualmente el evento change
+    //         const event = new Event('change', { bubbles: true });
+    //         actual_input.dispatchEvent(event);
+    //         // dropZone.textContent = actual_input.files[0].name;
+    //     }
+    // });
 
     // Hacer clic en el área de arrastre para seleccionar archivos
-    dropZone.onclick = () => {
-        actual_input.click();
-    };
+    // dropZone.onclick = () => {
+    //     actual_input.click();
+    // };
 
     actual_input.addEventListener('change', function(event) {
-        console.log("aqui");
         let fileInput = event.target;
-        file = fileInput.files[0]; // Obtener el archivo seleccionado
+        let file = fileInput.files[0]; // Obtener el archivo seleccionado
         feedback.textContent = ''; // Limpiar mensaje previo
 
-        if (actual_input.files.length) {
-            dropZone.textContent = file.name;
-        }
+        // if (actual_input.files.length) {
+        //     dropZone.textContent = file.name;
+        // }
         
         // Comprobar si se ha seleccionado un archivo
         if (!file) {
@@ -487,7 +702,7 @@ export function DeleteLists(){
     });
 }
 
-export function SetupModal(type){ // deprecated <====================
+export function DSetupModal(type){ // deprecated <====================
     updateModal.style.display = 'block';
     updateModal.classList.add('show');
     updateModal.classList.remove('hide');
@@ -549,7 +764,7 @@ export function createModalExit(){
     });
 }
 
-export function HideModal(modal){
+export function DHideModal(modal){
     modal.style.display = 'none';
     // setTimeout(() => {
     // }, 500);
@@ -575,7 +790,7 @@ export function CreateContent(content, record) {
 }
 
 // Encargada de enviar la informacion al archivo php que se encarga de eliminar
-export function DeleteContent(content, pk) {
+export function SendDeleteRequest(content, pk) {
     fetch("deleteContent.php", {
         method: "POST",
         headers: {

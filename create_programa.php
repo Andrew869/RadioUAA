@@ -49,7 +49,7 @@
 </head>
 
 <body>
-    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" onsubmit="GetSelectedOptions()" method="post" enctype="multipart/form-data" id="uploadForm">
+    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" onsubmit="GetSelectedOptions()" method="get"  id="uploadForm">
         <fieldset>
             <legend>crear nuevo programa</legend>
             <div>

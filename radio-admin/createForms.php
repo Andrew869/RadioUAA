@@ -143,3 +143,15 @@
         <button type="button" id="confirmBtn" class="modalBtn">Crear</button>
     </div> 
 </div>
+<!-- MODAL -->
+            <!-- <div class="originalModal modal">
+                <span class="close">&times;</span>
+                <div class="modal-content">
+                    <div class="container">
+                        <div class="btns_container">
+                            <button type="button" id="cancelBtn" class="modalBtn">Cancel</button>
+                            <button type="button" id="confirmBtn" class="modalBtn">Crear</button>
+                        </div>
+                    </div>
+                </div>
+            </div> -->

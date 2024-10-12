@@ -58,11 +58,18 @@
         }
 
         public static function GetFields($table_name): array{
+            $blackList = [
+                SQL::USER => [7,8,9]
+            ];
+
             $field_names = [];
             $sql = "SHOW COLUMNS FROM $table_name";
             self::$stmt = self::$conn->query($sql);
             while($row = self::$stmt->fetch(PDO::FETCH_ASSOC)){
                 $field_names[] = $row['Field'];
+            }
+            foreach ($blackList[$table_name] as $value) {
+                unset($field_names[$value]);
             }
             return $field_names;
         }
