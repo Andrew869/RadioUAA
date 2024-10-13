@@ -73,6 +73,16 @@
                     }
                 }
                 break;
+            case SQL::HORARIO:
+                {
+                    $id_programa = $_POST['id_programa'];
+                    foreach ($_POST['horarios'] as $value) {
+                        foreach (explode(',', $value['dias']) as $dia) {
+                            SQL::Create(SQL::HORARIO, [$id_programa, $dia, $value['hora_inicio'], $value['hora_fin'], $value['es_retransmision']]);
+                        }
+                    }
+                }
+                break;
             case SQL::PRESENTADOR:
                 {
                     $target_file = LoadImage();
@@ -85,7 +95,7 @@
             case SQL::USER:
                 {
                     $pass_hash = hash('sha256', $_POST['password']);
-                    SQL::Create(SQL::USER, [$_POST['username'], $_POST['email'], $pass_hash, $_POST['nombre_completo'], $_POST['rol'], $_POST['cuenta_activa']]);
+                    SQL::Create(SQL::USER, [$_POST['username'], $_POST['email'], $_POST['password'], $_POST['nombre_completo'], $_POST['rol'], $_POST['cuenta_activa']]);
                 }
                 break;
         }

@@ -30,6 +30,7 @@
         const TEXT = "text";
         const PASSWORD = "password";
         const IMAGE = "image";
+        const FILE = "file";
         const DATE = "date";
         const TIME = "time";
         const BOOLEAN = "boolean";
@@ -110,6 +111,25 @@
             return self::$stmt->fetchColumn();
         }
 
+        public static function FormatValue($table_name, $fieldName, $value) : string{
+            switch (self::GetFieldType($table_name, $fieldName)) {
+                case 'varchar':
+                case 'char':
+                case 'text':
+                case 'date':
+                case 'time':
+                case 'datetime':
+                case 'timestamp':
+                case 'enum':
+                case 'json':
+                case 'uuid':
+                    $value = '\'' . $value . '\'';
+                    // $record[$i] = '\'' . $record[$i] . '\'';
+                    break;
+            }
+            return $value;
+        }
+
         public static function Create($table_name, $record) : int{
 
             $fields = self::GetFields($table_name);
@@ -119,21 +139,22 @@
 
             $length = count($record);
             
-            for ($i = 0; $i < $length; $i++) { 
-                switch (self::GetFieldType($table_name, $fields[$i])) {
-                    case 'varchar':
-                    case 'char':
-                    case 'text':
-                    case 'date':
-                    case 'time':
-                    case 'datetime':
-                    case 'timestamp':
-                    case 'enum':
-                    case 'json':
-                    case 'uuid':
-                        $record[$i] = '\'' . $record[$i] . '\'';
-                        break;
-                }
+            for ($i = 0; $i < $length; $i++) {
+                $record[$i] = self::FormatValue($table_name, $fields[$i], $record[$i]);
+                // switch (self::GetFieldType($table_name, $fields[$i])) {
+                //     case 'varchar':
+                //     case 'char':
+                //     case 'text':
+                //     case 'date':
+                //     case 'time':
+                //     case 'datetime':
+                //     case 'timestamp':
+                //     case 'enum':
+                //     case 'json':
+                //     case 'uuid':
+                //         $record[$i] = '\'' . $record[$i] . '\'';
+                //         break;
+                // }
             }
             
             // foreach ($record as $key => $value) {
@@ -205,7 +226,7 @@
             $lastKey = array_key_last($fields);
             foreach ($fields as $key => $value) {
                 if($key === "password_hash") $value = hash('sha256', $value);
-                if($value !== self::NULL) $value = "'$value'";
+                if($value !== self::NULL) $value = self::FormatValue($table_name, $key, $value);
                 $text_fields .= "$key = $value" . ($key === $lastKey ? "" : ", " );
             }
             $id = "id_" . $table_name;

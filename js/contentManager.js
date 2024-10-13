@@ -86,60 +86,60 @@ if(createModal){
 
 
 
-function showCreateForm(table_name){
-    const confirmBtn = createModal.querySelector('#confirmBtn');
-    createModal.style.display = 'block';
-    let current_form;
+// function showCreateForm(table_name){
+//     const confirmBtn = createModal.querySelector('#confirmBtn');
+//     createModal.style.display = 'block';
+//     let current_form;
     
 
-    forms.forEach(form => {
-        if(form.id === table_name){
-            current_form = form;
-            form.style.display = 'block';
-        }
-        else
-            form.style.display = 'none';
-    });
+//     forms.forEach(form => {
+//         if(form.id === table_name){
+//             current_form = form;
+//             form.style.display = 'block';
+//         }
+//         else
+//             form.style.display = 'none';
+//     });
 
-    const schedulesContainer = current_form.querySelector('#schedules_container');
-    originalschedule = schedulesContainer.querySelector('.schedule');
-    const newScheduleBtn = schedulesContainer.querySelector('#addNewSchedule');
-    newScheduleBtn.addEventListener('click', function(){
-        CloneSchedule(schedulesContainer, newScheduleBtn);
-    });
+//     const schedulesContainer = current_form.querySelector('#schedules_container');
+//     originalschedule = schedulesContainer.querySelector('.schedule');
+//     const newScheduleBtn = schedulesContainer.querySelector('#addNewSchedule');
+//     newScheduleBtn.addEventListener('click', function(){
+//         CloneSchedule(schedulesContainer, newScheduleBtn);
+//     });
 
-    confirmBtn.onclick = function(){
-        let record = [];
-        switch (table_name) {
-            case 'programa':
-                {
-                    // record.push(form.querySelector('#nombre_programa').value);
-                    // record.push(form.querySelector('#fileInput').value);
-                    // record.push(form.querySelector('#descripcion').value);
-                    // record.push(form.querySelector('#nombre_programa').value);
-                    // record.push(form.querySelector('#nombre_programa').value);
-                }
-                break;
+//     confirmBtn.onclick = function(){
+//         let record = [];
+//         switch (table_name) {
+//             case 'programa':
+//                 {
+//                     // record.push(form.querySelector('#nombre_programa').value);
+//                     // record.push(form.querySelector('#fileInput').value);
+//                     // record.push(form.querySelector('#descripcion').value);
+//                     // record.push(form.querySelector('#nombre_programa').value);
+//                     // record.push(form.querySelector('#nombre_programa').value);
+//                 }
+//                 break;
         
-            default:
-                break;
-        }
-        CreateContent(table_name, )
-    }
-}
+//             default:
+//                 break;
+//         }
+//         CreateContent(table_name, )
+//     }
+// }
 
 // Muestra al modal de eliminacion
-function ShowConfirmationModal(content, pk) {
-    deleteModal.style.display = "block";
-    let cancelBtn = deleteModal.querySelector('#cancelBtn');
+// function ShowConfirmationModal(content, pk) {
+//     deleteModal.style.display = "block";
+//     let cancelBtn = deleteModal.querySelector('#cancelBtn');
 
-    cancelBtn.onclick = function(){ 
-        HideModal(deleteModal);
-    };
+//     cancelBtn.onclick = function(){ 
+//         HideModal(deleteModal);
+//     };
 
-    current_content = content;
-    current_pk = pk;
-}
+//     current_content = content;
+//     current_pk = pk;
+// }
 
 function showUpdateForm(table_name, primary_key, field, current_value, type){
     let file;

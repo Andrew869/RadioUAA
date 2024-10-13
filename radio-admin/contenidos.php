@@ -32,33 +32,69 @@
         echo "<button class='modalBtn createBtn' contentName=\"$table_name\">Crear $table_name</button>";
     }
 
-    function ShowField($table_name, $primary_key, $current_content, $key, $type) : void{
+    function ShowField($table_name, $primary_key, $fieldName, $fieldTitle, $type, $current_content) : void{
         $value_field = '';
         $onclick = '';
         switch ($type) {
             case SQL::TEXT:
             case SQL::ENUM:
-                $value_field.= $current_content[$key];       
+            case 'textarea':
+                $value_field.= $current_content[$fieldName];       
                 break;
             case SQL::PASSWORD:
                 $value_field .= "••••••••";
                 break;
-            case SQL::IMAGE:
-                $value_field .= "<img src='$current_content[$key]'>";
+            case SQL::FILE:
+                $value_field .= "<img src='$current_content[$fieldName]'>";
                 break;
             case SQL::BOOLEAN:
-                $value_field .= ($current_content[$key] ? "Sí" : "No");
+                $value_field .= ($current_content[$fieldName] ? "Sí" : "No");
                 break;
         }
-        echo $value_field;
-        echo "<button class='updateBtn' onclick=\"showUpdateForm('$table_name', '$primary_key', '$key', '" . addslashes($current_content[$key]) . "', '$type')\">Editar</button><br>";
+
+        $fieldsInfo = [
+            'programa' => [
+                'nombre_programa' => 'Nombre del programa',
+                'url_imagen' => 'Imagen del programa',
+                'descripcion' => 'Descripcion',
+                'horario' => 'Horarios',
+                'presentador' => 'Presentadores',
+                'genero' => 'Generos',
+            ],
+            'horario' => [
+                'horario' => 'Horarios',
+            ],
+            'presentador' => [
+                'nombre_presentador' => 'Nombre presentador',
+                'url_foto' => 'foto del presentador',
+                'biografia' => 'Biografia',
+            ],
+            'genero' => [
+                'nombre_genero' => 'Nombre del genero',
+            ],
+            'user' => [
+                'username' => 'Nombre de usuario',
+                'email' => 'correo de usuario',
+                'password' => 'contraseña',
+                'nombre_completo' => 'Nombre completo',
+                'rol' => 'Rol del usuario',
+                'cuenta_activa' => 'Cuenta Activa',
+            ]
+        ];
+
+        echo "<div class='contentField' contentName='$table_name' pk='$primary_key' fieldName='$fieldName' inputType='$type'>";
+        echo "<div><div class='fieldTitle'>$fieldTitle</div><div class='currentValue'>$value_field</div></div>";
+        echo "<button class='updateBtn'>Editar</button><br>";
+        echo "</div>";
     }
 
     function ShowSchedules($primary_key){
         $horarios = SQL::Select(SQL::HORARIO, ["id_programa" => $primary_key], [], "dia_semana", SQL::ASCENDANT)->fetchAll(PDO::FETCH_ASSOC);
         $groups = [];
 
-        $btn_element = "<button class=\"updateBtn\" onclick=\"showUpdateSchedules(args)\">Editar</button><br>";
+        $btn_element = "<button class='updateBtn'>Editar</button><br>";
+        $rangoHorario = '';
+        $currentValuesElement = "<div class='currentValue' style='display: none;'>args</div>";
         $args= '';
 
         foreach ($horarios as $horario) {
@@ -69,39 +105,51 @@
         }
 
         foreach ($groups as $key => $group) {
+            echo "<div class='contentField' contentName='horario' pk='$primary_key' fieldName='Horarios' inputType='schedules'>";
             $days = [];
             $retra = null;
             foreach ($group as $horario) {
                 $days[] = $horario['dia_semana'];
                 if(!isset($retra)) $retra = $horario['es_retransmision'];
                 echo $horario['dia_semana'] . ($horario['es_retransmision'] ? " (Retrasmision) " : "" ) . "<br>";
-                echo "De " . $horario['hora_inicio'] . " a " . $horario['hora_fin'] . "<br>";
+                $rangoHorario = "De " . $horario['hora_inicio'] . " a " . $horario['hora_fin'] . "<br>";
+                echo $rangoHorario;
             }
             $jsonDays = json_encode($days, JSON_UNESCAPED_UNICODE);
-            $jsonDays = str_replace('"', "'", $jsonDays);
-            $jsonDays = addslashes($jsonDays);
-            $args = "'$primary_key','$jsonDays','$key','$retra'";
-            $final_element = str_replace("args" , $args, $btn_element);
-            echo $final_element;
-            echo "<br>";
+            // $jsonDays = str_replace('"', "'", $jsonDays);
+            // $jsonDays = addslashes($jsonDays);
+            $args = "[$jsonDays,[$key],$retra]";
+            $currentValuesElement = str_replace("args" , $args, $currentValuesElement);
+            $fieldNameElement = "<div class='fieldTitle' style='display: nonde;'>Horario</div>";
+            echo $fieldNameElement;
+            echo $currentValuesElement;
+            echo $btn_element;
+            echo "</div>";
+        }
+
+        if(!count($groups)){
+            echo "<button id='$primary_key' class='modalBtn createBtn' contentName=\"horario\">Añadir horarios</button>";
         }
     }
 
     function ShowList($table_name, $primary_key){
+        $fieldTitle = null;
         $table_name_element = null;
         $pk_element = null;
         $value_element = null;
         $output_element = '';
-        $btn_element = "<button class=\"updateBtn\" onclick=\"ShowUpdateList(args)\">Editar</button><br>";
+        
         $args= '';
         
         switch ($table_name) {
             case SQL::PROGRAMA_PRESENTADOR:
+                $fieldTitle = 'Presentadores';
                 $table_name_element = SQL::PRESENTADOR;
                 $pk_element = 'id_presentador';
                 $value_element = 'nombre_presentador';
                 break;
             case SQL::PROGRAMA_GENERO:
+                $fieldTitle = 'Generos';
                 $table_name_element = SQL::GENERO;
                 $pk_element = 'id_genero';
                 $value_element = 'nombre_genero';
@@ -114,16 +162,25 @@
         $jsonAvailable = addslashes($jsonAvailable);
         $jsonAvailable = str_replace('"', "'", $jsonAvailable);
         $args = "'$primary_key','$table_name', '$jsonSelected', '$jsonAvailable'";
+
+        $btn_element = "<button class='updateBtn'>Editar</button><br>";
         $btn_element = str_replace("args" , $args, $btn_element);
+
+        echo "<div class='contentField' contentName='$table_name' pk='$primary_key' fieldName='$table_name_element' inputType='list'>";
+        echo "<div class='fieldTitle'>$fieldTitle</div>";
+        echo "<ul>";
         foreach ($selected as $element) {
             $output_element = SQL::Select($table_name_element, [$pk_element => $element], [$value_element])->fetchColumn() . "<br>";
             if($table_name_element === SQL::PRESENTADOR){
                 $aTag = '<a href="' . htmlspecialchars(pathinfo($_SERVER["PHP_SELF"], PATHINFO_FILENAME)) . "?presentador=" . $element . '">element</a>';
                 $output_element = str_replace("element", $output_element, $aTag);
             }
-            echo $output_element;
+            echo "<li>$output_element</li>";
         }
+        echo "</ul>";
+        echo "<div class='currentValue' style='display: none;'>$jsonSelected</div>";
         echo $btn_element;
+        echo "</div>";
     }
 
     class TableRows extends RecursiveIteratorIterator {
@@ -254,9 +311,9 @@
                                 Display404();
                                 break;
                             }
-                            ShowField($key, $value, $programa, 'nombre_programa', SQL::TEXT);
-                            ShowField($key, $value, $programa, 'url_imagen', SQL::IMAGE);
-                            ShowField($key, $value, $programa, 'descripcion', SQL::TEXT);
+                            ShowField($key, $value, 'nombre_programa', 'Nombre del programa', SQL::TEXT, $programa);
+                            ShowField($key, $value, 'url_imagen', 'Imagen del programa', SQL::FILE, $programa);
+                            ShowField($key, $value, 'descripcion', 'Descripcion', 'textarea', $programa);
                             echo "<br>";
                             
                             echo "Horarios: <br>";
@@ -270,14 +327,14 @@
                             // }
                             // echo "<br>";
                             
-                            echo "presentado por: <br>";
+                            // echo "presentado por: <br>";
                             ShowList(SQL::PROGRAMA_PRESENTADOR, $value);
                             // $presentadores = SQL::Select(SQL::PROGRAMA_PRESENTADOR, ["id_programa" => $value], ["id_presentador"])->fetchAll(PDO::FETCH_ASSOC);
                             // foreach ($presentadores as $presentador) {
                             //     echo '<a href="'. htmlspecialchars(pathinfo($_SERVER["PHP_SELF"], PATHINFO_FILENAME)) . "?presentador=". $presentador["id_presentador"] .'">' . SQL::Select(SQL::PRESENTADOR, ["id_presentador" => $presentador["id_presentador"]], ["nombre_presentador"])->fetchColumn() . '</a> <br>';
                             // }
-                            echo "<br>";
-                            echo "Generos: <br>";
+                            // echo "<br>";
+                            // echo "Generos: <br>";
                             ShowList(SQL::PROGRAMA_GENERO, $value);
                             // $generos = SQL::Select(SQL::PROGRAMA_GENERO, ['id_programa' => $value], ["id_genero"])->fetchAll(PDO::FETCH_ASSOC);
                             // foreach ($generos as $genero) {
@@ -291,9 +348,9 @@
                             Display404();
                             break;
                         }
-                        ShowField($key, $value, $presentador, 'nombre_presentador', SQL::TEXT);
-                        ShowField($key, $value, $presentador, 'biografia', SQL::TEXT);
-                        ShowField($key, $value, $presentador, 'url_foto', SQL::IMAGE);
+                        ShowField($key, $value, 'nombre_presentador', 'Nombre presentador', SQL::TEXT, $presentador);
+                        ShowField($key, $value, 'biografia', 'Biografia', SQL::TEXT, $presentador);
+                        ShowField($key, $value, 'url_foto', 'foto del presentador', SQL::FILE, $presentador);
                         break;
                     case SQL::GENERO:
                         $genero = SQL::Select(SQL::GENERO, ['id_genero' => $value])->fetch(PDO::FETCH_ASSOC);
@@ -301,7 +358,7 @@
                             Display404();
                             break;
                         }
-                        ShowField($key, $value, $genero, 'nombre_genero', SQL::TEXT);
+                        ShowField($key, $value, 'nombre_genero', 'Nombre del genero', SQL::TEXT, $genero);
                         break;
                     case SQL::USER:
                         $user = SQL::Select(SQL::USER, ['id_user' => $value])->fetch(PDO::FETCH_ASSOC);
@@ -309,12 +366,12 @@
                             Display404();
                             break;
                         }
-                        ShowField($key, $value, $user, 'username', SQL::TEXT);
-                        ShowField($key, $value, $user, 'email', SQL::TEXT);
-                        ShowField($key, $value, $user, 'password_hash', SQL::PASSWORD);
-                        ShowField($key, $value, $user, 'nombre_completo', SQL::TEXT);
-                        ShowField($key, $value, $user, 'rol', SQL::ENUM);
-                        ShowField($key, $value, $user, 'cuenta_activa', SQL::BOOLEAN);
+                        ShowField($key, $value, 'username', 'Nombre de usuario', SQL::TEXT, $user);
+                        ShowField($key, $value, 'email', 'correo de usuario', SQL::TEXT, $user);
+                        ShowField($key, $value, 'password_hash', 'contraseña', SQL::PASSWORD, $user);
+                        ShowField($key, $value, 'nombre_completo', 'Nombre completo', SQL::TEXT, $user);
+                        ShowField($key, $value, 'rol', 'Rol del usuario', SQL::ENUM, $user);
+                        ShowField($key, $value, 'cuenta_activa', 'Cuenta Activa', SQL::BOOLEAN, $user);
                         break;
                     default:
                         $flag = 1;

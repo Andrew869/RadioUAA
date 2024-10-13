@@ -1,8 +1,13 @@
-import { SendDataBaseRequest, CreateModal, CreateInput, SendDeleteRequest } from './utilities.js';
+import { CreateEvent, SumbitCreateRequest, SumbitUpdateRequest ,CreateModal, CreateInput, SubmitDeleteRequest, ToHours } from './utilities.js';
 const modals_container = document.getElementById('modals_container');
 // const originalModal = modals_container.querySelector('#originalModal');
 // const original_forms = document.getElementById('original_forms');
 const createBtns = document.getElementsByClassName('createBtn');
+
+const updateBtns = document.getElementsByClassName('updateBtn');
+
+const contentFields = document.getElementsByClassName('contentField');
+
 const deleteBtns = document.getElementsByClassName('deleteBtn');
 
 if(createBtns.length){
@@ -10,7 +15,41 @@ if(createBtns.length){
         const createBtn = createBtns[index];
         let contentName = createBtn.getAttribute('contentName');
         createBtn.addEventListener('click', function(e){
-            AddContent(contentName);
+            AddContent(e ,contentName);
+        });
+    }
+}
+
+// if(updateBtns.length){
+//     for (let index = 0; index < updateBtns.length; index++) {
+//         const updateBtn = updateBtns[index];
+//         let contentName = updateBtn.getAttribute('contentName');
+//         let pk = updateBtn.getAttribute('pk');
+//         updateBtn.addEventListener('click', function(e){
+//             UpdateContent(contentName, pk, );
+//         });
+//     }
+// }
+
+if(contentFields.length){
+    for (let index = 0; index < contentFields.length; index++) {
+        const contentField = contentFields[index];
+        const updateBtn = contentField.querySelector('.updateBtn');
+        const contentName = contentField.getAttribute('contentName');
+        const pk = contentField.getAttribute('pk');
+        const fieldName = contentField.getAttribute('fieldName');
+        const fieldTitle = contentField.querySelector('.fieldTitle').textContent;
+        const inputType = contentField.getAttribute('inputType');
+        let currentValue = contentField.querySelector('.currentValue').textContent;
+        if(inputType === 'boolean'){
+            if(currentValue === 'No')
+                currentValue = 0;
+            else
+                currentValue = 1;
+        }
+        
+        updateBtn.addEventListener('click', function(e){
+            UpdateContent(contentName, pk, fieldName, fieldTitle, inputType, currentValue);
         });
     }
 }
@@ -70,7 +109,15 @@ if(deleteBtns.length){
 //     return currentModal;
 // }
 
-function AddContent(contentName){
+const fieldsInfo = [
+    ['programa', 'Nombre del programa', 'Imagen del programa', 'Descripcion', 'Horarios', 'Presentadores', 'Generos'],
+    ['horario', 'Horarios'],
+    ['presentador', 'Nombre presentador', 'foto del presentador', 'Biografia'],
+    ['genero', 'Nombre del genero'],
+    ['user', 'Nombre de usuario', 'correo de usuario', 'contraseña', 'Nombre completo', 'Rol del usuario', 'Cuenta Activa']
+];
+
+function AddContent(e, contentName){
     const modal = CreateModal();
     const modal_content = modal.querySelector('.container');
     const btns_container = modal.querySelector('.btns_container');
@@ -91,6 +138,7 @@ function AddContent(contentName){
             {inputType:'list', id:'genero', classes:[], title:'Generos', tableName: contentName},
         ],
         horario: [
+            {inputType:'text', id:'id_programa', classes:[], title:'id del programa', tableName: contentName},
             {inputType:'schedules', id:'horario', classes:[], title:'Horarios', tableName: contentName},
         ],
         presentador: [
@@ -109,7 +157,6 @@ function AddContent(contentName){
             {inputType:'enum', id:'rol', classes:[], title:'Rol del usuario' , tableName: contentName},
             {inputType:'boolean', id:'cuenta_activa', classes:[], title:'Cuenta Activa' , tableName: contentName},
         ]
-
     };
 
     switch (contentName) {
@@ -122,6 +169,10 @@ function AddContent(contentName){
             contents.horario.forEach(input => {
                 inputs.push(CreateInput(input.inputType, input.id, input.classes, input.title, input.tableName));
             });
+            let inputId = inputs[0].querySelector('#id_programa');
+            inputId.value = e.target.id;
+            inputId.readOnly = true;
+            inputs[0].style.display = 'none';
             break;
         case 'presentador':
             contents.presentador.forEach(input => {
@@ -145,7 +196,123 @@ function AddContent(contentName){
     });
 
     confirmBtn.addEventListener('click', function(){
-        SendDataBaseRequest(0, contentName, inputs);
+        SumbitCreateRequest(contentName, inputs);
+    });
+}
+
+function UpdateContent(contentName, pk, fieldName, fieldTitle, inputType, currentValue){
+    const modal = CreateModal();
+    const modal_content = modal.querySelector('.container');
+    const btns_container = modal.querySelector('.btns_container');
+
+    const confirmBtn = btns_container.querySelector('#confirmBtn');
+
+    const input = CreateInput(inputType, fieldName, [], fieldTitle, contentName);
+    
+    modal_content.insertBefore(input, btns_container); 
+
+    // let file;
+    // let confirmBtn = SetupModal(inputType);
+
+    // let update_label = input.querySelector('LABEL');
+    // if(!(inputType === 'enum' || inputType === 'boolean'));
+    //     let update_input = input.querySelector('INPUT');
+
+    switch (inputType) {
+        case 'text':
+            input.querySelector('input').value = currentValue;
+            break;
+        case 'textarea':
+            input.querySelector('textarea').value = currentValue;
+            break;
+        case 'password':
+            break;
+        case 'file':
+            break;
+        case 'enum':
+            {
+                let selectElement = input.querySelector('.selectList');
+                // Como se hace una peticion fetch para obtener datos de la DB, puede existir un retraso, por lo que creamos un evento que se activa cuando la peticion fue recibida y hubo respuesta. Asi nos aseguramos que ya existan las opciones cuando las queremos modificar.
+                CreateEvent(selectElement, 'requestSuccessfully', 'Evento lanzado con éxito.');
+                selectElement.addEventListener('requestSuccessfully', function(){
+                    let options = selectElement.querySelectorAll('option');
+                    options.forEach(option => {
+                        if(option.textContent === currentValue)
+                            option.selected = true;
+                    });
+                });
+            }
+            break;
+        case 'boolean':
+            input.querySelector('input').checked = currentValue;
+            break;
+        case 'schedules':
+            {
+                let values = JSON.parse(currentValue);
+                let daysArray = values[0];  
+                let timesInMinutes = values[1];
+                let retrasmision = values[2];
+
+                let daysList = input.querySelector('.days_list');
+                CreateEvent(daysList, 'requestSuccessfully', 'Evento lanzado con éxito.');
+                daysList.addEventListener('requestSuccessfully', function(){
+                    let options = daysList.querySelectorAll('li');
+                    daysArray.forEach(selectedDay => {
+                        for (let i = 0; i < options.length; i++) {
+                            if (options[i].textContent === selectedDay) {
+                                options[i].classList.add('selected');
+                                break;
+                            }
+                        }
+                    });
+                });
+                let timesInHours = [];
+                timesInMinutes.forEach(time => {
+                    timesInHours.push(ToHours(time));
+                });
+
+                let prevTimes = timesInHours.join(',');
+
+                let timesContainer = input.querySelector('.times_container');
+                timesContainer.setAttribute('prevTimes', prevTimes);
+                
+                const timeInputs = input.querySelectorAll('[type=time]');
+                // console.log(ToHours(timesRange[1]));
+                for (let i = 0; i < timeInputs.length; i++) {
+                    const time = timeInputs[i];
+                    time.value = ToHours(timesInMinutes[i]);
+                }
+
+                const checkboxInput = input.querySelector('[type="checkbox"]');
+                checkboxInput.checked = retrasmision;
+            }
+            break;
+        case 'list':
+            {
+                let selected = JSON.parse(currentValue);
+                selected.sort((a, b) => a - b);
+
+                let selectedContainer = input.querySelector('#optionsSelected')
+                let optionsAvailable = input.querySelector('#optionsAvailable');
+                CreateEvent(optionsAvailable, 'requestSuccessfully', 'Evento lanzado con éxito.');
+                optionsAvailable.addEventListener('requestSuccessfully', function(){
+                    let options = optionsAvailable.querySelectorAll('li');
+                    selected.forEach(selectedOption => {
+                        for (let i = 0; i < options.length; i++) {
+                            if (i === (selectedOption - 1)) {
+                                options[i].classList.add('selected');
+                                selectedContainer.appendChild(options[i]);
+                                break;
+                            }
+                        }
+                    });
+                });
+            }
+            break;
+    }
+
+    confirmBtn.addEventListener('click', function(){
+        SumbitUpdateRequest(contentName, pk, fieldName, input);
     });
 }
 
@@ -160,6 +327,6 @@ function DeleteContent(contentName, pk){
     modal_content.insertBefore(warning_text, btns_container);
 
     confirmBtn.addEventListener('click', function(){
-        SendDeleteRequest(contentName, pk);
+        SubmitDeleteRequest(contentName, pk);
     })
 }

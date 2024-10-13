@@ -170,7 +170,7 @@ tr.values:nth-child(even){
     background-color: #f9f9f9;
 }
 button.updateBtn {
-    background-color: #008CBA;
+    background-color: #007bff;
     color: white;
     padding: 6px 10px;
     border: none;

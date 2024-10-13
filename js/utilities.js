@@ -106,21 +106,9 @@ export function GetInputValues(input){
     return data;
 }
 
-export function SendDataBaseRequest(action, contentName, inputs){
+export function SumbitCreateRequest(contentName, inputs){
     let formData = new FormData();
     formData.append('contentName', contentName);
-    // switch (action) {
-    //     case 0: //create
-    //         {
-                
-    //         }
-    //         break;
-    //     case 1:
-    //         {
-
-    //         }
-    //         break;
-    // }
 
     inputs.forEach(input => {
         let data = GetInputValues(input);
@@ -145,7 +133,34 @@ export function SendDataBaseRequest(action, contentName, inputs){
     .then(response => response.text()) // Procesar la respuesta como texto
     .then(data => {
         // message.textContent = data; // Mostrar el mensaje del servidor
-        // window.location.href = window.location.href;
+        window.location.href = window.location.href;
+    })
+    .catch(error => {
+        console.error('Error al subir la imagen:', error);
+    });
+}
+
+export function SumbitUpdateRequest(contentName, pk, fieldName, input){
+    let formData = new FormData();
+    formData.append('contentName', contentName);
+    formData.append('pk', pk);
+    formData.append('fieldName', fieldName);
+    let data = GetInputValues(input);
+    data.forEach(datum => {
+        formData.append((contentName === 'horario' ? datum.name : 'newValue'), datum.value);
+    });
+
+    if(contentName === 'horario')
+        formData.append('prevTimes', input.querySelector('.times_container').getAttribute('prevTimes'));
+
+    fetch('updateContent.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text()) // Procesar la respuesta como texto
+    .then(data => {
+        // message.textContent = data; // Mostrar el mensaje del servidor
+        window.location.href = window.location.href;
     })
     .catch(error => {
         console.error('Error al subir la imagen:', error);
@@ -205,8 +220,19 @@ export function CreateInput(inputType, id, classes, inputTitle, tableName){
             {
                 element = document.createElement('select');
                 element.id = id;
+                element.classList.add('selectList');
 
                 EnumToList(element, tableName, id, 'option');
+                // let opcion = document.createElement('option');
+                // opcion.textContent = 'Admin';
+                // element.appendChild(opcion);
+                // let opcion2 = document.createElement('option');
+                // opcion2.textContent = 'Editor';
+                // element.appendChild(opcion2);
+                // let opcion3 = document.createElement('option');
+                // opcion3.textContent = 'Moderador';
+                // element.appendChild(opcion3);
+                    
 
                 break;
             }
@@ -223,17 +249,17 @@ export function CreateInput(inputType, id, classes, inputTitle, tableName){
                 element = document.createElement('div');
                 element.id = 'schedules_container';
 
-                let originalSchedule = document.createElement('div');
+                let schedule = document.createElement('div');
                 // originalSchedule.id = 'originalschedule';
-                originalSchedule.classList.add('schedule');
-                element.appendChild(originalSchedule);
+                schedule.classList.add('schedule');
+                element.appendChild(schedule);
 
-                originalSchedule.addEventListener('click', CheckSchedules);
-                originalSchedule.addEventListener('keyup', CheckSchedules);
+                schedule.addEventListener('click', CheckSchedules);
+                schedule.addEventListener('keyup', CheckSchedules);
 
                 let daysContainer = document.createElement('div');
                 daysContainer.classList.add('days_container');
-                originalSchedule.appendChild(daysContainer);
+                schedule.appendChild(daysContainer);
 
                 let daysList = document.createElement('ul');
                 daysList.classList.add('days_list');
@@ -242,36 +268,41 @@ export function CreateInput(inputType, id, classes, inputTitle, tableName){
                 EnumToList(daysList, 'horario', 'dia_semana', 'li');
                 DaysSelectionSystem(daysList);
 
+                let timesContainer = document.createElement('div');
+                timesContainer.classList.add('times_container');
+
                 let labelHoraInicio = document.createElement('label');
                 labelHoraInicio.textContent = "Hora inicio";
-                originalSchedule.appendChild(labelHoraInicio);
+                timesContainer.appendChild(labelHoraInicio);
 
                 let inputHoraInicio = document.createElement('input');
                 inputHoraInicio.type = 'time';
                 inputHoraInicio.classList.add('hora_inicio');
-                originalSchedule.appendChild(inputHoraInicio);
+                timesContainer.appendChild(inputHoraInicio);
 
                 let labelHoraFin = document.createElement('label');
                 labelHoraFin.textContent = "Hora final";
-                originalSchedule.appendChild(labelHoraFin);
+                timesContainer.appendChild(labelHoraFin);
 
                 let inputHoraFin = document.createElement('input');
                 inputHoraFin.type = 'time';
                 inputHoraFin.classList.add('hora_fin');
-                originalSchedule.appendChild(inputHoraFin);
+                timesContainer.appendChild(inputHoraFin);
+
+                schedule.appendChild(timesContainer);
 
                 let labelRetransmision = document.createElement('label');
                 labelRetransmision.textContent = "Es retrasmision";
-                originalSchedule.appendChild(labelRetransmision);
+                schedule.appendChild(labelRetransmision);
 
                 let inputRetransmision = document.createElement('input');
                 inputRetransmision.type = 'checkbox';
                 inputRetransmision.classList.add('es_retransmision');
-                originalSchedule.appendChild(inputRetransmision);
+                schedule.appendChild(inputRetransmision);
 
                 let feedbackSchedules = document.createElement('div');
                 feedbackSchedules.classList.add('feedback_schedules');
-                originalSchedule.appendChild(feedbackSchedules);
+                schedule.appendChild(feedbackSchedules);
 
                 let addNewScheduleButton = document.createElement('button');
                 addNewScheduleButton.id = 'addNewSchedule';
@@ -279,7 +310,7 @@ export function CreateInput(inputType, id, classes, inputTitle, tableName){
                 element.appendChild(addNewScheduleButton);
                 
                 addNewScheduleButton.addEventListener('click', function(){
-                    CloneSchedule(element, originalSchedule, this);
+                    CloneSchedule(element, schedule, this);
                 });
                 break;
             }
@@ -336,7 +367,7 @@ function HideModal(modal){
             if(layers){
                 currentLayer = layers[layers.length - 1];
             }
-        }, 400);
+        }, 300);
     }
 }
 
@@ -422,6 +453,17 @@ export function CreateModal(){
     return modal;
 }
 
+let requestEvent;
+let listener;
+
+export function CreateEvent(element, eventName, detail) {
+    requestEvent = new CustomEvent(eventName, {
+        detail: detail
+    });
+
+    listener = element;
+}
+
 function GetList(container, tableName){
     let args = tableName;
     let list;
@@ -451,6 +493,7 @@ function GetList(container, tableName){
                     break;
             }
         });
+        if(listener) listener.dispatchEvent(requestEvent);
     })
     .catch(error => console.error("Error:", error));
 }
@@ -471,7 +514,8 @@ function EnumToList(container, tableName, fieldName, tagName){
             optionTag.textContent = option;
             container.appendChild(optionTag);
         });
-        
+        // Despachar el evento en el elemento especificado
+        if(listener) listener.dispatchEvent(requestEvent);
     })
     .catch(error => console.error("Error:", error));
 }
@@ -790,7 +834,7 @@ export function CreateContent(content, record) {
 }
 
 // Encargada de enviar la informacion al archivo php que se encarga de eliminar
-export function SendDeleteRequest(content, pk) {
+export function SubmitDeleteRequest(content, pk) {
     fetch("deleteContent.php", {
         method: "POST",
         headers: {
