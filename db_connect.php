@@ -1,33 +1,11 @@
-<<<<<<< HEAD
-<?php
-    $servername = "localhost:3309";
-    $username = "root";
-    $password = "";
-    $dbname='radio_db';
-    
-    try {
-        $conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8mb4", $username, $password);
-        // set the PDO error mode to exception
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        // echo "Connected successfully";
-    } catch(PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
-        exit();
-    }
-?>
-
-
-
-
-=======
 <?php
     class SQL{
         public static $conn = NULL;
         public static $stmt = NULL;
         
-        public static $servername = "localhost";
-        public static $username = "root";
-        public static $password = "";
+        public static $servername = "34.123.144.250";
+        public static $username = "admin";
+        public static $password = "1234";
         public static $dbname='radio_db';
 
         const NULL = "null";
@@ -235,4 +213,3 @@
     // $clase = null;
     // SQL::Create(SQL::GENERO, ["nom" => "Kids", "asd"=>"asd"])
 ?>
->>>>>>> main
