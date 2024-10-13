@@ -30,7 +30,97 @@
     // ShowField($key, $value, $presentador, 'nombre_presentador', SQL::TEXT);
 
     function ShowField($table_name, $primary_key, $current_content, $key, $type) : void{
-        echo "$current_content[$key] <button class='updateBtn' onclick=\"showUpdateForm('$table_name', '$primary_key', '$key', '" . addslashes($current_content[$key]) . "', '$type')\">Editar</button><br>";
+        $value_field = '';
+        $onclick = '';
+        switch ($type) {
+            case SQL::TEXT:
+            case SQL::ENUM:
+                $value_field.= $current_content[$key];       
+                break;
+            case SQL::PASSWORD:
+                $value_field .= "••••••••";
+                break;
+            case SQL::IMAGE:
+                $value_field .= "<img src='$current_content[$key]'>";
+                break;
+            case SQL::BOOLEAN:
+                $value_field .= ($current_content[$key] ? "Sí" : "No");
+                break;
+        }
+        echo $value_field;
+        echo "<button class='updateBtn' onclick=\"showUpdateForm('$table_name', '$primary_key', '$key', '" . addslashes($current_content[$key]) . "', '$type')\">Editar</button><br>";
+    }
+
+    function ShowSchedules($primary_key){
+        $horarios = SQL::Select(SQL::HORARIO, ["id_programa" => $primary_key], [], "dia_semana", SQL::ASCENDANT)->fetchAll(PDO::FETCH_ASSOC);
+        $groups = [];
+
+        $btn_element = "<button class=\"updateBtn\" onclick=\"showUpdateSchedules(args)\">Editar</button><br>";
+        $args= '';
+
+        foreach ($horarios as $horario) {
+            $inicio = ToMinutes($horario['hora_inicio']);
+            $fin = ToMinutes($horario['hora_fin']);
+
+            $groups["$inicio,$fin"][] = $horario;
+        }
+
+        foreach ($groups as $key => $group) {
+            $days = [];
+            $retra = null;
+            foreach ($group as $horario) {
+                $days[] = $horario['dia_semana'];
+                if(!isset($retra)) $retra = $horario['es_retransmision'];
+                echo $horario['dia_semana'] . ($horario['es_retransmision'] ? " (Retrasmision) " : "" ) . "<br>";
+                echo "De " . $horario['hora_inicio'] . " a " . $horario['hora_fin'] . "<br>";
+            }
+            $jsonDays = json_encode($days, JSON_UNESCAPED_UNICODE);
+            $jsonDays = str_replace('"', "'", $jsonDays);
+            $jsonDays = addslashes($jsonDays);
+            $args = "'$primary_key','$jsonDays','$key','$retra'";
+            $final_element = str_replace("args" , $args, $btn_element);
+            echo $final_element;
+            echo "<br>";
+        }
+    }
+
+    function ShowList($table_name, $primary_key){
+        $table_name_element = null;
+        $pk_element = null;
+        $value_element = null;
+        $output_element = '';
+        $btn_element = "<button class=\"updateBtn\" onclick=\"ShowUpdateList(args)\">Editar</button><br>";
+        $args= '';
+        
+        switch ($table_name) {
+            case SQL::PROGRAMA_PRESENTADOR:
+                $table_name_element = SQL::PRESENTADOR;
+                $pk_element = 'id_presentador';
+                $value_element = 'nombre_presentador';
+                break;
+            case SQL::PROGRAMA_GENERO:
+                $table_name_element = SQL::GENERO;
+                $pk_element = 'id_genero';
+                $value_element = 'nombre_genero';
+                break;
+        }
+        $selected = SQL::Select($table_name, ['id_programa' => $primary_key], [$pk_element])->fetchAll(PDO::FETCH_COLUMN);
+        $available = SQL::Select($table_name_element, [], [$pk_element, $value_element])->fetchAll(PDO::FETCH_ASSOC);
+        $jsonSelected = json_encode($selected);
+        $jsonAvailable = json_encode($available, JSON_UNESCAPED_UNICODE);
+        $jsonAvailable = addslashes($jsonAvailable);
+        $jsonAvailable = str_replace('"', "'", $jsonAvailable);
+        $args = "'$primary_key','$table_name', '$jsonSelected', '$jsonAvailable'";
+        $btn_element = str_replace("args" , $args, $btn_element);
+        foreach ($selected as $element) {
+            $output_element = SQL::Select($table_name_element, [$pk_element => $element], [$value_element])->fetchColumn() . "<br>";
+            if($table_name_element === SQL::PRESENTADOR){
+                $aTag = '<a href="' . htmlspecialchars(pathinfo($_SERVER["PHP_SELF"], PATHINFO_FILENAME)) . "?presentador=" . $element . '">element</a>';
+                $output_element = str_replace("element", $output_element, $aTag);
+            }
+            echo $output_element;
+        }
+        echo $btn_element;
     }
 
     class TableRows extends RecursiveIteratorIterator {
@@ -159,31 +249,35 @@
                                 Display404();
                                 break;
                             }
-                            echo $programa['nombre_programa'] . "<br>";
-                            echo '<img src="'.$programa['url_imagen'].'" style="display: block;" alt="imagen_programa" width="50" height="50">';
-                            echo $programa['descripcion'] . "<br>";
+                            ShowField($key, $value, $programa, 'nombre_programa', SQL::TEXT);
+                            ShowField($key, $value, $programa, 'url_imagen', SQL::IMAGE);
+                            ShowField($key, $value, $programa, 'descripcion', SQL::TEXT);
                             echo "<br>";
                             
                             echo "Horarios: <br>";
-                            $horarios = SQL::Select(SQL::HORARIO, ["id_programa" => $value], [], "dia_semana", SQL::ASCENDANT)->fetchAll(PDO::FETCH_ASSOC);
-                            foreach ($horarios as $horario) {
-                                echo $horario['dia_semana'] . ($horario['es_retransmision'] ? " (Retrasmision) " : "" ) . "<br>";
-                                echo "De " . $horario['hora_inicio'] . " a " . $horario['hora_fin'] . "<br>";
-                                echo "<br>";
-                            }
-                            echo "<br>";
+                            ShowSchedules($value);
+
+                            // foreach ($horarios as $horario) {
+                            //     $tmp[$horario['hora_inicio']] = $horario;
+                            //     echo $horario['dia_semana'] . ($horario['es_retransmision'] ? " (Retrasmision) " : "" ) . "<br>";
+                            //     echo "De " . $horario['hora_inicio'] . " a " . $horario['hora_fin'] . "<br>";
+                            //     echo "<br>";
+                            // }
+                            // echo "<br>";
                             
                             echo "presentado por: <br>";
-                            $presentadores = SQL::Select(SQL::PROGRAMA_PRESENTADOR, ["id_programa" => $value], ["id_presentador"])->fetchAll(PDO::FETCH_ASSOC);
-                            foreach ($presentadores as $presentador) {
-                                echo '<a href="'. htmlspecialchars(pathinfo($_SERVER["PHP_SELF"], PATHINFO_FILENAME)) . "?presentador=". $presentador["id_presentador"] .'">' . SQL::Select(SQL::PRESENTADOR, ["id_presentador" => $presentador["id_presentador"]], ["nombre_presentador"])->fetchColumn() . '</a> <br>';
-                            }
+                            ShowList(SQL::PROGRAMA_PRESENTADOR, $value);
+                            // $presentadores = SQL::Select(SQL::PROGRAMA_PRESENTADOR, ["id_programa" => $value], ["id_presentador"])->fetchAll(PDO::FETCH_ASSOC);
+                            // foreach ($presentadores as $presentador) {
+                            //     echo '<a href="'. htmlspecialchars(pathinfo($_SERVER["PHP_SELF"], PATHINFO_FILENAME)) . "?presentador=". $presentador["id_presentador"] .'">' . SQL::Select(SQL::PRESENTADOR, ["id_presentador" => $presentador["id_presentador"]], ["nombre_presentador"])->fetchColumn() . '</a> <br>';
+                            // }
                             echo "<br>";
                             echo "Generos: <br>";
-                            $generos = SQL::Select(SQL::PROGRAMA_GENERO, ['id_programa' => $value], ["id_genero"])->fetchAll(PDO::FETCH_ASSOC);
-                            foreach ($generos as $genero) {
-                                echo SQL::Select(SQL::GENERO, ["id_genero" => $genero["id_genero"]], ["nombre_genero"])->fetchColumn() . "<br>";
-                            }
+                            ShowList(SQL::PROGRAMA_GENERO, $value);
+                            // $generos = SQL::Select(SQL::PROGRAMA_GENERO, ['id_programa' => $value], ["id_genero"])->fetchAll(PDO::FETCH_ASSOC);
+                            // foreach ($generos as $genero) {
+                            //     echo SQL::Select(SQL::GENERO, ["id_genero" => $genero["id_genero"]], ["nombre_genero"])->fetchColumn() . "<br>";
+                            // }
                         }
                         break;
                     case SQL::PRESENTADOR:
@@ -195,10 +289,6 @@
                         ShowField($key, $value, $presentador, 'nombre_presentador', SQL::TEXT);
                         ShowField($key, $value, $presentador, 'biografia', SQL::TEXT);
                         ShowField($key, $value, $presentador, 'url_foto', SQL::IMAGE);
-                        
-                        
-                        // echo $presentador['biografia'] . "<button class='updateBtn'>Editar</button><br>";
-                        // echo '<img src="'.$presentador['url_foto'].'" style="display: block;" alt="imagen_programa" width="50" height="50">' . "<button class='updateBtn'>Editar</button>";
                         break;
                     case SQL::GENERO:
                         $genero = SQL::Select(SQL::GENERO, ['id_genero' => $value])->fetch(PDO::FETCH_ASSOC);
@@ -206,7 +296,7 @@
                             Display404();
                             break;
                         }
-                        echo $genero['nombre_genero'] . "<br>";
+                        ShowField($key, $value, $genero, 'nombre_genero', SQL::TEXT);
                         break;
                     case SQL::USER:
                         $user = SQL::Select(SQL::USER, ['id_user' => $value])->fetch(PDO::FETCH_ASSOC);
@@ -214,12 +304,12 @@
                             Display404();
                             break;
                         }
-                        echo $user['username'] . "<br>";
-                        echo $user['email'] . "<br>";
-                        echo $user['password_hash'] . "<br>";
-                        echo $user['nombre_completo'] . "<br>";
-                        echo $user['rol'] . "<br>";
-                        echo $user['cuenta_activa'] . "<br>";
+                        ShowField($key, $value, $user, 'username', SQL::TEXT);
+                        ShowField($key, $value, $user, 'email', SQL::TEXT);
+                        ShowField($key, $value, $user, 'password_hash', SQL::PASSWORD);
+                        ShowField($key, $value, $user, 'nombre_completo', SQL::TEXT);
+                        ShowField($key, $value, $user, 'rol', SQL::ENUM);
+                        ShowField($key, $value, $user, 'cuenta_activa', SQL::BOOLEAN);
                         break;
                     default:
                         $flag = 1;
@@ -231,21 +321,77 @@
                 <span class="close">&times;</span>
                 <div class="modal-content">
                     <div class="container">
-                        <div id="text" class="inputs">
+                        <div id="text" class="inputModal">
                             <label for="">text</label>
                             <input type="text" name="" id="">
                         </div>
-                        <div id="password" class="inputs">
+                        <div id="password" class="inputModal">
                             <label for="">password</label>
-                            <input type="text" name="" id="">
+                            <input type="password" name="" id="">
                         </div>
-                        <div id="image" class="inputs">
-                            <label for="">image</label>
-                            <input type="text" name="" id="">
+                        <div id="image" class="inputModal">
+                            <label for=""></label>
+                            <div class="drop-zone" id="drop-zone" for="fileInput">
+                                Arrastra y suelta tu archivo aquí o haz clic para seleccionar
+                            </div>
+                            <input type="file" name="fileToUpload" id="fileInput" accept="image/*" style="display:none;">
+                            <div id="feedback_img"></div>
+                        </div>
+                        <div id="enum" class="inputModal">
+                            <label for=""></label>
+                            <select id="enumContent" name="">
+                            </select>
+                        </div>
+                        <div id="boolean" class="inputModal">
+                            <label></label>
+                            <input id="true" type="radio" class="radio" name="opction" value="1">
+                            <label for="true">si</label>
+                            <input id="false" type="radio" class="radio" name="opction" value="0">
+                            <label for="false">no</label>
+                            <input type="text" id="radioMaster" name="">
+                        </div>
+                        <div id="schedules" class="inputModal">
+                            <div class="days_container">
+                                <ul class="days_list">
+                                    <?php 
+                                        // foreach (SQL::GetEnumValues(SQL::HORARIO, "dia_semana") as $dia) {
+                                        //     echo '<li dia_semana="' . $dia . '">' . $dia . '</li>';
+                                        // }
+                                    ?>
+                                </ul>
+                                <input type="hidden" name="horarios[0][dias]" class="diasSelectedInput" field_name="dias">
+                            </div>
+                            <label for="">Hora inicio</label>
+                            <input type="time" name="horarios[0][hora_inicio]" field_name="hora_inicio">
+                            <label for="">Hora final</label>
+                            <input type="time" name="horarios[0][hora_fin]" field_name="hora_fin">
+                            <label for="">Es retrasmision</label>
+                            <input type="checkbox">
+                            <!-- <input type="checkbox" name="horarios[0][es_retransmision]" field_name="es_retransmision" value="0" class="chk" checked hidden> -->
+                            <div class="txtHint"></div>
+                        </div>
+                        <div id="list" class="inputModal">
+                            <div>
+                                <h3>Seleccionados</h3>
+                                <ul id="optionsSelected" class="options">
+
+                                </ul>
+                            </div>
+                            <div>
+                                <h3>Disponibles</h3>
+                                <ul id="optionsAvailable" class="options">
+                                    <?php
+                                        // $presentadores = SQL::Select(SQL::PRESENTADOR, [], ["id_presentador", "nombre_presentador"])->fetchAll(PDO::FETCH_ASSOC);
+                                        // foreach ($presentadores as $presentador) {
+                                        //     echo '<li id_presentador="' . $presentador["id_presentador"] . '">' . $presentador["nombre_presentador"] . '</li>';
+                                        // }
+                                    ?>
+                                </ul>
+                            </div>
                         </div>
                         <div class="clearfix">
                             <button type="button" id="cancelBtn" class="modalBtn">Cancel</button>
-                            <button type="button" id="confirmBtn" class="modalBtn" <?php echo "content='$content' pk='$pk'" ?>>Actualizar</button>
+                            <button type="button" id="confirmBtn" class="modalBtn">Actualizar</button>
                         </div>
                     </div>
                 </div>
@@ -276,7 +422,7 @@
 
             <?php
 
-            
+            echo '<script src="../js/contentManager.js"></script>';
         }
         if($flag){
     ?>
@@ -329,12 +475,12 @@
             }
         ?>
         </div>
+        <script src="../js/tabsManager.js"></script>
         <?php
         }
         ?>
 
     </main>
-    <script src="../js/contentManager.js"></script>
 </body>
 
 </html>

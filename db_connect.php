@@ -33,6 +33,8 @@
         const DATE = "date";
         const TIME = "time";
         const BOOLEAN = "boolean";
+        const ENUM = "enum";
+        const LIST = "list";
 
         function __construct($asf){
             echo "hello world $asf" . "<br>";
@@ -94,38 +96,89 @@
             return self::$stmt;
         }
 
+        public static function GetFieldType($table_name, $field){
+            // $sql = "SELECT COLUMN_NAME, DATA_TYPE FROM information_schema.COLUMNS WHERE TABLE_NAME = '$table_name' AND COLUMN_NAME = '$field'";
+            $sql = "SELECT DATA_TYPE FROM information_schema.COLUMNS WHERE TABLE_NAME = '$table_name' AND COLUMN_NAME = '$field'";
+            self::$stmt = self::$conn->query($sql);
+            return self::$stmt->fetchColumn();
+        }
+
         public static function Create($table_name, $record) : int{
+
+            $fields = self::GetFields($table_name);
+            if($table_name !== SQL::PROGRAMA_PRESENTADOR && $table_name !== SQL::PROGRAMA_GENERO){
+                array_shift($fields);
+            }
+
             $length = count($record);
             
-            foreach ($record as $key => $value) {
-                $record[$key] = '\'' . $value . '\'';
+            for ($i = 0; $i < $length; $i++) { 
+                switch (self::GetFieldType($table_name, $fields[$i])) {
+                    case 'varchar':
+                    case 'char':
+                    case 'text':
+                    case 'date':
+                    case 'time':
+                    case 'datetime':
+                    case 'timestamp':
+                    case 'enum':
+                    case 'json':
+                    case 'uuid':
+                        $record[$i] = '\'' . $record[$i] . '\'';
+                        break;
+                }
             }
             
-            $sql = "INSERT INTO ";
-            switch ($table_name) {
-                case self::GENERO:
-                    $sql .= self::GENERO . " (nombre_genero)";
-                    break;
-                case self::HORARIO:
-                    $sql .= self::HORARIO . " (id_programa, dia_semana, hora_inicio, hora_fin, es_retransmision)";
-                    break;
-                case self::PRESENTADOR:
-                    $sql .= self::PRESENTADOR . " (nombre_presentador, biografia, url_foto)";
-                    break;
-                case self::PROGRAMA:
-                    $sql .= self::PROGRAMA . " (nombre_programa, url_imagen, descripcion)";
-                    break;
-                case self::USER:
-                    $sql .= self::USER . " (username, email, password_hash, nombre_completo, rol, cuenta_activa)";
-                    $record[2] = 'SHA2(' . $record[2] . ', 256)';
-                    break;
-                case self::PROGRAMA_PRESENTADOR:
-                    $sql .= self::PROGRAMA_PRESENTADOR . " (id_programa, id_presentador)";
-                    break;
-                case self::PROGRAMA_GENERO:
-                    $sql .= self::PROGRAMA_GENERO . " (id_programa, id_genero)";
-                    break;
+            // foreach ($record as $key => $value) {
+            //     switch (self::GetFieldType($table_name, $value)) {
+            //         case 'varchar':
+            //         case 'char':
+            //         case 'text':
+            //         case 'date':
+            //         case 'time':
+            //         case 'datetime':
+            //         case 'timestamp':
+            //         case 'json':
+            //         case 'uuid':
+            //             $record[$key] = '\'' . $value . '\'';
+            //             break;
+            //     }
+            // }
+            
+            $sql = "INSERT INTO $table_name ";
+            $str_fields = '(';
+            for ($i = 0; $i < $length; $i++) { 
+                if($i < $length-1)
+                    $str_fields .= $fields[$i] . ', ';
+                else 
+                    $str_fields .= $fields[$i] . ')';
             }
+            $sql .= $str_fields;
+            
+            // switch ($table_name) {
+            //     case self::GENERO:
+            //         $sql .= self::GENERO . " (nombre_genero)";
+            //         break;
+            //     case self::HORARIO:
+            //         $sql .= self::HORARIO . " (id_programa, dia_semana, hora_inicio, hora_fin, es_retransmision)";
+            //         break;
+            //     case self::PRESENTADOR:
+            //         $sql .= self::PRESENTADOR . " (nombre_presentador, biografia, url_foto)";
+            //         break;
+            //     case self::PROGRAMA:
+            //         $sql .= self::PROGRAMA . " (nombre_programa, url_imagen, descripcion)";
+            //         break;
+            //     case self::USER:
+            //         $sql .= self::USER . " (username, email, password_hash, nombre_completo, rol, cuenta_activa)";
+            //         $record[2] = 'SHA2(' . $record[2] . ', 256)';
+            //         break;
+            //     case self::PROGRAMA_PRESENTADOR:
+            //         $sql .= self::PROGRAMA_PRESENTADOR . " (id_programa, id_presentador)";
+            //         break;
+            //     case self::PROGRAMA_GENERO:
+            //         $sql .= self::PROGRAMA_GENERO . " (id_programa, id_genero)";
+            //         break;
+            // }
             
             $sql_values = "VALUES (";
             for ($i=0; $i < $length; $i++) { 
@@ -180,20 +233,31 @@
             return $enumValues;
         }
 
-        public static function Delete($table_name, $primary_key){
-            exit();
+        public static function Delete($table_name, $wheres = []){
             // $id = "id_" . $table_name;
             if($table_name === self::PROGRAMA){
-                self::Delete(self::HORARIO, $primary_key);
-                self::Delete(self::PROGRAMA_PRESENTADOR, $primary_key);
-                self::Delete(self::PROGRAMA_GENERO, $primary_key);
+                self::Delete(self::HORARIO, $wheres);
+                self::Delete(self::PROGRAMA_PRESENTADOR, $wheres);
+                self::Delete(self::PROGRAMA_GENERO, $wheres);
                 // Borrar imagen
-                $image_path = self::Select(self::PROGRAMA, self::GetPrimaryKeyName(self::PROGRAMA), $primary_key, ["url_imagen"])->fetchColumn();
-                if(file_exists($image_path)) unlink($image_path);
-            } 
+                // $image_path = self::Select(self::PROGRAMA, self::GetPrimaryKeyName(self::PROGRAMA), $primary_key, ["url_imagen"])->fetchColumn();
+                // if(file_exists($image_path)) unlink($image_path);
+            }
+            $where = "";
+            if(count($wheres)){
+                $where = " WHERE";
+                foreach ($wheres as $key => $value) {
+                    $where .= " $key = '$value'";
+                    if(array_key_last($wheres) !== $key){
+                        $where .= " AND";
+                    }
+                }
+            }
+
             $id_name = self::GetPrimaryKeyName(($table_name === self::HORARIO ? SQL::PROGRAMA : $table_name));
-            $sql = "DELETE FROM $table_name WHERE $id_name = '$primary_key'";
-            echo $sql . "<br>";
+            // $sql = "DELETE FROM $table_name WHERE $id_name = '$primary_key'";
+            $sql = "DELETE FROM $table_name" . $where;
+            // return;
             self::$stmt = self::$conn->prepare($sql);
             self::$conn->exec($sql);
             
@@ -203,8 +267,9 @@
             $stmt = self::$conn->exec($sql);
         }
     }
-    // $clase = new SQL("asd");
+    
     SQL::Connect();
+<<<<<<< HEAD
     // SQL::Update(SQL::GENERO, "1", "password_hash", "Admin123");
     // $asd = SQL::Select("user","1")->fetch(PDO::FETCH_ASSOC);
     // foreach ($asd as $key => $value) {
@@ -212,4 +277,13 @@
     // }
     // $clase = null;
     // SQL::Create(SQL::GENERO, ["nom" => "Kids", "asd"=>"asd"])
+=======
+
+    function ToMinutes($time) {
+        // Convierte el formato HH:MM en minutos totales desde la medianoche
+        list($hours, $minutes) = explode(':', $time);
+        return ($hours * 60) + $minutes;
+    }
+
+>>>>>>> 77415401fcf3c68b4a5befe7a21f9d1ce5ef5df0
 ?>

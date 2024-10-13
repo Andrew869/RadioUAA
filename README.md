@@ -31,13 +31,13 @@ CREATE TABLE programa_genero (
     id_programa INT,
     id_genero INT,
     PRIMARY KEY (id_programa, id_genero),
-    FOREIGN KEY (id_programa) REFERENCES programas(id_programa),
-    FOREIGN KEY (id_genero) REFERENCES generos(id_genero)
+    FOREIGN KEY (id_programa) REFERENCES programa(id_programa),
+    FOREIGN KEY (id_genero) REFERENCES genero(id_genero)
 ) 
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
 
-CREATE TABLE presentadore (
+CREATE TABLE presentador (
     id_presentador INT PRIMARY KEY AUTO_INCREMENT,
     nombre_presentador VARCHAR(64) NOT NULL,
     biografia TEXT,
@@ -50,8 +50,8 @@ CREATE TABLE programa_presentador (
     id_programa INT,
     id_presentador INT,
     PRIMARY KEY (id_programa, id_presentador),
-    FOREIGN KEY (id_programa) REFERENCES programas(id_programa),
-    FOREIGN KEY (id_presentador) REFERENCES presentadores(id_presentador)
+    FOREIGN KEY (id_programa) REFERENCES programa(id_programa),
+    FOREIGN KEY (id_presentador) REFERENCES presentador(id_presentador)
 ) 
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
@@ -63,7 +63,7 @@ CREATE TABLE horario (
     hora_inicio TIME,
     hora_fin TIME,
     es_retransmision BOOLEAN,
-    FOREIGN KEY (id_programa) REFERENCES programas(id_programa)
+    FOREIGN KEY (id_programa) REFERENCES programa(id_programa)
 ) 
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
@@ -110,7 +110,7 @@ VALUES (1, 1),  -- "Mañanas en la Radio" es de género "Noticias"
        (3, 3);  -- "Deportes en Vivo" es de género "Deportes"
 
 -- Insertar presentadores
-INSERT INTO presentadore (nombre_presentador, biografia, url_foto) 
+INSERT INTO presentador (nombre_presentador, biografia, url_foto) 
 VALUES ('Juan Pérez', 'Periodista con 10 años de experiencia en medios.', 'resources/img/profile_default.jpg'),
        ('Ana Gómez', 'Locutora y productora con 8 años en la radio.', 'resources/img/profile_default.jpg'),
        ('Carlos Martínez', 'Experto en deportes con amplia trayectoria.', 'resources/img/profile_default.jpg');
