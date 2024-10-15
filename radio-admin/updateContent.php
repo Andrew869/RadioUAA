@@ -94,14 +94,27 @@
         }
         else if($length === 3){ // types: list y img
             if(count($_FILES)){
-
+                $target_dir = "../resources/uploads/img/";
                 $image_path = SQL::Select($_POST['contentName'], [SQL::GetPrimaryKeyName($_POST['contentName']) => $_POST['pk']], [$_POST['fieldName']])->fetchColumn();
-                // unlink($image_path);
-
+                $nombrePrograma = null;
+                $version = null;
+                
                 $file = $_FILES['newValue'];
-
-                if(ValidateFile($file))
-                    move_uploaded_file($file["tmp_name"], $image_path);
+                $regex = '/\/([^\/]+)\[v(\d+)\]\.\w+$/'; // Expresión regular
+                
+                if (preg_match($regex, $image_path, $coincidencias)) {
+                    $nombrePrograma = $coincidencias[1];
+                    $version = ((int)$coincidencias[2]) + 1;
+                }
+                $newImageFileType = strtolower(pathinfo(basename($file["name"]),PATHINFO_EXTENSION));
+                
+                $target_file = $target_dir . $nombrePrograma . "[v$version]." . $newImageFileType;
+                if(isset($version))
+                    if(ValidateFile($file))
+                        if(move_uploaded_file($file["tmp_name"], $target_file)){
+                            SQL::Update($_POST['contentName'], $_POST['pk'], [$_POST['fieldName'] => $target_file]);
+                            unlink($image_path);
+                        }
                 
             }else{
                 $relationship_name = $_POST['0'];

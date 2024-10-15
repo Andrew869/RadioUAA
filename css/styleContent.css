@@ -307,3 +307,25 @@ li {
 .drop-zone.dragover {
     background-color: #e9ecef;
 }
+
+.rowfadein{
+    animation: newContentEffect 1s ease-in-out;
+}
+
+@keyframes newContentEffect {
+    0% {
+        opacity: 0;
+        transform: translateX(100%); /* Comienza fuera del contenedor, a la derecha */
+        background-color: rgba(0, 255, 0, 0.3);
+    }
+    80% {
+        opacity: 1;
+        transform: translateX(0); /* Se desplaza a su posición final */
+        background-color: rgba(0, 255, 0, 0.5); /* Fondo verde */
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0); /* Se queda en su lugar */
+        background-color: transparent; /* El fondo vuelve a ser transparente */
+    }
+}

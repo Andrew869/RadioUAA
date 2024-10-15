@@ -209,11 +209,12 @@
             $this->current_index = 0;
             // $this->stmt = SQL::Select($table_name, SQL::ALL, SQL::ALL, "id_user", "username", "email", "password_hash", "nombre_completo", "rol", "cuenta_activa", "fecha_creacion", "ultimo_acceso");
             $this->pk_name = SQL::GetPrimaryKeyName($table_name);
-            $this->stmt = SQL::Select($table_name, [], self::fiels[$table_name][0]);
+            $this->stmt = SQL::Select($table_name, [], self::fiels[$table_name][0], $this->pk_name, SQL::DESCENDANT);
             $this->stmt->setFetchMode(PDO::FETCH_ASSOC); // set the resulting array to associative
             parent::__construct(new RecursiveArrayIterator($this->stmt->fetchAll()), self::LEAVES_ONLY);
             echo createCreateBtn($table_name);
-            echo "<table>";
+            echo "<table class='contentTable' table_for='$table_name'>";
+            echo "<tr class='tableHeader'>";
             foreach (self::fiels[$table_name][2] as $value) {
                 echo "<th>" . $value . "</th>";
             }
@@ -312,7 +313,7 @@
                                 break;
                             }
                             ShowField($key, $value, 'nombre_programa', 'Nombre del programa', SQL::TEXT, $programa);
-                            ShowField($key, $value, 'url_imagen', 'Imagen del programa', SQL::FILE, $programa);
+                            ShowField($key, $value, 'url_img', 'Imagen del programa', SQL::FILE, $programa);
                             ShowField($key, $value, 'descripcion', 'Descripcion', 'textarea', $programa);
                             echo "<br>";
                             
@@ -350,7 +351,7 @@
                         }
                         ShowField($key, $value, 'nombre_presentador', 'Nombre presentador', SQL::TEXT, $presentador);
                         ShowField($key, $value, 'biografia', 'Biografia', SQL::TEXT, $presentador);
-                        ShowField($key, $value, 'url_foto', 'foto del presentador', SQL::FILE, $presentador);
+                        ShowField($key, $value, 'url_img', 'foto del presentador', SQL::FILE, $presentador);
                         break;
                     case SQL::GENERO:
                         $genero = SQL::Select(SQL::GENERO, ['id_genero' => $value])->fetch(PDO::FETCH_ASSOC);

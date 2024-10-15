@@ -25,11 +25,11 @@
 
     function LoadImage() : string{
         $uploadOk = 0;
-        $next_id = SQL::GetCurrentIdIndex(SQL::PROGRAMA, SQL::GetPrimaryKeyName(SQL::PROGRAMA)) + 1;
+        $next_id = SQL::GetCurrentIdIndex($_POST['contentName'], SQL::GetPrimaryKeyName($_POST['contentName'])) + 1;
         $target_dir = "../resources/uploads/img/";
         if(count($_FILES)){
             $imageFileType = strtolower(pathinfo(basename($_FILES["fileToUpload"]["name"]),PATHINFO_EXTENSION));
-            $target_file = $target_dir . $_POST['contentName'] . "_$next_id.$imageFileType";
+            $target_file = $target_dir . $_POST['contentName'] . '_' . $next_id . "[v0].$imageFileType";
         
             // if (!file_exists($target_file)) { // Check if file already exists
                 if ($_FILES["fileToUpload"]["size"] <= 500000) { // Check file size
@@ -46,7 +46,7 @@
         if(!$uploadOk){
             $defaultImg_Path = "../resources/img/" . $_POST['contentName'] . "_default.jpg";
             $imageFileType = strtolower(pathinfo(basename($defaultImg_Path),PATHINFO_EXTENSION));
-            $target_file = $target_dir . $_POST['contentName'] . "_$next_id.$imageFileType";
+            $target_file = $target_dir . $_POST['contentName'] . '_' . $next_id . "[v0].$imageFileType";
             copy($defaultImg_Path, $target_file);
         }
 
@@ -54,31 +54,32 @@
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
+        $contentValues = null;
         switch ($_POST['contentName']) {
             case SQL::PROGRAMA:
                 {
                     $target_file = LoadImage();
 
-                    $id_programa = SQL::Create(SQL::PROGRAMA, [$_POST['nombre_programa'], $target_file, $_POST['descripcion']]);
+                    $contentValues = SQL::Create(SQL::PROGRAMA, [$_POST['nombre_programa'], $target_file, $_POST['descripcion']]);
                     foreach ($_POST['horarios'] as $value) {
                         foreach (explode(',', $value['dias']) as $dia) {
-                            SQL::Create(SQL::HORARIO, [$id_programa, $dia, $value['hora_inicio'], $value['hora_fin'], $value['es_retransmision']]);
+                            SQL::Create(SQL::HORARIO, [$contentValues, $dia, $value['hora_inicio'], $value['hora_fin'], $value['es_retransmision']]);
                         }
                     }
                     foreach (explode(',', $_POST['presentador']) as $value) {
-                        SQL::Create(SQL::PROGRAMA_PRESENTADOR, [$id_programa, $value]);
+                        SQL::Create(SQL::PROGRAMA_PRESENTADOR, [$contentValues, $value]);
                     }
                     foreach (explode(',', $_POST['genero']) as $value) {
-                        SQL::Create(SQL::PROGRAMA_GENERO, [$id_programa, $value]);
+                        SQL::Create(SQL::PROGRAMA_GENERO, [$contentValues, $value]);
                     }
                 }
                 break;
             case SQL::HORARIO:
                 {
-                    $id_programa = $_POST['id_programa'];
+                    $contentValues = $_POST['id_programa'];
                     foreach ($_POST['horarios'] as $value) {
                         foreach (explode(',', $value['dias']) as $dia) {
-                            SQL::Create(SQL::HORARIO, [$id_programa, $dia, $value['hora_inicio'], $value['hora_fin'], $value['es_retransmision']]);
+                            SQL::Create(SQL::HORARIO, [$contentValues, $dia, $value['hora_inicio'], $value['hora_fin'], $value['es_retransmision']]);
                         }
                     }
                 }
@@ -86,18 +87,19 @@
             case SQL::PRESENTADOR:
                 {
                     $target_file = LoadImage();
-                    SQL::Create(SQL::PRESENTADOR, [$_POST['nombre_presentador'], $_POST['biografia'], $target_file]);
+                    $contentValues =  SQL::Create(SQL::PRESENTADOR, [$_POST['nombre_presentador'], $_POST['biografia'], $target_file]);
                 }
                 break;
             case SQL::GENERO:
-                SQL::Create(SQL::GENERO, [$_POST['nombre_genero']]);
+                $contentValues = SQL::Create(SQL::GENERO, [$_POST['nombre_genero']]);
                 break;
             case SQL::USER:
                 {
                     $pass_hash = hash('sha256', $_POST['password']);
-                    SQL::Create(SQL::USER, [$_POST['username'], $_POST['email'], $_POST['password'], $_POST['nombre_completo'], $_POST['rol'], $_POST['cuenta_activa']]);
+                    $contentValues =  SQL::Create(SQL::USER, [$_POST['username'], $_POST['email'], $_POST['password'], $_POST['nombre_completo'], $_POST['rol'], $_POST['cuenta_activa']]);
                 }
                 break;
         }
+        echo json_encode($contentValues);
     }
 ?>

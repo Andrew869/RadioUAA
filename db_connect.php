@@ -60,7 +60,7 @@
 
         public static function GetFields($table_name): array{
             $blackList = [
-                SQL::USER => [7,8,9]
+                self::USER => [7,8,9]
             ];
 
             $field_names = [];
@@ -69,9 +69,10 @@
             while($row = self::$stmt->fetch(PDO::FETCH_ASSOC)){
                 $field_names[] = $row['Field'];
             }
-            foreach ($blackList[$table_name] as $value) {
-                unset($field_names[$value]);
-            }
+            if(isset($blackList[$table_name]))
+                foreach ($blackList[$table_name] as $value) {
+                    unset($field_names[$value]);
+                }
             return $field_names;
         }
 
@@ -130,15 +131,14 @@
             return $value;
         }
 
-        public static function Create($table_name, $record) : int{
-
+        public static function Create($table_name, $record) : array{
             $fields = self::GetFields($table_name);
             if($table_name !== SQL::PROGRAMA_PRESENTADOR && $table_name !== SQL::PROGRAMA_GENERO){
                 array_shift($fields);
             }
 
             $length = count($record);
-            
+            $name = $record[0];
             for ($i = 0; $i < $length; $i++) {
                 $record[$i] = self::FormatValue($table_name, $fields[$i], $record[$i]);
                 // switch (self::GetFieldType($table_name, $fields[$i])) {
@@ -218,7 +218,14 @@
             $sql .= $sql_values;
             // echo $sql;
             self::$conn->exec($sql);
-            return self::$conn->lastInsertId();
+
+            $contentValues = [
+                "id" => self::$conn->lastInsertId(),
+                "name" => $name
+            ];
+
+            // return self::$conn->lastInsertId();
+            return $contentValues;
         }
 
         public static function Update($table_name, $primary_key, $fields){
@@ -262,15 +269,6 @@
         }
 
         public static function Delete($table_name, $wheres = []){
-            // $id = "id_" . $table_name;
-            if($table_name === self::PROGRAMA){
-                self::Delete(self::HORARIO, $wheres);
-                self::Delete(self::PROGRAMA_PRESENTADOR, $wheres);
-                self::Delete(self::PROGRAMA_GENERO, $wheres);
-                // Borrar imagen
-                // $image_path = self::Select(self::PROGRAMA, self::GetPrimaryKeyName(self::PROGRAMA), $primary_key, ["url_imagen"])->fetchColumn();
-                // if(file_exists($image_path)) unlink($image_path);
-            }
             $where = "";
             if(count($wheres)){
                 $where = " WHERE";

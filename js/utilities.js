@@ -106,7 +106,7 @@ export function GetInputValues(input){
     return data;
 }
 
-export function SumbitCreateRequest(contentName, inputs){
+export function SumbitCreateRequest(contentName, inputs, cancelBtn){
     let formData = new FormData();
     formData.append('contentName', contentName);
 
@@ -130,10 +130,42 @@ export function SumbitCreateRequest(contentName, inputs){
         method: 'POST',
         body: formData
     })
-    .then(response => response.text()) // Procesar la respuesta como texto
+    .then(response => response.json()) // Procesar la respuesta como texto
     .then(data => {
-        // message.textContent = data; // Mostrar el mensaje del servidor
-        window.location.href = window.location.href;
+        cancelBtn.click();
+
+        let table = document.querySelector('[table_for="' + contentName + '"]');
+        // let 
+        if(table){
+            let tbody = table.querySelector('tbody');
+            let tableHeader = tbody.querySelector('.tableHeader');
+            let trElement = document.createElement('tr');
+            trElement.classList.add('values');
+            trElement.classList.add('rowfadein');
+
+            let tdForID = document.createElement('td');
+            tdForID.classList.add('pk');
+            tdForID.textContent = data.id;
+            trElement.appendChild(tdForID);
+
+            let tdForName = document.createElement('td');
+            tdForName.classList.add('name');
+            tdForName.textContent = data.name;
+            trElement.appendChild(tdForName);
+
+            trElement.addEventListener('click', function () {
+                window.location.href = window.location.pathname + '?' + contentName + '=' + data.id;
+            });
+
+            // table.appendChild(trElement);
+            tbody.insertBefore(trElement, tableHeader.nextSibling);
+
+            // window.location.href = window.location.pathname + "#new";
+            setTimeout(function(){
+                trElement.classList.remove('rowfadein');
+            }, 1000);
+        }
+        
     })
     .catch(error => {
         console.error('Error al subir la imagen:', error);
@@ -164,6 +196,127 @@ export function SumbitUpdateRequest(contentName, pk, fieldName, input){
     })
     .catch(error => {
         console.error('Error al subir la imagen:', error);
+    });
+}
+
+// Encargada de enviar la informacion al archivo php que se encarga de eliminar
+export function SubmitDeleteRequest(contentName, pk) {
+    let formData = new FormData();
+    formData.append('contentName', contentName);
+    formData.append('pk', pk);
+
+    fetch('deleteContent.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text()) // Procesar la respuesta como texto
+    .then(data => {
+        // message.textContent = data; // Mostrar el mensaje del servidor
+        window.location.href = window.location.pathname;
+    })
+    .catch(error => {
+        console.error('Error al subir la imagen:', error);
+    });
+
+    // fetch("deleteContent.php", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/x-www-form-urlencoded"
+    //     },
+    //     body: encodeURIComponent(content) + '=' + encodeURIComponent(pk)
+    // })
+    // .then(response => response.text())
+    // .then(data => {
+    //     // console.log("Respuesta del servidor:", data);
+    //     // Recargar la página después de enviar los datos exitosamente
+    //     window.location.href = window.location.pathname;
+    // })
+    // .catch(error => {
+    //     console.error("Error:", error);
+    // });
+}
+
+export function AddContent(e, contentName){
+    const modal = CreateModal();
+    const modal_content = modal.querySelector('.container');
+    const btns_container = modal.querySelector('.btns_container');
+
+    const cancelBtn = btns_container.querySelector('#cancelBtn');
+    const confirmBtn = btns_container.querySelector('#confirmBtn');
+
+    // const origianl_form = original_forms.querySelector('#' + content);
+    // let current_form = origianl_form.cloneNode(true);
+    let inputs = [];
+
+    const contents = {
+        programa: [
+            {inputType:'text', id:'nombre_programa', classes:[], title:'Nombre del programa' , tableName: contentName},
+            {inputType:'file', id:'url_imagen', classes:[], title:'Imagen del programa', tableName: contentName},
+            {inputType:'textarea', id:'descripcion', classes:[], title:'Descripcion', tableName: contentName},
+            {inputType:'schedules', id:'horario', classes:[], title:'Horarios', tableName: contentName},
+            {inputType:'list', id:'presentador', classes:[], title:'Presentadores', tableName: contentName},
+            {inputType:'list', id:'genero', classes:[], title:'Generos', tableName: contentName},
+        ],
+        horario: [
+            {inputType:'text', id:'id_programa', classes:[], title:'id del programa', tableName: contentName},
+            {inputType:'schedules', id:'horario', classes:[], title:'Horarios', tableName: contentName},
+        ],
+        presentador: [
+            {inputType:'text', id:'nombre_presentador', classes:[], title:'Nombre presentador' , tableName: contentName},
+            {inputType:'file', id:'url_foto', classes:[], title:'foto del presentador', tableName: contentName},
+            {inputType:'textarea', id:'biografia', classes:[], title:'Biografia', tableName: contentName},
+        ],
+        genero: [
+            {inputType:'text', id:'nombre_genero', classes:[], title:'Nombre del genero' , tableName: contentName},
+        ],
+        user: [
+            {inputType:'text', id:'username', classes:[], title:'Nombre de usuario' , tableName: contentName},
+            {inputType:'email', id:'email', classes:[], title:'correo de usuario' , tableName: contentName},
+            {inputType:'password', id:'password', classes:[], title:'contraseña' , tableName: contentName},
+            {inputType:'text', id:'nombre_completo', classes:[], title:'Nombre completo' , tableName: contentName},
+            {inputType:'enum', id:'rol', classes:[], title:'Rol del usuario' , tableName: contentName},
+            {inputType:'boolean', id:'cuenta_activa', classes:[], title:'Cuenta Activa' , tableName: contentName},
+        ]
+    };
+
+    switch (contentName) {
+        case 'programa':
+            contents.programa.forEach(input => {
+                inputs.push(CreateInput(input.inputType, input.id, input.classes, input.title, input.tableName));
+            });
+            break;
+        case 'horario':
+            contents.horario.forEach(input => {
+                inputs.push(CreateInput(input.inputType, input.id, input.classes, input.title, input.tableName));
+            });
+            let inputId = inputs[0].querySelector('#id_programa');
+            inputId.value = e.target.id;
+            inputId.readOnly = true;
+            inputs[0].style.display = 'none';
+            break;
+        case 'presentador':
+            contents.presentador.forEach(input => {
+                inputs.push(CreateInput(input.inputType, input.id, input.classes, input.title, input.tableName));
+            });
+            break;
+        case 'genero':
+            contents.genero.forEach(input => {
+                inputs.push(CreateInput(input.inputType, input.id, input.classes, input.title, input.tableName));
+            });
+            break;
+        case 'user':
+            contents.user.forEach(input => {
+                inputs.push(CreateInput(input.inputType, input.id, input.classes, input.title, input.tableName));
+            });
+            break;
+    }
+
+    inputs.forEach(input => {
+        modal_content.insertBefore(input, btns_container); 
+    });
+
+    confirmBtn.addEventListener('click', function(){
+        SumbitCreateRequest(contentName, inputs, cancelBtn);
     });
 }
 
@@ -326,6 +479,20 @@ export function CreateInput(inputType, id, classes, inputTitle, tableName){
                 let h3Selected = document.createElement('h3');
                 h3Selected.textContent = "Seleccionados";
                 divSelected.appendChild(h3Selected);
+
+                let createBtn = document.createElement('button');
+                createBtn.classList.add('modalBtn');
+                createBtn.classList.add('createBtn');
+                let subContentName = tableName.split("_")[1];
+
+                createBtn.setAttribute('contentName', subContentName);
+                createBtn.textContent = "Crear " + subContentName;
+
+                createBtn.addEventListener('click', function(e){
+                    AddContent(e, subContentName);
+                });
+
+                divSelected.appendChild(createBtn);
 
                 let ulSelected = document.createElement('ul');
                 ulSelected.id = 'optionsSelected';
@@ -816,26 +983,6 @@ export function DHideModal(modal){
 
 export function CreateContent(content, record) {
     fetch("createContent.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: encodeURIComponent(content) + '=' + encodeURIComponent(pk)
-    })
-    .then(response => response.text())
-    .then(data => {
-        // console.log("Respuesta del servidor:", data);
-        // Recargar la página después de enviar los datos exitosamente
-        window.location.href = window.location.pathname;
-    })
-    .catch(error => {
-        console.error("Error:", error);
-    });
-}
-
-// Encargada de enviar la informacion al archivo php que se encarga de eliminar
-export function SubmitDeleteRequest(content, pk) {
-    fetch("deleteContent.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
