@@ -16,10 +16,6 @@
 html {
     height: 100%;
 }
-
-
-
-
 body {
     background: radial-gradient(circle, #E0FFFF 0%, #ADD8E6 25%, #F0F8FF 70%);
     font-family: Arial, Helvetica, sans-serif;
@@ -27,7 +23,6 @@ body {
     margin: 0;
     padding: 0; 
 }
-
 
 
 .container{

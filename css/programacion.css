@@ -11,6 +11,9 @@
     --Azulligero: #ADD8E6;
     --verdemasclaro: #4bb578;
 }
+html {
+    height: 100%;
+}
 body {
     background-size: cover;
     background: radial-gradient(circle, #E0FFFF 0%, #ADD8E6 25%, #F0F8FF 70%);
@@ -20,16 +23,11 @@ body {
     padding: 0;
 }
 
-html, body{
-    margin: 0;
-    padding: 5px 0;
-}
-
 table {
     width: 90%;
     border-collapse: separate;
     margin: 20px 0;
-    margin-left: 10px;
+    margin-left: 80px;
     border-spacing: 0;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
@@ -120,3 +118,56 @@ table tr:last-child td:first-child {
     background-color: var(--Amarillo);
 }
 /* Botones de redes sociales fin */
+
+/* uaa inicio */
+.container-uaa {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.container-uaa a {
+    text-decoration: none;
+}
+
+.container-uaa img {
+    border-radius: 6px;
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    padding: 20px;
+}
+
+.container-uaa img .dark {
+    background-color: var(--GrisClaro);
+} 
+
+.container-uaa img:hover {
+    transform: scale(1.1);
+}
+/* uaa fin */
+
+.arrow-down::after {
+    position: absolute;
+    top: 4px;
+    right: -15px;
+    content: "";
+    border: solid var(--Blanco);
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+footer {
+    background-color: var(--VerdeClaro);
+    /* padding: .1%; */
+    text-align: center;
+    font-weight: bold;
+    /* font-size: auto; */
+    /* padding-left: 13%; */
+} 
