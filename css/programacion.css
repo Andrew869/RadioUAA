@@ -1,4 +1,3 @@
-
 :root {
     --Blanco: #fff;
     --AzulCLaro: #3498db;
@@ -12,455 +11,13 @@
     --Azulligero: #ADD8E6;
     --verdemasclaro: #4bb578;
 }
-
-html {
-    height: 100%;
-}
-
 body {
+    background-size: cover;
     background: radial-gradient(circle, #E0FFFF 0%, #ADD8E6 25%, #F0F8FF 70%);
     font-family: Arial, Helvetica, sans-serif;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-
-
-.container{
-    padding: 6rem;   
-    /* display:flex; */
-    justify-content: space-between;
-    /* align-items: center; */
-    /* gap: 10rem; */
-    
-}
-   
-.titulos{
-    /* max-width: 50%; */
-    /* box-sizing: border-box; */
-    margin-top: -6%;
-    text-align: center;
-    animation: colorChange 5s infinite;
-}
-
-
-.slider-box{
-    width: 50%;
-    /* box-sizing: border-box; */
-    overflow: hidden;
-    /* position: relative; */
-    margin: 0 auto; /* Centra el slider horizontalmente */
-    border: solid 15px var(--VerdeObscuro);
-
-    z-index: -1;
-}
-.slider-box ul{
-    display: flex;
-    width: 400%;
-    animation: slide 20s infinite linear; /* Cambiado para un movimiento continuo */
-    /* list-style: none; */
-}
-.slider-box li{
-    height: 300px;
-}
-.slider-box img{
-    width: 730px;
-    height: 350px;
-    margin-top: -3%; 
-    /* object-fit: cover;  */
-}
-@keyframes slide {
-    100% { transform: translateX(-55%); } /* Desplazar todo el contenido del carrusel */
-}
-
-
-
-#seekBar {
-    flex: 1;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 5px;
-    height: 8px;
-    cursor: pointer;
-}
-
-#seekBar::-webkit-slider-thumb {
-    width: 14px;
-    height: 14px;
-    background-color: #FFD200;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-#currentTime, #duration {
-    width: 55px;
-    text-align: center;
-    color: #E9E9E9;
-}
-
-
-.dark{
-    background: none;
-    background-color: #333;
-    color: white;
     /* transition: all 2s ease; */
-}
-#toggle {
-    display: none;
-}
-#label_toggle {
-    /* transition: 3s; */
-    /* position: absolute; */
-    /* top: 52px; */
-    /* right: 100px; */
-    font-size: 1.5rem;
-    color: var(--Blanco);
-    cursor: pointer;
-}
-
-@keyframes colorChange {
-    0% {
-        color: var(--Rojo);
-    }
-    33% {
-        color: var(--VerdeClaro);
-    }
-    66% {
-        color: var(--AzulCLaro);
-    }
-    100% {
-        color: var(--Rojo);
-    }
-}
-h1 {
-    animation: colorChange 5s infinite; /* Cambia los colores cada 3 segundos */
-    text-align: center;
-}
-h2, p {
-    margin-left: 10%;
-    margin-right: 10%;
-}
-h2 {
-    font-size: 35px;
-    margin-bottom: 0; /* Elimina el margen inferior */
-}
-p {
-    margin-top: 0; /* Elimina el margen superior */
-    line-height: 1.6;
-    text-align: justify;
-}
-
-/* Barra de Navegacion Inicio*/
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--VerdeClaro);
-    padding: 10px 250px;
-    border-radius: 4rem;
-    margin: 20px; /* Espacio superior para despegar la barra de la parte superior */
-    position: relative;
-}
-
-.menu-toggle {
-    display: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--Blanco);
-    background: none;
-    border: none;
-}
-@media (max-width: 768px) {
-    .nav-links {
-        display: none; /* Por defecto el menú está oculto en móviles */
-        flex-direction: column;
-        position: block;
-        width: auto;
-        top: 100%;
-        right: 0;
-        background-color: var(--VerdeClaro);
-        width: 100%;
-        padding: 20px;
-        border-radius: 10px;
-        z-index: 1;
-    }
-    .nav-links li {
-        margin: 10px 0; /* Espacio entre los elementos del menú */
-    }
-
-    /* Mostrar el botón hamburguesa */
-    .menu-toggle {
-        z-index: 1;
-        display: block;
-    }
-
-    /* Mostrar el menú cuando el botón hamburguesa esté activo */
-    .nav-links.active {
-        display: flex;
-    }
-}
-/* Barra de Navegacion Fin*/
-
-
-
-@media (max-width: 768px) {
-    .programacion_cont {
-        padding-left: 1rem; /* Reduce el padding izquierdo */
-        padding-right: 1rem; /* Agrega padding derecho */
-    }
-
-    .programas_div_par, .programas_div_impar {
-        width: 100%; /* Hace que los contenedores ocupen el ancho completo */
-        margin: 1rem 0; /* Ajusta el margen para dar espacio entre los elementos */
-        padding: 1rem; /* Reduce el padding para mejorar la distribución del espacio */
-        height: auto; /* Ajusta la altura automáticamente */
-    }
-
-    .imgprog {
-        width: 4rem; /* Ajusta el tamaño de las imágenes para que se vean mejor en pantallas pequeñas */
-        height: auto; /* Mantiene la proporción de la imagen */
-    }
-
-    .descrip {
-        margin-left: 1rem; /* Ajusta el espacio entre la imagen y el texto */
-        font-size: 1rem; /* Reduce el tamaño del texto para mejorar la visualización */
-    }
-
-    .title_descrip {
-        font-size: 1.5rem; /* Reduce ligeramente el tamaño del título */
-    }
-}
-/* Barra de busqueda Fin */
-
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--VerdeClaro);
-    padding: 10px 250px;
-    border-radius: 4rem;
-    margin: 20px;
-}
-
-.logo img {
-    width: 60px;
-    height: auto;
-    margin-left: -290%;
-}
-
-.nav-links {
-    font-weight: bold;
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.nav-links li {
-    margin-left: 20px;
-    position: relative;
-}
-
-.nav-links a {
-    color: var(--Blanco);
-    text-decoration: none;
-    font-size: 15px;
-}
-
-.nav-links a:hover {
-    color: var(--obscuro);
-    text-decoration: underline;
-}
-
-/* Dropdown Content */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: var(--Blanco);
-    list-style: none;
-    top: 100%;
-    left: 0;
+    margin: 0;
     padding: 0;
-    margin: 0;
-    border-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
-}
-
-.dropdown-content li {
-    margin: 0;
-}
-
-.dropdown-content a {
-    color: var(--obscuro);
-    padding: 10px 20px;
-    display: block;
-    text-decoration: none;
-}
-
-.dropdown-content li:first-child a:hover {
-    border-radius: 4px 4px 0 0;
-}
-
-.dropdown-content li:last-child a:hover {
-    border-radius: 0 0 5px 5px;
-}
-
-.dropdown-content a:hover {
-    background-color: var(--VerdeClaro);
-}
-
-/* Mostrar el menú cuando se pasa el ratón */
-.dropdown:hover .dropdown-content {
-    display: block; 
-}
-
-/* Barra de Navegacion Fin*/
-
-/* Barra de búsqueda Inicio */
-.ContenedorBoton {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    transform: none;
-    padding: 10px;
-}
-
-input {
-    outline: none;
-    box-sizing: border-box;
-    height: 60px;
-    width: 0;
-    padding: 0 10px;
-    color: var(--obscuro); 
-    border-radius: .5rem;
-    font-size: 17px;
-    transition: all .7s ease;
-    background: var(--Blanco);
-}
-
-::placeholder {
-    color: var(--obscuro); 
-}
-
-.boton {
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(145deg, #4CAF50, #388E3C); /* Verde vibrante */
-    line-height: 60px; /* Centrar el icono */
-    border-radius: 1rem;
-    text-align: center;
-    cursor: pointer;
-    position: fixed;
-    bottom: 30px;
-    right: 20px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    transition: background 0.3s ease, box-shadow 0.3s ease;
-}
-
-.boton:hover {
-    background: linear-gradient(145deg, #66BB6A, #4CAF50); /* Verde más brillante en hover */
-}
-
-.boton i {
-    font-size: 30px;
-    color: #fff; /* Color blanco para el icono */
-    line-height: 50%;
-    transition: all .7s ease;
-}
-.ContenedorBoton:hover #search-input {
-    width: 350px;
-}
-/* Barra de búsqueda Fin */
-
-/* Botones de redes sociales inicio */
-.social-buttons {
-    position: fixed;
-    bottom: 20%;
-    right: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.social-button {
-    text-decoration: none;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--Blanco);
-    font-size: 30px;
-    cursor: pointer;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-}
-
-.social-button i {
-    font-size: 25px;
-}
-
-.whatsapp {
-    background: linear-gradient(145deg, #25D366, #128C7E); /* Verde de WhatsApp */
-}
-
-.instagram {
-    background: linear-gradient(145deg, #F58529, #DD2A7B, #8134B8); /* Colores de Instagram */
-}
-
-.facebook {
-    background: linear-gradient(145deg, #4267B2, #3B5998); /* Azul de Facebook */
-}
-
-.spotify {
-    background: linear-gradient(145deg, #1DB954, #1ED760); /* Verde de Spotify */
-}
-
-.social-button:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-    background-color: var(--Amarillo);
-}
-/* Botones de redes sociales fin */
-
-/* uaa inicio */
-.container-uaa {
-    display: flex;
-    flex-flow: row;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.container-uaa a {
-    text-decoration: none;
-}
-
-.container-uaa img {
-    border-radius: 6px;
-    width: 150px;
-    height: 150px;
-    object-fit: contain;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    padding: 20px;
-}
-
-.container-uaa img .dark {
-    background-color: var(--GrisClaro);
-} 
-
-.container-uaa img:hover {
-    transform: scale(1.2);
-}
-/* uaa fin */
-
-footer {
-    background-color: var(--VerdeClaro);
-    text-align: center;
-    font-weight: bold;
-    padding-left: 13%;
 }
 
 html, body{
@@ -521,3 +78,45 @@ table th:first-child {
 table tr:last-child td:first-child {
     border-radius: 0 0 0 12px;
 }
+
+
+
+/* Botones de redes sociales inicio */
+.social-buttons {
+    position: fixed;
+    bottom: 20%;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.social-button {
+    text-decoration: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--Blanco);
+    font-size: 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.social-button i {
+    font-size: 25px;
+}
+
+.spotify {
+    background: linear-gradient(145deg, #1DB954, #1ED760); /* Verde de Spotify */
+}
+
+.social-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    background-color: var(--Amarillo);
+}
+/* Botones de redes sociales fin */
