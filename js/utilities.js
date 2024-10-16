@@ -135,8 +135,17 @@ export function SumbitCreateRequest(contentName, inputs, cancelBtn){
         cancelBtn.click();
 
         let table = document.querySelector('[table_for="' + contentName + '"]');
-        // let 
-        if(table){
+        let listContainer = document.getElementsByClassName('lists-container')[0];
+        if(listContainer){
+            let optionsSelected = listContainer.querySelector('#optionsSelected');
+
+            let liElement = document.createElement('li');
+            liElement.id = data.id;
+            liElement.textContent = data.name;
+
+            optionsSelected.appendChild(liElement);
+        }
+        else if(table){
             let tbody = table.querySelector('tbody');
             let tableHeader = tbody.querySelector('.tableHeader');
             let trElement = document.createElement('tr');
@@ -165,7 +174,6 @@ export function SumbitCreateRequest(contentName, inputs, cancelBtn){
                 trElement.classList.remove('rowfadein');
             }, 1000);
         }
-        
     })
     .catch(error => {
         console.error('Error al subir la imagen:', error);
@@ -254,8 +262,8 @@ export function AddContent(e, contentName){
             {inputType:'file', id:'url_imagen', classes:[], title:'Imagen del programa', tableName: contentName},
             {inputType:'textarea', id:'descripcion', classes:[], title:'Descripcion', tableName: contentName},
             {inputType:'schedules', id:'horario', classes:[], title:'Horarios', tableName: contentName},
-            {inputType:'list', id:'presentador', classes:[], title:'Presentadores', tableName: contentName},
-            {inputType:'list', id:'genero', classes:[], title:'Generos', tableName: contentName},
+            {inputType:'list', id:'presentador', classes:[], title:'Presentadores', tableName: 'programa_presentador'},
+            {inputType:'list', id:'genero', classes:[], title:'Generos', tableName: 'programa_genero'},
         ],
         horario: [
             {inputType:'text', id:'id_programa', classes:[], title:'id del programa', tableName: contentName},
@@ -483,7 +491,7 @@ export function CreateInput(inputType, id, classes, inputTitle, tableName){
                 let createBtn = document.createElement('button');
                 createBtn.classList.add('modalBtn');
                 createBtn.classList.add('createBtn');
-                let subContentName = tableName.split("_")[1];
+                let subContentName = tableName.split("_")[1]; // x_value
 
                 createBtn.setAttribute('contentName', subContentName);
                 createBtn.textContent = "Crear " + subContentName;
