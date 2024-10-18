@@ -70,7 +70,7 @@
 
 .nav-links a:hover {
     color: var(--obscuro);
-    background-color: var(--verdeaqua);
+    background-color: var(--VerdeClaro);
     transform: scale(1.2); 
     text-decoration: underline;
 }
@@ -192,7 +192,8 @@
 
 #box-search li a {
     display: block;
-    width: 1200px;
+    /* width: 1200px; */
+    text-align: left;
     color: var(--obscuro);
     padding: 12px 20px;
 }

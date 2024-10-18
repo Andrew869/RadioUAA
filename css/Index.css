@@ -10,6 +10,8 @@
     --verdeaqua: #66CDAA;
     --Azulligero: #ADD8E6;
     --verdemasclaro: #4bb578;
+    --seashell: #FFF5EE;
+    --snow: #FFFAFA;
 }
 
   
@@ -17,7 +19,8 @@ html {
     height: 100%;
 }
 body {
-    background: radial-gradient(circle, #E0FFFF 0%, #ADD8E6 25%, #F0F8FF 70%);
+    background-color: var(--snow);
+    /* background: radial-gradient(circle, #E0FFFF 0%, #ADD8E6 25%, #F0F8FF 70%); */
     font-family: Arial, Helvetica, sans-serif;
     /* height: 100%; */
     margin: 0;
@@ -50,7 +53,7 @@ body {
     overflow: hidden;
     /* position: relative; */
     margin: 0 auto; /* Centra el slider horizontalmente */
-    border: solid 10px var(--VerdeObscuro);
+    border: solid 10px var(--VerdeClaro);
     border-radius: 1rem;
 }
 .slider-box ul{
@@ -231,7 +234,7 @@ p {
 }
 
 .programas_div_par, .programas_div_impar {
-    background-color: var(--verdeaqua);
+    background-color: var(--VerdeClaro);
     padding: 20px;
     border-radius: 10px;
     max-width: 400px;
@@ -283,7 +286,7 @@ p {
 /* Botones de redes sociales inicio */
 .social-buttons {
     position: fixed;
-    bottom: 20%;
+    bottom: 30%;
     right: 20px;
     display: flex;
     flex-direction: column;
@@ -331,6 +334,50 @@ p {
     background-color: var(--Amarillo);
 }
 /* Botones de redes sociales fin */
+/* Botones de descarga de apps inicio */
+.app-buttons {
+    position: fixed;
+    bottom: 10%;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.app-button {
+    text-decoration: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--Blanco);
+    font-size: 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.app-button i {
+    font-size: 25px;
+}
+
+.google-play {
+    background: linear-gradient(145deg, #34A853, #4285F4); /* Verde y azul de Google Play */
+}
+
+.apple-store {
+    background: linear-gradient(145deg, #A2AAAD, #1C1C1E); /* Gris y negro de Apple Store */
+}
+
+.app-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    background-color: var(--Amarillo);
+}
+/* Botones de descarga de apps fin */
+
 
 /* uaa inicio */
 .container-uaa {

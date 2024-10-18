@@ -10,13 +10,16 @@
     --verdeaqua: #66CDAA;
     --Azulligero: #ADD8E6;
     --verdemasclaro: #4bb578;
+    --seashell: #FFF5EE;
+    --snow: #FFFAFA;
 }
 html {
     height: 100%;
 }
 body {
     background-size: cover;
-    background: radial-gradient(circle, #E0FFFF 0%, #ADD8E6 25%, #F0F8FF 70%);
+    background-color: var(--snow);
+    /* background: radial-gradient(circle, #E0FFFF 0%, #ADD8E6 25%, #F0F8FF 70%); */
     font-family: Arial, Helvetica, sans-serif;
     /* transition: all 2s ease; */
     margin: 0;
