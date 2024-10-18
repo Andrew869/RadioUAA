@@ -152,6 +152,8 @@ p {
     cursor: pointer;
     transition: transform 0.3s ease;
     padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+
 }
 
 .container-uaa img .dark {
@@ -176,7 +178,7 @@ html body footer p {
 }
 /*nuevo*/
 .defensoria-fondo{
-    background-image: url(../imgs/defaudi.png);
+    background-image: url(../resources/img/defaudi.png);
     background-repeat: no-repeat;
     background-size: cover;
     height: 450px;
@@ -253,6 +255,27 @@ html body footer p {
 .normatividad {
     font-family: Arial, sans-serif;
     margin: 20px;
+}
+.documentos-texto-Defensoria ul {
+    padding-left: 10%;
+}
+.documentos-texto-Defensoria li {
+    margin-bottom: 20px;
+}
+
+.documentos-texto-Defensoria a {
+    color: var(--obscuro);
+}
+
+.documentos-texto-Defensoria a strong {
+    padding: 1px 13px;
+    background-color: var(--VerdeClaro);
+    border-radius: 1rem;
+    font-size: 20px;
+}
+
+.documentos-texto-Defensoria a:hover strong {
+    background-color: var(--seagreen);
 }
 
 .archivo {

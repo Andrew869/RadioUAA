@@ -1,4 +1,14 @@
 <?php
+<<<<<<< HEAD
+$dsn='mysql:host=localhost;port=3309;dbname=radio_db';
+$usuario='root';
+$contrasenia= '';
+try {
+    $conn = new PDO($dsn, $usuario, $contrasenia);
+} catch (PDOException $e) {
+    echo 'Connection failed: ' . $e->getMessage();
+}
+=======
     class SQL{
         public static $conn = NULL;
         public static $stmt = NULL;
@@ -276,4 +286,5 @@
         return ($hours * 60) + $minutes;
     }
 
+>>>>>>> origin/EduardoPruebasWeb
 ?>

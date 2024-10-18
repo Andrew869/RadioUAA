@@ -142,6 +142,8 @@ table tr:last-child td:first-child {
     cursor: pointer;
     transition: transform 0.3s ease;
     padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+
 }
 
 .container-uaa img .dark {

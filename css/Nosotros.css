@@ -150,6 +150,8 @@ p {
     cursor: pointer;
     transition: transform 0.3s ease;
     padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+
 }
 
 .container-uaa img .dark {
@@ -238,6 +240,20 @@ p {
 .documentos-texto a:hover strong {
     background-color: var(--seagreen);
 }
+
+.archivos-Consejo{
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    margin-left: 10%;
+}
+.archivos-Consejo a{
+    color: var(--seagreen);
+}
+.archivos-Consejo strong{
+    color: var(--obscuro);
+}
+
 
 /* consejo ciudadano fin */
 
