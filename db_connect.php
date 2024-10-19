@@ -236,7 +236,8 @@
                 if($value !== self::NULL) $value = self::FormatValue($table_name, $key, $value);
                 $text_fields .= "$key = $value" . ($key === $lastKey ? "" : ", " );
             }
-            $id = "id_" . $table_name;
+            // $id = "id_" . $table_name;
+            $id = self::GetPrimaryKeyName($table_name);
             $sql = "UPDATE $table_name SET $text_fields WHERE $id = '$primary_key'";
             self::$stmt = self::$conn->prepare($sql);
             self::$conn->exec($sql);

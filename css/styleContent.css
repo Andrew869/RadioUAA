@@ -4,14 +4,12 @@
     box-sizing: border-box;
 }
 
-/* Style the tab */
 .tab {
     overflow: hidden;
     border: 1px solid #ccc;
     background-color: #f1f1f1;
 }
 
-/* Style the buttons that are used to open the tab content */
 .tab button {
     background-color: inherit;
     float: left;
@@ -22,26 +20,22 @@
     transition: 0.3s;
 }
 
-/* Change background color of buttons on hover */
 .tab button:hover {
     background-color: #ddd;
 }
 
-/* Create an active/current tablink class */
 .tab button.active {
     background-color: #ccc;
 }
 
-/* Style the tab content */
 .tabcontent {
     display: none;
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;
-    animation: fadeEffect 1s; /* Fading effect takes 1 second */
+    animation: fadeEffect 1s;
 }
 
-/* Go from zero to full opacity */
 @keyframes fadeEffect {
     from {
         opacity: 0;
@@ -72,84 +66,40 @@ tr.values {
     cursor: pointer;
 }
 tr.values:hover {
-    background-color: #838383;
+    background-color: #96969681;
 }
 
-td.pk {
+td.contentName {
     width: 80px;
-    /* background-color: red; */
-}
-
-* {
-    box-sizing: border-box;
-}
-
-/* Set a style for all buttons */
-.modalBtn {
-    background-color: #f44336;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0.9;
-}
-
-.modalBtn:hover {
-    opacity: 1;
-}
-
-/* Float cancel and delete buttons and add an equal width */
-#cancelBtn,
-#confirmBtn {
-    /* float: left;
-    width: 50%; */
-}
-
-/* Add a color to the cancel button */
-#cancelBtn {
-    background-color: #ccc;
-    color: black;
-}
-
-/* Add a color to the delete button */
-#deletebtn {
-    background-color: #f44336;
-}
-
-/* Add padding and center-align text to the container */
-.container {
-    padding: 16px;
-    text-align: center;
 }
 
 #original_forms {
     display: none;
 }
 
-/* The Modal (background) */
+/* MODAL */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    display: none;
+    position: fixed;
+    z-index: 1;
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
+    width: 100%;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    padding-top: 50px;
+    padding-top: 10vh;
 }
 
-/* Modal Content/Box */
 .modal-content {
     position: relative;
     background-color: #fefefe;
     margin: auto;
     padding: 0;
     border: 1px solid #888;
-    width: 80%;
+    width: 960px;
+    height: 90%;
+    overflow: auto;
+    border-radius: 8px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     -webkit-animation-name: fadein;
     -webkit-animation-duration: 0.4s;
@@ -230,82 +180,6 @@ hr {
 .close:focus {
     color: #f44336;
     cursor: pointer;
-}
-
-.btns_container{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-}
-
-/* Clear floats */
-/* .clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
-} */
-
-/* Change styles for cancel button and delete button on extra small screens */
-@media screen and (max-width: 300px) {
-    .cancelbtn,
-    .deletebtn {
-        width: 100%;
-    }
-}
-
-.modal .inputs{
-    display: none;
-}
-
-div#list>div{
-    float: left;
-    width: 50%;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    /* width: 200px; */
-}
-li {
-    margin: 2px 0;
-    /* padding: 10px; */
-    background-color: #f1f1f1;
-    cursor: pointer;
-    text-align: center;
-    border: 1px solid #ccc;
-}
-
-.days_container {
-    /* width: 100px; */
-    /* height: 80px; */
-    /* border: 1px solid black; */
-    /* overflow: auto; */
-    /* display: inline-block; */
-    user-select: none;
-}
-
-.selected {
-    background-color: lightblue;
-    color: white;
-}
-
-.drop-zone {
-    /* width: 100%; */
-    /* max-width: 400px; */
-    height: 200px;
-    padding: 20px;
-    border: 2px dashed #007bff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    margin-bottom: 20px;
-    text-align: center;
-}
-.drop-zone.dragover {
-    background-color: #e9ecef;
 }
 
 .rowfadein{

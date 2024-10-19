@@ -59,8 +59,8 @@
         $length = count($_POST);
         if($length === 5){ //types: schedules
             $prevTimes = explode(',', $_POST['prevTimes']);
-            $pk = $_POST['pk'];
-            SQL::Delete(SQL::HORARIO, ['id_programa' => $pk, 'hora_inicio' => $prevTimes[0], 'hora_fin' => $prevTimes[1]]);
+            $contentId = $_POST['contentId'];
+            SQL::Delete(SQL::HORARIO, ['id_programa' => $contentId, 'hora_inicio' => $prevTimes[0], 'hora_fin' => $prevTimes[1]]);
 
             foreach ($_POST['horarios'] as $horario) {
                 $days = explode(',', $horario['dias']);
@@ -69,7 +69,7 @@
                 $es_retransmision = strtoupper($horario['es_retransmision']);
                 
                 foreach ($days as $day) {
-                    SQL::Create(SQL::HORARIO, [$pk, $day, $hora_inicio, $hora_fin, $es_retransmision]);
+                    SQL::Create(SQL::HORARIO, [$contentId, $day, $hora_inicio, $hora_fin, $es_retransmision]);
                 }
             }
         }
@@ -79,23 +79,23 @@
                 $table_name = array_key_last($_POST);
                 $id_name = SQL::GetPrimaryKeyName($_POST['fieldName']);
                 $selected_input = explode(',' ,$_POST['newValue']);
-                $selected_db = SQL::Select($relationship_name, ['id_programa' => $_POST['pk']], [$id_name])->fetchAll(PDO::FETCH_COLUMN);
+                $selected_db = SQL::Select($relationship_name, ['id_programa' => $_POST['contentId']], [$id_name])->fetchAll(PDO::FETCH_COLUMN);
                 $toAdd = CompareRelationship($selected_input, $selected_db);
                 $toDelete = CompareRelationship($selected_db, $selected_input);
                 foreach ($toDelete as $id) {
                     SQL::Delete($relationship_name, [$id_name => $id]);
                 }
                 foreach ($toAdd as $id) {
-                    SQL::Create($relationship_name, [$_POST['pk'], $id]);
+                    SQL::Create($relationship_name, [$_POST['contentId'], $id]);
                 }
             }
             else
-                SQL::Update($_POST['contentName'],$_POST['pk'],[$_POST['fieldName'] => $_POST['newValue']]);
+                SQL::Update($_POST['contentName'],$_POST['contentId'],[$_POST['fieldName'] => $_POST['newValue']]);
         }
         else if($length === 3){ // types: list y img
             if(count($_FILES)){
                 $target_dir = "../resources/uploads/img/";
-                $image_path = SQL::Select($_POST['contentName'], [SQL::GetPrimaryKeyName($_POST['contentName']) => $_POST['pk']], [$_POST['fieldName']])->fetchColumn();
+                $image_path = SQL::Select($_POST['contentName'], [SQL::GetPrimaryKeyName($_POST['contentName']) => $_POST['contentId']], [$_POST['fieldName']])->fetchColumn();
                 $nombrePrograma = null;
                 $version = null;
                 
@@ -112,7 +112,7 @@
                 if(isset($version))
                     if(ValidateFile($file))
                         if(move_uploaded_file($file["tmp_name"], $target_file)){
-                            SQL::Update($_POST['contentName'], $_POST['pk'], [$_POST['fieldName'] => $target_file]);
+                            SQL::Update($_POST['contentName'], $_POST['contentId'], [$_POST['fieldName'] => $target_file]);
                             unlink($image_path);
                         }
                 

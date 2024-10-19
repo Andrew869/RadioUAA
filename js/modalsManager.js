@@ -20,23 +20,12 @@ if(createBtns.length){
     }
 }
 
-// if(updateBtns.length){
-//     for (let index = 0; index < updateBtns.length; index++) {
-//         const updateBtn = updateBtns[index];
-//         let contentName = updateBtn.getAttribute('contentName');
-//         let pk = updateBtn.getAttribute('pk');
-//         updateBtn.addEventListener('click', function(e){
-//             UpdateContent(contentName, pk, );
-//         });
-//     }
-// }
-
 if(contentFields.length){
     for (let index = 0; index < contentFields.length; index++) {
         const contentField = contentFields[index];
         const updateBtn = contentField.querySelector('.updateBtn');
         const contentName = contentField.getAttribute('contentName');
-        const pk = contentField.getAttribute('pk');
+        const contentId = contentField.getAttribute('contentId');
         const fieldName = contentField.getAttribute('fieldName');
         const fieldTitle = contentField.querySelector('.fieldTitle').textContent;
         const inputType = contentField.getAttribute('inputType');
@@ -49,7 +38,7 @@ if(contentFields.length){
         }
         
         updateBtn.addEventListener('click', function(e){
-            UpdateContent(contentName, pk, fieldName, fieldTitle, inputType, currentValue);
+            UpdateContent(contentName, contentId, fieldName, fieldTitle, inputType, currentValue);
         });
     }
 }
@@ -117,14 +106,14 @@ const fieldsInfo = [
     ['user', 'Nombre de usuario', 'correo de usuario', 'contraseña', 'Nombre completo', 'Rol del usuario', 'Cuenta Activa']
 ];
 
-function UpdateContent(contentName, pk, fieldName, fieldTitle, inputType, currentValue){
+function UpdateContent(contentName, contentId, fieldName, fieldTitle, inputType, currentValue){
     const modal = CreateModal();
     const modal_content = modal.querySelector('.container');
     const btns_container = modal.querySelector('.btns_container');
 
-    const confirmBtn = btns_container.querySelector('#confirmBtn');
+    const confirmBtn = btns_container.querySelector('.confirmBtn');
 
-    const input = CreateInput(inputType, fieldName, [], fieldTitle, contentName);
+    const input = CreateInput(inputType, fieldName, [], fieldTitle, contentName, 'type something here...');
     
     modal_content.insertBefore(input, btns_container); 
 
@@ -190,17 +179,22 @@ function UpdateContent(contentName, pk, fieldName, fieldTitle, inputType, curren
 
                 let prevTimes = timesInHours.join(',');
 
-                let timesContainer = input.querySelector('.times_container');
-                timesContainer.setAttribute('prevTimes', prevTimes);
+                let containers = input.querySelectorAll('.input_time');
+                containers[0].setAttribute('prevTimes', prevTimes);
                 
-                const timeInputs = input.querySelectorAll('[type=time]');
-                // console.log(ToHours(timesRange[1]));
+                let timeInputs = [];
+
+                for (let i = 0; i < 2; i++) {
+                    const container = containers[i];
+                    timeInputs.push(container.querySelector('[type=time]'))
+                }
+
                 for (let i = 0; i < timeInputs.length; i++) {
                     const time = timeInputs[i];
                     time.value = ToHours(timesInMinutes[i]);
                 }
 
-                const checkboxInput = input.querySelector('[type="checkbox"]');
+                const checkboxInput = containers[2].querySelector('[type="checkbox"]');
                 checkboxInput.checked = retrasmision;
             }
             break;
@@ -209,14 +203,14 @@ function UpdateContent(contentName, pk, fieldName, fieldTitle, inputType, curren
                 let selected = JSON.parse(currentValue);
                 selected.sort((a, b) => a - b);
 
-                let selectedContainer = input.querySelector('#optionsSelected')
-                let optionsAvailable = input.querySelector('#optionsAvailable');
+                let selectedContainer = input.querySelector('.optionsSelected')
+                let optionsAvailable = input.querySelector('.optionsAvailable');
                 CreateEvent(optionsAvailable, 'requestSuccessfully', 'Evento lanzado con éxito.');
                 optionsAvailable.addEventListener('requestSuccessfully', function(){
                     let options = optionsAvailable.querySelectorAll('li');
                     selected.forEach(selectedOption => {
                         for (let i = 0; i < options.length; i++) {
-                            if (i === (selectedOption - 1)) {
+                            if(options[i].id == selectedOption){
                                 options[i].classList.add('selected');
                                 selectedContainer.appendChild(options[i]);
                                 break;
@@ -229,7 +223,7 @@ function UpdateContent(contentName, pk, fieldName, fieldTitle, inputType, curren
     }
 
     confirmBtn.addEventListener('click', function(){
-        SumbitUpdateRequest(contentName, pk, fieldName, input);
+        SumbitUpdateRequest(contentName, contentId, fieldName, input);
     });
 }
 
@@ -237,7 +231,7 @@ function DeleteContent(contentName, pk){
     const modal = CreateModal();
     const modal_content = modal.querySelector('.container');
     const btns_container = modal.querySelector('.btns_container');
-    const confirmBtn = btns_container.querySelector('#confirmBtn');
+    const confirmBtn = btns_container.querySelector('.confirmBtn');
 
     const warning_text = document.createElement('p');
     warning_text.textContent = "Estas a punto de eliminar este contenido, deseas continuar?"

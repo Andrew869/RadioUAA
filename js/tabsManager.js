@@ -5,9 +5,7 @@ let currentPK;
 
 for (let i = 0; i < rows.length; i++) {
 	rows[i].addEventListener('click', function () {
-		// console.log(rows[i].querySelector('.pk').textContent);
-		// console.log("Ruta (como PHP_SELF): " + window.location.pathname);
-		currentPK = rows[i].querySelector('.pk').textContent;
+		currentPK = rows[i].querySelector('.contentName').textContent;
 		window.location.href = window.location.pathname + '?' + currentContent + '=' + currentPK;
 	});
 }

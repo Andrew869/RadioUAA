@@ -48,21 +48,6 @@ export function GetInputValues(input){
             break;
         case 'schedules':
             {
-                // let data = [
-                //     {name: "horarios[0][dias]", value: "Lunes,Martes"},
-                //     {name: "horarios[0][hora_inicio]", value: "11:00"},
-                //     {name: "horarios[0][hora_fin]", value: "12:00"},
-                //     {name: "horarios[0][es_retransmision]", value: "0"},
-                //     {name: "horarios[1][dias]", value: "Miércoles,Jueves"},
-                //     {name: "horarios[1][hora_inicio]", value: "20:00"},
-                //     {name: "horarios[1][hora_fin]", value: "09:00"},
-                //     {name: "horarios[1][es_retransmision]", value: "0"}
-                // ];
-                // data.forEach(datum => {
-                //     formData.append(datum.name, datum.value);
-                // });
-                // data.push({name: "horarios[0][dias]", value: "Lunes,Martes"});
-
                 let schedulesContainer = input.querySelector('#schedules_container');
                 
                 let schedules = schedulesContainer.querySelectorAll('.schedule');
@@ -93,7 +78,7 @@ export function GetInputValues(input){
         case 'list':
             {
                 let optionsSelected = input.querySelectorAll('.selected');
-                let contentName = input.id;
+                let contentName = input.getAttribute('contentName');
                 let ids = [];
                 optionsSelected.forEach(options => {
                     ids.push(options.id);
@@ -135,15 +120,21 @@ export function SumbitCreateRequest(contentName, inputs, cancelBtn){
         cancelBtn.click();
 
         let table = document.querySelector('[table_for="' + contentName + '"]');
-        let listContainer = document.getElementsByClassName('lists-container')[0];
-        if(listContainer){
-            let optionsSelected = listContainer.querySelector('#optionsSelected');
+        let optionsSelected = document.querySelector('#selected_list_' + contentName);
+        if(optionsSelected){
+            // let optionsSelected = inputSelector.querySelector('#optionsSelected');
 
             let liElement = document.createElement('li');
             liElement.id = data.id;
             liElement.textContent = data.name;
+            liElement.classList.add('selected');
+            liElement.classList.add('rowfadein');
 
             optionsSelected.appendChild(liElement);
+
+            setTimeout(function(){
+                liElement.classList.remove('rowfadein');
+            }, 1000);
         }
         else if(table){
             let tbody = table.querySelector('tbody');
@@ -153,7 +144,7 @@ export function SumbitCreateRequest(contentName, inputs, cancelBtn){
             trElement.classList.add('rowfadein');
 
             let tdForID = document.createElement('td');
-            tdForID.classList.add('pk');
+            tdForID.classList.add('contentId');
             tdForID.textContent = data.id;
             trElement.appendChild(tdForID);
 
@@ -176,14 +167,14 @@ export function SumbitCreateRequest(contentName, inputs, cancelBtn){
         }
     })
     .catch(error => {
-        console.error('Error al subir la imagen:', error);
+        console.error('Error al guardar la informacion:', error);
     });
 }
 
-export function SumbitUpdateRequest(contentName, pk, fieldName, input){
+export function SumbitUpdateRequest(contentName, contentId, fieldName, input){
     let formData = new FormData();
     formData.append('contentName', contentName);
-    formData.append('pk', pk);
+    formData.append('contentId', contentId);
     formData.append('fieldName', fieldName);
     let data = GetInputValues(input);
     data.forEach(datum => {
@@ -191,7 +182,7 @@ export function SumbitUpdateRequest(contentName, pk, fieldName, input){
     });
 
     if(contentName === 'horario')
-        formData.append('prevTimes', input.querySelector('.times_container').getAttribute('prevTimes'));
+        formData.append('prevTimes', input.querySelectorAll('.input_time')[0].getAttribute('prevTimes'));
 
     fetch('updateContent.php', {
         method: 'POST',
@@ -249,8 +240,8 @@ export function AddContent(e, contentName){
     const modal_content = modal.querySelector('.container');
     const btns_container = modal.querySelector('.btns_container');
 
-    const cancelBtn = btns_container.querySelector('#cancelBtn');
-    const confirmBtn = btns_container.querySelector('#confirmBtn');
+    const cancelBtn = btns_container.querySelector('.cancelBtn');
+    const confirmBtn = btns_container.querySelector('.confirmBtn');
 
     // const origianl_form = original_forms.querySelector('#' + content);
     // let current_form = origianl_form.cloneNode(true);
@@ -258,44 +249,44 @@ export function AddContent(e, contentName){
 
     const contents = {
         programa: [
-            {inputType:'text', id:'nombre_programa', classes:[], title:'Nombre del programa' , tableName: contentName},
-            {inputType:'file', id:'url_imagen', classes:[], title:'Imagen del programa', tableName: contentName},
-            {inputType:'textarea', id:'descripcion', classes:[], title:'Descripcion', tableName: contentName},
-            {inputType:'schedules', id:'horario', classes:[], title:'Horarios', tableName: contentName},
-            {inputType:'list', id:'presentador', classes:[], title:'Presentadores', tableName: 'programa_presentador'},
-            {inputType:'list', id:'genero', classes:[], title:'Generos', tableName: 'programa_genero'},
+            {inputType:'text', fieldName:'nombre_programa', classes:[], title:'Nombre del programa' , tableName: contentName, placeholder: "nombre..."},
+            {inputType:'file', fieldName:'url_imagen', classes:[], title:'Imagen del programa', tableName: contentName, placeholder: ''},
+            {inputType:'textarea', fieldName:'descripcion', classes:[], title:'Descripcion', tableName: contentName, placeholder: "descripcion..."},
+            {inputType:'schedules', fieldName:'horario', classes:[], title:'Horarios', tableName: contentName, placeholder: ''},
+            {inputType:'list', fieldName:'presentador', classes:[], title:'Presentadores', tableName: 'programa_presentador', placeholder: ''},
+            {inputType:'list', fieldName:'genero', classes:[], title:'Generos', tableName: 'programa_genero', placeholder: ''},
         ],
         horario: [
-            {inputType:'text', id:'id_programa', classes:[], title:'id del programa', tableName: contentName},
-            {inputType:'schedules', id:'horario', classes:[], title:'Horarios', tableName: contentName},
+            {inputType:'text', fieldName:'id_programa', classes:[], title:'id del programa', tableName: contentName, placeholder: ''},
+            {inputType:'schedules', fieldName:'horario', classes:[], title:'Horarios', tableName: contentName, placeholder: ''},
         ],
         presentador: [
-            {inputType:'text', id:'nombre_presentador', classes:[], title:'Nombre presentador' , tableName: contentName},
-            {inputType:'file', id:'url_foto', classes:[], title:'foto del presentador', tableName: contentName},
-            {inputType:'textarea', id:'biografia', classes:[], title:'Biografia', tableName: contentName},
+            {inputType:'text', fieldName:'nombre_presentador', classes:[], title:'Nombre presentador' , tableName: contentName, placeholder: "nombre..."},
+            {inputType:'file', fieldName:'url_foto', classes:[], title:'foto del presentador', tableName: contentName, placeholder: ''},
+            {inputType:'textarea', fieldName:'biografia', classes:[], title:'Biografia', tableName: contentName, placeholder: "biografia..."},
         ],
         genero: [
-            {inputType:'text', id:'nombre_genero', classes:[], title:'Nombre del genero' , tableName: contentName},
+            {inputType:'text', fieldName:'nombre_genero', classes:[], title:'Nombre del genero' , tableName: contentName, placeholder: "nombre..."},
         ],
         user: [
-            {inputType:'text', id:'username', classes:[], title:'Nombre de usuario' , tableName: contentName},
-            {inputType:'email', id:'email', classes:[], title:'correo de usuario' , tableName: contentName},
-            {inputType:'password', id:'password', classes:[], title:'contraseña' , tableName: contentName},
-            {inputType:'text', id:'nombre_completo', classes:[], title:'Nombre completo' , tableName: contentName},
-            {inputType:'enum', id:'rol', classes:[], title:'Rol del usuario' , tableName: contentName},
-            {inputType:'boolean', id:'cuenta_activa', classes:[], title:'Cuenta Activa' , tableName: contentName},
+            {inputType:'text', fieldName:'username', classes:[], title:'Nombre de usuario' , tableName: contentName, placeholder: "username..."},
+            {inputType:'email', fieldName:'email', classes:[], title:'correo de usuario' , tableName: contentName, placeholder: "nombre..."},
+            {inputType:'password', fieldName:'password', classes:[], title:'contraseña' , tableName: contentName, placeholder: "password..."},
+            {inputType:'text', fieldName:'nombre_completo', classes:[], title:'Nombre completo' , tableName: contentName, placeholder: "nombre completo..."},
+            {inputType:'enum', fieldName:'rol', classes:[], title:'Rol del usuario' , tableName: contentName, placeholder: ''},
+            {inputType:'boolean', fieldName:'cuenta_activa', classes:[], title:'Cuenta Activa' , tableName: contentName, placeholder: ''},
         ]
     };
-
+    
     switch (contentName) {
         case 'programa':
             contents.programa.forEach(input => {
-                inputs.push(CreateInput(input.inputType, input.id, input.classes, input.title, input.tableName));
+                inputs.push(CreateInput(input.inputType, input.fieldName, input.classes, input.title, input.tableName, input.placeholder));
             });
             break;
         case 'horario':
             contents.horario.forEach(input => {
-                inputs.push(CreateInput(input.inputType, input.id, input.classes, input.title, input.tableName));
+                inputs.push(CreateInput(input.inputType, input.fieldName, input.classes, input.title, input.tableName, input.placeholder));
             });
             let inputId = inputs[0].querySelector('#id_programa');
             inputId.value = e.target.id;
@@ -304,17 +295,17 @@ export function AddContent(e, contentName){
             break;
         case 'presentador':
             contents.presentador.forEach(input => {
-                inputs.push(CreateInput(input.inputType, input.id, input.classes, input.title, input.tableName));
+                inputs.push(CreateInput(input.inputType, input.fieldName, input.classes, input.title, input.tableName, input.placeholder));
             });
             break;
         case 'genero':
             contents.genero.forEach(input => {
-                inputs.push(CreateInput(input.inputType, input.id, input.classes, input.title, input.tableName));
+                inputs.push(CreateInput(input.inputType, input.fieldName, input.classes, input.title, input.tableName, input.placeholder));
             });
             break;
         case 'user':
             contents.user.forEach(input => {
-                inputs.push(CreateInput(input.inputType, input.id, input.classes, input.title, input.tableName));
+                inputs.push(CreateInput(input.inputType, input.fieldName, input.classes, input.title, input.tableName, input.placeholder));
             });
             break;
     }
@@ -328,15 +319,17 @@ export function AddContent(e, contentName){
     });
 }
 
-export function CreateInput(inputType, id, classes, inputTitle, tableName){
+export function CreateInput(inputType, fieldName, classes, inputTitle, tableName, placeholder){
     let container = document.createElement('div');
+    container.classList.add('input_content');
     classes.forEach(input_class => {
         container.classList.add(input_class);
     });
 
     let label = document.createElement('label');
+    label.classList.add('input_content__label');
     label.textContent = inputTitle;
-    label.setAttribute('for', id);
+    label.setAttribute('for', fieldName);
 
     container.appendChild(label);
 
@@ -350,28 +343,45 @@ export function CreateInput(inputType, id, classes, inputTitle, tableName){
             {
                 element = document.createElement('input');
                 element.type = inputType;
-                element.id = id;
+                element.id = fieldName;
+                element.setAttribute('fieldName', fieldName);
+                element.classList.add('input_content__input');
+                element.placeholder = placeholder;
                 // input.setAttribute('name', id);
                 break;
             }
         case 'textarea':
             {
                 element = document.createElement('textarea');
-                // input.type = inputType;
-                element.id = id;   
+                // element.type = inputType;
+                element.classList.add('input_content__input--textarea');
+                element.id = fieldName;
+                element.setAttribute('fieldName', fieldName);
+                element.placeholder = placeholder;
                 break;
             }
         case 'file':
             {
                 element = document.createElement('div');
+                let btnLabel = document.createElement('label');
+                btnLabel.classList.add('button');
+                btnLabel.setAttribute('for', 'fileToUpload');
+                btnLabel.textContent = 'Seleccionar archivo';
+
+                element.appendChild(btnLabel);
+
                 let input = document.createElement('input');
+                input.classList.add('input_content__input--file');
                 input.type = inputType;
-                input.id = "fileToUpload";
+                input.id = 'fileToUpload';
                 input.accept = 'image/*';
+
                 element.appendChild(input);
 
-                let feedback_file = document.createElement('div');
-                feedback_file.id = 'feedback_file';
+                let feedback_file = document.createElement('span');
+                // feedback_file.id = 'feedback_file';
+                feedback_file.classList.add('input_content__feedback--file');
+                feedback_file.textContent = 'No se ha seleccionado archivo';
                 element.appendChild(feedback_file);
                 
                 InputFileManager(element);
@@ -380,28 +390,22 @@ export function CreateInput(inputType, id, classes, inputTitle, tableName){
         case 'enum':
             {
                 element = document.createElement('select');
-                element.id = id;
+                element.id = fieldName;
+                element.setAttribute('fieldName', fieldName);
                 element.classList.add('selectList');
+                element.classList.add('input_content__input--select');
 
-                EnumToList(element, tableName, id, 'option');
-                // let opcion = document.createElement('option');
-                // opcion.textContent = 'Admin';
-                // element.appendChild(opcion);
-                // let opcion2 = document.createElement('option');
-                // opcion2.textContent = 'Editor';
-                // element.appendChild(opcion2);
-                // let opcion3 = document.createElement('option');
-                // opcion3.textContent = 'Moderador';
-                // element.appendChild(opcion3);
-                    
-
+                EnumToList(element, tableName, fieldName, 'option');
                 break;
             }
         case 'boolean':
             {
+                label.className = 'input_content__label-checkbox';
                 element = document.createElement('input');
+                element.classList.add('input_content__input-checkbox');
+                element.id = fieldName;
+                element.setAttribute('fieldName', fieldName);
                 element.type = 'checkbox';
-                element.id = id;
                 element.checked = true;
                 break;
             }
@@ -410,116 +414,176 @@ export function CreateInput(inputType, id, classes, inputTitle, tableName){
                 element = document.createElement('div');
                 element.id = 'schedules_container';
 
-                let schedule = document.createElement('div');
-                // originalSchedule.id = 'originalschedule';
-                schedule.classList.add('schedule');
-                element.appendChild(schedule);
+                // Crear el contenedor principal
+                const scheduleDiv = document.createElement('div');
+                scheduleDiv.classList.add('schedule');
 
-                schedule.addEventListener('click', CheckSchedules);
-                schedule.addEventListener('keyup', CheckSchedules);
+                // Crear el contenedor de los inputs
+                const scheduleInputsDiv = document.createElement('div');
+                scheduleInputsDiv.classList.add('scheduel_inputs');
 
-                let daysContainer = document.createElement('div');
-                daysContainer.classList.add('days_container');
-                schedule.appendChild(daysContainer);
+                // Crear el contenedor de la lista
+                const listContainerDiv = document.createElement('div');
+                listContainerDiv.classList.add('list_container');
 
-                let daysList = document.createElement('ul');
-                daysList.classList.add('days_list');
-                daysContainer.appendChild(daysList);
+                // Crear la lista de días
+                const daysListUl = document.createElement('ul');
+                daysListUl.classList.add('list', 'days_list');
 
-                EnumToList(daysList, 'horario', 'dia_semana', 'li');
-                DaysSelectionSystem(daysList);
+                EnumToList(daysListUl, 'horario', 'dia_semana', 'li');
+                DaysSelectionSystem(daysListUl);
 
-                let timesContainer = document.createElement('div');
-                timesContainer.classList.add('times_container');
+                // Añadir la lista de días al contenedor
+                listContainerDiv.appendChild(daysListUl);
 
-                let labelHoraInicio = document.createElement('label');
-                labelHoraInicio.textContent = "Hora inicio";
-                timesContainer.appendChild(labelHoraInicio);
+                // Añadir el contenedor de la lista a los inputs
+                scheduleInputsDiv.appendChild(listContainerDiv);
 
-                let inputHoraInicio = document.createElement('input');
-                inputHoraInicio.type = 'time';
-                inputHoraInicio.classList.add('hora_inicio');
-                timesContainer.appendChild(inputHoraInicio);
+                // Crear el input de "Hora inicio"
+                const horaInicioDiv = document.createElement('div');
+                horaInicioDiv.classList.add('input_time');
 
-                let labelHoraFin = document.createElement('label');
-                labelHoraFin.textContent = "Hora final";
-                timesContainer.appendChild(labelHoraFin);
+                const horaInicioLabel = document.createElement('label');
+                horaInicioLabel.classList.add('input_time__label');
+                horaInicioLabel.textContent = 'Hora inicio';
 
-                let inputHoraFin = document.createElement('input');
-                inputHoraFin.type = 'time';
-                inputHoraFin.classList.add('hora_fin');
-                timesContainer.appendChild(inputHoraFin);
+                const horaInicioInput = document.createElement('input');
+                horaInicioInput.type = 'time';
+                horaInicioInput.classList.add('input_time__input', 'hora_inicio');
 
-                schedule.appendChild(timesContainer);
+                horaInicioDiv.appendChild(horaInicioLabel);
+                horaInicioDiv.appendChild(horaInicioInput);
 
-                let labelRetransmision = document.createElement('label');
-                labelRetransmision.textContent = "Es retrasmision";
-                schedule.appendChild(labelRetransmision);
+                // Crear el input de "Hora final"
+                const horaFinDiv = document.createElement('div');
+                horaFinDiv.classList.add('input_time');
 
-                let inputRetransmision = document.createElement('input');
-                inputRetransmision.type = 'checkbox';
-                inputRetransmision.classList.add('es_retransmision');
-                schedule.appendChild(inputRetransmision);
+                const horaFinLabel = document.createElement('label');
+                horaFinLabel.classList.add('input_time__label');
+                horaFinLabel.textContent = 'Hora final';
 
-                let feedbackSchedules = document.createElement('div');
-                feedbackSchedules.classList.add('feedback_schedules');
-                schedule.appendChild(feedbackSchedules);
+                const horaFinInput = document.createElement('input');
+                horaFinInput.type = 'time';
+                horaFinInput.classList.add('input_time__input', 'hora_fin');
+
+                horaFinDiv.appendChild(horaFinLabel);
+                horaFinDiv.appendChild(horaFinInput);
+
+                // Crear el checkbox de "Es retransmisión"
+                const esRetransmisionDiv = document.createElement('div');
+                esRetransmisionDiv.classList.add('input_time');
+
+                const esRetransmisionLabel = document.createElement('label');
+                esRetransmisionLabel.classList.add('input_time__label');
+                esRetransmisionLabel.textContent = 'Es retrasmision';
+
+                const esRetransmisionInput = document.createElement('input');
+                esRetransmisionInput.type = 'checkbox';
+                esRetransmisionInput.classList.add('input_time__input', 'es_retransmision');
+
+                esRetransmisionDiv.appendChild(esRetransmisionLabel);
+                esRetransmisionDiv.appendChild(esRetransmisionInput);
+
+                // Añadir todos los inputs a los schedule inputs
+                scheduleInputsDiv.appendChild(horaInicioDiv);
+                scheduleInputsDiv.appendChild(horaFinDiv);
+                scheduleInputsDiv.appendChild(esRetransmisionDiv);
+
+                // Añadir el contenedor de inputs al contenedor principal
+                scheduleDiv.appendChild(scheduleInputsDiv);
+
+                // Crear la div de feedback
+                const feedbackDiv = document.createElement('div');
+                feedbackDiv.classList.add('feedback_schedules');
+                feedbackDiv.textContent = 'hay solapaciones';
+
+                // Añadir el feedback al contenedor principal
+                scheduleDiv.appendChild(feedbackDiv);
+
+                element.appendChild(scheduleDiv);
 
                 let addNewScheduleButton = document.createElement('button');
                 addNewScheduleButton.id = 'addNewSchedule';
+                addNewScheduleButton.classList.add('button');
                 addNewScheduleButton.textContent = "añadir nuevo horario";
                 element.appendChild(addNewScheduleButton);
-                
+
                 addNewScheduleButton.addEventListener('click', function(){
-                    CloneSchedule(element, schedule, this);
+                    CloneSchedule(element, scheduleDiv, this);
                 });
                 break;
             }
         case 'list':
             {
-                container.id = id;
+                container.id = "inputSelector_" + fieldName;
+                container.setAttribute('contentName', tableName);
                 element = document.createElement('div');
-                element.classList.add('lists-container');
+                element.classList.add('input_select');
 
                 let divSelected = document.createElement('div');
+                divSelected.classList.add('input_list');
                 element.appendChild(divSelected);
 
                 let h3Selected = document.createElement('h3');
+                h3Selected.classList.add('title_list');
                 h3Selected.textContent = "Seleccionados";
                 divSelected.appendChild(h3Selected);
 
                 let createBtn = document.createElement('button');
-                createBtn.classList.add('modalBtn');
-                createBtn.classList.add('createBtn');
+                createBtn.classList.add('button--mini');
+                createBtn.classList.add('tooltip');
+
                 let subContentName = tableName.split("_")[1]; // x_value
 
                 createBtn.setAttribute('contentName', subContentName);
-                createBtn.textContent = "Crear " + subContentName;
+                createBtn.textContent = '+';
 
                 createBtn.addEventListener('click', function(e){
                     AddContent(e, subContentName);
                 });
 
-                divSelected.appendChild(createBtn);
+                let tooltip = document.createElement('span');
+                tooltip.classList.add('tooltiptext');
+                tooltip.textContent = 'crear nuevo ' + subContentName;
+
+                createBtn.appendChild(tooltip)
+
+                h3Selected.appendChild(createBtn);
 
                 let ulSelected = document.createElement('ul');
-                ulSelected.id = 'optionsSelected';
+                ulSelected.classList.add('list');
                 ulSelected.classList.add('options');
+                ulSelected.classList.add('optionsSelected');
+                ulSelected.id = "selected_list_" + subContentName;
                 divSelected.appendChild(ulSelected);
 
+                let divDivision = document.createElement('div');
+                divDivision.classList.add('division');
+
+                fetch('../resources/img/arrow-right-arrow-left-solid.svg')
+                .then(response => response.text())
+                .then(svgContent => {
+                    divDivision.innerHTML = svgContent;
+                })
+                .catch(error => console.log('Error al cargar el SVG:', error));
+                element.appendChild(divDivision);
+
                 let divAvailable = document.createElement('div');
+                divAvailable.classList.add('input_list');
                 element.appendChild(divAvailable);
 
                 let h3Available = document.createElement('h3');
+                h3Available.classList.add('title_list');
                 h3Available.textContent = "Disponibles";
                 divAvailable.appendChild(h3Available);
 
                 let ulAvailable = document.createElement('ul');
-                ulAvailable.id = 'optionsAvailable';
+                ulAvailable.classList.add('list');
                 ulAvailable.classList.add('options');
+                ulAvailable.classList.add('optionsAvailable');
                 divAvailable.appendChild(ulAvailable);
 
-                GetList(ulAvailable, id);
+                GetList(ulAvailable, fieldName);
                 ListSelectionSystem(ulSelected, ulAvailable);
             }
             break;
@@ -557,7 +621,7 @@ function SetupModal(modal){
             HideModal(currentModal);
         });
 
-        let cancelBtn = currentModal.querySelector('#cancelBtn');
+        let cancelBtn = currentModal.querySelector('.cancelBtn');
         cancelBtn.addEventListener('click', () => {
             HideModal(currentModal);
         });
@@ -597,15 +661,15 @@ export function CreateModal(){
 
     let cancelBtn = document.createElement('button');
     cancelBtn.type = 'button';
-    cancelBtn.id = 'cancelBtn';
-    cancelBtn.classList.add('modalBtn');
+    cancelBtn.classList.add('button');
+    cancelBtn.classList.add('cancelBtn');
     cancelBtn.textContent = 'Cancelar';
     btns_container.appendChild(cancelBtn);
 
     let confirmBtn = document.createElement('button');
     confirmBtn.type = 'button';
-    confirmBtn.id = 'confirmBtn';
-    confirmBtn.classList.add('modalBtn');
+    confirmBtn.classList.add('button');
+    confirmBtn.classList.add('confirmBtn');
     confirmBtn.textContent = 'Confirmar';
     // confirmBtn.addEventListener('click', function () {
     //     CreateModal();
@@ -618,7 +682,7 @@ export function CreateModal(){
     // let replicant = originalModal.cloneNode(true);
     // replicant.classList.remove('originalModal');
 
-    // let confirmBtn = replicant.querySelector('#confirmBtn');
+    // let confirmBtn = replicant.querySelector('.confirmBtn');
 
     // confirmBtn.addEventListener('click', function(){
     //     CreateModal();
@@ -774,7 +838,7 @@ export function CloneSchedule(schedulesContainer, originalschedule, newScheduleB
 export function InputFileManager(input_file){
     // const dropZone = input_file.querySelector('#drop-zone');
     const actual_input = input_file.querySelector('[type="file"]')
-    const feedback = input_file.querySelector('#feedback_file');
+    const feedback = input_file.querySelector('.input_content__feedback--file');
     
     // Cambiar apariencia del área de arrastre cuando el archivo está sobre ella
     // dropZone.addEventListener('dragover', (e) => {
@@ -927,7 +991,7 @@ export function DSetupModal(type){ // deprecated <====================
     updateModal.classList.remove('hide');
     // let deleteX = deleteModal.querySelector('SPAN');
     let uptadeX = updateModal.querySelector('SPAN');
-    let cancelBtn = updateModal.querySelector('#cancelBtn');
+    let cancelBtn = updateModal.querySelector('.cancelBtn');
 
     exitOptions = [uptadeX, cancelBtn];
 
@@ -958,7 +1022,7 @@ export function DSetupModal(type){ // deprecated <====================
         }
     });
 
-    return updateModal.querySelector('#confirmBtn');
+    return updateModal.querySelector('.confirmBtn');
 }
 
 export function ToHours(minutes) {

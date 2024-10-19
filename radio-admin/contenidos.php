@@ -33,57 +33,26 @@
     }
 
     function ShowField($table_name, $primary_key, $fieldName, $fieldTitle, $type, $current_content) : void{
-        $value_field = '';
+        $currentValue = '';
         $onclick = '';
         switch ($type) {
             case SQL::TEXT:
             case SQL::ENUM:
             case 'textarea':
-                $value_field.= $current_content[$fieldName];       
+                $currentValue.= $current_content[$fieldName];       
                 break;
             case SQL::PASSWORD:
-                $value_field .= "••••••••";
+                $currentValue .= "••••••••";
                 break;
             case SQL::FILE:
-                $value_field .= "<img src='$current_content[$fieldName]'>";
+                $currentValue .= "<img src='$current_content[$fieldName]'>";
                 break;
             case SQL::BOOLEAN:
-                $value_field .= ($current_content[$fieldName] ? "Sí" : "No");
+                $currentValue .= ($current_content[$fieldName] ? "Sí" : "No");
                 break;
         }
-
-        $fieldsInfo = [
-            'programa' => [
-                'nombre_programa' => 'Nombre del programa',
-                'url_imagen' => 'Imagen del programa',
-                'descripcion' => 'Descripcion',
-                'horario' => 'Horarios',
-                'presentador' => 'Presentadores',
-                'genero' => 'Generos',
-            ],
-            'horario' => [
-                'horario' => 'Horarios',
-            ],
-            'presentador' => [
-                'nombre_presentador' => 'Nombre presentador',
-                'url_foto' => 'foto del presentador',
-                'biografia' => 'Biografia',
-            ],
-            'genero' => [
-                'nombre_genero' => 'Nombre del genero',
-            ],
-            'user' => [
-                'username' => 'Nombre de usuario',
-                'email' => 'correo de usuario',
-                'password' => 'contraseña',
-                'nombre_completo' => 'Nombre completo',
-                'rol' => 'Rol del usuario',
-                'cuenta_activa' => 'Cuenta Activa',
-            ]
-        ];
-
-        echo "<div class='contentField' contentName='$table_name' pk='$primary_key' fieldName='$fieldName' inputType='$type'>";
-        echo "<div><div class='fieldTitle'>$fieldTitle</div><div class='currentValue'>$value_field</div></div>";
+        echo "<div class='contentField' contentName='$table_name' contentId='$primary_key' fieldName='$fieldName' inputType='$type'>";
+        echo "<div><div class='fieldTitle'>$fieldTitle</div><div class='currentValue'>$currentValue</div></div>";
         echo "<button class='updateBtn'>Editar</button><br>";
         echo "</div>";
     }
@@ -105,7 +74,7 @@
         }
 
         foreach ($groups as $key => $group) {
-            echo "<div class='contentField' contentName='horario' pk='$primary_key' fieldName='Horarios' inputType='schedules'>";
+            echo "<div class='contentField' contentName='horario' contentId='$primary_key' fieldName='Horarios' inputType='schedules'>";
             $days = [];
             $retra = null;
             foreach ($group as $horario) {
@@ -166,7 +135,7 @@
         $btn_element = "<button class='updateBtn'>Editar</button><br>";
         $btn_element = str_replace("args" , $args, $btn_element);
 
-        echo "<div class='contentField' contentName='$table_name' pk='$primary_key' fieldName='$table_name_element' inputType='list'>";
+        echo "<div class='contentField' contentName='$table_name' contentId='$primary_key' fieldName='$table_name_element' inputType='list'>";
         echo "<div class='fieldTitle'>$fieldTitle</div>";
         echo "<ul>";
         foreach ($selected as $element) {
@@ -228,7 +197,7 @@
             $cell_content = "<td";
             if($this->pk_name === parent::key()){
                 $this->primary_key = parent::current();
-                $cell_content .= " class='pk'";
+                $cell_content .= " class='contentName'";
             }
             $cell_content .= ">";
 
@@ -285,12 +254,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radio Admin</title>
+    <link rel="stylesheet" href="../css/normalize.css">
+    <!-- <link rel="stylesheet" href="../css/bem.css"> -->
+    <link rel="stylesheet" href="../css/commonStyles.css">
     <link rel="stylesheet" href="../css/styleContent.css">
+    <link rel="stylesheet" href="../css/formStyles.css">
     <script type="module" src="../js/utilities.js"></script>
 </head>
 
 <body>
-    <header>
+    <header class="header">
         <?php
         include "nav_header.php";
         ?>

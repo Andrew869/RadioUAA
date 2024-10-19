@@ -1,33 +1,24 @@
+<a href="../radio-admin/" class="header__logo">Radio Admin</a>
+<nav class="header__nav">
+    <!-- <a href="../radio-admin/" class="header__nav-link header__nav-item">Radio Admin</a> -->
+    <a href="contenidos" class="header__nav-link header__nav-item">Contenidos</a>
+    <a href="../" class="header__nav-external_link header__nav-item">Radio UAA<svg style="width: 14px;"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+            <path
+                d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l82.7 0L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3l0 82.7c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160c0-17.7-14.3-32-32-32L320 0zM80 32C35.8 32 0 67.8 0 112L0 432c0 44.2 35.8 80 80 80l320 0c44.2 0 80-35.8 80-80l0-112c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 112c0 8.8-7.2 16-16 16L80 448c-8.8 0-16-7.2-16-16l0-320c0-8.8 7.2-16 16-16l112 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L80 32z" />
+        </svg></a>
 
-<link rel="stylesheet" href="../css/admin.css">
-<nav class="nav_admin">
-    <a href="../radio-admin/" class="nav_admin_item">Radio Admin</a>
-    
-    <div class="nav_admin_item_wrapper">
-        <a href="contenidos" class="nav_admin_item">
-            Contenidos <span class="submenu_opener">&#9660;</span>
-        </a>
-        <ul class="submenu">
-            <li><a href="#">Programas</a></li>
-            <li><a href="#">Presentadores</a></li>
-            <li><a href="#">Géneros</a></li>
-            <li><a href="#">Comentarios</a></li>
-            <li><a href="#">Usuario</a></li>
-        </ul>
+    <div class="dropdown">
+        <button onclick="DropdownShow(this)" class="dropdown__button">
+            <?php 
+                echo $_SESSION['username'];
+            ?>
+        </button>
+        <div id="user_options" class="dropdown__content">
+            <a href="#">Editar perfil</a>
+            <a href="logout">Cerrar sesion</a>
+        </div>
     </div>
-
-    <a href="../" class="nav_admin_item">Radio UAA</a>
-    <div class="nav_admin_item_wrapper-usuario">
-        <a href="#" class="nav_icono">
-            <img width="40" height="40" src="https://img.icons8.com/ios-filled/50/user.png" alt="user"/>
-        </a>  
-        <ul class="submenu">
-            <li><a href="login.php">cambiar Cuenta</a></li>
-            <li><a href="logout.php">Cerrar Sesion</a></li>
-            <li><a href="#">Ajustes</a></li>
-            
-        </ul>
-    </div>
-
-     
 </nav>
+<script src="../js/headerManager.js"></script>

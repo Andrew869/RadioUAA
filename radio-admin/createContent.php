@@ -63,14 +63,14 @@
                     $contentValues = SQL::Create(SQL::PROGRAMA, [$_POST['nombre_programa'], $target_file, $_POST['descripcion']]);
                     foreach ($_POST['horarios'] as $value) {
                         foreach (explode(',', $value['dias']) as $dia) {
-                            SQL::Create(SQL::HORARIO, [$contentValues, $dia, $value['hora_inicio'], $value['hora_fin'], $value['es_retransmision']]);
+                            SQL::Create(SQL::HORARIO, [$contentValues['id'], $dia, $value['hora_inicio'], $value['hora_fin'], $value['es_retransmision']]);
                         }
                     }
-                    foreach (explode(',', $_POST['presentador']) as $value) {
-                        SQL::Create(SQL::PROGRAMA_PRESENTADOR, [$contentValues, $value]);
+                    foreach (explode(',', $_POST[SQL::PROGRAMA_PRESENTADOR]) as $value) {
+                        SQL::Create(SQL::PROGRAMA_PRESENTADOR, [$contentValues['id'], $value]);
                     }
-                    foreach (explode(',', $_POST['genero']) as $value) {
-                        SQL::Create(SQL::PROGRAMA_GENERO, [$contentValues, $value]);
+                    foreach (explode(',', $_POST[SQL::PROGRAMA_GENERO]) as $value) {
+                        SQL::Create(SQL::PROGRAMA_GENERO, [$contentValues['id'], $value]);
                     }
                 }
                 break;
@@ -79,7 +79,7 @@
                     $contentValues = $_POST['id_programa'];
                     foreach ($_POST['horarios'] as $value) {
                         foreach (explode(',', $value['dias']) as $dia) {
-                            SQL::Create(SQL::HORARIO, [$contentValues, $dia, $value['hora_inicio'], $value['hora_fin'], $value['es_retransmision']]);
+                            SQL::Create(SQL::HORARIO, [$contentValues['id'], $dia, $value['hora_inicio'], $value['hora_fin'], $value['es_retransmision']]);
                         }
                     }
                 }
