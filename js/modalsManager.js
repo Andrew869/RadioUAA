@@ -47,9 +47,9 @@ if(deleteBtns.length){
     for (let index = 0; index < deleteBtns.length; index++) {
         const deleteBtn = deleteBtns[index];
         let contentName = deleteBtn.getAttribute('contentName');
-        let pk = deleteBtn.getAttribute('pk');
+        let contentId = deleteBtn.getAttribute('contentId');
         deleteBtn.addEventListener('click', function(e){
-            DeleteContent(contentName, pk);
+            DeleteContent(contentName, contentId);
         });
     }
 }
@@ -227,17 +227,19 @@ function UpdateContent(contentName, contentId, fieldName, fieldTitle, inputType,
     });
 }
 
-function DeleteContent(contentName, pk){
+function DeleteContent(contentName, contentId){
     const modal = CreateModal();
     const modal_content = modal.querySelector('.container');
+    modal_content.classList.add('delete-container');
     const btns_container = modal.querySelector('.btns_container');
     const confirmBtn = btns_container.querySelector('.confirmBtn');
 
     const warning_text = document.createElement('p');
-    warning_text.textContent = "Estas a punto de eliminar este contenido, deseas continuar?"
+    warning_text.classList.add('delete-message');
+    warning_text.innerHTML = "Estas a punto de <span class='highlight'>eliminar</span> el contenido, ¿deseas continuar?";
     modal_content.insertBefore(warning_text, btns_container);
 
     confirmBtn.addEventListener('click', function(){
-        SubmitDeleteRequest(contentName, pk);
+        SubmitDeleteRequest(contentName, contentId);
     })
 }

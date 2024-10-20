@@ -11,7 +11,11 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="../css/bem.css" />
+    <link rel="stylesheet" href="../css/normalize.css">
+    <!-- <link rel="stylesheet" href="../css/bem.css"> -->
+    <link rel="stylesheet" href="../css/commonStyles.css">
+    <link rel="stylesheet" href="../css/styleContent.css">
+    <link rel="stylesheet" href="../css/formStyles.css">
 </head>
 
 <body>
@@ -38,200 +42,102 @@
             </div>
         </nav>
     </header>
-    <aside></aside>
-    <main class="main">
-        <div class="inputs">
-            <div class="input_content" inputtype="text">
-                <label class="input_content__label" for="nombre_programa">Nombre del programa</label>
-                <input class="input_content__input" type="text" id="nombre_programa" placeholder="nombre...">
+    <main>
+        <div class="main">
+            <div class="contentField" contentname="programa" contentid="110" fieldname="nombre_programa" inputtype="text">
+                <div>
+                    <div class="fieldTitle">Nombre del programa</div>
+                    <div class="currentValue">Nombre super ingenioso</div>
+                </div>
+                <button class="button modalBtn updateBtn">Editar</button><br>
             </div>
-            <div class="input_content" inputtype="file">
-                <label class="input_content__label" for="fileToUpload">Imagen del programa</label>
-                <button class="button" for="fileToUpload">Seleccionar archivo</button>
-                <input class="input_content__input--file" type="file" id="fileToUpload" accept="image/*">
-                <span class="input_content__feedback--file">No se ha seleccionado archivo</span>
+            <div class="contentField" contentname="programa" contentid="110" fieldname="url_img" inputtype="file">
+                <div>
+                    <div class="fieldTitle">Imagen del programa</div>
+                    <div class="currentValue"><img src="../resources/uploads/img/programa_110[v0].jpg"></div>
+                </div><button class="button modalBtn updateBtn">Editar</button><br>
             </div>
-            <div class="input_content" inputtype="textarea">
-                <label class="input_content__label" for="descripcion">Descripcion del programa</label>
-                <textarea class="input_content__input--textarea" id="descripcion" placeholder="descripcion..."></textarea>
+            <div class="contentField" contentname="programa" contentid="110" fieldname="descripcion" inputtype="textarea">
+                <div>
+                    <div class="fieldTitle">Descripcion</div>
+                    <div class="currentValue">
+                        <p>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maxime cumque voluptatem, quisquam numquam sed unde mollitia, labore doloremque accusamus voluptatum necessitatibus maiores repudiandae aperiam exercitationem veritatis voluptas aliquid a cupiditate.
+                            Magni, veritatis ex natus pariatur, optio laboriosam unde a enim corporis rerum harum vitae! Similique nulla quo totam officia, aperiam, quisquam obcaecati eius architecto ipsa in labore ab quibusdam dolorem!
+                            Suscipit ex nam nobis vitae similique pariatur nemo unde harum fuga dicta voluptate, eos nesciunt ullam, est amet, placeat alias ipsam. Accusantium optio qui repellat, at tempore placeat ipsa unde!
+                            Adipisci exercitationem molestias aliquid tempora mollitia dolorem non ratione, laboriosam saepe eos assumenda et sapiente temporibus, ea perferendis delectus excepturi itaque sit, neque minima hic quis maiores? Quod, voluptatibus iusto.
+                        </p>
+                    </div>
+                </div><button class="button modalBtn updateBtn">Editar</button>
             </div>
-            <div class="input_content" inputtype="schedules">
-                <label class="input_content__label" for="horario">Horarios</label>
-                <div id="schedules_container">
-                    <div class="schedule">
-                        <div class="scheduel_inputs">
-                            <div class="list_container">
-                                <ul class="list days_list">
-                                    <li>Lunes</li>
-                                    <li>Martes</li>
-                                    <li class="selected">Miércoles</li>
-                                    <li class="hover">Jueves</li>
-                                    <li>Viernes</li>
-                                    <li class="selected">Sábado</li>
-                                    <li>Domingo</li>
-                                </ul>
-                            </div>
-                            <div class="input_time">
-                                <label class="input_time__label">Hora inicio</label>
-                                <input type="time" class="input_time__input hora_inicio">
-                            </div>
-                            <div class="input_time">
-                                <label class="input_time__label">Hora final</label>
-                                <input type="time" class="input_time__input hora_fin">
-                            </div>
-                            <div class="input_time">
-                                <label class="input_time__label">Es retrasmision</label>
-                                <input type="checkbox" class="input_time__input es_retransmision">
-                            </div>
+                <div class="contentName">Horarios</div>
+                <div class="contentField" contentname="horario" contentid="110" fieldname="Horarios" inputtype="schedules">
+                    <div class="schedule-group">
+                        <div>
+                            <ul class="schedule-days">
+                                <li>Lunes</li>
+                                <li>Martes</li>
+                                <li>Miercoles</li>
+                            </ul>
                         </div>
-                        <div class="feedback_schedules">hay solapaciones</div>
-                    </div>
-                    <div class="schedule">
-                        <div class="scheduel_inputs">
-                            <div class="input_list">
-                                <ul class="list days_list">
-                                    <li>Lunes</li>
-                                    <li class="selected">Martes</li>
-                                    <li>Miércoles</li>
-                                    <li class="selected">Jueves</li>
-                                    <li>Viernes</li>
-                                    <li>Sábado</li>
-                                    <li>Domingo</li>
-                                </ul>
-                            </div>
-                            <div class="input_time">
-                                <label class="input_time__label">Hora inicio</label>
-                                <input type="time" class="input_time__input hora_inicio">
-                            </div>
-                            <div class="input_time">
-                                <label class="input_time__label">Hora final</label>
-                                <input type="time" class="input_time__input hora_fin">
-                            </div>
-                            <div class="input_time">
-                                <label class="input_time__label">Es retrasmision</label>
-                                <input type="checkbox" class="input_time__input es_retransmision">
-                            </div>
+                        <div class="schedule-time">De 00:00 a 01:00</div>
+                        <div class="schedule-tag">
+                            <span class="live">En vivo</span>
                         </div>
-                        <div class="feedback_schedules">hay solapaciones</div>
                     </div>
-                    <button id="addNewSchedule" class="button">añadir nuevo horario</button>
+                    <button class="button modalBtn updateBtn">Editar</button>
                 </div>
-            </div>
-            <div class="input_content" inputtype="list" id="inputSelector_presentador"
-                contentname="programa_presentador">
-                <label class="input_content__label">Presentadores</label>
-                <div class="input_select">
-                    <div class="input_list">
-                        <h3 class="title_list">Seleccionados<button class="miniCreateBtn"
-                                contentname="presentador">+</button></h3>
-                        <ul class="list options optionsSelected">
-                            <li content_id="3" class="selected">Ing. Héctor Andrés Gutiérrez Esparza</li>
-                            <li content_id="3" class="selected">Ing. Héctor Andrés Gutiérrez Esparzaz</li>
-                            <li content_id="3" class="selected">Ing. Héctor Andrés Gutiérrez Esparza
-                                ammmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm2</li>
-                        </ul>
+                <div class="contentField" contentname="horario" contentid="110" fieldname="Horarios" inputtype="schedules">
+                    <div class="schedule-group">
+                        <div>
+                            <ul class="schedule-days">
+                                <li>Viernes</li>
+                                <li>Sábado</li>
+                            </ul>
+                        </div>
+                        <div class="schedule-time">De 03:00 a 05:00</div>
+                        <div class="schedule-tag">
+                            <span class="retransmission">Retransmisión</span>
+                        </div>
                     </div>
-                    <div class="division">
-                        <svg style="width: 14px;" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                            <path
-                                d="M438.6 150.6c12.5-12.5 12.5-32.8 0-45.3l-96-96c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.7 96 32 96C14.3 96 0 110.3 0 128s14.3 32 32 32l306.7 0-41.4 41.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l96-96zm-333.3 352c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 416 416 416c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0 41.4-41.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-96 96c-12.5 12.5-12.5 32.8 0 45.3l96 96z" />
-                        </svg>
-                    </div>
-                    <div class="input_list">
-                        <h3 class="title_list">Disponibles</h3>
-                        <ul class="list options optionsAvailable">
-                            <li content_id="1">Dr. Victor Hugo Salazar Ortiz</li>
-                            <li content_id="2">Dr. Victor Hugo Salazar Ortiz</li>
-                            <li content_id="3">Dr. Victor Hugo Salazar Ortiz</li>
-                            <li content_id="3">Dr. Victor Hugo Salazar Ortiz</li>
-                            <li content_id="3">Dr. Victor Hugo Salazar Ortiz</li>
-                            <li content_id="3">Dr. Victor Hugo Salazar Ortiz</li>
-                            <li content_id="3">Dr. Victor Hugo Salazar Ortiz</li>
-                            <li content_id="3">Dr. Victor Hugo Salazar Ortiz</li>
-                            <li content_id="3">Dr. Victor Hugo Salazar Ortiz</li>
-                            <li content_id="3">Dr. Victor Hugo Salazar Ortiz</li>
-                            <li content_id="3">Dr. Victor Hugo Salazar Ortiz</li>
-                            <li content_id="3">Dr. Victor Hugo Salazar Ortiz</li>
-                            <li content_id="3">Dr. Victor Hugo Salazar Ortiz</li>
-                            <li content_id="3">Dr. Victor Hugo Salazar Ortiz</li>
-                            <li content_id="3">Dr. Victor Hugo Salazar Ortiz</li>
-                        </ul>
-                    </div>
+                    <button class="button modalBtn updateBtn">Editar</button>
                 </div>
-            </div>
-            <div class="input_content" inputtype="list" id="inputSelector_genero" contentname="programa_genero">
-                <label for="genero">Generos</label>
-                <div class="input_select">
-                    <div class="input_list">
-                        <h3 class="title_list">Seleccionados<button class="miniCreateBtn"
-                                contentname="presentador">+</button></h3>
-                        <ul class="list options optionsSelected">
-
-                        </ul>
-                    </div>
-                    <div class="division">
-                        <svg style="width: 14px;" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                            <path
-                                d="M438.6 150.6c12.5-12.5 12.5-32.8 0-45.3l-96-96c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.7 96 32 96C14.3 96 0 110.3 0 128s14.3 32 32 32l306.7 0-41.4 41.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l96-96zm-333.3 352c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 416 416 416c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0 41.4-41.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-96 96c-12.5 12.5-12.5 32.8 0 45.3l96 96z" />
-                        </svg>
-                    </div>
-                    <div class="input_list">
-                        <h3 class="title_list">Disponibles</h3>
-                        <ul class="list options optionsAvailable">
-                            <li id="2">Entretenimiento</li>
-                            <li id="3">Deportes</li>
-                            <li id="4">Música</li>
-                            <li id="5">Kids</li>
-                            <li id="6">xd</li>
-                            <li id="7">OMG</li>
-                        </ul>
-                    </div>
+            <div class="contentField" contentname="programa_presentador" contentid="110" fieldname="presentador" inputtype="list">
+                <div>
+                    <div class="fieldTitle">Presentadores</div>
+                    <ul class="item-list">
+                        <li><a class="item-link" href="contenidos?presentador=1">Sylvia Ríos</a></li>
+                        <li><a class="item-link" href="contenidos?presentador=53">Walkyria Torres</a></li>
+                    </ul>
+                    <div class="currentValue" style="display: none;">[1,53]</div>
                 </div>
+                <button class="button modalBtn updateBtn">Editar</button>
             </div>
-            <div class="btns_container">
-                <button type="button" id="cancelBtn" class="button cancelBtn">Cancelar</button>
-                <button type="button" id="confirmBtn" class="button confirmBtn">Confirmar</button>
+            <div class="contentField" contentname="programa_genero" contentid="110" fieldname="genero" inputtype="list">
+                <div>
+                    <div class="fieldTitle">Generos</div>
+                    <ul  class="item-list">
+                        <li>Hablado</li>
+                        <li>Informativo<br></li>
+                        <li>Musical<br></li>
+                    </ul>
+                    <div class="currentValue" style="display: none;">[2,4,5]</div>
+                </div>
+                <button class="button modalBtn updateBtn">Editar</button>
             </div>
-        </div>
-        <div class="inputs">
-            <div class="input_content" inputtype="text">
-                <label class="input_content__label" for="username">Nombre de usuario</label>
-                <input class="input_content__input" type="text" id="username">
-            </div>
-            <div class="input_content" inputtype="email">
-                <label class="input_content__label" for="email">correo de usuario</label>
-                <input class="input_content__input" type="email" id="email">
-            </div>
-            <div class="input_content" inputtype="password">
-                <label class="input_content__label" for="password">contraseña</label>
-                <input class="input_content__input" type="password" id="password">
-            </div>
-            <div class="input_content" inputtype="text">
-                <label class="input_content__label" for="nombre_completo">Nombre completo</label>
-                <input class="input_content__input" type="text" id="nombre_completo">
-            </div>
-            <div class="input_content" inputtype="enum">
-                <label class="input_content__label" for="rol">Rol del usuario</label>
-                <select class="selectList input_content__input--select" id="rol">
-                    <option>Admin</option>
-                    <option>Editor</option>
-                    <option>Moderador</option>
-                </select>
-            </div>
-            <div class="input_content" inputtype="boolean">
-                <label class="input_content__label-checkbox" for="cuenta_activa">Cuenta Activa</label>
-                <input class="input_content__input-checkbox" type="checkbox" id="cuenta_activa">
-            </div>
-            <div class="btns_container">
-                <button type="button" class="button cancelBtn">Cancelar</button>
-                <button type="button" class="button confirmBtn">Confirmar</button>
+            <div class="div-button">
+                <button class="button deleteBtn" contentname="programa" pk="110">Eliminar</button>
             </div>
         </div>
     </main>
+        <script src="../js/contentManager.js"></script>
+        <!-- <script src="../js/createManager.js"></script> -->
+        <!-- <button onclick="AddContent('programa')">crear</button> -->
+        <div id="modals_container">
+        </div>
+        <script type="module" src="../js/modalsManager.js"></script>
     <footer></footer>
-    <script src="../js/bem.js"></script>
+    <script src="../js/headerManager.js"></script>
 </body>
 
 </html>

@@ -5,7 +5,7 @@ let currentPK;
 
 for (let i = 0; i < rows.length; i++) {
 	rows[i].addEventListener('click', function () {
-		currentPK = rows[i].querySelector('.contentName').textContent;
+		currentPK = rows[i].querySelector('.contentId').textContent;
 		window.location.href = window.location.pathname + '?' + currentContent + '=' + currentPK;
 	});
 }

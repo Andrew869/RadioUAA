@@ -177,8 +177,9 @@
 
 /* BUTTONS */
 .button {
+    height: 46px;
     display: inline-block;
-    padding: 10px 20px;
+    padding: 14px 20px;
     background-color: #007bff;
     color: white;
     text-align: center;
@@ -205,19 +206,20 @@
 }
 
 .tooltip .tooltiptext {
-    font-size: 0.5rem;
-    visibility: hidden;
-    width: 120px;
+    /* font-size: 0.5rem; */
+    visibility: none;
+    width: 200px;
+    height: 26px;
     background-color: #555;
     color: #fff;
     text-align: center;
     border-radius: 6px;
-    padding: 5px 0;
+    padding: 10px;
     position: absolute;
     z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -60px;
+    bottom: -3px;
+    right: -210px;
+    /* margin-left: -60px; */
     opacity: 0;
     transition: opacity 0.3s;
 }
@@ -225,12 +227,12 @@
 .tooltip .tooltiptext::after {
     content: "";
     position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
+    top: 8px;
+    left: -10px;
     border-width: 5px;
     border-style: solid;
-    border-color: #555 transparent transparent transparent;
+    border-color: transparent #555 transparent transparent;
+    z-index: 9;
 }
 
 .tooltip:hover .tooltiptext {

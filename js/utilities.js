@@ -250,7 +250,7 @@ export function AddContent(e, contentName){
     const contents = {
         programa: [
             {inputType:'text', fieldName:'nombre_programa', classes:[], title:'Nombre del programa' , tableName: contentName, placeholder: "nombre..."},
-            {inputType:'file', fieldName:'url_imagen', classes:[], title:'Imagen del programa', tableName: contentName, placeholder: ''},
+            {inputType:'file', fieldName:'url_img', classes:[], title:'Imagen del programa', tableName: contentName, placeholder: ''},
             {inputType:'textarea', fieldName:'descripcion', classes:[], title:'Descripcion', tableName: contentName, placeholder: "descripcion..."},
             {inputType:'schedules', fieldName:'horario', classes:[], title:'Horarios', tableName: contentName, placeholder: ''},
             {inputType:'list', fieldName:'presentador', classes:[], title:'Presentadores', tableName: 'programa_presentador', placeholder: ''},
@@ -262,7 +262,7 @@ export function AddContent(e, contentName){
         ],
         presentador: [
             {inputType:'text', fieldName:'nombre_presentador', classes:[], title:'Nombre presentador' , tableName: contentName, placeholder: "nombre..."},
-            {inputType:'file', fieldName:'url_foto', classes:[], title:'foto del presentador', tableName: contentName, placeholder: ''},
+            {inputType:'file', fieldName:'url_img', classes:[], title:'foto del presentador', tableName: contentName, placeholder: ''},
             {inputType:'textarea', fieldName:'biografia', classes:[], title:'Biografia', tableName: contentName, placeholder: "biografia..."},
         ],
         genero: [
@@ -530,7 +530,7 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
                 divSelected.appendChild(h3Selected);
 
                 let createBtn = document.createElement('button');
-                createBtn.classList.add('button--mini');
+                createBtn.classList.add('miniBtn');
                 createBtn.classList.add('tooltip');
 
                 let subContentName = tableName.split("_")[1]; // x_value
@@ -544,7 +544,7 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
 
                 let tooltip = document.createElement('span');
                 tooltip.classList.add('tooltiptext');
-                tooltip.textContent = 'crear nuevo ' + subContentName;
+                tooltip.textContent = 'Añadir nuevo ' + subContentName;
 
                 createBtn.appendChild(tooltip)
 

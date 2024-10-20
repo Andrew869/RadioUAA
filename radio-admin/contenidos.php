@@ -29,7 +29,7 @@
 
     function createCreateBtn($table_name){
         // echo "<button class='modalBtn createBtn' onclick=\"AddContent('$table_name')\">Crear $table_name</button>";
-        echo "<button class='modalBtn createBtn' contentName=\"$table_name\">Crear $table_name</button>";
+        echo "<button class='button modalBtn createBtn' contentName=\"$table_name\">Crear nuevo $table_name</button>";
     }
 
     function ShowField($table_name, $primary_key, $fieldName, $fieldTitle, $type, $current_content) : void{
@@ -38,22 +38,24 @@
         switch ($type) {
             case SQL::TEXT:
             case SQL::ENUM:
+                $currentValue = $current_content[$fieldName];
+                break;
             case 'textarea':
-                $currentValue.= $current_content[$fieldName];       
+                $currentValue = "<p>$current_content[$fieldName]</p>";
                 break;
             case SQL::PASSWORD:
-                $currentValue .= "••••••••";
+                $currentValue = "••••••••";
                 break;
             case SQL::FILE:
-                $currentValue .= "<img src='$current_content[$fieldName]'>";
+                $currentValue = "<img src='$current_content[$fieldName]'>";
                 break;
             case SQL::BOOLEAN:
-                $currentValue .= ($current_content[$fieldName] ? "Sí" : "No");
+                $currentValue = ($current_content[$fieldName] ? "Sí" : "No");
                 break;
         }
         echo "<div class='contentField' contentName='$table_name' contentId='$primary_key' fieldName='$fieldName' inputType='$type'>";
         echo "<div><div class='fieldTitle'>$fieldTitle</div><div class='currentValue'>$currentValue</div></div>";
-        echo "<button class='updateBtn'>Editar</button><br>";
+        echo "<button class='button modalBtn updateBtn'>Editar</button>";
         echo "</div>";
     }
 
@@ -61,43 +63,55 @@
         $horarios = SQL::Select(SQL::HORARIO, ["id_programa" => $primary_key], [], "dia_semana", SQL::ASCENDANT)->fetchAll(PDO::FETCH_ASSOC);
         $groups = [];
 
-        $btn_element = "<button class='updateBtn'>Editar</button><br>";
-        $rangoHorario = '';
-        $currentValuesElement = "<div class='currentValue' style='display: none;'>args</div>";
-        $args= '';
-
         foreach ($horarios as $horario) {
             $inicio = ToMinutes($horario['hora_inicio']);
             $fin = ToMinutes($horario['hora_fin']);
+            $retra = $horario['es_retransmision'];
 
-            $groups["$inicio,$fin"][] = $horario;
+            $groups["$inicio,$fin,$retra"][] = $horario;
         }
-
+        
+        echo "<div class='contentName'>Horarios</div>";
         foreach ($groups as $key => $group) {
-            echo "<div class='contentField' contentName='horario' contentId='$primary_key' fieldName='Horarios' inputType='schedules'>";
+            echo "<div class='contentField' contentName='horario' contentId='$primary_key' fieldname='' inputType='schedules'>";
+            echo "<div class='schedule-group'>";
+            $btn_element = "<button class='button modalBtn updateBtn'>Editar</button>";
+            $timeRange = '';
+            $isRetra = '';
+            $currentValuesElement = "<div class='currentValue' style='display: none;'>args</div>";
+            $args= '';
             $days = [];
-            $retra = null;
+            echo "<div><ul class='schedule-days'>";
             foreach ($group as $horario) {
+                echo "<li>" . $horario['dia_semana'] . "</li>";
                 $days[] = $horario['dia_semana'];
-                if(!isset($retra)) $retra = $horario['es_retransmision'];
-                echo $horario['dia_semana'] . ($horario['es_retransmision'] ? " (Retrasmision) " : "" ) . "<br>";
-                $rangoHorario = "De " . $horario['hora_inicio'] . " a " . $horario['hora_fin'] . "<br>";
-                echo $rangoHorario;
+                // if(!isset($retra)) $retra = $horario['es_retransmision'];
+                // echo $horario['dia_semana'] . ($horario['es_retransmision'] ? " (Retrasmision) " : "" ) . "";
+                $timeRange = "De " . $horario['hora_inicio'] . " a " . $horario['hora_fin'];
+                $isRetra = $horario['es_retransmision'];
+                // echo $rangoHorario;
             }
+            echo "<ul></div>";
+            echo "<div class='schedule-time'>$timeRange</div>";
+            $tagText = ($isRetra ? "Retrasmision" : "En vivo" );
+            $tagStatus = ($isRetra ? "retransmission" : "live" );
+            echo "<div class='schedule-tag'><span class='$tagStatus'>$tagText</span></div>";
             $jsonDays = json_encode($days, JSON_UNESCAPED_UNICODE);
             // $jsonDays = str_replace('"', "'", $jsonDays);
             // $jsonDays = addslashes($jsonDays);
-            $args = "[$jsonDays,[$key],$retra]";
+            $args = "[$jsonDays,[$key],$isRetra]";
             $currentValuesElement = str_replace("args" , $args, $currentValuesElement);
-            $fieldNameElement = "<div class='fieldTitle' style='display: nonde;'>Horario</div>";
+            $fieldNameElement = "<div class='fieldTitle' style='display: none;'>Horarios</div>";
             echo $fieldNameElement;
             echo $currentValuesElement;
+            echo "</div>";
             echo $btn_element;
             echo "</div>";
         }
+        echo "</div>";
 
         if(!count($groups)){
-            echo "<button id='$primary_key' class='modalBtn createBtn' contentName=\"horario\">Añadir horarios</button>";
+            echo "<button id='$primary_key' class='button createBtn' contentName=\"horario\">Añadir horarios</button>";
         }
     }
 
@@ -132,22 +146,24 @@
         $jsonAvailable = str_replace('"', "'", $jsonAvailable);
         $args = "'$primary_key','$table_name', '$jsonSelected', '$jsonAvailable'";
 
-        $btn_element = "<button class='updateBtn'>Editar</button><br>";
+        $btn_element = "<button class='button modalBtn updateBtn'>Editar</button>";
         $btn_element = str_replace("args" , $args, $btn_element);
 
         echo "<div class='contentField' contentName='$table_name' contentId='$primary_key' fieldName='$table_name_element' inputType='list'>";
+        echo "<div>";
         echo "<div class='fieldTitle'>$fieldTitle</div>";
-        echo "<ul>";
+        echo "<ul class='item-list'>";
         foreach ($selected as $element) {
-            $output_element = SQL::Select($table_name_element, [$pk_element => $element], [$value_element])->fetchColumn() . "<br>";
+            $output_element = SQL::Select($table_name_element, [$pk_element => $element], [$value_element])->fetchColumn() . "";
             if($table_name_element === SQL::PRESENTADOR){
-                $aTag = '<a href="' . htmlspecialchars(pathinfo($_SERVER["PHP_SELF"], PATHINFO_FILENAME)) . "?presentador=" . $element . '">element</a>';
+                $aTag = '<a class="item-link" href="' . htmlspecialchars(pathinfo($_SERVER["PHP_SELF"], PATHINFO_FILENAME)) . "?presentador=" . $element . '">element</a>';
                 $output_element = str_replace("element", $output_element, $aTag);
             }
             echo "<li>$output_element</li>";
         }
         echo "</ul>";
         echo "<div class='currentValue' style='display: none;'>$jsonSelected</div>";
+        echo "</div>";
         echo $btn_element;
         echo "</div>";
     }
@@ -197,7 +213,7 @@
             $cell_content = "<td";
             if($this->pk_name === parent::key()){
                 $this->primary_key = parent::current();
-                $cell_content .= " class='contentName'";
+                $cell_content .= " class='contentId'";
             }
             $cell_content .= ">";
 
@@ -254,6 +270,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radio Admin</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="../css/normalize.css">
     <!-- <link rel="stylesheet" href="../css/bem.css"> -->
     <link rel="stylesheet" href="../css/commonStyles.css">
@@ -271,12 +290,12 @@
     <main>
     <?php
         $flag = 1;
-        $content = $pk = '';
+        $content = $contentId = '';
         if(count(($_GET)) === 1){
             $flag = 0;
             foreach ($_GET as $key => $value) {
                 $content = $key;
-                $pk = $value;
+                $contentId = $value;
                 switch ($key) {
                     case SQL::PROGRAMA:
                         {
@@ -288,31 +307,28 @@
                             ShowField($key, $value, 'nombre_programa', 'Nombre del programa', SQL::TEXT, $programa);
                             ShowField($key, $value, 'url_img', 'Imagen del programa', SQL::FILE, $programa);
                             ShowField($key, $value, 'descripcion', 'Descripcion', 'textarea', $programa);
-                            echo "<br>";
-                            
-                            echo "Horarios: <br>";
                             ShowSchedules($value);
 
                             // foreach ($horarios as $horario) {
                             //     $tmp[$horario['hora_inicio']] = $horario;
-                            //     echo $horario['dia_semana'] . ($horario['es_retransmision'] ? " (Retrasmision) " : "" ) . "<br>";
-                            //     echo "De " . $horario['hora_inicio'] . " a " . $horario['hora_fin'] . "<br>";
-                            //     echo "<br>";
+                            //     echo $horario['dia_semana'] . ($horario['es_retransmision'] ? " (Retrasmision) " : "" ) . "";
+                            //     echo "De " . $horario['hora_inicio'] . " a " . $horario['hora_fin'] . "";
+                            //     echo "";
                             // }
-                            // echo "<br>";
+                            // echo "";
                             
-                            // echo "presentado por: <br>";
+                            // echo "presentado por: ";
                             ShowList(SQL::PROGRAMA_PRESENTADOR, $value);
                             // $presentadores = SQL::Select(SQL::PROGRAMA_PRESENTADOR, ["id_programa" => $value], ["id_presentador"])->fetchAll(PDO::FETCH_ASSOC);
                             // foreach ($presentadores as $presentador) {
-                            //     echo '<a href="'. htmlspecialchars(pathinfo($_SERVER["PHP_SELF"], PATHINFO_FILENAME)) . "?presentador=". $presentador["id_presentador"] .'">' . SQL::Select(SQL::PRESENTADOR, ["id_presentador" => $presentador["id_presentador"]], ["nombre_presentador"])->fetchColumn() . '</a> <br>';
+                            //     echo '<a href="'. htmlspecialchars(pathinfo($_SERVER["PHP_SELF"], PATHINFO_FILENAME)) . "?presentador=". $presentador["id_presentador"] .'">' . SQL::Select(SQL::PRESENTADOR, ["id_presentador" => $presentador["id_presentador"]], ["nombre_presentador"])->fetchColumn() . '</a> ';
                             // }
-                            // echo "<br>";
-                            // echo "Generos: <br>";
+                            // echo "";
+                            // echo "Generos: ";
                             ShowList(SQL::PROGRAMA_GENERO, $value);
                             // $generos = SQL::Select(SQL::PROGRAMA_GENERO, ['id_programa' => $value], ["id_genero"])->fetchAll(PDO::FETCH_ASSOC);
                             // foreach ($generos as $genero) {
-                            //     echo SQL::Select(SQL::GENERO, ["id_genero" => $genero["id_genero"]], ["nombre_genero"])->fetchColumn() . "<br>";
+                            //     echo SQL::Select(SQL::GENERO, ["id_genero" => $genero["id_genero"]], ["nombre_genero"])->fetchColumn() . "";
                             // }
                         }
                         break;
@@ -352,7 +368,7 @@
                         break;
                 }
             }
-            echo "<button class='modalBtn deleteBtn' contentName='$content' pk='$pk' >Eliminar</button>";
+            echo "<div class='div-button'><button class='button deleteBtn' contentName='$content' contentId='$contentId' >Eliminar</button></div>";
         }
         if($flag){
     ?>
