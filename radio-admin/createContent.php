@@ -77,9 +77,10 @@
             case SQL::HORARIO:
                 {
                     $contentValues = $_POST['id_programa'];
-                    foreach ($_POST['horarios'] as $value) {
-                        foreach (explode(',', $value['dias']) as $dia) {
-                            SQL::Create(SQL::HORARIO, [$contentValues['id'], $dia, $value['hora_inicio'], $value['hora_fin'], $value['es_retransmision']]);
+                    foreach ($_POST['horarios'] as $horario) {
+                        foreach (explode(',', $horario['dias']) as $dia) {
+                            $es_retransmision = strtoupper($horario['es_retransmision']);
+                            SQL::Create(SQL::HORARIO, [$contentValues, $dia, $horario['hora_inicio'], $horario['hora_fin'], $es_retransmision]);
                         }
                     }
                 }

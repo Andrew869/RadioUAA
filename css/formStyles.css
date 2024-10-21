@@ -251,7 +251,7 @@
 .btns_container {
     /* background-color: #0011ff; */
     padding: 20px;
-    width: 100%;
+    /* width: 100%; */
     display: flex;
     justify-content: flex-end;
     gap: 10px;

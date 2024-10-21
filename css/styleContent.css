@@ -99,7 +99,7 @@ td.contentName {
     padding: 0;
     border: 1px solid #888;
     width: 960px;
-    height: 90%;
+    /* height: 90%; */
     overflow: auto;
     border-radius: 8px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -218,8 +218,8 @@ main {
 }
 
 /* .contentField { */
-    /* background-color: #f9f9f9;  */
-    /* border-radius: 8px;
+/* background-color: #f9f9f9;  */
+/* border-radius: 8px;
     padding: 16px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
@@ -240,19 +240,19 @@ main {
     align-items: center;
 }
 
-.contentField div {
+.contentField > div {
     width: 90%;
 }
 
-.contentField button {
+.contentField > button {
     width: 10%;
 }
 
 .div-button {
     margin-top: 20px;
+    padding-right: 15px;
     display: flex;
     justify-content: flex-end;
-    /* display: inline-block; */
 }
 
 .contentName {
@@ -269,6 +269,9 @@ main {
 }
 
 .currentValue {
+    /* white-space: nowrap; */
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 14px;
     color: #666;
 }
@@ -282,6 +285,10 @@ img {
     display: flex;
     flex-direction: row;
     font-weight: bold;
+}
+
+.schedule-group>div {
+    flex: 1;
 }
 
 .schedule-header {
@@ -314,7 +321,7 @@ img {
     border-radius: 4px;
 }
 
-.live{
+.live {
     background-color: #27ae60;
 }
 
@@ -354,23 +361,23 @@ img {
     color: #2980b9;
 }
 
+.warning{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+}
 
-.delete-container p {
+.delete-message {
     align-items: center;
     padding: 20px;
-    width: 100%;
     text-align: center;
-    margin-top: 50px;
-  }
-  
-  .delete-message {
     font-size: 18px;
     color: #333;
-    margin-bottom: 20px;
-  }
-  
-  .highlight {
+}
+
+.highlight {
     color: #e53935;
     font-weight: bold;
-  }
-  
+}

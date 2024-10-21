@@ -1,8 +1,20 @@
 const modals_container = document.getElementById('modals_container');
 let isDragging = false;
 
-let currentLayer;
+let currentLayer = -1;
 const layers = [];
+const layersModalContent = [];
+const layersInputsType = [];
+const layersNumSchedules = [];
+
+export function AddInputToCurrentLayer(modal_content, inputsType){
+    layersModalContent.push(modal_content);
+    layersInputsType.push(inputsType);
+    // console.log(`types array length ${layersInputsType.length}`);
+    // inputsType.forEach(element => {
+    //     console.log(element);
+    // });
+}
 
 export function GetInputValues(input){
     const data = [];
@@ -235,9 +247,47 @@ export function SubmitDeleteRequest(contentName, pk) {
     // });
 }
 
+export function CheckHeights(){
+
+    for (let index = 0; index < layers.length; index++) {
+        let inputsHeight = 86; // Altura de los botones de cancel y confirm
+    
+        layersInputsType[index].forEach(inputType => {
+            inputsHeight += GetInputHeight(inputType);
+        });
+    
+        const height = window.innerHeight;
+        let optimalHeight = height * 0.9
+        console.log(`inputs height = ${inputsHeight} > optimal height = ${optimalHeight}`);
+        if(inputsHeight > optimalHeight)
+            layersModalContent[index].style.height = '90%';
+        else
+            layersModalContent[index].style.height = '';
+    }
+}
+
+export function GetInputHeight(inputType){
+    switch (inputType) {
+        case 'text':
+        case 'email':
+        case 'password':
+        case 'file':
+        case 'enum':
+        case 'boolean':
+            return 100;
+        case 'textarea':
+            return 250;
+        case 'schedules':
+                return 350 + (280 * layersNumSchedules[currentLayer]);
+        case 'list':
+            return 300;
+    }
+}
+
 export function AddContent(e, contentName){
     const modal = CreateModal();
-    const modal_content = modal.querySelector('.container');
+    const modal_content = modal.querySelector('.modal-content');
+    const container = modal.querySelector('.container');
     const btns_container = modal.querySelector('.btns_container');
 
     const cancelBtn = btns_container.querySelector('.cancelBtn');
@@ -245,7 +295,6 @@ export function AddContent(e, contentName){
 
     // const origianl_form = original_forms.querySelector('#' + content);
     // let current_form = origianl_form.cloneNode(true);
-    let inputs = [];
 
     const contents = {
         programa: [
@@ -278,40 +327,40 @@ export function AddContent(e, contentName){
         ]
     };
     
-    switch (contentName) {
-        case 'programa':
-            contents.programa.forEach(input => {
-                inputs.push(CreateInput(input.inputType, input.fieldName, input.classes, input.title, input.tableName, input.placeholder));
-            });
-            break;
-        case 'horario':
-            contents.horario.forEach(input => {
-                inputs.push(CreateInput(input.inputType, input.fieldName, input.classes, input.title, input.tableName, input.placeholder));
-            });
-            let inputId = inputs[0].querySelector('#id_programa');
-            inputId.value = e.target.id;
-            inputId.readOnly = true;
-            inputs[0].style.display = 'none';
-            break;
-        case 'presentador':
-            contents.presentador.forEach(input => {
-                inputs.push(CreateInput(input.inputType, input.fieldName, input.classes, input.title, input.tableName, input.placeholder));
-            });
-            break;
-        case 'genero':
-            contents.genero.forEach(input => {
-                inputs.push(CreateInput(input.inputType, input.fieldName, input.classes, input.title, input.tableName, input.placeholder));
-            });
-            break;
-        case 'user':
-            contents.user.forEach(input => {
-                inputs.push(CreateInput(input.inputType, input.fieldName, input.classes, input.title, input.tableName, input.placeholder));
-            });
-            break;
+    // let inputsHeight = 0;
+    let inputs = [];
+    let inputsType = [];
+    contents[contentName].forEach(input => {
+        inputsType.push(input.inputType);
+        // inputsHeight += GetInputHeight(input.inputType);
+        inputs.push(CreateInput(input.inputType, input.fieldName, input.classes, input.title, input.tableName, input.placeholder));
+    });
+
+    if(contentName === 'horario'){
+        let inputId = inputs[0].querySelector('#id_programa');
+        inputId.value = e.target.id;
+        inputId.readOnly = true;
+        inputs[0].style.display = 'none';
     }
 
+    AddInputToCurrentLayer(modal_content, inputsType);
+
+    CheckHeights();
+
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        // let inputsHeight = 0;
+        // contents[contentName].forEach(input => {
+        //     inputsHeight += GetInputHeight(input.inputType);
+        // });
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            CheckHeights();
+        }, 200);
+    });
+
     inputs.forEach(input => {
-        modal_content.insertBefore(input, btns_container); 
+        container.insertBefore(input, btns_container); 
     });
 
     confirmBtn.addEventListener('click', function(){
@@ -341,6 +390,7 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
         case 'email':
         case 'password':
             {
+                container.style.height = '100px';
                 element = document.createElement('input');
                 element.type = inputType;
                 element.id = fieldName;
@@ -352,6 +402,7 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
             }
         case 'textarea':
             {
+                container.style.height = '250px';
                 element = document.createElement('textarea');
                 // element.type = inputType;
                 element.classList.add('input_content__input--textarea');
@@ -362,6 +413,7 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
             }
         case 'file':
             {
+                container.style.height = '100px';
                 element = document.createElement('div');
                 let btnLabel = document.createElement('label');
                 btnLabel.classList.add('button');
@@ -389,6 +441,7 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
             }
         case 'enum':
             {
+                container.style.height = '100px';
                 element = document.createElement('select');
                 element.id = fieldName;
                 element.setAttribute('fieldName', fieldName);
@@ -400,6 +453,7 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
             }
         case 'boolean':
             {
+                container.style.height = '100px';
                 label.className = 'input_content__label-checkbox';
                 element = document.createElement('input');
                 element.classList.add('input_content__input-checkbox');
@@ -413,7 +467,6 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
             {
                 element = document.createElement('div');
                 element.id = 'schedules_container';
-
                 // Crear el contenedor principal
                 const scheduleDiv = document.createElement('div');
                 scheduleDiv.classList.add('schedule');
@@ -509,12 +562,15 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
                 element.appendChild(addNewScheduleButton);
 
                 addNewScheduleButton.addEventListener('click', function(){
+                    layersNumSchedules[currentLayer]++;
+                    CheckHeights(this.parentNode.parentNode.parentNode.parentNode);
                     CloneSchedule(element, scheduleDiv, this);
                 });
                 break;
             }
         case 'list':
             {
+                container.style.height = '300px';
                 container.id = "inputSelector_" + fieldName;
                 container.setAttribute('contentName', tableName);
                 element = document.createElement('div');
@@ -590,22 +646,28 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
         default:
             break;
     }
+
     container.appendChild(element);
 
     return container;
 }
 
 function HideModal(modal){
-    if(layers[layers.length - 1] === currentLayer){
+    if((layers.length - 1) === currentLayer){
         console.log("Closing...");
         modal.querySelector('.modal-content').classList.add('fadeout');
         layers.pop();
+        layersModalContent.pop();
+        layersInputsType.pop();
+        layersNumSchedules.pop();
+        currentLayer--;
         setTimeout(function() {
             modal.style.display = 'none';
             modal.remove();
-            if(layers){
-                currentLayer = layers[layers.length - 1];
-            }
+            // if(layers){
+                // currentLayer = layers[layers.length - 1];
+                // CheckHeights();
+            // }
         }, 300);
     }
 }
@@ -635,7 +697,8 @@ function SetupModal(modal){
 
     modals_container.appendChild(currentModal);
     layers.push(currentModal);
-    currentLayer = currentModal;
+    layersNumSchedules.push(0);
+    currentLayer++;
 }
 
 export function CreateModal(){

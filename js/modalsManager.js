@@ -1,4 +1,4 @@
-import { AddContent, CreateEvent, SumbitCreateRequest, SumbitUpdateRequest ,CreateModal, CreateInput, SubmitDeleteRequest, ToHours } from './utilities.js';
+import { AddInputToCurrentLayer, CheckHeights, GetInputHeight, AddContent, CreateEvent, SumbitCreateRequest, SumbitUpdateRequest ,CreateModal, CreateInput, SubmitDeleteRequest, ToHours } from './utilities.js';
 // const modals_container = document.getElementById('modals_container');
 // const originalModal = modals_container.querySelector('#originalModal');
 // const original_forms = document.getElementById('original_forms');
@@ -54,68 +54,17 @@ if(deleteBtns.length){
     }
 }
 
-// function HideModal(modal){
-//     if(layers[layers.length - 1] === currentLayer){
-//         console.log("Closing...");
-//         modal.querySelector('.modal-content').classList.add('fadeout');
-//         layers.pop();
-//         setTimeout(function() {
-//             modal.style.display = 'none';
-//             modal.remove();
-//             if(layers){
-//                 currentLayer = layers[layers.length - 1];
-//             }
-//         }, 390);
-//     }
-// }
-
-// function SetupModal(modal){
-//     let currentModal = modal;
-
-//     currentModal.style.display = 'block';
-
-//     setTimeout(function() {
-//         let xBtn = currentModal.querySelector('.close');
-//         xBtn.addEventListener('click', () => {
-//             HideModal(currentModal);
-//         });
-
-//         let cancelBtn = currentModal.querySelector('#cancelBtn');
-//         cancelBtn.addEventListener('click', () => {
-//             HideModal(currentModal);
-//         });
-
-//         window.addEventListener('click', (event) => {
-//             if(event.target === currentModal){
-//                 HideModal(currentModal);
-//             }
-//         });
-//     }, 400);
-
-//     modals_container.appendChild(currentModal);
-//     layers.push(currentModal);
-//     currentLayer = currentModal;
-//     return currentModal;
-// }
-
-const fieldsInfo = [
-    ['programa', 'Nombre del programa', 'Imagen del programa', 'Descripcion', 'Horarios', 'Presentadores', 'Generos'],
-    ['horario', 'Horarios'],
-    ['presentador', 'Nombre presentador', 'foto del presentador', 'Biografia'],
-    ['genero', 'Nombre del genero'],
-    ['user', 'Nombre de usuario', 'correo de usuario', 'contraseña', 'Nombre completo', 'Rol del usuario', 'Cuenta Activa']
-];
-
 function UpdateContent(contentName, contentId, fieldName, fieldTitle, inputType, currentValue){
     const modal = CreateModal();
-    const modal_content = modal.querySelector('.container');
+    const modal_content = modal.querySelector('.modal-content');
+    const container = modal.querySelector('.container');
     const btns_container = modal.querySelector('.btns_container');
 
     const confirmBtn = btns_container.querySelector('.confirmBtn');
 
     const input = CreateInput(inputType, fieldName, [], fieldTitle, contentName, 'type something here...');
     
-    modal_content.insertBefore(input, btns_container); 
+    container.insertBefore(input, btns_container); 
 
     // let file;
     // let confirmBtn = SetupModal(inputType);
@@ -222,6 +171,18 @@ function UpdateContent(contentName, contentId, fieldName, fieldTitle, inputType,
             break;
     }
 
+    AddInputToCurrentLayer(modal_content, [inputType]);
+
+    CheckHeights();
+
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            CheckHeights();
+        }, 200);
+    });
+
     confirmBtn.addEventListener('click', function(){
         SumbitUpdateRequest(contentName, contentId, fieldName, input);
     });
@@ -229,15 +190,17 @@ function UpdateContent(contentName, contentId, fieldName, fieldTitle, inputType,
 
 function DeleteContent(contentName, contentId){
     const modal = CreateModal();
-    const modal_content = modal.querySelector('.container');
-    modal_content.classList.add('delete-container');
+    const container = modal.querySelector('.container');
     const btns_container = modal.querySelector('.btns_container');
     const confirmBtn = btns_container.querySelector('.confirmBtn');
 
+    const divWarning = document.createElement('div');
+    divWarning.classList.add('warning');
     const warning_text = document.createElement('p');
     warning_text.classList.add('delete-message');
     warning_text.innerHTML = "Estas a punto de <span class='highlight'>eliminar</span> el contenido, ¿deseas continuar?";
-    modal_content.insertBefore(warning_text, btns_container);
+    divWarning.appendChild(warning_text);
+    container.insertBefore(divWarning, btns_container);
 
     confirmBtn.addEventListener('click', function(){
         SubmitDeleteRequest(contentName, contentId);
