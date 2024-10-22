@@ -1,0 +1,189 @@
+:root {
+    --Blanco: #fff;
+    --AzulCLaro: #3498db;
+    --VerdeClaro: #2ecc71;
+    --Rojo: #e74c3c;
+    --GrisClaro: #dfe9f3;
+    --obscuro: #333;
+    --AzulGris: #2c3e50;
+    --Naranja: #e67e22;
+    --seagreen: #2E8B57;
+    --VerdeObscuro: #006400;
+    --verdeaqua: #66CDAA;
+    --Azulligero: #ADD8E6;
+    --verdemasclaro: #4bb578;
+    --Amarillo: #FFD700;
+}
+
+/* * {box-sizing:border-box} */
+
+body, html {
+    height: 100%;
+} 
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.programa {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    width: 100%; /* El ancho se ajusta al contenedor */
+    aspect-ratio: 1/1; /* Mantener la proporción cuadrada */
+}
+
+.programa img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajustar la imagen para cubrir todo el contenedor sin distorsión */
+    transition: transform 0.3s ease;
+}
+
+.programa:hover img {
+    transform: scale(1.1); /* Efecto de zoom al hacer hover */
+}
+
+.descripcion-breve {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.programa:hover .descripcion-breve {
+    opacity: 1;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 1% auto;
+    padding: 20px;
+    border: 1px;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 8px;
+}
+
+.close {
+    color: var(--verdemasclaro);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: var(--VerdeObscuro);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* Estilos generales del formulario */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+form label {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--AzulGris);
+}
+
+form input[type="text"],
+form textarea {
+    width: 96%;
+    padding: 10px;
+    border: 3px solid var(--GrisClaro);
+    border-radius: 5px;
+    font-size: 14px;
+    color: var(--obscuro);
+    background-color: var(--Blanco);
+}
+
+
+form textarea {
+    height: 50px;
+    resize: vertical;
+}
+
+form button {
+    padding: 10px 20px;
+    background-color: var(--VerdeClaro);
+    color: var(--Blanco);
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button[type="submit"]:hover {
+    background-color: var(--VerdeObscuro);
+}
+
+.comentario {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: var(--Blanco);
+    border-radius: 5px;
+    border: 1px solid var(--GrisClaro);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
