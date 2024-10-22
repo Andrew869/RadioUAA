@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+
+    <title>Contenido</title>
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/Contenido.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Contenido</h2>
+        <div class="grid" id="programas-grid"></div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modal-titulo"></h3>
+            <img id="modal-imagen" class="modal-image">
+            <p><strong>Presentado por <br></strong> <span id="modal-produccion"></span></p>
+            <p><strong>Género <br></strong> <span id="modal-genero"></span></p>
+            <p><strong>Horario <br></strong> <span id="modal-horario"></span></p>
+            <p><strong>Acerca del programa <br></strong> <span id="modal-descripcion"></span></p>
+            
+            <!-- Formulario de comentarios -->
+            <h3>Deja un comentario</h3>
+            <form id="form-comentario">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required><br><br>
+                <label for="comentario">Comentario:</label>
+                <textarea id="comentario" name="comentario" required></textarea><br><br>
+                <button type="submit">Publicar comentario</button>
+            </form>
+
+            <!-- Lista de comentarios -->
+            <div id="comentarios-lista"></div>
+        </div>
+    </div>
+
+    <script src="js/contenido.js"></script>
+</body>
+</html>
+
+
+const programas = [
+    {
+        id: 1,
+        titulo: "#Cultura Freak",
+        imagen: "https://radio.uaa.mx/wp-content/uploads/2021/08/Anchor-16a-temporada-300x300.jpg",
+        nombre: "#Cultura Freak",
+        produccion: "Vladimir Guerrero , Julio Cortez , Isaac Benitez 'El Cheche' y Gerardo 'Roger' Loera",
+        genero: "Hablado, Informativo, Opinión",
+        horario: "",
+        descripcion: "#CulturaFreak es un espacio de discusión, análisis y (des)información..."
+    },
+    {
+        id: 2,
+        titulo: "#SoyComunicación Radio: Ce de Casa",
+        imagen: "https://radio.uaa.mx/wp-content/uploads/2024/04/Captura-de-Pantalla-2024-04-04-a-las-9.47.15-300x135.png",
+        nombre: "#SoyComunicación Radio: Ce de Casa",
+        produccion: "",
+        genero: "",
+        horario: "",
+        descripcion: "Programa del departamento académico de comunicación."
+    },
+    // Más programas...
+];
+
+const grid = document.getElementById('programas-grid');
+const modal = document.getElementById('modal');
+const closeBtn = document.getElementsByClassName('close')[0];
+
+function crearTarjetaPrograma(programa) {
+    const tarjeta = document.createElement('div');
+    tarjeta.className = 'programa';
+    tarjeta.innerHTML = `
+        <img src="${programa.imagen}" alt="${programa.titulo}">
+        <div class="descripcion-breve">${programa.nombre}</div>
+    `;
+    tarjeta.addEventListener('click', () => abrirModal(programa));
+    return tarjeta;
+}
+
+function abrirModal(programa) {
+    document.getElementById('modal-titulo').textContent = programa.titulo;
+    document.getElementById('modal-imagen').src = programa.imagen;
+    document.getElementById('modal-imagen').alt = programa.titulo;
+    document.getElementById('modal-produccion').textContent = programa.produccion;
+    document.getElementById('modal-genero').textContent = programa.genero;
+    document.getElementById('modal-horario').textContent = programa.horario;
+    document.getElementById('modal-descripcion').textContent = programa.descripcion;
+    modal.style.display = 'block';
+}
+
+closeBtn.onclick = function() {
+    modal.style.display = 'none';
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+}
+
+programas.forEach(programa => {
+    grid.appendChild(crearTarjetaPrograma(programa));
+});
+
+// Manejo del formulario de comentarios
+document.getElementById('form-comentario').addEventListener('submit', function(event) {
+    event.preventDefault(); // Evita que se recargue la página
+
+    const nombre = document.getElementById('nombre').value;
+    const comentario = document.getElementById('comentario').value;
+
+    // Crear el elemento para el comentario
+    const comentarioElemento = document.createElement('div');
+    comentarioElemento.className = 'comentario';
+    comentarioElemento.innerHTML = `<strong>${nombre}:</strong> <p>${comentario}</p>`;
+
+    // Agregar el comentario a la lista de comentarios
+    document.getElementById('comentarios-lista').appendChild(comentarioElemento);
+
+    // Limpiar el formulario
+    document.getElementById('form-comentario').reset();
+});
