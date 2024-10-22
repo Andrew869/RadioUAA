@@ -7,6 +7,14 @@ const layersModalContent = [];
 const layersInputsType = [];
 const layersNumSchedules = [];
 
+let resizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        CheckHeights();  // Llama a la función que deseas ejecutar al redimensionar
+    }, 200);
+});
+
 export function AddInputToCurrentLayer(modal_content, inputsType){
     layersModalContent.push(modal_content);
     layersInputsType.push(inputsType);
@@ -248,7 +256,6 @@ export function SubmitDeleteRequest(contentName, pk) {
 }
 
 export function CheckHeights(){
-
     for (let index = 0; index < layers.length; index++) {
         let inputsHeight = 86; // Altura de los botones de cancel y confirm
     
@@ -257,7 +264,7 @@ export function CheckHeights(){
         });
     
         const height = window.innerHeight;
-        let optimalHeight = height * 0.9
+        let optimalHeight = height * 0.8
         console.log(`inputs height = ${inputsHeight} > optimal height = ${optimalHeight}`);
         if(inputsHeight > optimalHeight)
             layersModalContent[index].style.height = '90%';
@@ -346,18 +353,13 @@ export function AddContent(e, contentName){
     AddInputToCurrentLayer(modal_content, inputsType);
 
     CheckHeights();
-
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-        // let inputsHeight = 0;
-        // contents[contentName].forEach(input => {
-        //     inputsHeight += GetInputHeight(input.inputType);
-        // });
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-            CheckHeights();
-        }, 200);
-    });
+    // let resizeTimeout;
+    // window.addEventListener('resize', () => {
+    //     clearTimeout(resizeTimeout);
+    //     resizeTimeout = setTimeout(() => {
+    //         CheckHeights();
+    //     }, 200);
+    // });
 
     inputs.forEach(input => {
         container.insertBefore(input, btns_container); 

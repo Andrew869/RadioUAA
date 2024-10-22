@@ -47,7 +47,7 @@
                 $currentValue = "••••••••";
                 break;
             case SQL::FILE:
-                $currentValue = "<img src='$current_content[$fieldName]'>";
+                $currentValue = "<img src='../$current_content[$fieldName]'>";
                 break;
             case SQL::BOOLEAN:
                 $currentValue = ($current_content[$fieldName] ? "Sí" : "No");

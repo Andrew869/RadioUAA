@@ -1,6 +1,41 @@
-import requests
-from bs4 import BeautifulSoup
-import time
+import requests # Para hacer solicitudes a una pagina web
+from bs4 import BeautifulSoup # Para obtener el ocntenido de una pagina web
+import time # Para dormir el proceso
+import re # Para usar regex
+import os # Para comprobar si un archivo existe
+import shutil # Para copiar archivos
+
+# Número máximo de intentos
+MAX_RETRIES = 3
+# Tiempo de espera entre reintentos (en segundos)
+RETRY_DELAY = 5
+
+def download_image(url, pathImg):
+    retries = 0
+
+    while retries < MAX_RETRIES:
+        try:
+            # Realizar la solicitud
+            response = requests.get(url, timeout=10)  # Se puede ajustar el timeout
+            if response.status_code == 200:
+                with open(pathImg, 'wb') as f:
+                    f.write(response.content)
+                print(f"descargada con éxito: {url}")
+                return True
+            else:
+                print(f"Error en la descarga: {url}, {response.status_code}")
+                return False
+        except requests.exceptions.Timeout:
+            retries += 1
+            print(f"Timeout al intentar descargar: {url}. Reintentando {retries}/{MAX_RETRIES}...")
+            time.sleep(RETRY_DELAY)  # Espera antes de volver a intentar
+        except requests.exceptions.RequestException as e:
+            retries += 1
+            print(f"Error de conexión: {e}, {url}. Reintentando {retries}/{MAX_RETRIES}...")
+            time.sleep(RETRY_DELAY)  # Espera antes de volver a intentar
+    else:
+        print(f"Fallo al descargar la imagen después de {MAX_RETRIES} intentos.")
+        return False
 
 # URL base
 url_base = 'https://radio.uaa.mx/contenidos/'
@@ -24,6 +59,7 @@ if response.status_code == 200:
     enlaces = sorted(enlaces, key=lambda x: x.split('/')[-2])
     # enlaces = list(enlaces)
 
+    # enlaces = ['https://radio.uaa.mx/show/soy-comunicacion-radio/'
     presentadores = {}
     presentadoresIndex = 1
     generos = {}
@@ -39,7 +75,7 @@ if response.status_code == 200:
         while index_try < max_tries and not success:
             try:
                 # Realizar una nueva solicitud GET a cada enlace encontrado
-                response_enlace = requests.get(enlace)
+                response_enlace = requests.get(enlace, timeout=10)
                 if response_enlace.status_code == 200:
                     soup_link = BeautifulSoup(response_enlace.content, 'html.parser')
                     
@@ -47,8 +83,11 @@ if response.status_code == 200:
                     programa['nombre'] = nombre_programa
                     print(f"Nombre del programa: {nombre_programa}")
 
-                    imagen = soup_link.find('img', class_='show-image')
-                    url_img = imagen['src'] if imagen else None
+                    image = soup_link.find('img', class_='show-image')
+                    if not image:
+                        image = soup_link.find('img', class_='wp-post-image')
+
+                    url_img = image['src'] if image else None
                     programa['url_img'] = url_img
 
                     descripcion_div = soup_link.find('div', class_='show-desc-content')
@@ -60,10 +99,11 @@ if response.status_code == 200:
                         programa_presentadores = []
                         for presentador in presentador_div.find_all('a'):
                             presentador = presentador.text.strip()
-                            if not presentadores.get(presentador):
-                                presentadores[presentador] = presentadoresIndex
-                                presentadoresIndex += 1
-                            programa_presentadores.append(presentadores[presentador])
+                            if presentador != '':
+                                if not presentadores.get(presentador):
+                                    presentadores[presentador] = presentadoresIndex
+                                    presentadoresIndex += 1
+                                programa_presentadores.append(presentadores[presentador])
                         programa['presentadores'] = programa_presentadores
                    
                     generos_div = soup_link.find('div', class_='show-genres')
@@ -102,7 +142,7 @@ if response.status_code == 200:
             except (requests.exceptions.ConnectTimeout, requests.exceptions.ReadTimeout, requests.exceptions.RequestException) as e:
                 index_try += 1
                 print(f"Error: {e}. Intento {index_try} de {max_tries}. Reintentando...")
-                time.sleep(5)  # Esperar 5 segundos antes de intentar de nuevo
+                time.sleep(RETRY_DELAY)  # Esperar 5 segundos antes de intentar de nuevo
 
 
     dias = {
@@ -120,7 +160,11 @@ if response.status_code == 200:
     programaIndex = 1
     with open('inserciones_radio.sql', 'w', encoding='utf-8') as archivo:
         for presentador,id in presentadores.items():
-            insert_presentador = f"INSERT INTO presentador (nombre_presentador) VALUES ('{presentador}');"
+            pathImgProfile =  'resources/uploads/img/presentador_' + str(id) + '[v0].jpg'
+            if not os.path.exists(pathImgProfile):
+                defaultImgPath = 'resources/img/presentador_default.jpg' 
+                shutil.copy(defaultImgPath, pathImgProfile)
+            insert_presentador = f"INSERT INTO presentador (nombre_presentador, url_img) VALUES ('{presentador}', '{pathImgProfile}');"
             archivo.write(insert_presentador + "\n")
 
         for genero,id in generos.items():
@@ -128,7 +172,36 @@ if response.status_code == 200:
             archivo.write(insert_genero + "\n")
 
         for programa in programas:
-            insert_programa = f"INSERT INTO programa (nombre_programa, url_img, descripcion) VALUES ('{programa['nombre']}', '{programa['url_img']}', '{programa['descripcion']}');"
+            pathImg = 'resources/uploads/img/programa_' + str(programaIndex) + '[v0]'
+            imgFlag = False
+            alreadyExist = False
+            if programa['url_img']:
+                if programa['url_img'] != 'https://radio.uaa.mx/wp-content/uploads/2023/06/indiespensables-800x800px-300x300.png':
+                    url = re.sub(r'-\d+x\d+', '', programa['url_img'])
+                else:
+                    url = programa['url_img']
+
+                nombre_archivo, extension = os.path.splitext(url)
+                tmpPath = pathImg + extension
+                alreadyExist = os.path.exists(tmpPath)
+                if not alreadyExist:
+                    imgFlag = download_image(url, tmpPath)
+                # if not os.path.exists(pathImg):
+                #     response = requests.get(url)
+                #     if response.status_code == 200:
+                #         with open(pathImg, 'wb') as f:
+                #             f.write(response.content)
+
+            if not imgFlag and not alreadyExist:
+                defaultImgPath = 'resources/img/programa_default.jpg'
+                nombre_archivo, extension = os.path.splitext(defaultImgPath)
+                tmpPath = pathImg + extension
+                # tmpPath += extension
+                shutil.copy(defaultImgPath, tmpPath)
+            
+
+
+            insert_programa = f"INSERT INTO programa (nombre_programa, url_img, descripcion) VALUES ('{programa['nombre']}', '{tmpPath}', '{programa['descripcion']}');"
             archivo.write(insert_programa + "\n")
 
             if programa.get('horarios'):
@@ -150,3 +223,10 @@ if response.status_code == 200:
             programaIndex += 1
 else:
     print(f"Error al acceder a la página: {response.status_code}")
+
+# DROP TABLE programa_presentador;
+# DROP TABLE programa_genero;
+# DROP TABLE genero;
+# DROP TABLE presentador;
+# DROP TABLE horario;
+# DROP TABLE programa;

@@ -175,13 +175,13 @@ function UpdateContent(contentName, contentId, fieldName, fieldTitle, inputType,
 
     CheckHeights();
 
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-            CheckHeights();
-        }, 200);
-    });
+    // let resizeTimeout;
+    // window.addEventListener('resize', () => {
+    //     clearTimeout(resizeTimeout);
+    //     resizeTimeout = setTimeout(() => {
+    //         CheckHeights();
+    //     }, 200);
+    // });
 
     confirmBtn.addEventListener('click', function(){
         SumbitUpdateRequest(contentName, contentId, fieldName, input);
