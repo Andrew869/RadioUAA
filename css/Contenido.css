@@ -143,7 +143,7 @@ form {
 form label {
     font-size: 16px;
     font-weight: bold;
-    color: var(--AzulGris);
+    color: var(--obscuro);
 }
 
 form input[type="text"],
@@ -164,7 +164,7 @@ form textarea {
 }
 
 form button {
-    padding: 10px 20px;
+    padding: 10px;
     background-color: var(--VerdeClaro);
     color: var(--Blanco);
     border: none;
@@ -180,10 +180,11 @@ form button[type="submit"]:hover {
 }
 
 .comentario {
+    
     margin-bottom: 15px;
     padding: 10px;
     background-color: var(--Blanco);
     border-radius: 5px;
-    border: 1px solid var(--GrisClaro);
+    border: 3px solid var(--GrisClaro);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

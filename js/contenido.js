@@ -1,4 +1,4 @@
-const programas = [
+const programas = [ //EDITAR: OBTENER DE BD O GENERAR A PARTIR DE BD
     {
         id: 1,
         titulo: "#Cultura Freak",
@@ -76,17 +76,6 @@ function crearTarjetaPrograma(programa) {
     return tarjeta;
 }
 
-function abrirModal(programa) {
-    document.getElementById('modal-titulo').textContent = programa.titulo;
-    document.getElementById('modal-imagen').src = programa.imagen;
-    document.getElementById('modal-imagen').alt = programa.titulo;
-    document.getElementById('modal-produccion').textContent = programa.produccion;
-    document.getElementById('modal-genero').textContent = programa.genero;
-    document.getElementById('modal-horario').textContent = programa.horario;
-    document.getElementById('modal-descripcion').textContent = programa.descripcion;
-    modal.style.display = 'block';
-}
-
 closeBtn.onclick = function() {
     modal.style.display = 'none';
 }
@@ -101,12 +90,61 @@ programas.forEach(programa => {
     grid.appendChild(crearTarjetaPrograma(programa));
 });
 
+//EDITAR: OBTENER DE BD
+function abrirModal(programa) { // abrir modal y cargar detalles
+    document.getElementById('modal-titulo').textContent = programa.titulo;
+    document.getElementById('modal-imagen').src = programa.imagen;
+    document.getElementById('modal-imagen').alt = programa.titulo;
+    document.getElementById('modal-produccion').textContent = programa.produccion;
+    document.getElementById('modal-genero').textContent = programa.genero;
+    document.getElementById('modal-horario').textContent = programa.horario;
+    document.getElementById('modal-descripcion').textContent = programa.descripcion;
+
+    document.getElementById('programa-id').value = programa.id;  // asignar el ID al campo oculto 
+
+    // Obtiene los comentarios por ID de porgrama
+    const comentariosLista = document.getElementById('comentarios-lista');
+    comentariosLista.innerHTML = ''; // Limpia comentarios anteriores
+
+    /* Suponiendo que tienes una lista de comentarios en algún lugar
+    if (programa.comentarios) {
+        programa.comentarios.forEach(comentario => {
+            const comentarioElemento = document.createElement('div');
+            comentarioElemento.className = 'comentario';
+            comentarioElemento.innerHTML = `<strong>${comentario.nombre} dice:</strong> <p>${comentario.texto}</p>`;
+            comentariosLista.appendChild(comentarioElemento);
+        });
+    }*/
+
+    modal.style.display = 'block'; // Mostrar el modal
+}
+
+// Enviar y agregar comentario
 document.getElementById('form-comentario').addEventListener('submit', function(event) {
-    event.preventDefault(); // Evita que se recargue la página
+    event.preventDefault(); 
 
     const nombre = document.getElementById('nombre').value;
     const comentario = document.getElementById('comentario').value;
+    const correo = document.getElementById('correo');
+    const programaId = document.getElementById('programa-id').value; //hidden
 
-    // Limpiar el formulario
+    const programa = programas.find(p => p.id == programaId); // busqueda de cometarios por ID
+
+    // EDITAR CUANDO SEA NECESARIO
+    // Si no tiene una lista de comentarios, la creamos
+    if (!programa.comentarios) {
+        programa.comentarios = [];
+    }
+
+    // Agregar el nuevo comentario al programa
+    programa.comentarios.push({ nombre, texto: comentario });
+
+    //mostrar
+    const comentarioElemento = document.createElement('div');
+    comentarioElemento.className = 'comentario';
+    comentarioElemento.innerHTML = `<strong>${nombre} dice:</strong> <p>${comentario}</p>`;
+    document.getElementById('comentarios-lista').appendChild(comentarioElemento);
+
+    //limpiar campos
     document.getElementById('form-comentario').reset();
 });
