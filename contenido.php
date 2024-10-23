@@ -13,6 +13,7 @@
 </head>
 
 <body>
+    <?php include 'main_header.php' ?>
 
     <div class="container">
         <h2>Contenido</h2>
@@ -40,6 +41,7 @@
             </form>
         </div>
     </div>
+    <?php include 'main_footer.php' ?>
     <script src="js/contenido.js"></script>
 </body>
 </html>

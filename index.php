@@ -9,77 +9,13 @@
     <link rel="stylesheet" href="css/Index.css">
 </head>
 <body>
+    <?php include 'main_header.php' ?>
 
-    <nav class="navbar">
-        <div class="logo">
-            <a href="Inicio.html">
-                <img src="resources/img/logo-radio-uaa-blanco.png" alt="Radio UAA Logo" />
-            </a>        
-        </div>
-
-        <!-- Botón Hamburguesa -->
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-
-        <ul class="nav-links" id="nav-links">
-            <li><a href="Index.html">Inicio</a></li>
-            <li class="dropdown">
-                <a href="#" class="arrow-down">Nosotros</a>
-                <ul class="dropdown-content">
-                    <li><a href="Acerca de Radio UAA.html">Acerca de Radio UAA</a></li>
-                    <li><a href="Preguntas Frecuentes.html">Preguntas Frecuentes</a></li>
-                    <li><a href="Consejo Ciudadano.html">Consejo Ciudadano</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="#" class="arrow-down">Defensoría</a>
-                <ul class="dropdown-content">
-                    <li><a href="Defensoria.html">Defensoría de las Audiencias</a></li>
-                    <li><a href="Derechos de las Audiencias.html">Derechos de las Audiencias</a></li>
-                    <li><a href="Quejas y Sugerencias.html">Quejas y Sugerencias</a></li>
-                    <li><a href="Transparencia.html">Transparencia</a></li>
-                    <li><a href="Politicas de Privacidad.html">Políticas de privacidad</a></li>
-                </ul>
-            </li>         
-            <li><a href="Programacion.html">Programación</a></li>
-            <li><a href="#">Contenido</a></li>
-            <li><a href="Contacto.html">Contacto</a></li>
-        </ul>
-
-        <!-- Botón Modo Oscuro -->
-        <div class="dark-mode-toggle">
-            <label for="toggle" id="label_toggle" aria-label="Toggle Dark Mode">
-                <i id="theme-icon" class="fa-solid fa-moon"></i>
-            </label>
-            <input type="checkbox" id="toggle" aria-hidden="true">
-        </div>
-
-        <!-- Search Icon -->
-        <div id="cont-icon-search" aria-label="Search">
-            <i class="fas fa-search" id="icon-search"></i>
-        </div>
-        <!-- Search Bar -->
-        <div id="cont-bars-search">
-            <input type="text" id="inputSearch" placeholder="Buscar en Radio UAA..." aria-label="Search">
-        </div>
-        <!-- Search Suggestions -->
-    <ul id="box-search">
-        <li><a href="Inicio.html"><i class="fas fa-search"></i>Inicio</a></li>
-        <li><a href="Acerca de Radio UAA.html"><i class="fas fa-search"></i>Acerca de Radio UAA</a></li>
-        <li><a href="Preguntas_Frecuentes.html"><i class="fas fa-search"></i>Preguntas Frecuentes</a></li>
-        <li><a href="Consejo Ciudadano.html"><i class="fas fa-search"></i>Consejo Ciudadano</a></li>
-        <li><a href="Contacto.html"><i class="fas fa-search"></i>Contacto</a></li>
-    </ul>
-    </nav>
-    
     <div class="container"> 
         <div class="titulos">
         <h2>RADIO UAA <br> PROYECCION DE LA VOZ UNIVERSITARIA</h2>
         </div>
-        <br>
+        <br><br>
 
         <div class="slider-box">
             <ul>
@@ -163,7 +99,6 @@
     </div>
         
     
-        <script src="js/playerManager.js"></script> <!-- Enlaza el archivo JS -->
         <script src="https://kit.fontawesome.com/9b86802e8e.js" crossorigin="anonymous"></script>
  
 
@@ -181,6 +116,15 @@
                 <i class="fab fa-spotify"></i>
             </a>
         </div>
+        <div class="app-buttons">
+            <a href="https://play.google.com/store/search?q=radio+uaa+94.5fm&c=apps&pli=1" target="_blank" class="app-button google-play">
+                <i class="fab fa-google-play"></i>
+            </a>
+            <a href="https://apps.apple.com/mx/app/radio-uaa-94-5fm/id6670407197" target="_blank" class="app-button apple-store">
+                <i class="fab fa-apple"></i>
+            </a>
+        </div>
+        
     
             <hr>
             <br>
@@ -192,18 +136,13 @@
                 <a href="https://www.uaa.mx/dgdv/" target="_blank">
                     <img src="resources/img/UAA-DG.png" alt="Logo UAA" class="logo-uaa">
                 </a>
-                <a href="https://www.uaa.mx/portal/comunicacion/radio-y-tv/" target="_blank">
+                <!-- <a href="https://www.uaa.mx/portal/comunicacion/radio-y-tv/" target="_blank">
                     <img src="resources/img/UAA-TV-RADIO.png" alt="Logo UAA" class="logo-uaa">
-                </a>
+                </a> -->
             </div>
             <br>
 
-<footer>
-    <p>© Derechos de autor 1978-2024 Radio UAA – Proyección de la voz universitaria   |   Política de privacidad   |  Transparencia</p>
-</footer>
-
-<script src="js/barrabuscar.js"></script>
-<script src="js/navbar.js"></script>
-<script src="js/theme.js"></script>
+    <?php include 'main_footer.php' ?>
+    <script src="js/playerManager.js"></script>
 </body>
 </html>
