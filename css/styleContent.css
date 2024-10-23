@@ -4,14 +4,12 @@
     box-sizing: border-box;
 }
 
-/* Style the tab */
 .tab {
     overflow: hidden;
     border: 1px solid #ccc;
     background-color: #f1f1f1;
 }
 
-/* Style the buttons that are used to open the tab content */
 .tab button {
     background-color: inherit;
     float: left;
@@ -22,26 +20,22 @@
     transition: 0.3s;
 }
 
-/* Change background color of buttons on hover */
 .tab button:hover {
     background-color: #ddd;
 }
 
-/* Create an active/current tablink class */
 .tab button.active {
     background-color: #ccc;
 }
 
-/* Style the tab content */
 .tabcontent {
     display: none;
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;
-    animation: fadeEffect 1s; /* Fading effect takes 1 second */
+    animation: fadeEffect 1s;
 }
 
-/* Go from zero to full opacity */
 @keyframes fadeEffect {
     from {
         opacity: 0;
@@ -72,89 +66,58 @@ tr.values {
     cursor: pointer;
 }
 tr.values:hover {
-    background-color: #838383;
-}
-
-td.pk {
-    width: 80px;
-    /* background-color: red; */
-}
-
-* {
-    box-sizing: border-box;
-}
-
-/* Set a style for all buttons */
-.modalBtn {
-    background-color: #f44336;
+    /* background-color: #96969681; */
+    background-color: #007bff;
     color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0.9;
 }
 
-.modalBtn:hover {
-    opacity: 1;
+td.contentName {
+    width: 80px;
 }
 
-/* Float cancel and delete buttons and add an equal width */
-#cancelBtn,
-#confirmBtn {
-    /* float: left;
-    width: 50%; */
+#original_forms {
+    display: none;
 }
 
-/* Add a color to the cancel button */
-#cancelBtn {
-    background-color: #ccc;
-    color: black;
-}
-
-/* Add a color to the delete button */
-#deletebtn {
-    background-color: #f44336;
-}
-
-/* Add padding and center-align text to the container */
-.container {
-    padding: 16px;
-    text-align: center;
-}
-
-/* The Modal (background) */
+/* MODAL */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    display: none;
+    position: fixed;
+    z-index: 1;
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
+    width: 100%;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    padding-top: 50px;
+    padding-top: 10vh;
 }
 
-/* Modal Content/Box */
 .modal-content {
     position: relative;
     background-color: #fefefe;
     margin: auto;
     padding: 0;
     border: 1px solid #888;
-    width: 80%;
+    width: 960px;
+    /* height: 90%; */
+    overflow: auto;
+    border-radius: 8px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -webkit-animation-name: animatetop;
+    -webkit-animation-name: fadein;
     -webkit-animation-duration: 0.4s;
-    animation-name: animatetop;
+    animation-name: fadein;
+    animation-duration: 0.4s;
+}
+
+.fadeout {
+    -webkit-animation-name: fadeout;
+    -webkit-animation-duration: 0.4s;
+    animation-name: fadeout;
     animation-duration: 0.4s;
 }
 
 /* Add Animation */
-@-webkit-keyframes animatetop {
+@-webkit-keyframes fadein {
     from {
         top: -300px;
         opacity: 0;
@@ -165,7 +128,7 @@ td.pk {
     }
 }
 
-@keyframes animatetop {
+@keyframes fadein {
     from {
         top: -300px;
         opacity: 0;
@@ -173,6 +136,29 @@ td.pk {
     to {
         top: 0;
         opacity: 1;
+    }
+}
+
+/* Add Animation */
+@-webkit-keyframes fadeout {
+    from {
+        top: 0px;
+        opacity: 1;
+    }
+    to {
+        top: -300px;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        top: 0px;
+        opacity: 1;
+    }
+    to {
+        top: -300px;
+        opacity: 0;
     }
 }
 
@@ -198,78 +184,200 @@ hr {
     cursor: pointer;
 }
 
-.clearfix{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
+.rowfadein {
+    animation: newContentEffect 1s ease-in-out;
 }
 
-/* Clear floats */
-/* .clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
-} */
-
-/* Change styles for cancel button and delete button on extra small screens */
-@media screen and (max-width: 300px) {
-    .cancelbtn,
-    .deletebtn {
-        width: 100%;
+@keyframes newContentEffect {
+    0% {
+        opacity: 0;
+        transform: translateX(
+            100%
+        ); /* Comienza fuera del contenedor, a la derecha */
+        background-color: rgba(0, 255, 0, 0.3);
+    }
+    80% {
+        opacity: 1;
+        transform: translateX(0); /* Se desplaza a su posición final */
+        background-color: rgba(0, 255, 0, 0.5); /* Fondo verde */
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0); /* Se queda en su lugar */
+        background-color: transparent; /* El fondo vuelve a ser transparente */
     }
 }
 
-.modal .inputs{
-    display: none;
-}
-
-div#list>div{
-    float: left;
-    width: 50%;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    /* width: 200px; */
-}
-li {
-    margin: 2px 0;
-    /* padding: 10px; */
-    background-color: #f1f1f1;
-    cursor: pointer;
-    text-align: center;
-    border: 1px solid #ccc;
-}
-
-.days_container {
-    /* width: 100px; */
-    /* height: 80px; */
-    /* border: 1px solid black; */
-    /* overflow: auto; */
-    /* display: inline-block; */
-    user-select: none;
-}
-
-.selected {
-    background-color: lightblue;
-    color: white;
-}
-
-.drop-zone {
-    /* width: 100%; */
-    /* max-width: 400px; */
-    height: 200px;
+main {
+    max-width: 960px;
+    margin: 50px auto;
+    background-color: white;
     padding: 20px;
-    border: 2px dashed #007bff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* .contentField { */
+/* background-color: #f9f9f9;  */
+/* border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; */
+/* } */
+
+.contentField {
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    margin-bottom: 20px;
-    text-align: center;
 }
-.drop-zone.dragover {
-    background-color: #e9ecef;
+
+.contentField > div {
+    width: 90%;
+}
+
+.contentField > button {
+    width: 10%;
+}
+
+.div-button {
+    margin-top: 20px;
+    padding-right: 15px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.contentName {
+    padding: 14px 10px;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.fieldTitle {
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #5a5a5a;
+    font-size: 16px;
+}
+
+.currentValue {
+    /* white-space: nowrap; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    color: #666;
+}
+
+img {
+    max-width: 300px;
+    border-radius: 5px;
+}
+
+.schedule-group {
+    display: flex;
+    flex-direction: row;
+    font-weight: bold;
+}
+
+.schedule-group>div {
+    flex: 1;
+}
+
+.schedule-header {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 5px;
+}
+
+.schedule-days {
+    list-style: none;
+    font-size: 14px;
+    color: #333;
+}
+
+.schedule-time {
+    margin: auto;
+    font-size: 14px;
+    color: #666;
+}
+
+.schedule-tag {
+    margin: auto;
+}
+
+.schedule-tag span {
+    color: white;
+    font-size: 0.85rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.live {
+    background-color: #27ae60;
+}
+
+.retransmission {
+    background-color: #f39c12;
+}
+
+.fieldTitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+    flex-basis: 100%;
+}
+
+/* Presenters list styling */
+.item-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px 0;
+    flex-grow: 1;
+}
+
+.item-list li {
+    margin-bottom: 8px;
+}
+
+.item-link {
+    text-decoration: none;
+    color: #3498db;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.item-link:hover {
+    color: #2980b9;
+}
+
+.warning{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+}
+
+.delete-message {
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+    color: #333;
+}
+
+.highlight {
+    color: #e53935;
+    font-weight: bold;
 }

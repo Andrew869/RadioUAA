@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Radio Admin</title>
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/normalize.css">
+    <!-- <link rel="stylesheet" href="../css/bem.css"> -->
+    <link rel="stylesheet" href="../css/commonStyles.css">
+    <link rel="stylesheet" href="../css/styleContent.css">
+    <link rel="stylesheet" href="../css/formStyles.css">
+</head>
+
+<body>
+    <header class="header">
+        <a href="#" class="header__logo">Radio Admin</a>
+        <nav class="header__nav">
+            <!-- <a href="../radio-admin/" class="header__nav-link header__nav-item">Radio Admin</a> -->
+            <a href="contenidos" class="header__nav-link header__nav-item">Contenidos</a>
+            <a href="../" class="header__nav-external_link header__nav-item">Radio UAA<svg style="width: 14px;"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                    <path
+                        d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l82.7 0L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3l0 82.7c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160c0-17.7-14.3-32-32-32L320 0zM80 32C35.8 32 0 67.8 0 112L0 432c0 44.2 35.8 80 80 80l320 0c44.2 0 80-35.8 80-80l0-112c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 112c0 8.8-7.2 16-16 16L80 448c-8.8 0-16-7.2-16-16l0-320c0-8.8 7.2-16 16-16l112 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L80 32z" />
+                </svg></a>
+
+            <div class="dropdown">
+                <button onclick="DropdownShow(this)" class="dropdown__button">
+                    Andrew
+                </button>
+                <div id="user_options" class="dropdown__content">
+                    <a href="#">Editar perfil</a>
+                    <a href="/radio-admin/logout.php">Cerrar sesion</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="main">
+            <div class="contentField" contentname="programa" contentid="110" fieldname="nombre_programa" inputtype="text">
+                <div>
+                    <div class="fieldTitle">Nombre del programa</div>
+                    <div class="currentValue">Nombre super ingenioso</div>
+                </div>
+                <button class="button modalBtn updateBtn">Editar</button><br>
+            </div>
+            <div class="contentField" contentname="programa" contentid="110" fieldname="url_img" inputtype="file">
+                <div>
+                    <div class="fieldTitle">Imagen del programa</div>
+                    <div class="currentValue"><img src="../resources/uploads/img/programa_110[v0].jpg"></div>
+                </div><button class="button modalBtn updateBtn">Editar</button><br>
+            </div>
+            <div class="contentField" contentname="programa" contentid="110" fieldname="descripcion" inputtype="textarea">
+                <div>
+                    <div class="fieldTitle">Descripcion</div>
+                    <div class="currentValue">
+                        <p>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maxime cumque voluptatem, quisquam numquam sed unde mollitia, labore doloremque accusamus voluptatum necessitatibus maiores repudiandae aperiam exercitationem veritatis voluptas aliquid a cupiditate.
+                            Magni, veritatis ex natus pariatur, optio laboriosam unde a enim corporis rerum harum vitae! Similique nulla quo totam officia, aperiam, quisquam obcaecati eius architecto ipsa in labore ab quibusdam dolorem!
+                            Suscipit ex nam nobis vitae similique pariatur nemo unde harum fuga dicta voluptate, eos nesciunt ullam, est amet, placeat alias ipsam. Accusantium optio qui repellat, at tempore placeat ipsa unde!
+                            Adipisci exercitationem molestias aliquid tempora mollitia dolorem non ratione, laboriosam saepe eos assumenda et sapiente temporibus, ea perferendis delectus excepturi itaque sit, neque minima hic quis maiores? Quod, voluptatibus iusto.
+                        </p>
+                    </div>
+                </div><button class="button modalBtn updateBtn">Editar</button>
+            </div>
+                <div class="contentName">Horarios</div>
+                <div class="contentField" contentname="horario" contentid="110" fieldname="Horarios" inputtype="schedules">
+                    <div class="schedule-group">
+                        <div>
+                            <ul class="schedule-days">
+                                <li>Lunes</li>
+                                <li>Martes</li>
+                                <li>Miercoles</li>
+                            </ul>
+                        </div>
+                        <div class="schedule-time">De 00:00 a 01:00</div>
+                        <div class="schedule-tag">
+                            <span class="live">En vivo</span>
+                        </div>
+                    </div>
+                    <button class="button modalBtn updateBtn">Editar</button>
+                </div>
+                <div class="contentField" contentname="horario" contentid="110" fieldname="Horarios" inputtype="schedules">
+                    <div class="schedule-group">
+                        <div>
+                            <ul class="schedule-days">
+                                <li>Viernes</li>
+                                <li>Sábado</li>
+                            </ul>
+                        </div>
+                        <div class="schedule-time">De 03:00 a 05:00</div>
+                        <div class="schedule-tag">
+                            <span class="retransmission">Retransmisión</span>
+                        </div>
+                    </div>
+                    <button class="button modalBtn updateBtn">Editar</button>
+                </div>
+            <div class="contentField" contentname="programa_presentador" contentid="110" fieldname="presentador" inputtype="list">
+                <div>
+                    <div class="fieldTitle">Presentadores</div>
+                    <ul class="item-list">
+                        <li><a class="item-link" href="contenidos?presentador=1">Sylvia Ríos</a></li>
+                        <li><a class="item-link" href="contenidos?presentador=53">Walkyria Torres</a></li>
+                    </ul>
+                    <div class="currentValue" style="display: none;">[1,53]</div>
+                </div>
+                <button class="button modalBtn updateBtn">Editar</button>
+            </div>
+            <div class="contentField" contentname="programa_genero" contentid="110" fieldname="genero" inputtype="list">
+                <div>
+                    <div class="fieldTitle">Generos</div>
+                    <ul  class="item-list">
+                        <li>Hablado</li>
+                        <li>Informativo<br></li>
+                        <li>Musical<br></li>
+                    </ul>
+                    <div class="currentValue" style="display: none;">[2,4,5]</div>
+                </div>
+                <button class="button modalBtn updateBtn">Editar</button>
+            </div>
+            <div class="div-button">
+                <button class="button deleteBtn" contentname="programa" pk="110">Eliminar</button>
+            </div>
+        </div>
+    </main>
+        <script src="../js/contentManager.js"></script>
+        <!-- <script src="../js/createManager.js"></script> -->
+        <!-- <button onclick="AddContent('programa')">crear</button> -->
+        <div id="modals_container">
+        </div>
+        <script type="module" src="../js/modalsManager.js"></script>
+    <footer></footer>
+    <script src="../js/headerManager.js"></script>
+</body>
+
+</html>

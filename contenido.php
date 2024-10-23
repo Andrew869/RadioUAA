@@ -13,6 +13,7 @@
 </head>
 
 <body>
+    <?php include 'main_header.php' ?>
 
     <div class="container">
         <h2>Contenido</h2>
@@ -22,33 +23,25 @@
     <div id="modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2 id="modal-titulo"></h2>
-            <img id="modal-imagen" class="modal-image" src="" alt="">
-            <p><strong>Producción:</strong> <span id="modal-produccion"></span></p>
-            <p><strong>Género:</strong> <span id="modal-genero"></span></p>
-            <p><strong>Horario:</strong> <span id="modal-horario"></span></p>
-            
-            <p id="modal-descripcion"></p> 
+            <h3 id="modal-titulo"></h3>
+            <img id="modal-imagen" class="modal-image">
+            <p><strong>Presentado por <br></strong> <span id="modal-produccion"></span></p>
+            <p><strong>Género <br></strong> <span id="modal-genero"></span></p>
+            <p><strong>Horario <br></strong> <span id="modal-horario"></span> </p>
+            <p><strong>Acerca del programa <br></strong> <span id="modal-descripcion"></span></p>
 
-            <div id="comentarios-lista"></div>
-
-            <form id="form-comentario">
-                <input type="hidden" id="programa-id">
-
+            <!-- Formulario de comentarios -->
+            <p>Deja tu comentario!</p> 
+            <form id="form-comentario"">
                 <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" required>
-
-                <label for="nombre">Correo electrónico.:</label>
-                <input type="text" id="correo" required>
-
+                <input type="text" id="nombre" name="nombre" required>
                 <label for="comentario">Comentario:</label>
-                <textarea id="comentario" required></textarea>
-
-                <button type="submit">Publicar</button>
+                <textarea id="comentario" name="comentario" required></textarea>
+                <button type="submit">Publicar comentario</button>
             </form>
         </div>
     </div>
-
+    <?php include 'main_footer.php' ?>
     <script src="js/contenido.js"></script>
 </body>
 </html>

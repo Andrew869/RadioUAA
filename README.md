@@ -14,7 +14,7 @@ USE radio_db;
 CREATE TABLE programa (
     id_programa INT PRIMARY KEY AUTO_INCREMENT,
     nombre_programa VARCHAR(64) NOT NULL,
-    url_imagen VARCHAR(255),
+    url_img VARCHAR(255),
     descripcion TEXT
 ) 
 CHARACTER SET utf8mb4
@@ -41,7 +41,7 @@ CREATE TABLE presentador (
     id_presentador INT PRIMARY KEY AUTO_INCREMENT,
     nombre_presentador VARCHAR(64) NOT NULL,
     biografia TEXT,
-    url_foto VARCHAR(255)
+    url_img VARCHAR(255)
 ) 
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;

@@ -1,14 +1,4 @@
 <?php
-<<<<<<< HEAD
-$dsn='mysql:host=localhost;port=3309;dbname=radio_db';
-$usuario='root';
-$contrasenia= '';
-try {
-    $conn = new PDO($dsn, $usuario, $contrasenia);
-} catch (PDOException $e) {
-    echo 'Connection failed: ' . $e->getMessage();
-}
-=======
     class SQL{
         public static $conn = NULL;
         public static $stmt = NULL;
@@ -16,7 +6,7 @@ try {
         public static $servername = "localhost";
         public static $username = "root";
         public static $password = "";
-        public static $dbname='radio_db';
+        public static $dbname='radio_dbv2';
 
         const NULL = "null";
         const ALL = "*";
@@ -40,6 +30,7 @@ try {
         const TEXT = "text";
         const PASSWORD = "password";
         const IMAGE = "image";
+        const FILE = "file";
         const DATE = "date";
         const TIME = "time";
         const BOOLEAN = "boolean";
@@ -68,12 +59,20 @@ try {
         }
 
         public static function GetFields($table_name): array{
+            $blackList = [
+                self::USER => [7,8,9]
+            ];
+
             $field_names = [];
             $sql = "SHOW COLUMNS FROM $table_name";
             self::$stmt = self::$conn->query($sql);
             while($row = self::$stmt->fetch(PDO::FETCH_ASSOC)){
                 $field_names[] = $row['Field'];
             }
+            if(isset($blackList[$table_name]))
+                foreach ($blackList[$table_name] as $value) {
+                    unset($field_names[$value]);
+                }
             return $field_names;
         }
 
@@ -113,30 +112,49 @@ try {
             return self::$stmt->fetchColumn();
         }
 
-        public static function Create($table_name, $record) : int{
+        public static function FormatValue($table_name, $fieldName, $value) : string{
+            switch (self::GetFieldType($table_name, $fieldName)) {
+                case 'varchar':
+                case 'char':
+                case 'text':
+                case 'date':
+                case 'time':
+                case 'datetime':
+                case 'timestamp':
+                case 'enum':
+                case 'json':
+                case 'uuid':
+                    $value = '\'' . $value . '\'';
+                    // $record[$i] = '\'' . $record[$i] . '\'';
+                    break;
+            }
+            return $value;
+        }
 
+        public static function Create($table_name, $record) : array{
             $fields = self::GetFields($table_name);
             if($table_name !== SQL::PROGRAMA_PRESENTADOR && $table_name !== SQL::PROGRAMA_GENERO){
                 array_shift($fields);
             }
 
             $length = count($record);
-            
-            for ($i = 0; $i < $length; $i++) { 
-                switch (self::GetFieldType($table_name, $fields[$i])) {
-                    case 'varchar':
-                    case 'char':
-                    case 'text':
-                    case 'date':
-                    case 'time':
-                    case 'datetime':
-                    case 'timestamp':
-                    case 'enum':
-                    case 'json':
-                    case 'uuid':
-                        $record[$i] = '\'' . $record[$i] . '\'';
-                        break;
-                }
+            $name = $record[0];
+            for ($i = 0; $i < $length; $i++) {
+                $record[$i] = self::FormatValue($table_name, $fields[$i], $record[$i]);
+                // switch (self::GetFieldType($table_name, $fields[$i])) {
+                //     case 'varchar':
+                //     case 'char':
+                //     case 'text':
+                //     case 'date':
+                //     case 'time':
+                //     case 'datetime':
+                //     case 'timestamp':
+                //     case 'enum':
+                //     case 'json':
+                //     case 'uuid':
+                //         $record[$i] = '\'' . $record[$i] . '\'';
+                //         break;
+                // }
             }
             
             // foreach ($record as $key => $value) {
@@ -200,7 +218,14 @@ try {
             $sql .= $sql_values;
             // echo $sql;
             self::$conn->exec($sql);
-            return self::$conn->lastInsertId();
+
+            $contentValues = [
+                "id" => self::$conn->lastInsertId(),
+                "name" => $name
+            ];
+
+            // return self::$conn->lastInsertId();
+            return $contentValues;
         }
 
         public static function Update($table_name, $primary_key, $fields){
@@ -208,10 +233,11 @@ try {
             $lastKey = array_key_last($fields);
             foreach ($fields as $key => $value) {
                 if($key === "password_hash") $value = hash('sha256', $value);
-                if($value !== self::NULL) $value = "'$value'";
+                if($value !== self::NULL) $value = self::FormatValue($table_name, $key, $value);
                 $text_fields .= "$key = $value" . ($key === $lastKey ? "" : ", " );
             }
-            $id = "id_" . $table_name;
+            // $id = "id_" . $table_name;
+            $id = self::GetPrimaryKeyName($table_name);
             $sql = "UPDATE $table_name SET $text_fields WHERE $id = '$primary_key'";
             self::$stmt = self::$conn->prepare($sql);
             self::$conn->exec($sql);
@@ -244,15 +270,6 @@ try {
         }
 
         public static function Delete($table_name, $wheres = []){
-            // $id = "id_" . $table_name;
-            if($table_name === self::PROGRAMA){
-                self::Delete(self::HORARIO, $wheres);
-                self::Delete(self::PROGRAMA_PRESENTADOR, $wheres);
-                self::Delete(self::PROGRAMA_GENERO, $wheres);
-                // Borrar imagen
-                // $image_path = self::Select(self::PROGRAMA, self::GetPrimaryKeyName(self::PROGRAMA), $primary_key, ["url_imagen"])->fetchColumn();
-                // if(file_exists($image_path)) unlink($image_path);
-            }
             $where = "";
             if(count($wheres)){
                 $where = " WHERE";
@@ -286,5 +303,4 @@ try {
         return ($hours * 60) + $minutes;
     }
 
->>>>>>> origin/EduardoPruebasWeb
 ?>

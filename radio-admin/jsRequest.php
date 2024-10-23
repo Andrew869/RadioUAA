@@ -31,6 +31,21 @@
                 $output = SQL::GetEnumValues($args[0], $args[1]);
                 echo json_encode($output);
                 break;
+            case 'GetList':
+                {
+                    if($args[0] === SQL::PRESENTADOR);
+                    switch ($args[0]) {
+                        case SQL::PRESENTADOR:
+                            $output = SQL::Select(SQL::PRESENTADOR, [], ["id_presentador", "nombre_presentador"])->fetchAll(PDO::FETCH_ASSOC);
+                            break;
+                        case SQL::GENERO:
+                            $output = SQL::Select(SQL::GENERO, [], ["id_genero", "nombre_genero"])->fetchAll(PDO::FETCH_ASSOC);
+                            break;
+                    }
+                    echo json_encode($output);
+                    break;
+
+                }
         }
 
     }
