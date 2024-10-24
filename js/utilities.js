@@ -15,6 +15,38 @@ window.addEventListener('resize', () => {
     }, 200);
 });
 
+export function GetSVG(parentNode, url, styles){
+    fetch(url)
+    .then(response => response.text())
+    .then(svgContent => {
+        let [width, height, fill] = styles;
+
+        // Reemplazar width
+        svgContent = svgContent.replace(/width:\s*\d+px/, `width: ${width}`);
+
+        // Verificar si el height ya está en el SVG
+        if (svgContent.includes('height:')) {
+            // Reemplazar el height si existe
+            svgContent = svgContent.replace(/height:\s*\d+px/, `height: ${height}`);
+        } else {
+            // Agregar el height si no existe
+            svgContent = svgContent.replace('<svg ', `<svg style="height: ${height}; " `);
+        }
+
+        // Reemplazar fill si existe, o agregarlo si no
+        if (svgContent.includes('fill:')) {
+            svgContent = svgContent.replace(/fill:\s*[^;]+/, `fill: ${fill}`);
+        } else {
+            // Si no existe, agregar fill al estilo
+            svgContent = svgContent.replace('style="', `style="fill: ${fill}; `);
+        }
+
+        // Insertar el SVG en el nodo padre
+        parentNode.innerHTML = svgContent;
+    })
+    .catch(error => console.log('Error al cargar imagen SVG:', error));
+}
+
 export function AddInputToCurrentLayer(modal_content, inputsType){
     layersModalContent.push(modal_content);
     layersInputsType.push(inputsType);
@@ -618,12 +650,14 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
                 let divDivision = document.createElement('div');
                 divDivision.classList.add('division');
 
-                fetch('../resources/img/arrow-right-arrow-left-solid.svg')
-                .then(response => response.text())
-                .then(svgContent => {
-                    divDivision.innerHTML = svgContent;
-                })
-                .catch(error => console.log('Error al cargar el SVG:', error));
+                // fetch('../resources/img/arrow-right-arrow-left-solid.svg')
+                // .then(response => response.text())
+                // .then(svgContent => {
+                //     divDivision.innerHTML = svgContent;
+                // })
+                // .catch(error => console.log('Error al cargar el SVG:', error));
+
+                GetSVG(divDivision ,'../resources/img/arrow-right-arrow-left-solid.svg');
                 element.appendChild(divDivision);
 
                 let divAvailable = document.createElement('div');

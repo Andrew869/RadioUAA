@@ -1,7 +1,20 @@
 RewriteEngine On
-# Redirigir las URLs sin la extensión .html
+
+# Excluir todo lo que esté dentro de la carpeta "admin"
+RewriteCond %{REQUEST_URI} !^/radio-admin/ [NC]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L]
+
+# Aplicar las reglas solo a la carpeta "admin"
+
+# Redirigir URLs sin la extensión .html en la carpeta "admin"
+RewriteCond %{REQUEST_URI} ^/radio-admin/
 RewriteCond %{REQUEST_FILENAME}.html -f
-RewriteRule ^(.*)$ $1.html [L]
-# Redirigir las URLs sin la extensión .php
+RewriteRule ^radio-admin/(.*)$ radio-admin/$1.html [L]
+
+# Redirigir URLs sin la extensión .php en la carpeta "admin"
+RewriteCond %{REQUEST_URI} ^/radio-admin/
 RewriteCond %{REQUEST_FILENAME}.php -f
-RewriteRule ^(.*)$ $1.php [L]
+RewriteRule ^radio-admin/(.*)$ radio-admin/$1.php [L]

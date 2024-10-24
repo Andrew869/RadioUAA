@@ -31,7 +31,8 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background: linear-gradient(90deg, #66ff99 0%, #00cc44 50%, #006600 100%);
+    background: linear-gradient(160deg, #66ff99 0%, #00cc44 100%);
+    /* background: linear-gradient(90deg, #66ff99 0%, #00cc44 50%, #006600 100%); */
     padding: 12px 25px;
     border-radius: 4rem;
     margin: 20px;

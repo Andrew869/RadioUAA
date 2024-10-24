@@ -61,7 +61,7 @@ const programas = [
     }
 ];
 
-const grid = document.getElementById('programas-grid');
+
 const modal = document.getElementById('modal');
 const closeBtn = document.getElementsByClassName('close')[0];
 
@@ -87,9 +87,9 @@ function abrirModal(programa) {
     modal.style.display = 'block';
 }
 
-closeBtn.onclick = function() {
-    modal.style.display = 'none';
-}
+// closeBtn.onclick = function() {
+//     modal.style.display = 'none';
+// }
 
 window.onclick = function(event) {
     if (event.target == modal) {
@@ -97,16 +97,19 @@ window.onclick = function(event) {
     }
 }
 
-programas.forEach(programa => {
-    grid.appendChild(crearTarjetaPrograma(programa));
-});
+export function ShowPrograms(){
+    const grid = document.getElementById('programas-grid');
+    programas.forEach(programa => {
+        grid.appendChild(crearTarjetaPrograma(programa));
+    });
+}
 
-document.getElementById('form-comentario').addEventListener('submit', function(event) {
-    event.preventDefault(); // Evita que se recargue la página
+// document.getElementById('form-comentario').addEventListener('submit', function(event) {
+//     event.preventDefault(); // Evita que se recargue la página
 
-    const nombre = document.getElementById('nombre').value;
-    const comentario = document.getElementById('comentario').value;
+//     const nombre = document.getElementById('nombre').value;
+//     const comentario = document.getElementById('comentario').value;
 
-    // Limpiar el formulario
-    document.getElementById('form-comentario').reset();
-});
+//     // Limpiar el formulario
+//     document.getElementById('form-comentario').reset();
+// });

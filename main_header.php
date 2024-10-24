@@ -13,36 +13,37 @@
         </div>
 
         <ul class="nav-links" id="nav-links">
-            <li><a href="index">Inicio</a></li>
+            <li><a href="inicio" class="nav-link">Inicio</a></li>
             <li class="dropdown">
                 <a class="arrow-down">Nosotros</a>
                 <ul class="dropdown-content">
-                    <li><a href="nosotros">Acerca de Radio UAA</a></li>
-                    <li><a href="preguntas-frecuentes">Preguntas Frecuentes</a></li>
-                    <li><a href="consejo-ciudadano">Consejo Ciudadano</a></li>
+                    <li><a href="nosotros" class="nav-link">Acerca de Radio UAA</a></li>
+                    <li><a href="preguntas-frecuentes" class="nav-link">Preguntas Frecuentes</a></li>
+                    <li><a href="consejo-ciudadano" class="nav-link">Consejo Ciudadano</a></li>
                 </ul>
             </li>
             <li class="dropdown">
-                <a href="#" class="arrow-down">Defensoría</a>
+                <a class="arrow-down">Defensoría</a>
                 <ul class="dropdown-content">
-                    <li><a href="defensoria-de-las-audiencias">Defensoría de las Audiencias</a></li>
-                    <li><a href="derechos-de-la-audiencia">Derechos de las Audiencias</a></li>
-                    <li><a href="quejas-sugerencias">Quejas y Sugerencias</a></li>
-                    <li><a href="transparencia">Transparencia</a></li>
-                    <li><a href="politica-de-privacidad">Políticas de privacidad</a></li>
+                    <li><a href="defensoria-de-las-audiencias" class="nav-link">Defensoría de las Audiencias</a></li>
+                    <li><a href="derechos-de-la-audiencia" class="nav-link">Derechos de las Audiencias</a></li>
+                    <li><a href="quejas-sugerencias" class="nav-link">Quejas y Sugerencias</a></li>
+                    <li><a href="transparencia" class="nav-link">Transparencia</a></li>
+                    <li><a href="politica-de-privacidad" class="nav-link">Políticas de privacidad</a></li>
                 </ul>
             </li>
-            <li><a href="programacion">Programación</a></li>
-            <li><a href="contenido">Contenido</a></li>
-            <li><a href="contacto">Contacto</a></li>
+            <li><a href="programacion" class="nav-link">Programación</a></li>
+            <li><a href="contenido" class="nav-link">Contenido</a></li>
+            <li><a href="contacto" class="nav-link">Contacto</a></li>
         </ul>
 
         <!-- Botón Modo Oscuro -->
         <div class="dark-mode-toggle">
             <label for="toggle" id="label_toggle" aria-label="Toggle Dark Mode">
-                <i id="theme-icon" class="fa-solid fa-moon"></i>
+                <?php echo GetSVG($iconProperties[$currentTheme]['url'], $iconProperties[$currentTheme]['styles']) ?>
+                <!-- <i id="theme-icon" class="fa-solid fa-moon"></i> -->
             </label>
-            <input type="checkbox" id="toggle" aria-hidden="true">
+            <input type="checkbox" id="toggle" aria-hidden="true" <?php echo ($currentTheme === 'dark' ? 'checked' : ''); ?>>
         </div>
 
         <!-- Search Icon -->
