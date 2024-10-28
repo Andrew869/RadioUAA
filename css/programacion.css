@@ -81,47 +81,6 @@ table tr:last-child td:first-child {
 }
 
 
-
-/* Botones de redes sociales inicio */
-.social-buttons {
-    position: fixed;
-    bottom: 20%;
-    right: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.social-button {
-    text-decoration: none;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--Blanco);
-    font-size: 30px;
-    cursor: pointer;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-}
-
-.social-button i {
-    font-size: 25px;
-}
-
-.spotify {
-    background: linear-gradient(145deg, #1DB954, #1ED760); /* Verde de Spotify */
-}
-
-.social-button:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-    background-color: var(--Amarillo);
-}
-/* Botones de redes sociales fin */
-
 /* uaa inicio */
 .container-uaa {
     display: flex;

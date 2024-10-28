@@ -27,18 +27,16 @@
         class="social-button spotify">
         <i class="fab fa-spotify"></i>
     </a>
-</div>
-<div class="app-buttons">
     <a
         href="https://play.google.com/store/search?q=radio+uaa+94.5fm&c=apps&pli=1"
         target="_blank"
-        class="app-button google-play">
+        class="social-button google-play">
         <i class="fab fa-google-play"></i>
     </a>
     <a
         href="https://apps.apple.com/mx/app/radio-uaa-94-5fm/id6670407197"
         target="_blank"
-        class="app-button apple-store">
+        class="social-button apple-store">
         <i class="fab fa-apple"></i>
     </a>
 </div>
