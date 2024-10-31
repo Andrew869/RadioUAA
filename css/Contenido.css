@@ -13,11 +13,13 @@
     --Azulligero: #ADD8E6;
     --verdemasclaro: #4bb578;
     --Amarillo: #FFD700;
+    --snow: #FFFAFA;
 }
 
 /* * {box-sizing:border-box} */
 
 body, html {
+    background-color: var(--snow);
     height: 100%;
 } 
 
