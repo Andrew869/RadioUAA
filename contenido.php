@@ -22,6 +22,7 @@
 
     <div id="modal" class="modal">
         <div class="modal-content">
+        <div class="modal-content">
             <span class="close">&times;</span>
             <h3 id="modal-titulo"></h3>
             <img id="modal-imagen" class="modal-image">
@@ -30,15 +31,25 @@
             <p><strong>Horario <br></strong> <span id="modal-horario"></span> </p>
             <p><strong>Acerca del programa <br></strong> <span id="modal-descripcion"></span></p>
 
+            <!-- Contenedor para los comentarios -->
+            <h4>Comentarios</h4>
+            <div id="comentarios-lista"></div> <!-- Aquí se cargarán los comentarios -->
+
             <!-- Formulario de comentarios -->
             <p>Deja tu comentario!</p> 
-            <form id="form-comentario"">
+            <form id="form-comentario">
+            <input type="hidden" id="programa-id" name="programa_id">
+            
                 <label for="nombre">Nombre:</label>
                 <input type="text" id="nombre" name="nombre" required>
+                
                 <label for="comentario">Comentario:</label>
                 <textarea id="comentario" name="comentario" required></textarea>
+                
                 <button type="submit">Publicar comentario</button>
             </form>
+        </div>
+
         </div>
     </div>
     <?php include 'main_footer.php' ?>
