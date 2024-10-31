@@ -52,15 +52,17 @@ h1 {
     animation: colorChange 5s infinite;
     text-align: center;
 }
-h3{
+h4{
     /* text-align: justify; */
+    text-align: center;
     font-weight: bold;
     font-size: 2rem;
 }
 ul {
     list-style: none;
 }
-h3, p, li{
+li {
+    list-style: none;
     text-align: center;
     margin: 0 auto;
 }
