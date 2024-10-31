@@ -46,7 +46,7 @@ COLLATE utf8mb4_unicode_ci;
 CREATE TABLE horario (
     id_horario INT PRIMARY KEY AUTO_INCREMENT,
     id_programa INT,
-    dia_semana ENUM('Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'),
+    dia_semana ENUM('1', '2', '3', '4', '5', '6', '7'),
     hora_inicio TIME,
     hora_fin TIME,
     es_retransmision BOOLEAN,

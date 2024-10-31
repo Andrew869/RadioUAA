@@ -36,7 +36,7 @@
             $password_input = test_input($_POST["password"], TRUE);
         }
 
-        include "../db_connect.php";
+        include "../php/db_connect.php";
         
         $user = SQL::Select(SQL::USER, ["username" => $username_input])->fetch(PDO::FETCH_ASSOC);
         
@@ -71,7 +71,7 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <?php include "../metaData.php"; ?>
+        <?php include "metaData.php"; ?>
         <link rel="stylesheet" href="../css/styleLogin.css">
     </head>
 <body>

@@ -7,7 +7,7 @@
         exit();
     }
 
-    include "../db_connect.php";
+    include "../php/db_connect.php";
 
     $db_token = SQL::Select(SQL::USER, ["id_user" => $_SESSION['id_user']], ["session_token"])->fetchColumn();
 
@@ -60,6 +60,15 @@
     }
 
     function ShowSchedules($primary_key){
+        $dias_semana = [
+            1 => 'Lunes',
+            2 => 'Martes',
+            3 => 'Miércoles',
+            4 => 'Jueves',
+            5 => 'Viernes',
+            6 => 'Sábado',
+            7 => 'Domingo'
+        ];
         $horarios = SQL::Select(SQL::HORARIO, ["id_programa" => $primary_key], [], "dia_semana", SQL::ASCENDANT)->fetchAll(PDO::FETCH_ASSOC);
         $groups = [];
 
@@ -83,7 +92,7 @@
             $days = [];
             echo "<div><ul class='schedule-days'>";
             foreach ($group as $horario) {
-                echo "<li>" . $horario['dia_semana'] . "</li>";
+                echo "<li>" . $dias_semana[$horario['dia_semana']] . "</li>";
                 $days[] = $horario['dia_semana'];
                 // if(!isset($retra)) $retra = $horario['es_retransmision'];
                 // echo $horario['dia_semana'] . ($horario['es_retransmision'] ? " (Retrasmision) " : "" ) . "";

@@ -146,13 +146,13 @@ if response.status_code == 200:
 
 
     dias = {
-        "Lun": "Lunes",
-        "Mar": "Martes",
-        "Mié": "Miércoles",
-        "Jue": "Jueves",
-        "Vie": "Viernes",
-        "Sáb": "Sábado",
-        "Dom": "Domingo"
+        "Lun": "1",
+        "Mar": "2",
+        "Mié": "3",
+        "Jue": "4",
+        "Vie": "5",
+        "Sáb": "6",
+        "Dom": "7"
     }
     def transformar_dia(dia_abreviado):
         return dias.get(dia_abreviado, dia_abreviado) 
@@ -207,7 +207,7 @@ if response.status_code == 200:
             if programa.get('horarios'):
                 for horario in programa['horarios']:
                     insert_horario = f"INSERT INTO horario (id_programa, dia_semana, hora_inicio, hora_fin, es_retransmision) " \
-                                    f"VALUES ({programaIndex}, '{transformar_dia(horario['dia'])}', '{horario['hora_inicio']}', '{horario['hora_fin']}', {1 if horario['es_retransmision'] else 0});"
+                                    f"VALUES ({programaIndex}, {transformar_dia(horario['dia'])}, '{horario['hora_inicio']}', '{horario['hora_fin']}', {1 if horario['es_retransmision'] else 0});"
                     archivo.write(insert_horario + "\n")
             
             if programa.get('presentadores'):

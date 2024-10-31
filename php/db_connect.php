@@ -209,7 +209,7 @@
         }
 
         public static function GetEnumValues($table_name, $id_name) : array{
-            $sql = "SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '$table_name' AND COLUMN_NAME = '$id_name' AND TABLE_SCHEMA '" . self::$dbname . "'";
+            $sql = "SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '$table_name' AND COLUMN_NAME = '$id_name' AND TABLE_SCHEMA = '" . self::$dbname . "'";
             self::$stmt = self::$conn->query($sql);
             $result = self::$stmt->fetch(PDO::FETCH_ASSOC);
                 

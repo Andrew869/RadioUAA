@@ -62,10 +62,22 @@
     display: none;
 }
 
-.input_content__feedback--file {
+.input_content__filename--file {
     margin-left: 15px;
     font-size: 16px;
     color: #555;
+}
+
+.input_content__feedback--file{
+    padding: 10px;
+    color: #555;
+    height: 40px;
+}
+
+.input_content__feedback--file::before{
+    content: '*';
+    color: red;
+    padding: 0 5px;
 }
 
 .schedule {

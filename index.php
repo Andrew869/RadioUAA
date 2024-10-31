@@ -1,5 +1,5 @@
 <?php 
-    include 'utilities.php';
+    include 'php/utilities.php';
 
     $request = $_SERVER['REQUEST_URI'];
 
@@ -52,9 +52,9 @@
     <link rel="stylesheet" href="css/Nosotros.css">
     <link rel="stylesheet" href="css/programacion.css">
 </head>
-<body class="<?php echo $currentTheme ?>">
+<body class="<?php echo ($currentTheme === 'dark' ? $currentTheme : '')?>">
     <?php 
-        include 'main_header.php';
+        include 'php/main_header.php';
         include 'pages/player.html';
     ?>
 
@@ -64,7 +64,7 @@
         ?>
     </main>
 
-    <?php include 'main_footer.php' ?>
+    <?php include 'php/main_footer.php' ?>
     <script src="js/playerManager.js"></script>
     <script type="module" src="js/contenido.js"></script>
     <!-- <script src="js/Galeria.js"></script> -->

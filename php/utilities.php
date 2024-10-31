@@ -1,9 +1,10 @@
 <?php
     $currentTheme = null;
-    if(isset($_COOKIE['theme']) && $_COOKIE['theme'] != null)
+    if(isset($_COOKIE['theme']))
         $currentTheme = $_COOKIE['theme'];
     else
         $currentTheme = 'light';
+
     $iconProperties = [
         'dark' => [
             'url' => 'resources/img/sun.svg',
@@ -35,7 +36,7 @@
             $svgContent = preg_replace('/height:\s*\d+px/', "height: $height", $svgContent);
         } else {
             // Agregar el height si no existe
-            $svgContent = preg_replace('/<svg /', "<svg style=\"height: $height; \" ", $svgContent);
+            $svgContent = preg_replace('/style="/', "style=\"height: $height; ", $svgContent);
         }
     
         // Reemplazar fill si existe, o agregarlo si no

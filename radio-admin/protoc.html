@@ -43,7 +43,28 @@
         </nav>
     </header>
     <main>
-        <div class="main">
+        <div id="modals_container">
+            <div class="modal" style="display: block;"><span class="close">×</span>
+                <div class="modal-content">
+                    <div class="container">
+                        <div class="input_content" inputtype="file" style="height: 140px;">
+                            <label class="input_content__label" for="url_img">foto del presentador</label>
+                            <div>
+                                <label class="button" for="fileToUpload">Seleccionar archivo</label>
+                                <input class="input_content__input--file" type="file" id="fileToUpload" accept="image/*">
+                                <span class="input_content__filename--file">No se ha seleccionado archivo</span>
+                                <div class="input_content__feedback--file">prueba</div>
+                            </div>
+                        </div>
+                        <div class="btns_container">
+                            <button type="button" class="button cancelBtn">Cancelar</button>
+                            <button type="button" class="button confirmBtn">Confirmar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="main">
             <div class="contentField" contentname="programa" contentid="110" fieldname="nombre_programa" inputtype="text">
                 <div>
                     <div class="fieldTitle">Nombre del programa</div>
@@ -128,14 +149,14 @@
             <div class="div-button">
                 <button class="button deleteBtn" contentname="programa" pk="110">Eliminar</button>
             </div>
-        </div>
+        </div> -->
     </main>
-        <script src="../js/contentManager.js"></script>
-        <!-- <script src="../js/createManager.js"></script> -->
-        <!-- <button onclick="AddContent('programa')">crear</button> -->
-        <div id="modals_container">
-        </div>
-        <script type="module" src="../js/modalsManager.js"></script>
+    <script src="../js/contentManager.js"></script>
+    <!-- <script src="../js/createManager.js"></script> -->
+    <!-- <button onclick="AddContent('programa')">crear</button> -->
+    <div id="modals_container">
+    </div>
+    <script type="module" src="../js/modalsManager.js"></script>
     <footer></footer>
     <script src="../js/headerManager.js"></script>
 </body>
