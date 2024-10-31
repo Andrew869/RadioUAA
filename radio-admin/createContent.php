@@ -26,7 +26,7 @@
     function LoadImage() : string{
         $uploadOk = 0;
         $next_id = SQL::GetCurrentIdIndex($_POST['contentName'], SQL::GetPrimaryKeyName($_POST['contentName'])) + 1;
-        $target_dir = "../resources/uploads/img/";
+        $target_dir = "resources/uploads/img/";
         if(count($_FILES)){
             $imageFileType = strtolower(pathinfo(basename($_FILES["fileToUpload"]["name"]),PATHINFO_EXTENSION));
             $target_file = $target_dir . $_POST['contentName'] . '_' . $next_id . "[v0].$imageFileType";
@@ -36,7 +36,7 @@
                     if($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "jpeg" || $imageFileType == "gif" ) { // Allow certain file formats
                         $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]); // Check if image file is a actual image or fake image
                         if($check !== false) { 
-                            $uploadOk = move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
+                            $uploadOk = move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "../$target_file");
                         }
                     }
                 }
@@ -47,7 +47,7 @@
             $defaultImg_Path = "../resources/img/" . $_POST['contentName'] . "_default.jpg";
             $imageFileType = strtolower(pathinfo(basename($defaultImg_Path),PATHINFO_EXTENSION));
             $target_file = $target_dir . $_POST['contentName'] . '_' . $next_id . "[v0].$imageFileType";
-            copy($defaultImg_Path, $target_file);
+            copy($defaultImg_Path, "../$target_file");
         }
 
         return $target_file;

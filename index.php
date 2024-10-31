@@ -53,7 +53,10 @@
     <link rel="stylesheet" href="css/programacion.css">
 </head>
 <body class="<?php echo $currentTheme ?>">
-    <?php include 'main_header.php' ?>
+    <?php 
+        include 'main_header.php';
+        include 'pages/player.html';
+    ?>
 
     <main id="content">
         <?php
@@ -62,7 +65,7 @@
     </main>
 
     <?php include 'main_footer.php' ?>
-    <!-- <script src="js/playerManager.js"></script> -->
+    <script src="js/playerManager.js"></script>
     <script type="module" src="js/contenido.js"></script>
     <!-- <script src="js/Galeria.js"></script> -->
     <script type="module" src="js/app.js"></script>

@@ -230,3 +230,4 @@ else:
 # DROP TABLE presentador;
 # DROP TABLE horario;
 # DROP TABLE programa;
+# DROP TABLE user;

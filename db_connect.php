@@ -184,12 +184,19 @@
             // $id = "id_" . $table_name;
             $id = self::GetPrimaryKeyName($table_name);
             $sql = "UPDATE $table_name SET $text_fields WHERE $id = '$primary_key'";
-            self::$stmt = self::$conn->prepare($sql);
-            self::$conn->exec($sql);
+
+            try {
+                self::$stmt = self::$conn->prepare($sql);
+                self::$conn->exec($sql);
+            } catch(PDOException $e) {
+                echo "Connection failed: " . $e->getMessage() . $sql;
+                exit();
+            }
+
         }
 
         public static function GetPrimaryKeyName($table_name) : string{
-            $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = '$table_name' AND CONSTRAINT_NAME = 'PRIMARY' AND TABLE_SCHEMA = 'radio_db'";
+            $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = '$table_name' AND CONSTRAINT_NAME = 'PRIMARY' AND TABLE_SCHEMA = '" . self::$dbname . "'";
             self::$stmt = self::$conn->query($sql);
             return self::$stmt->fetchColumn();
         }
@@ -202,7 +209,7 @@
         }
 
         public static function GetEnumValues($table_name, $id_name) : array{
-            $sql = "SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '$table_name' AND COLUMN_NAME = '$id_name' AND TABLE_SCHEMA = 'radio_db'";
+            $sql = "SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '$table_name' AND COLUMN_NAME = '$id_name' AND TABLE_SCHEMA '" . self::$dbname . "'";
             self::$stmt = self::$conn->query($sql);
             $result = self::$stmt->fetch(PDO::FETCH_ASSOC);
                 
