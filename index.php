@@ -44,13 +44,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <title>Radio UAA</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/Contacto.css">
-    <link rel="stylesheet" href="css/Contenido.css">
-    <link rel="stylesheet" href="css/Defensoria.css">
-    <link rel="stylesheet" href="css/Index.css">
-    <link rel="stylesheet" href="css/Nosotros.css">
-    <link rel="stylesheet" href="css/programacion.css">
+    <link rel="stylesheet" href="css/styles.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/Contacto.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/Contenido.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/Defensoria.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/Index.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/Nosotros.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/programacion.css?v=<?php echo time(); ?>">
 </head>
 <body class="<?php echo ($currentTheme === 'dark' ? $currentTheme : '')?>">
     <?php 
@@ -65,9 +65,9 @@
     </main>
 
     <?php include 'php/main_footer.php' ?>
-    <script src="js/playerManager.js"></script>
-    <script type="module" src="js/contenido.js"></script>
+    <script src="js/playerManager.js?v=<?php echo time(); ?>"></script>
+    <script type="module" src="js/contenido.js?v=<?php echo time(); ?>"></script>
     <!-- <script src="js/Galeria.js"></script> -->
-    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/app.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

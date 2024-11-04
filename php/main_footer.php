@@ -66,6 +66,6 @@
         |
     </p>
 </footer>
-<script type="module" src="js/light-dark-mode.js"></script>
-<script src="js/navbar.js"></script>
-<script src="js/barrabuscar.js"></script>
+<script type="module" src="js/light-dark-mode.js?v=<?php echo time(); ?>"></script>
+<script src="js/navbar.js?v=<?php echo time(); ?>"></script>
+<script src="js/barrabuscar.js?v=<?php echo time(); ?>"></script>

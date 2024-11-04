@@ -7,7 +7,7 @@
         exit();
     }
 
-    include "../db_connect.php";
+    include "../php/db_connect.php";
 
     $db_token = SQL::Select(SQL::USER, ["id_user" => $_SESSION['id_user']], ["session_token"])->fetchColumn();
 

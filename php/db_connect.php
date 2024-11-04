@@ -3,6 +3,11 @@
         public static $conn = NULL;
         public static $stmt = NULL;
         
+        // public static $servername = "dbmxscl.uaa.mx";
+        // public static $username = "uradiop";
+        // public static $password = "CpRPra2k24.-";
+        // public static $dbname= "radiopra";
+
         public static $servername = "localhost";
         public static $username = "root";
         public static $password = "";
