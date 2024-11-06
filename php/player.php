@@ -1,9 +1,6 @@
 <div class="player container-radio-player">
     <div class="radio-player">
-        <audio
-            id="audio"
-            src="https://streamingcwsradio30.com/8148/stream"
-        ></audio>
+        <audio id="audio" src="https://streamingcwsradio30.com/8148/stream"></audio>
         <div id="loading" class="loading">Cargando...</div>
         <div class="station-info">
             <h2>Radio UAA</h2>
@@ -11,9 +8,10 @@
         </div>
         <div class="controls">
             <button id="playPauseBtn">
-                <i id="playPauseIcon" class="fa-solid fa-play"></i>
+                <!-- <i id="playPauseIcon" class="fa-solid fa-play"></i> -->
+                <?php echo GetSVG('resources/img/svg/play.svg', ["18px", "18px", "white"]) ?>
             </button>
-            <button id="syncBtn"><i class="fa-solid fa-rotate"></i></button>
+            <button id="syncBtn">Sync</button>
         </div>
         <div class="volume-control">
             <label for="volumeSlider">Volumen:</label>

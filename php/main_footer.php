@@ -1,48 +1,23 @@
-<script
-    src="https://kit.fontawesome.com/9b86802e8e.js"
-    crossorigin="anonymous"></script>
-
 <div class="social-buttons">
-    <a
-        href="https://wa.me/524499121588"
-        target="_blank"
-        class="social-button whatsapp">
-        <i class="fab fa-whatsapp"></i>
+    <a href="https://wa.me/524499121588" target="_blank" class="social-button whatsapp">
+        <?php echo GetSVG('resources/img/svg/whatsapp.svg', ["24px", "24px", "white"]) ?>
     </a>
-    <a
-        href="https://www.instagram.com/radiouaa94.5fm?igsh=ZnpsMnBrcjdjMnZ1"
-        target="_blank"
-        class="social-button instagram">
-        <i class="fab fa-instagram"></i>
+    <a href="https://www.instagram.com/radiouaa94.5fm?igsh=ZnpsMnBrcjdjMnZ1" target="_blank" class="social-button instagram">
+        <?php echo GetSVG('resources/img/svg/instagram.svg', ["24px", "24px", "white"]) ?>
     </a>
-    <a
-        href="https://www.facebook.com/RadioUAA?mibextid=ZbWKwL"
-        target="_blank"
-        class="social-button facebook">
-        <i class="fab fa-facebook"></i>
+    <a href="https://www.facebook.com/RadioUAA?mibextid=ZbWKwL" target="_blank" class="social-button facebook">
+        <?php echo GetSVG('resources/img/svg/facebook.svg', ["24px", "24px", "white"]) ?>
     </a>
-    <a
-        href="https://open.spotify.com/show/33OclgjRhmrjS1GaSAwXoU"
-        target="_blank"
-        class="social-button spotify">
-        <i class="fab fa-spotify"></i>
+    <a href="https://open.spotify.com/show/33OclgjRhmrjS1GaSAwXoU" target="_blank" class="social-button spotify">
+        <?php echo GetSVG('resources/img/svg/spotify.svg', ["24px", "24px", "white"]) ?>
     </a>
-    <a
-        href="https://play.google.com/store/search?q=radio+uaa+94.5fm&c=apps&pli=1"
-        target="_blank"
-        class="social-button google-play">
-        <i class="fab fa-google-play"></i>
+    <a href="https://play.google.com/store/search?q=radio+uaa+94.5fm&c=apps&pli=1" target="_blank" class="social-button google-play">
+        <?php echo GetSVG('resources/img/svg/google-play.svg', ["20px", "20px", "white"]) ?>
     </a>
-    <a
-        href="https://apps.apple.com/mx/app/radio-uaa-94-5fm/id6670407197"
-        target="_blank"
-        class="social-button apple-store">
-        <i class="fab fa-apple"></i>
+    <a href="https://apps.apple.com/mx/app/radio-uaa-94-5fm/id6670407197"target="_blank" class="social-button apple-store">
+        <?php echo GetSVG('resources/img/svg/app-store.svg', ["24px", "24px", "white"]) ?>
     </a>
 </div>
-
-<hr />
-<br />
 
 <div class="container-uaa">
     <a href="https://www.uaa.mx/portal/" target="_blank">

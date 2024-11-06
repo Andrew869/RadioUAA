@@ -7,11 +7,11 @@
 
     $iconProperties = [
         'dark' => [
-            'url' => 'resources/img/sun.svg',
+            'url' => 'resources/img/svg/sun.svg',
             'styles' => ["18px", "18px", "white"]
         ],
         'light' => [
-            'url' => 'resources/img/moon.svg',
+            'url' => 'resources/img/svg/moon.svg',
             'styles' => ["18px", "18px", "black"]
         ]
     ];
@@ -39,12 +39,14 @@
             $svgContent = preg_replace('/style="/', "style=\"height: $height; ", $svgContent);
         }
     
-        // Reemplazar fill si existe, o agregarlo si no
-        if (strpos($svgContent, 'fill:') !== false) {
-            $svgContent = preg_replace('/fill:\s*[^;]+/', "fill: $fill", $svgContent);
-        } else {
-            // Si no existe, agregar fill al estilo
-            $svgContent = preg_replace('/style="/', "style=\"fill: $fill; ", $svgContent);
+        if($fill !== ''){
+            // Reemplazar fill si existe, o agregarlo si no
+            if (strpos($svgContent, 'fill:') !== false) {
+                $svgContent = preg_replace('/fill:\s*[^;]+/', "fill: $fill", $svgContent);
+            } else {
+                // Si no existe, agregar fill al estilo
+                $svgContent = preg_replace('/style="/', "style=\"fill: $fill; ", $svgContent);
+            }
         }
     
         return $svgContent;

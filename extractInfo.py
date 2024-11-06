@@ -123,18 +123,22 @@ if response.status_code == 200:
                         horarios = []
                         dias = horarios_div.find_all('td', class_='show-day-time')
                         for dia in dias:
-                            horario = {}
+                            # horario = {}
                             dia_texto = dia.find('b').text.strip()
-                            horario['dia'] = dia_texto
+                            # horario['dia'] = dia_texto
                             horario_info = dia.find_next_sibling('td')
                             if horario_info:
-                                start_time = horario_info.find('span', class_='rs-start-time').text.strip()
-                                horario['hora_inicio'] = start_time
-                                end_time = horario_info.find('span', class_='rs-end-time').text.strip()
-                                horario['hora_fin'] = end_time
-                                es_retransmision = horario_info.find('span', class_='show-encore') is not None
-                                horario['es_retransmision'] = 1 if es_retransmision else 0
-                                horarios.append(horario)
+                                tiempos = horario_info.find_all('span', class_='show-time')
+                                for tiempo in tiempos:
+                                    horario = {}
+                                    horario['dia'] = dia_texto
+                                    start_time = tiempo.find('span', class_='rs-start-time').text.strip()
+                                    horario['hora_inicio'] = start_time
+                                    end_time = tiempo.find('span', class_='rs-end-time').text.strip()
+                                    horario['hora_fin'] = end_time
+                                    es_retransmision = tiempo.find('span', class_='show-encore') is not None
+                                    horario['es_retransmision'] = 1 if es_retransmision else 0
+                                    horarios.append(horario)
                     programa['horarios'] = horarios
                     programas.append(programa)
                     success = True  # Salir del bucle si la solicitud fue exitosa

@@ -70,5 +70,18 @@ CREATE TABLE user (
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
 
+CREATE TABLE comentario (
+    id_comentario INT PRIMARY KEY AUTO_INCREMENT,
+    id_programa INT NOT NULL,
+    nombre_usuario VARCHAR(64),
+    email_usuario VARCHAR(255),
+    comentario TEXT NOT NULL,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    aprobado BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (id_programa) REFERENCES programa(id_programa)
+)
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
+
 INSERT INTO user (username, email, password_hash, nombre_completo, rol,  cuenta_activa) 
 VALUES ('admin', 'admin1@example.com', SHA2('Admin123', 256), 'Juan Admin', 'Admin', TRUE);

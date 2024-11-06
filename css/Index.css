@@ -114,6 +114,12 @@ div.radio-player:hover {
     letter-spacing: 0.5px;
 }
 
+.controls{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .controls button {
     font-size: 16px;
     background: linear-gradient(145deg, #FF416C, #FF4B2B);
@@ -126,6 +132,9 @@ div.radio-player:hover {
     box-shadow: 0 5px 10px rgba(255, 75, 43, 0.5);
     transition: background 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .controls button:hover {

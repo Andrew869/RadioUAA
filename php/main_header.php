@@ -39,7 +39,7 @@
 
         <!-- Botón Modo Oscuro -->
         <div class="dark-mode-toggle">
-            <label for="toggle" id="label_toggle" aria-label="Toggle Dark Mode">
+            <label for="toggle" id="label_toggle" class="icon">
                 <?php echo GetSVG($iconProperties[$currentTheme]['url'], $iconProperties[$currentTheme]['styles']) ?>
                 <!-- <i id="theme-icon" class="fa-solid fa-moon"></i> -->
             </label>
@@ -47,8 +47,10 @@
         </div>
 
         <!-- Search Icon -->
-        <div id="cont-icon-search" aria-label="Search">
-            <i class="fas fa-search" id="icon-search"></i>
+        <div id="cont-icon-search">
+            <label id="icon-search" class="icon">
+                <?php echo GetSVG('resources/img/svg/search.svg', ["18px", "18px", "white"]) ?>
+            </label>
         </div>
         <!-- Search Bar -->
         <div id="cont-bars-search">

@@ -1,3 +1,4 @@
+import { GetSVG } from './utilities.js';
 const audio = document.getElementById('audio');
 
 const playPauseBtn = document.getElementById('playPauseBtn');
@@ -91,6 +92,7 @@ playPauseBtn.addEventListener('click', () => {
         audio.play();
         // playLive();
         // playPauseIcon.className = 'fa-solid fa-pause';
+        
     } else {
         audio.pause();
         // playPauseIcon.className = 'fa-solid fa-play';
@@ -130,11 +132,13 @@ audio.addEventListener('loadedmetadata', () => {
 });
 
 audio.addEventListener('play', () => {
-    playPauseIcon.className = 'fa-solid fa-pause';
-    console.log("has played");
+    // playPauseIcon.className = 'fa-solid fa-pause';
+    GetSVG(playPauseBtn, "../resources/img/svg/pause.svg", ["18px", "18px", "white"]);
+    // console.log("has played");
 });
 
 audio.addEventListener('pause', () => {
-    playPauseIcon.className = 'fa-solid fa-play';
-    console.log("has paused");
+    // playPauseIcon.className = 'fa-solid fa-play';
+    GetSVG(playPauseBtn, "../resources/img/svg/play.svg", ["18px", "18px", "white"]);
+    // console.log("has paused");
 });

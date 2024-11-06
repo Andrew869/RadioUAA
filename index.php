@@ -42,7 +42,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"> -->
     <title>Radio UAA</title>
     <link rel="stylesheet" href="css/styles.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/Contacto.css?v=<?php echo time(); ?>">
@@ -55,7 +55,7 @@
 <body class="<?php echo ($currentTheme === 'dark' ? $currentTheme : '')?>">
     <?php 
         include 'php/main_header.php';
-        include 'pages/player.html';
+        include 'php/player.php';
     ?>
 
     <main id="content">
@@ -65,7 +65,7 @@
     </main>
 
     <?php include 'php/main_footer.php' ?>
-    <script src="js/playerManager.js?v=<?php echo time(); ?>"></script>
+    <script type="module" src="js/playerManager.js?v=<?php echo time(); ?>"></script>
     <script type="module" src="js/contenido.js?v=<?php echo time(); ?>"></script>
     <!-- <script src="js/Galeria.js"></script> -->
     <script type="module" src="js/app.js?v=<?php echo time(); ?>"></script>
