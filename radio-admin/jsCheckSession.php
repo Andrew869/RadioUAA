@@ -2,7 +2,7 @@
     if(session_status() == PHP_SESSION_NONE){
         session_start();
     }
-    include_once "db_connect.php";
+    include_once "../php/db_connect.php";
     
     $db_token = SQL::Select(SQL::USER, ["id_user" => $_SESSION['id_user']], ["session_token"])->fetchColumn();
 

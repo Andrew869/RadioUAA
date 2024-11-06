@@ -1,7 +1,7 @@
 <?php
 // Asegúrate de que la sesión esté iniciada
 session_start();
-include "../db_connect.php";
+include "../php/db_connect.php";
 
 SQL::Update(SQL::USER, $_SESSION['id_user'], ["session_token" => SQL::NULL]);
 

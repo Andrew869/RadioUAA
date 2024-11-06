@@ -3,7 +3,7 @@
     date_default_timezone_set("America/Mexico_City");
 
     if(isset($_SESSION['id_user'])){
-        header('Location: index');
+        header('Location: contenidos');
         exit();
     }
 
@@ -36,7 +36,7 @@
             $password_input = test_input($_POST["password"], TRUE);
         }
 
-        include "../db_connect.php";
+        include "../php/db_connect.php";
         
         $user = SQL::Select(SQL::USER, ["username" => $username_input])->fetch(PDO::FETCH_ASSOC);
         
@@ -55,7 +55,7 @@
 
                     SQL::Update(SQL::USER, $user['id_user'], ["ultimo_acceso" => date("Y-m-d H:i:s"), "session_token" => $token]); // modifica el ultimo acceso y añadiendo el token
                     
-                    header('Location: index'); // Redirigir al panel de administración
+                    header('Location: contenidos'); // Redirigir al panel de administración
                     exit();
                 }
                 else
@@ -71,7 +71,7 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <?php include "../metaData.php"; ?>
+        <?php include "metaData.php"; ?>
         <link rel="stylesheet" href="../css/styleLogin.css">
     </head>
 <body>

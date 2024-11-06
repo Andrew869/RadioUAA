@@ -123,18 +123,22 @@ if response.status_code == 200:
                         horarios = []
                         dias = horarios_div.find_all('td', class_='show-day-time')
                         for dia in dias:
-                            horario = {}
+                            # horario = {}
                             dia_texto = dia.find('b').text.strip()
-                            horario['dia'] = dia_texto
+                            # horario['dia'] = dia_texto
                             horario_info = dia.find_next_sibling('td')
                             if horario_info:
-                                start_time = horario_info.find('span', class_='rs-start-time').text.strip()
-                                horario['hora_inicio'] = start_time
-                                end_time = horario_info.find('span', class_='rs-end-time').text.strip()
-                                horario['hora_fin'] = end_time
-                                es_retransmision = horario_info.find('span', class_='show-encore') is not None
-                                horario['es_retransmision'] = 1 if es_retransmision else 0
-                                horarios.append(horario)
+                                tiempos = horario_info.find_all('span', class_='show-time')
+                                for tiempo in tiempos:
+                                    horario = {}
+                                    horario['dia'] = dia_texto
+                                    start_time = tiempo.find('span', class_='rs-start-time').text.strip()
+                                    horario['hora_inicio'] = start_time
+                                    end_time = tiempo.find('span', class_='rs-end-time').text.strip()
+                                    horario['hora_fin'] = end_time
+                                    es_retransmision = tiempo.find('span', class_='show-encore') is not None
+                                    horario['es_retransmision'] = 1 if es_retransmision else 0
+                                    horarios.append(horario)
                     programa['horarios'] = horarios
                     programas.append(programa)
                     success = True  # Salir del bucle si la solicitud fue exitosa
@@ -146,13 +150,13 @@ if response.status_code == 200:
 
 
     dias = {
-        "Lun": "Lunes",
-        "Mar": "Martes",
-        "Mié": "Miércoles",
-        "Jue": "Jueves",
-        "Vie": "Viernes",
-        "Sáb": "Sábado",
-        "Dom": "Domingo"
+        "Lun": "1",
+        "Mar": "2",
+        "Mié": "3",
+        "Jue": "4",
+        "Vie": "5",
+        "Sáb": "6",
+        "Dom": "7"
     }
     def transformar_dia(dia_abreviado):
         return dias.get(dia_abreviado, dia_abreviado) 
@@ -207,7 +211,7 @@ if response.status_code == 200:
             if programa.get('horarios'):
                 for horario in programa['horarios']:
                     insert_horario = f"INSERT INTO horario (id_programa, dia_semana, hora_inicio, hora_fin, es_retransmision) " \
-                                    f"VALUES ({programaIndex}, '{transformar_dia(horario['dia'])}', '{horario['hora_inicio']}', '{horario['hora_fin']}', {1 if horario['es_retransmision'] else 0});"
+                                    f"VALUES ({programaIndex}, {transformar_dia(horario['dia'])}, '{horario['hora_inicio']}', '{horario['hora_fin']}', {1 if horario['es_retransmision'] else 0});"
                     archivo.write(insert_horario + "\n")
             
             if programa.get('presentadores'):
@@ -230,3 +234,4 @@ else:
 # DROP TABLE presentador;
 # DROP TABLE horario;
 # DROP TABLE programa;
+# DROP TABLE user;

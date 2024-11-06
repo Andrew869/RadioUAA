@@ -16,14 +16,8 @@
     --snow: #FFFAFA;
 }
 
-/* * {box-sizing:border-box} */
-
-body, html {
-    background-color: var(--snow);
-    /* height: 100%; */
-} 
-
 body {
+    /* background-color: var(--snow); */
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;

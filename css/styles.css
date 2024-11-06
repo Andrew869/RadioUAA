@@ -17,13 +17,17 @@
     color: white;
 }
 
+.icon {
+    display: flex;
+}
+
 #toggle {
     display: none;
 }
 
 #label_toggle {
-    display: flex;
-    font-size: 1.5rem;
+    /* display: flex; */
+    /* font-size: 1.5rem; */
     color: var(--Blanco);
     cursor: pointer;
 }
@@ -114,7 +118,7 @@
 }
 
 .dark-mode-toggle {
-    display: flex;
+    /* display: flex; */
     justify-content: center;
     align-items: center;
     margin-left: 20px;
@@ -333,16 +337,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--Blanco);
-    font-size: 30px;
     cursor: pointer;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    /* transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; */
 }
 
-.social-button i {
+/* .social-button i {
     font-size: 25px;
-}
+} */
 
 .whatsapp {
     background: linear-gradient(145deg, #25D366, #128C7E); /* Verde de WhatsApp */

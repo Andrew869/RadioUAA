@@ -1,11 +1,33 @@
 const modals_container = document.getElementById('modals_container');
 let isDragging = false;
 
+// Obtiene la ruta completa del archivo actual
+const fullPath = window.location.pathname;
+
+// Elimina la última barra si está en la raíz, y divide la ruta en segmentos
+const segments = fullPath.endsWith('/') ? fullPath.slice(0, -1).split('/') : fullPath.split('/');
+
+// Obtiene la carpeta anterior al archivo, o una cadena vacía si está en la raíz
+const currentDir = segments.length > 1 ? segments[segments.length - 2] : '';
+
+// console.log(currentDir);
+
+
 let currentLayer = -1;
 const layers = [];
 const layersModalContent = [];
 const layersInputsType = [];
 const layersNumSchedules = [];
+
+const dias_semana = {
+    1: 'Lunes',
+    2: 'Martes',
+    3: 'Miércoles',
+    4: 'Jueves',
+    5: 'Viernes',
+    6: 'Sábado',
+    7: 'Domingo'
+};
 
 let resizeTimeout;
 window.addEventListener('resize', () => {
@@ -16,7 +38,15 @@ window.addEventListener('resize', () => {
 });
 
 export function GetSVG(parentNode, url, styles){
-    fetch(url)
+    console.log(`seahorse ${window.location.pathname}`);
+    let args = url + ',' + styles;
+    fetch((currentDir === '' ? '' : "../" ) + "php/jsRequest.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "GetSVG=" + encodeURIComponent(args)
+    })
     .then(response => response.text())
     .then(svgContent => {
         let [width, height, fill] = styles;
@@ -109,7 +139,7 @@ export function GetInputValues(input){
                     let daysSelected = schedule.querySelectorAll('.selected');
                     let arrayDays = [];
                     daysSelected.forEach(day => {
-                        arrayDays.push(day.textContent);
+                        arrayDays.push(day.getAttribute('id_day'));
                     });
                     let strDays = arrayDays.join(',');
                     data.push({name: "horarios[" + scheduleIndex + "][dias]", value: strDays});
@@ -310,14 +340,15 @@ export function GetInputHeight(inputType){
         case 'text':
         case 'email':
         case 'password':
-        case 'file':
         case 'enum':
         case 'boolean':
             return 100;
+        case 'file':
+            return 140;
         case 'textarea':
             return 250;
         case 'schedules':
-                return 350 + (280 * layersNumSchedules[currentLayer]);
+            return 350 + (280 * layersNumSchedules[currentLayer]);
         case 'list':
             return 300;
     }
@@ -415,8 +446,9 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
     label.setAttribute('for', fieldName);
 
     container.appendChild(label);
-
     container.setAttribute('inputType', inputType);
+    if(inputType !== 'schedules')
+        container.style.height = GetInputHeight(inputType) + 'px';
 
     let element;
     switch (inputType) {
@@ -424,7 +456,6 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
         case 'email':
         case 'password':
             {
-                container.style.height = '100px';
                 element = document.createElement('input');
                 element.type = inputType;
                 element.id = fieldName;
@@ -436,7 +467,6 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
             }
         case 'textarea':
             {
-                container.style.height = '250px';
                 element = document.createElement('textarea');
                 // element.type = inputType;
                 element.classList.add('input_content__input--textarea');
@@ -447,11 +477,10 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
             }
         case 'file':
             {
-                container.style.height = '100px';
                 element = document.createElement('div');
                 let btnLabel = document.createElement('label');
                 btnLabel.classList.add('button');
-                btnLabel.setAttribute('for', 'fileToUpload');
+                // btnLabel.setAttribute('for', 'fileToUpload');
                 btnLabel.textContent = 'Seleccionar archivo';
 
                 element.appendChild(btnLabel);
@@ -464,18 +493,24 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
 
                 element.appendChild(input);
 
-                let feedback_file = document.createElement('span');
+                let name_file = document.createElement('span');
+                // feedback_file.id = 'feedback_file';
+                name_file.classList.add('input_content__filename--file');
+                name_file.textContent = 'No se ha seleccionado archivo';
+                element.appendChild(name_file);
+
+                let feedback_file = document.createElement('div');
                 // feedback_file.id = 'feedback_file';
                 feedback_file.classList.add('input_content__feedback--file');
-                feedback_file.textContent = 'No se ha seleccionado archivo';
+                feedback_file.textContent = '';
                 element.appendChild(feedback_file);
+
                 
                 InputFileManager(element);
                 break;
             }
         case 'enum':
             {
-                container.style.height = '100px';
                 element = document.createElement('select');
                 element.id = fieldName;
                 element.setAttribute('fieldName', fieldName);
@@ -487,7 +522,6 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
             }
         case 'boolean':
             {
-                container.style.height = '100px';
                 label.className = 'input_content__label-checkbox';
                 element = document.createElement('input');
                 element.classList.add('input_content__input-checkbox');
@@ -518,6 +552,20 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
                 daysListUl.classList.add('list', 'days_list');
 
                 EnumToList(daysListUl, 'horario', 'dia_semana', 'li');
+
+                CreateEvent(daysListUl, 'requestSuccessfully', 'Evento lanzado con éxito.');
+
+                daysListUl.addEventListener('requestSuccessfully', function(){
+                    let liDays = daysListUl.querySelectorAll('li');
+                    // console.log("numero de dias =" + liDays.length);
+                    
+                    for (let i = 1; i <= liDays.length; i++) {
+                        const days = liDays[i - 1];
+                        days.setAttribute('id_day', i);
+                        days.textContent = dias_semana[i];
+                    }
+                });
+
                 DaysSelectionSystem(daysListUl);
 
                 // Añadir la lista de días al contenedor
@@ -604,7 +652,6 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
             }
         case 'list':
             {
-                container.style.height = '300px';
                 container.id = "inputSelector_" + fieldName;
                 container.setAttribute('contentName', tableName);
                 element = document.createElement('div');
@@ -657,7 +704,7 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
                 // })
                 // .catch(error => console.log('Error al cargar el SVG:', error));
 
-                GetSVG(divDivision ,'../resources/img/arrow-right-arrow-left-solid.svg');
+                GetSVG(divDivision ,'../resources/img/arrow-right-arrow-left-solid.svg', ["14px", "14px", "#007BFF"]);
                 element.appendChild(divDivision);
 
                 let divAvailable = document.createElement('div');
@@ -805,7 +852,7 @@ export function CreateEvent(element, eventName, detail) {
 function GetList(container, tableName){
     let args = tableName;
     let list;
-    fetch("jsRequest.php", {
+    fetch((currentDir === '' ? "" : "../" ) + "php/jsRequest.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
@@ -838,7 +885,7 @@ function GetList(container, tableName){
 
 function EnumToList(container, tableName, fieldName, tagName){
     let args = tableName + ',' + fieldName;
-    fetch("jsRequest.php", {
+    fetch((currentDir === '' ? "" : "../" ) + "php/jsRequest.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
@@ -936,9 +983,15 @@ export function CloneSchedule(schedulesContainer, originalschedule, newScheduleB
 
 export function InputFileManager(input_file){
     // const dropZone = input_file.querySelector('#drop-zone');
-    const actual_input = input_file.querySelector('[type="file"]')
-    const feedback = input_file.querySelector('.input_content__feedback--file');
+    const button = input_file.querySelector('.button');
+    const actual_input = input_file.querySelector('[type="file"]');
+    const nameELement = input_file.querySelector('.input_content__filename--file')
+    const feedbackElement = input_file.querySelector('.input_content__feedback--file');
     
+    button.addEventListener('click', function(){
+        actual_input.click();
+    });
+
     // Cambiar apariencia del área de arrastre cuando el archivo está sobre ella
     // dropZone.addEventListener('dragover', (e) => {
     //         e.preventDefault();
@@ -975,7 +1028,8 @@ export function InputFileManager(input_file){
     actual_input.addEventListener('change', function(event) {
         let fileInput = event.target;
         let file = fileInput.files[0]; // Obtener el archivo seleccionado
-        feedback.textContent = ''; // Limpiar mensaje previo
+        nameELement.textContent = file.name;
+        feedbackElement.textContent = ''; // Limpiar mensaje previo
 
         // if (actual_input.files.length) {
         //     dropZone.textContent = file.name;
@@ -983,14 +1037,14 @@ export function InputFileManager(input_file){
         
         // Comprobar si se ha seleccionado un archivo
         if (!file) {
-            feedback.textContent = 'Por favor selecciona un archivo.';
+            feedbackElement.textContent = 'Por favor selecciona un archivo.';
             return;
         }
     
         // Verificar el tamaño del archivo (máximo 500KB)
         let maxSize = 500 * 1024; // 500KB
         if (file.size > maxSize) {
-            feedback.textContent = 'El archivo es demasiado grande. Máximo 500KB.';
+            feedbackElement.textContent = 'El archivo es demasiado grande. Máximo 500KB.';
             fileInput.value = ''; // Limpiar el archivo seleccionado
             return;
         }
@@ -998,20 +1052,20 @@ export function InputFileManager(input_file){
         // Verificar extensiones permitidas
         let allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
         if (!allowedExtensions.exec(file.name)) {
-            feedback.textContent = 'Solo se permiten archivos con extensiones .jpg, .jpeg, .png, .gif';
+            feedbackElement.textContent = 'Solo se permiten archivos con extensiones .jpg, .jpeg, .png, .gif';
             fileInput.value = ''; // Limpiar el archivo seleccionado
             return;
         }
     
         // Verificar que sea un archivo de imagen con el tipo MIME
         if (!file.type.startsWith('image/')) {
-            feedback.textContent = 'El archivo debe ser una imagen válida.';
+            feedbackElement.textContent = 'El archivo debe ser una imagen válida.';
             fileInput.value = ''; // Limpiar el archivo seleccionado
             return;
         }
     
         // Si todas las comprobaciones pasan, mostrar mensaje de éxito
-        feedback.textContent = 'El archivo es válido y está listo para subir.';
+        feedbackElement.textContent = 'El archivo es válido y está listo para subir.';
     });
 }
 

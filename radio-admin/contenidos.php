@@ -1,27 +1,5 @@
 <?php
-    session_start();
-    date_default_timezone_set("America/Mexico_City");
-
-    if(!isset($_SESSION['id_user'])){
-        header('Location: login');
-        exit();
-    }
-
-    include "../db_connect.php";
-
-    $db_token = SQL::Select(SQL::USER, ["id_user" => $_SESSION['id_user']], ["session_token"])->fetchColumn();
-
-    if($_SESSION['session_token'] !== $db_token){
-        setcookie("session_token", "", time() - 3600);
-        session_unset();
-        session_destroy();
-        
-        header("Location: login");
-        exit();
-    }else if(!isset($_COOKIE['session_token'])){
-        header("Location: logout");
-        exit();
-    }
+    include "connNCheck.php";
 
     function Display404() : void{
         echo "404: pagina no encontrada";
@@ -60,6 +38,15 @@
     }
 
     function ShowSchedules($primary_key){
+        $dias_semana = [
+            1 => 'Lunes',
+            2 => 'Martes',
+            3 => 'Miércoles',
+            4 => 'Jueves',
+            5 => 'Viernes',
+            6 => 'Sábado',
+            7 => 'Domingo'
+        ];
         $horarios = SQL::Select(SQL::HORARIO, ["id_programa" => $primary_key], [], "dia_semana", SQL::ASCENDANT)->fetchAll(PDO::FETCH_ASSOC);
         $groups = [];
 
@@ -83,7 +70,7 @@
             $days = [];
             echo "<div><ul class='schedule-days'>";
             foreach ($group as $horario) {
-                echo "<li>" . $horario['dia_semana'] . "</li>";
+                echo "<li>" . $dias_semana[$horario['dia_semana']] . "</li>";
                 $days[] = $horario['dia_semana'];
                 // if(!isset($retra)) $retra = $horario['es_retransmision'];
                 // echo $horario['dia_semana'] . ($horario['es_retransmision'] ? " (Retrasmision) " : "" ) . "";
@@ -275,10 +262,10 @@
         rel="stylesheet">
     <link rel="stylesheet" href="../css/normalize.css">
     <!-- <link rel="stylesheet" href="../css/bem.css"> -->
-    <link rel="stylesheet" href="../css/commonStyles.css">
-    <link rel="stylesheet" href="../css/styleContent.css">
-    <link rel="stylesheet" href="../css/formStyles.css">
-    <script type="module" src="../js/utilities.js"></script>
+    <link rel="stylesheet" href="../css/commonStyles.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../css/styleContent.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../css/formStyles.css?v=<?php echo time(); ?>">
+    <script type="module" src="../js/utilities.js?v=<?php echo time(); ?>"></script>
 </head>
 
 <body>
@@ -412,17 +399,17 @@
             }
         ?>
         </div>
-        <script src="../js/tabsManager.js"></script>
+        <script src="../js/tabsManager.js?v=<?php echo time(); ?>"></script>
         <?php
         }
         // include "createForms.php";
         ?>
-        <script src="../js/contentManager.js"></script>
+        <script src="../js/contentManager.js?v=<?php echo time(); ?>"></script>
         <!-- <script src="../js/createManager.js"></script> -->
         <!-- <button onclick="AddContent('programa')">crear</button> -->
         <div id="modals_container">
         </div>
-        <script type="module" src="../js/modalsManager.js"></script>
+        <script type="module" src="../js/modalsManager.js?v=<?php echo time(); ?>"></script>
     </main>
 </body>
 
