@@ -1,31 +1,3 @@
-:root {
-    --Blanco: #fff;
-    --AzulCLaro: #3498db;
-    --VerdeClaro: #2ecc71;
-    --Rojo: #e74c3c;
-    --GrisClaro: #dfe9f3;
-    --obscuro: #333;
-    --seagreen: #2E8B57;
-    --VerdeObscuro: #006400;
-    --verdeaqua: #66CDAA;
-    --Azulligero: #ADD8E6;
-    --verdemasclaro: #4bb578;
-    --seashell: #FFF5EE;
-    --snow: #FFFAFA;
-}
-html {
-    height: 100%;
-}
-body {
-    background-size: cover;
-    background-color: var(--snow);
-    /* background: radial-gradient(circle, #E0FFFF 0%, #ADD8E6 25%, #F0F8FF 70%); */
-    font-family: Arial, Helvetica, sans-serif;
-    /* transition: all 2s ease; */
-    margin: 0;
-    padding: 0;
-}
-
 table {
     width: 90%;
     border-collapse: separate;
@@ -113,19 +85,6 @@ table tr:last-child td:first-child {
     transform: scale(1.1);
 }
 /* uaa fin */
-
-.arrow-down::after {
-    position: absolute;
-    top: 4px;
-    right: -15px;
-    content: "";
-    border: solid var(--Blanco);
-    border-width: 0 3px 3px 0;
-    display: inline-block;
-    padding: 3px;
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
-}
 
 footer {
     background-color: var(--VerdeClaro);

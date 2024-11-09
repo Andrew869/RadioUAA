@@ -2,6 +2,7 @@
 import { ShowPrograms } from './contenido.js';
 // Obtener todos los enlaces de navegación
 const navLinks = document.querySelectorAll('.nav-link');
+const mainContent = document.getElementById('content');
 
 ExecuteBehavior(window.location.pathname.split('/').pop());
 
@@ -23,7 +24,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
             .then(response => response.text())
             .then(data => {
                 // Suponiendo que tienes un div con el ID 'content' para cargar el nuevo contenido
-                document.getElementById('content').innerHTML = data;
+                mainContent.innerHTML = data;
                 
                 // Actualizar la URL sin recargar
                 window.history.pushState({path: url}, '', url);

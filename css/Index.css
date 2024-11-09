@@ -1,33 +1,3 @@
-:root {
-    --Blanco: #fff;
-    --AzulCLaro: #3498db;
-    --VerdeClaro: #2ecc71;
-    --Rojo: #e74c3c;
-    --GrisClaro: #dfe9f3;
-    --obscuro: #333;
-    --seagreen: #2E8B57;
-    --VerdeObscuro: #006400;
-    --verdeaqua: #66CDAA;
-    --Azulligero: #ADD8E6;
-    --verdemasclaro: #4bb578;
-    --seashell: #FFF5EE;
-    --snow: #FFFAFA;
-}
-
-  
-html {
-    height: 100%;
-}
-body {
-    background-color: var(--snow);
-    /* background: radial-gradient(circle, #E0FFFF 0%, #ADD8E6 25%, #F0F8FF 70%); */
-    font-family: Arial, Helvetica, sans-serif;
-    /* height: 100%; */
-    margin: 0;
-    padding: 0; 
-}
-
-
 .container{
     /* width: 100%; */
     padding: 6rem;   

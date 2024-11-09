@@ -704,7 +704,7 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
                 // })
                 // .catch(error => console.log('Error al cargar el SVG:', error));
 
-                GetSVG(divDivision ,'../resources/img/arrow-right-arrow-left-solid.svg', ["14px", "14px", "#007BFF"]);
+                GetSVG(divDivision ,'../resources/img/svg/arrow-right-arrow-left-solid.svg', ["14px", "14px", "#007BFF"]);
                 element.appendChild(divDivision);
 
                 let divAvailable = document.createElement('div');

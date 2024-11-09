@@ -18,10 +18,12 @@
         case 'quejas-sugerencias':
         case 'transparencia':
         case 'politica-de-privacidad':
-        case 'programacion':
         case 'contenido':
         case 'contacto':
             $file = "pages/$request.html";
+            break;
+        case 'programacion':
+            $file = 'php/programacion.php';
             break;
         case '':
             $file = 'pages/inicio.html';
@@ -55,13 +57,25 @@
 <body class="<?php echo ($currentTheme === 'dark' ? $currentTheme : '')?>">
     <?php 
         include 'php/main_header.php';
-        include 'php/player.php';
     ?>
 
-    <main id="content">
-        <?php
-            include($file);
-        ?>
+    <main>
+        <?php include 'php/player.php' ?>
+        <iframe 
+        src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FRadioUAA%2Fvideos%2F1095161882345068%2F&show_text=false&width=560&t=0" 
+        width="560" 
+        height="314" 
+        style="border:none;overflow:hidden" 
+        scrolling="no" 
+        frameborder="0" 
+        allowfullscreen="false" 
+        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+    </iframe>
+        <div id="content">
+            <?php
+                include($file);
+            ?>
+        </div>
     </main>
 
     <?php include 'php/main_footer.php' ?>

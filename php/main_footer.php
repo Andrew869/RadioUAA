@@ -2,10 +2,10 @@
     <a href="https://wa.me/524499121588" target="_blank" class="social-button whatsapp">
         <?php echo GetSVG('resources/img/svg/whatsapp.svg', ["24px", "24px", "white"]) ?>
     </a>
-    <a href="https://www.instagram.com/radiouaa94.5fm?igsh=ZnpsMnBrcjdjMnZ1" target="_blank" class="social-button instagram">
+    <a href="https://www.instagram.com/radio.uaa/" target="_blank" class="social-button instagram">
         <?php echo GetSVG('resources/img/svg/instagram.svg', ["24px", "24px", "white"]) ?>
     </a>
-    <a href="https://www.facebook.com/RadioUAA?mibextid=ZbWKwL" target="_blank" class="social-button facebook">
+    <a href="https://www.facebook.com/RadioUAA" target="_blank" class="social-button facebook">
         <?php echo GetSVG('resources/img/svg/facebook.svg', ["24px", "24px", "white"]) ?>
     </a>
     <a href="https://open.spotify.com/show/33OclgjRhmrjS1GaSAwXoU" target="_blank" class="social-button spotify">
@@ -18,6 +18,17 @@
         <?php echo GetSVG('resources/img/svg/app-store.svg', ["24px", "24px", "white"]) ?>
     </a>
 </div>
+
+<!-- <div class="app-promo">
+    <div class="app-promo-content">
+        <h3>¡Descarga nuestra nueva app!</h3>
+        <p>Disponible para Android y iOS</p>
+        <div class="app-links">
+            <a href="#" class="app-link android">Descargar para Android</a>
+            <a href="#" class="app-link ios">Descargar para iOS</a>
+        </div>
+    </div>
+</div> -->
 
 <div class="container-uaa">
     <a href="https://www.uaa.mx/portal/" target="_blank">
