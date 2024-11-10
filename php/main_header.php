@@ -32,7 +32,7 @@
                     <li><a href="politica-de-privacidad" class="nav-link">Políticas de privacidad</a></li>
                 </ul>
             </li>
-            <li><a href="php/programacion.php" class="nav-link">Programación</a></li>
+            <li><a href="programacion" class="nav-link">Programación</a></li>
             <li><a href="contenido" class="nav-link">Contenido</a></li>
             <li><a href="contacto" class="nav-link">Contacto</a></li>
         </ul>

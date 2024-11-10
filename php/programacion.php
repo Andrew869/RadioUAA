@@ -20,7 +20,7 @@
 
     // Consulta SQL para obtener los programas ordenados por día y hora
     $sql = "
-        SELECT p.id_programa, p.nombre_programa, p.url_img, h.dia_semana, h.hora_inicio, h.hora_fin
+        SELECT p.id_programa, p.nombre_programa, p.url_img, h.dia_semana, h.hora_inicio, h.hora_fin, h.es_retransmision
         FROM programa p
         INNER JOIN horario h ON p.id_programa = h.id_programa
         ORDER BY h.dia_semana, h.hora_inicio;
@@ -36,7 +36,7 @@
     // Arreglo donde almacenaremos los programas por día
     $programs = array();
     
-    // $prevFin = "00:00:00";
+    $prevFin = "00:00:00";
     // $prevDay = "";
 
     // Iterar sobre los resultados y organizar por día
@@ -51,16 +51,17 @@
         $inicio = $row['hora_inicio'];
         $fin = $row['hora_fin'];
 
-        // if($prevFin !== $inicio){
-        //     $programa = array(
-        //         'id_programa' => "0",
-        //         'nombre_programa' => "void",
-        //         'hora_inicio' => "$prevFin",
-        //         'hora_fin' => $inicio,
-        //         'color' => "#fff"
-        //     );
-        //     $programs[$dia][] = $programa;
-        // }
+        if($prevFin !== $inicio){
+            $programa = array(
+                'id_programa' => "0",
+                'nombre_programa' => "void",
+                'url_img' => "",
+                'hora_inicio' => "$prevFin",
+                'hora_fin' => $inicio,
+                'es_retransmision' => "0"
+            );
+            $programs[$dia][] = $programa;
+        }
 
         $programa = array(
             'id_programa' => $row['id_programa'],
@@ -68,6 +69,7 @@
             'url_img' => $row['url_img'],
             'hora_inicio' => $row['hora_inicio'],
             'hora_fin' => $row['hora_fin'],
+            'es_retransmision' => $row['es_retransmision']
             // 'color' => GetHexa()
         );
     
@@ -77,7 +79,7 @@
         }
         $programs[$dia][] = $programa;
 
-        // $prevFin = $fin;
+        $prevFin = $fin;
     }
 
     // $colores = [
@@ -101,57 +103,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendario de Horarios</title>
     <style>
-        *{
-            box-sizing: border-box;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            /* background-color: #f2f2f2; */
-            margin: 0;
-            padding: 20px;
-        }
-        table {
-            width: 80%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        th, td {
-            border: solid #ddd;
-            border-width: 1px;
-            padding: 0;
-            margin: 0;
-        }
-        tr:nth-child(even) {
-              background-color: #f2f2f2;
-        }
-        th, td {
-            /* padding: 8px; */
-            text-align: center;
-            width: 12.5%;
-        }
-        th {
-            background-color: #027543;
-            color: white;
-            padding: 10px 0;
-        }
         td {
             /* background-color: #fff; */
             font-size: <?php echo $hourSize . "px" ?>;
             height: <?php echo $hourHeight . "px" ?>
-        }
-        td:hover {
-            /* background-color: #f2f2f2; */
-        }
-        .time-column {
-            /* background-color: #f2f2f2; */
-            font-weight: bold;
-        }
-        hr {
-            margin-top: 20px;
-            margin-bottom: 20px;
-            /* border: 0; */
-            /* border-top: 1px solid #ccc; */
         }
         .pro{
             height: <?php echo $contentHeight . "px" ?>;
@@ -161,7 +116,7 @@
             left: 0;
             position: absolute;
             border: solid #ddd;
-            border-width: 1px 0 1px 0;
+            border-width: 0 0 1px 0;
             /* border-radius: 6px; */
             width: 100%;
             font-size: .8rem;
@@ -170,36 +125,59 @@
             display: flex;
             justify-content: center;
             align-items: end;
-
+            overflow: hidden;
+            cursor: pointer;
         }
-        /* .pro > div::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
+
+        .pro > div img{
             width: 100%;
-            height: 40%;
-        } */
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            position: absolute;
+            transition: transform 0.2s ease, object-fit 0.2s ease;
+        }
+        .pro > div:hover img {
+            transform: scale(1.2);
+            /* object-fit: contain; */
+        }
+
+        .pro > div:last-child {
+            border-width: 0 0 0 0;
+            /* border-radius: 0 0 12px 0; */
+        }
         .pro > div:hover{
-            background-color: #f2f2f2;
+            /* background-color: #f2f2f2; */
         }
         .pro > div:nth-child(odd) {
-            background-color: #F9F9F9;
+            /* background-color: #F9F9F9; */
         }
         .program-info {
             color: white;
             width: 100%;
-            height: 45%;
+            height: 50%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             background: rgb(0, 0, 0); /* Fallback color */
             background: rgba(0, 0, 0, 0.8);
+            position: absolute;
             /* text-align: left; */
             /* border-radius: 0 0 6px 6px; */
         }
-        .program-info > div {
+        .tag-info {
+            color: white;
+            font-size: 0.8rem;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background-color: #f39c12;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+        .program-info > div:not(:last-child) {
             width: 100%;
             white-space: nowrap; /* Evita el salto de línea */
             overflow: hidden; /* Oculta el texto que se desborda */
@@ -216,24 +194,24 @@
             height: 40px;
         } */
         <?php
+            $cssSelectors = [];
             foreach ($programs as $day) {
                 foreach ($day as $program) {
                     $id_programa = $program['id_programa'];
-                    $url = $program['url_img'];
+                    // $url = $program['url_img'];
                     $inicio = ToMinutes($program['hora_inicio']);
                     $fin = ToMinutes($program['hora_fin']);
-                    if($inicio > $fin && $fin === 0)
-                        $total = 60*24 - $inicio;
-                    else
-                        $total = $fin - $inicio;
-                    $height = $total * $hourHeight / 60;
-                    $height .= "px";
-                    $yPos = $inicio * $contentHeight / 1440;
-                    $yPos .= "px";
-                    // $color = $program['color'];
-                    // echo ".i$id_programa". '_' . $inicio . '_' . $fin . "{ height: $height }";
-                    echo ".i$id_programa". '_' . $inicio . '_' . $fin . "{ background-image: url(../$url); height: $height; top: $yPos }";
-                    // echo ".i$id_programa". '_' . $inicio . '_' . $fin . "{ background-color: $color; height: $height; top: $yPos }";
+                    $cssSelector = ".i$id_programa" . '_' . $inicio . '_' . $fin;
+                    if (!in_array($cssSelector, $cssSelectors)) {
+                        // Si no ha sido impreso, imprimir y agregar al arreglo
+                        $total = ($inicio > $fin && $fin === 0) ? 60 * 24 - $inicio : $fin - $inicio;
+                        $height = $total * $hourHeight / 60 . "px";
+                        $yPos = $inicio * $contentHeight / 1440 . "px";
+                        
+                        echo "$cssSelector { height: $height; top: $yPos; }";
+                        
+                        $cssSelectors[] = $cssSelector; // Agregar el selector al arreglo
+                    }
                 }
             }
         ?>
@@ -244,7 +222,7 @@
     <table>
         <thead>
         <tr>
-                <th>Horarios</th>
+                <th>Horas</th>
                 <th class="day-column">Lunes</th>
                 <th class="day-column">Martes</th>
                 <th class="day-column">Miércoles</th>
@@ -263,16 +241,22 @@
                         echo "<td rowspan='24' class='pro'>";
                         foreach ($day as $key => $program) {
                             $id_programa = $program['id_programa'];
+                            $urlImg = $program['url_img'];
                             $h_inicio = date("H:i", strtotime($program['hora_inicio']));
                             $h_fin = date("H:i", strtotime($program['hora_fin']));
                             $inicio = ToMinutes($program['hora_inicio']);
                             $fin = ToMinutes($program['hora_fin']);
                             // echo "<div class='a" . $inicio . '_' . $fin . "'>$h_inicio - $h_fin</div>";
-                            echo "<div class='i$id_programa" . '_' . $inicio . '_' . $fin . "'>
-                            <div class='program-info'>
-                            <div>" . htmlspecialchars($program['nombre_programa']) . "</div>
-                            <div>De $h_inicio a $h_fin</div>
-                            </div></div>";
+                            echo "<div class='i$id_programa" . '_' . $inicio . '_' . $fin . "'>";
+                            if($id_programa){
+                                echo "<img src='../$urlImg.300' alt='void'>";
+                                echo ($program['es_retransmision']? "<div class='tag-info'>Retransmision</div>" : '' );
+                                echo "<div class='program-info'>";
+                                    echo "<div>" . htmlspecialchars($program['nombre_programa']) . "</div>";
+                                    echo "<div>De $h_inicio a $h_fin</div>";
+                                echo"</div>";
+                            }
+                            echo"</div>";
                         }
                         echo "</td>";
                     }

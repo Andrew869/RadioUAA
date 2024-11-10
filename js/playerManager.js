@@ -48,12 +48,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const savedVolume = localStorage.getItem('audioVolume');
     if (savedVolume !== null) {
         volumeSlider.value = savedVolume;
+        const value = (volumeSlider.value - volumeSlider.min) / (volumeSlider.max - volumeSlider.min) * 100;
+        volumeSlider.style.background = `linear-gradient(to right, #4CAF50 0%, #4CAF50 ${value}%, #ddd ${value}%, #ddd 100%)`;
         audio.volume = savedVolume;
     }
 });
 // debe esperar a que toda la pagina este completamente cargada
 window.addEventListener('load', function() {
-    console.log('La página se ha cargado completamente.');
+    // console.log('La página se ha cargado completamente.');
 });
 
 // Muestra el indicador de carga mientras el audio se está cargando
@@ -105,10 +107,13 @@ syncBtn.addEventListener('click', () => {
 
 // Control de volumen
 volumeSlider.addEventListener('input', (e) => {
+    const value = (volumeSlider.value - volumeSlider.min) / (volumeSlider.max - volumeSlider.min) * 100;
+    volumeSlider.style.background = `linear-gradient(to right, #4CAF50 0%, #4CAF50 ${value}%, #ddd ${value}%, #ddd 100%)`;
+    console.log(value);
     audio.volume = e.target.value;
     localStorage.setItem('audioVolume', audio.volume);
     if(localStorage.getItem('audioVolume') !== null){
-        console.log("volumen saved");
+        // console.log("volumen saved");
     }
 });
 
@@ -133,12 +138,12 @@ audio.addEventListener('loadedmetadata', () => {
 
 audio.addEventListener('play', () => {
     // playPauseIcon.className = 'fa-solid fa-pause';
-    GetSVG(playPauseBtn, "../resources/img/svg/pause.svg", ["18px", "18px", "white"]);
+    GetSVG(playPauseBtn, "../resources/img/svg/pause.svg", ["24px", "24px", "black"]);
     // console.log("has played");
 });
 
 audio.addEventListener('pause', () => {
     // playPauseIcon.className = 'fa-solid fa-play';
-    GetSVG(playPauseBtn, "../resources/img/svg/play.svg", ["18px", "18px", "white"]);
+    GetSVG(playPauseBtn, "../resources/img/svg/play.svg", ["24px", "24px", "black"]);
     // console.log("has paused");
 });

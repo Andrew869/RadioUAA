@@ -19,17 +19,6 @@
     </a>
 </div>
 
-<!-- <div class="app-promo">
-    <div class="app-promo-content">
-        <h3>¡Descarga nuestra nueva app!</h3>
-        <p>Disponible para Android y iOS</p>
-        <div class="app-links">
-            <a href="#" class="app-link android">Descargar para Android</a>
-            <a href="#" class="app-link ios">Descargar para iOS</a>
-        </div>
-    </div>
-</div> -->
-
 <div class="container-uaa">
     <a href="https://www.uaa.mx/portal/" target="_blank">
         <img src="resources/img/UAA-LOGO.png" alt="Logo UAA" class="logo-uaa" />

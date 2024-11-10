@@ -12,7 +12,7 @@
         ],
         'light' => [
             'url' => 'resources/img/svg/moon.svg',
-            'styles' => ["18px", "18px", "black"]
+            'styles' => ["18px", "18px", "white"]
         ]
     ];
 

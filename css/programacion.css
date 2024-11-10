@@ -1,55 +1,92 @@
+table td, table th {
+    /* border: 1px solid #ddd; */
+    border: 1px solid #ddd;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    width: 12.5%;
+}
+thead{
+    position: sticky;
+    top: 60px;
+    z-index: 1;
+}
+tr:nth-child(even) {
+      /* background-color: #f2f2f2; */
+}
+th, td {
+    /* padding: 8px; */
+}
+th {
+    background-color: #027543;
+    color: white;
+    padding: 10px 0;
+}
+
+.time-column {
+    /* background-color: #f2f2f2; */
+    font-weight: bold;
+}
+hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    /* border: 0; */
+    /* border-top: 1px solid #ccc; */
+}
+
 table {
     width: 90%;
-    border-collapse: separate;
-    margin: 20px 0;
-    margin-left: 80px;
-    border-spacing: 0;
+    border-collapse: collapse;
+    margin: auto;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
-    overflow: hidden;
+    /* border-radius: 12px; */
+    /* border-radius: 12px 12px 0 0; */
+    /* overflow: hidden; */
 }
 thead th{
-    background-color:#4caf50;
+    background-color:#027543;
     color: white;
     padding: 12px;
     font-weight: bold;
     text-transform: uppercase;
-    border: none;
-
 }
 
-tbody td, thead th{
-    border-bottom: 1px solid #dddddd;
-    padding: 12px;
-    text-align: center;
-    transition: background-color 0.3s ease;
-    }
-
-tbody td{
-    background-color: #fff;
-}
-tbody tr:nth-child(even) td{
-    background-color: #f9f9f9;
-}
-tbody td:hover{
-    background-color: #e0f7fa;
-    cursor: pointer;
-}
-td:first-child{
-    background-color: #f2f2f2;
-    font-weight: bold;
-    border-right: 1px solid #dddddd;
-}
-
-tbody td:first-child:hover {
-    background-color: #128C7E; 
-}
-table th:first-child {
+table thead > tr:first-child th:first-child{ /*top-left corner*/
+    border-width: 0 1px 1px 0;
     border-radius: 12px 0 0 0;
 }
 
-table tr:last-child td:first-child {
+table thead > tr:first-child th:not(:first-child):not(:last-child) {
+    border-width: 0 1px 1px 1px;
+}
+
+table thead > tr:first-child th:last-child{ /*top-right corner*/
+    border-width: 0 0 1px 1px;
+    border-radius: 0 12px 0 0;
+}
+
+table tbody > tr:last-child td:first-child{ /*bottom-left corner*/
+    border-width: 1px 1px 0 0;
     border-radius: 0 0 0 12px;
+}
+
+table tbody > tr:first-child td:last-child { /*bottom-right corner*/
+    /* border-width: 0 0 0 0; */
+    overflow: hidden;
+    border-radius: 0 0 12px 0;
+}
+
+table tbody > tr:not(:last-child) td:first-child {
+    border-width: 1px 1px 1px 0;
+    /* background-color: teal; */
+}
+
+table tbody > tr td:first-child{
+    font-weight: bold;
+}
+
+table tbody > tr:first-child td:last-child{
+    border-width: 0;
 }
 
 
@@ -93,4 +130,4 @@ footer {
     font-weight: bold;
     /* font-size: auto; */
     /* padding-left: 13%; */
-} 
+}

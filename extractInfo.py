@@ -1,5 +1,6 @@
 import requests # Para hacer solicitudes a una pagina web
-from bs4 import BeautifulSoup # Para obtener el ocntenido de una pagina web
+from bs4 import BeautifulSoup # Para obtener el contenido de una pagina web
+from PIL import Image # Para modificar imagenes
 import time # Para dormir el proceso
 import re # Para usar regex
 import os # Para comprobar si un archivo existe
@@ -36,6 +37,34 @@ def download_image(url, pathImg):
     else:
         print(f"Fallo al descargar la imagen después de {MAX_RETRIES} intentos.")
         return False
+    
+def resize_image_to_webp(input_image_path, output_image_path, target_width):
+    try:
+        # Abrir la imagen
+        img = Image.open(input_image_path)
+        original_width, original_height = img.size
+
+        # Verificar si la imagen ya tiene un ancho menor o igual al objetivo
+        if original_width <= target_width:
+            target_width = original_width
+            target_height = original_height
+        else:
+            # Calcular el nuevo alto manteniendo el aspect ratio original
+            target_height = int((original_height / original_width) * target_width)
+            
+
+        # Redimensionar la imagen
+        resized_img = img.resize((target_width, target_height), Image.LANCZOS)
+
+        # Guardar la imagen redimensionada en formato WEBP
+        resized_img.save(output_image_path, 'WEBP')
+
+        print(f"Imagen redimensionada y convertida a WEBP: {output_image_path}")
+
+    except IOError:
+        print(f"No se pudo abrir la imagen: {input_image_path}")
+    except Exception as e:
+        print(f"Error al procesar la imagen: {e}")
 
 # URL base
 url_base = 'https://radio.uaa.mx/contenidos/'
@@ -186,10 +215,16 @@ if response.status_code == 200:
                     url = programa['url_img']
 
                 nombre_archivo, extension = os.path.splitext(url)
-                tmpPath = pathImg + extension
-                alreadyExist = os.path.exists(tmpPath)
+                # outputPath = pathImg + extension
+                outputPath = pathImg
+                lowResWidth = 300
+                # lowResPath = pathImg + str(lowResWidth) + ".webp"
+                lowResPath = pathImg + '.' + str(lowResWidth)
+                alreadyExist = os.path.exists(outputPath)
                 if not alreadyExist:
-                    imgFlag = download_image(url, tmpPath)
+                    imgFlag = download_image(url, outputPath)
+                    resize_image_to_webp(outputPath, lowResPath, lowResWidth)
+
                 # if not os.path.exists(pathImg):
                 #     response = requests.get(url)
                 #     if response.status_code == 200:
@@ -199,13 +234,15 @@ if response.status_code == 200:
             if not imgFlag and not alreadyExist:
                 defaultImgPath = 'resources/img/programa_default.jpg'
                 nombre_archivo, extension = os.path.splitext(defaultImgPath)
-                tmpPath = pathImg + extension
-                # tmpPath += extension
-                shutil.copy(defaultImgPath, tmpPath)
+                outputPath = pathImg
+                lowResWidth = 300
+                lowResPath = pathImg + '.' + str(lowResWidth)
+                shutil.copy(defaultImgPath, outputPath)
+                resize_image_to_webp(outputPath, lowResPath, lowResWidth)
             
 
 
-            insert_programa = f"INSERT INTO programa (nombre_programa, url_img, descripcion) VALUES ('{programa['nombre']}', '{tmpPath}', '{programa['descripcion']}');"
+            insert_programa = f"INSERT INTO programa (nombre_programa, url_img, descripcion) VALUES ('{programa['nombre']}', '{outputPath}', '{programa['descripcion']}');"
             archivo.write(insert_programa + "\n")
 
             if programa.get('horarios'):
