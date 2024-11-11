@@ -6,6 +6,8 @@
 <title>Tabla con encabezado sticky</title>
 <style>
 #customRange {
+    position: sticky;
+    bottom: 20px;
     width: 100%;
     height: 8px;
     -webkit-appearance: none;
@@ -13,7 +15,7 @@
     background: linear-gradient(to right, #4CAF50 0%, #4CAF50 10%, #ddd 20%, #ddd 100%);
     border-radius: 5px;
     outline: none;
-    position: relative;
+    
 }
 
 #customRange::-webkit-slider-thumb {
@@ -48,11 +50,22 @@
     z-index: 1;
 }
 
+main,footer{
+    width: 100%;
+    height: 9000px;
+    background-color: teal;
+}
 </style>
 </head>
 <body>
+
+<main>
+    
+</main>
+
 <input type="range" id="customRange"min="0" max="1" step="0.01" value="1"/>
+<footer>
 
-
+</footer>
 </body>
 </html>

@@ -66,14 +66,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"> -->
     <title>Radio UAA</title>
+    <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/styles.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/Contacto.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/Contenido.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/Defensoria.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/Index.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/Nosotros.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/headerStyles.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/playerStyles.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/contacto.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/contenido.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/defensoria.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/inicio.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/nosotros.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/programacion.css?v=<?php echo time(); ?>">
 </head>
 <body class="<?php echo ($currentTheme === 'dark' ? $currentTheme : '')?>">

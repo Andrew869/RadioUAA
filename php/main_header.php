@@ -1,16 +1,16 @@
 <header>
     <nav class="navbar">
+        <div class="menu-icon" onclick="myFunction(this)">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+        </div>
+
         <div class="logo">
             <a class="nav-link" href="./">
                 <!-- <img src="resources/img/logo-radio-uaa-blanco.png" alt="Radio UAA Logo"> -->
                 <?php echo GetSVG('resources/img/svg/logoRadioUAA.svg', ["40px", "40px", "white"]) ?>
             </a>
-        </div>
-        <div id="cont-bars-search">
-            <input type="text" id="inputSearch" placeholder="Buscar..." aria-label="Search">
-            <div class="icon search-icon">
-                <?php echo GetSVG('resources/img/svg/search.svg', ["18px", "18px", "black"]) ?>
-            </div>
         </div>
         <ul class="nav-links" id="nav-links">
             <li><a href="inicio" class="nav-link">Inicio</a></li>
@@ -37,6 +37,17 @@
             <li><a href="contacto" class="nav-link">Contacto</a></li>
         </ul>
 
+        <div class="cont-bars-search">
+            <input type="text" id="inputSearch" placeholder="Buscar..." aria-label="Search">
+            <div class="icon search-icon">
+                <?php echo GetSVG('resources/img/svg/search.svg', ["18px", "18px", "black"]) ?>
+            </div>
+        </div>
+
+        <div class="icon button-search">
+            <?php echo GetSVG('resources/img/svg/search.svg', ["18px", "18px", "white"]) ?>
+        </div>
+
         <!-- Botón Modo Oscuro -->
         <div class="dark-mode-toggle">
             <label for="toggle" id="label_toggle" class="icon">
@@ -45,8 +56,6 @@
             </label>
             <input type="checkbox" id="toggle" aria-hidden="true" <?php echo ($currentTheme === 'dark' ? 'checked' : ''); ?>>
         </div>
-
-        <!-- Search Icon -->
         
         <!-- Search Suggestions -->
         <ul id="box-search">
