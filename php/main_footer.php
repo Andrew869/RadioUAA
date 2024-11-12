@@ -2,10 +2,10 @@
     <a href="https://wa.me/524499121588" target="_blank" class="social-button whatsapp">
         <?php echo GetSVG('resources/img/svg/whatsapp.svg', ["24px", "24px", "white"]) ?>
     </a>
-    <a href="https://www.instagram.com/radiouaa94.5fm?igsh=ZnpsMnBrcjdjMnZ1" target="_blank" class="social-button instagram">
+    <a href="https://www.instagram.com/radio.uaa/" target="_blank" class="social-button instagram">
         <?php echo GetSVG('resources/img/svg/instagram.svg', ["24px", "24px", "white"]) ?>
     </a>
-    <a href="https://www.facebook.com/RadioUAA?mibextid=ZbWKwL" target="_blank" class="social-button facebook">
+    <a href="https://www.facebook.com/RadioUAA" target="_blank" class="social-button facebook">
         <?php echo GetSVG('resources/img/svg/facebook.svg', ["24px", "24px", "white"]) ?>
     </a>
     <a href="https://open.spotify.com/show/33OclgjRhmrjS1GaSAwXoU" target="_blank" class="social-button spotify">

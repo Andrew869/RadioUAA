@@ -9,7 +9,7 @@ const applyTheme = (isDark) => {
     let theme = (isDark ? 'dark' : 'light');
     const iconProperties = {
         dark: {url: '../resources/img/svg/sun.svg', styles: ["18px", "18px", "white"]},
-        light: {url: '../resources/img/svg/moon.svg', styles: ["18px", "18px", "black"]}
+        light: {url: '../resources/img/svg/moon.svg', styles: ["18px", "18px", "white"]}
     }
 
     // GetSVG(label_toggle, (isDark ? 'resources/img/sun.svg' : 'resources/img/moon.svg'), ["18px", "18px", "yellow"]);

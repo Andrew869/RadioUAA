@@ -256,7 +256,15 @@
 
     function ToMinutes($time) {
         // Convierte el formato HH:MM en minutos totales desde la medianoche
-        list($hours, $minutes) = explode(':', $time);
+        list($hours, $minutes, $seconds) = explode(':', $time);
         return ($hours * 60) + $minutes;
+    }
+
+    function ToHours($minutes) {
+        $hours = floor($minutes / 60);
+        $mins = $minutes % 60;
+        $hours = $hours < 10 ? '0' . $hours : $hours;
+        $mins = $mins < 10 ? '0' . $mins : $mins;
+        return $hours . ':' . $mins;
     }
 ?>

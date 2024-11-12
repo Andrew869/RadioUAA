@@ -7,7 +7,6 @@
     //     exit();
     // }
 
-    include "db_connect.php";
     include "utilities.php";
 
     // $db_token = SQL::Select(SQL::USER, ["id_user" => $_SESSION['id_user']], ["session_token"])->fetchColumn();
@@ -29,11 +28,13 @@
         $args = explode(',', $_POST[$fun]);
         switch ($fun) {
             case 'GetEnumValues':
+                include "db_connect.php";
                 $output = SQL::GetEnumValues($args[0], $args[1]);
                 echo json_encode($output);
                 break;
             case 'GetList':
                 {
+                    include "db_connect.php";
                     if($args[0] === SQL::PRESENTADOR);
                     switch ($args[0]) {
                         case SQL::PRESENTADOR:

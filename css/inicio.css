@@ -1,33 +1,3 @@
-:root {
-    --Blanco: #fff;
-    --AzulCLaro: #3498db;
-    --VerdeClaro: #2ecc71;
-    --Rojo: #e74c3c;
-    --GrisClaro: #dfe9f3;
-    --obscuro: #333;
-    --seagreen: #2E8B57;
-    --VerdeObscuro: #006400;
-    --verdeaqua: #66CDAA;
-    --Azulligero: #ADD8E6;
-    --verdemasclaro: #4bb578;
-    --seashell: #FFF5EE;
-    --snow: #FFFAFA;
-}
-
-  
-html {
-    height: 100%;
-}
-body {
-    background-color: var(--snow);
-    /* background: radial-gradient(circle, #E0FFFF 0%, #ADD8E6 25%, #F0F8FF 70%); */
-    font-family: Arial, Helvetica, sans-serif;
-    /* height: 100%; */
-    margin: 0;
-    padding: 0; 
-}
-
-
 .container{
     /* width: 100%; */
     padding: 6rem;   
@@ -75,31 +45,7 @@ body {
     100% { transform: translateX(-55%); } /* Desplazar todo el contenido del carrusel */
 }
 
-.container-radio-player {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* min-height: 100vh; */
-    padding: 20px;
-}
-
-div.radio-player {
-    padding: 3rem;   
-    background: rgba(0, 0, 0, 0.8);
-    padding: 25px;
-    border-radius: 15px;
-    color: #fff;
-    width: 320px;
-    text-align: center;
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
-    transition: transform 0.3s ease;
-}
-
-div.radio-player:hover {
-    /* transform: translateY(-10px); */
-    transform: scale(1.1);
-}
-.station-info h2 {
+/* .station-info h2 {
     margin: 0;
     font-size: 26px;
     font-weight: 700;
@@ -114,19 +60,12 @@ div.radio-player:hover {
     letter-spacing: 0.5px;
 }
 
-.controls button {
-    font-size: 16px;
-    background: linear-gradient(145deg, #FF416C, #FF4B2B);
-    border: none;
-    color: #fff;
-    width: 55px;
-    height: 55px;
-    margin: 5px;
-    border-radius: 50%;
-    box-shadow: 0 5px 10px rgba(255, 75, 43, 0.5);
-    transition: background 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
+.controls{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 
 .controls button:hover {
     background: linear-gradient(145deg, #FFD200, #F7971E);
@@ -188,7 +127,7 @@ div.radio-player:hover {
     width: 55px;
     text-align: center;
     color: #E9E9E9;
-}
+} */
 
 
 @keyframes colorChange {
