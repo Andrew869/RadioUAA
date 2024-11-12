@@ -30,7 +30,7 @@ body {
 }
 
 main {
-    margin-top: 60px;
+    margin-top: calc(60px + 60px);
 }
 
 .dark {
@@ -163,3 +163,10 @@ li {
     background-color: #ffc107;
     margin-left: 10px;
 } */
+
+
+@media (max-width: 768px){
+    main{
+        margin-top: 70px;
+    }
+}

@@ -2,8 +2,11 @@
 import { ShowPrograms } from './contenido.js';
 import { IsSticky } from './cal.js';
 // Obtener todos los enlaces de navegación
-const navLinks = document.querySelectorAll('.nav-link');
+// const navLinks = document.querySelectorAll('.nav-link');
 const mainContent = document.getElementById('content');
+const options = document.querySelector('.nav-links > ul');
+const menuIcon = document.getElementById('menu-icon');
+const navLinks = document.querySelector('.nav-links');
 
 ExecuteBehavior(window.location.pathname.split('/').pop());
 
@@ -112,6 +115,24 @@ function GetURLFile(url){
     }
     return url;
 }
+
+menuIcon.addEventListener('click', function(e){
+    menuIcon.classList.toggle("change");
+    navLinks.classList.toggle("show");
+    options.classList.toggle('show-options');
+});
+
+window.addEventListener('click', function(e){
+    if(e.target === navLinks){
+        menuIcon.classList.remove("change");
+        navLinks.classList.remove("show");
+        options.classList.remove('show-options');
+    }
+});
+
+// function myFunction(x) {
+//     x.classList.toggle("change");
+// } 
 
 // window.addEventListener('beforeunload', function (event) {
 //     // Puedes mostrar un mensaje personalizado, pero la mayoría de los navegadores no lo mostrarán.

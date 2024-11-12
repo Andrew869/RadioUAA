@@ -1,41 +1,37 @@
 <header>
     <nav class="navbar">
-        <div class="menu-icon" onclick="myFunction(this)">
-            <div class="bar1"></div>
-            <div class="bar2"></div>
-            <div class="bar3"></div>
-        </div>
-
         <div class="logo">
-            <a class="nav-link" href="./">
+            <a href="./">
                 <!-- <img src="resources/img/logo-radio-uaa-blanco.png" alt="Radio UAA Logo"> -->
                 <?php echo GetSVG('resources/img/svg/logoRadioUAA.svg', ["40px", "40px", "white"]) ?>
             </a>
         </div>
-        <ul class="nav-links" id="nav-links">
-            <li><a href="inicio" class="nav-link">Inicio</a></li>
-            <li class="dropdown">
-                <a class="nav-link arrow-down">Nosotros</a>
-                <ul class="dropdown-content">
-                    <li><a href="nosotros" class="nav-link">Acerca de Radio UAA</a></li>
-                    <li><a href="preguntas-frecuentes" class="nav-link">Preguntas Frecuentes</a></li>
-                    <li><a href="consejo-ciudadano" class="nav-link">Consejo Ciudadano</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a class="nav-link arrow-down">Defensoría</a>
-                <ul class="dropdown-content">
-                    <li><a href="defensoria-de-las-audiencias" class="nav-link">Defensoría de las Audiencias</a></li>
-                    <li><a href="derechos-de-la-audiencia" class="nav-link">Derechos de las Audiencias</a></li>
-                    <li><a href="quejas-sugerencias" class="nav-link">Quejas y Sugerencias</a></li>
-                    <li><a href="transparencia" class="nav-link">Transparencia</a></li>
-                    <li><a href="politica-de-privacidad" class="nav-link">Políticas de privacidad</a></li>
-                </ul>
-            </li>
-            <li><a href="programacion" class="nav-link">Programación</a></li>
-            <li><a href="contenido" class="nav-link">Contenido</a></li>
-            <li><a href="contacto" class="nav-link">Contacto</a></li>
-        </ul>
+        <div class="nav-links">
+            <ul>
+                <li><a href="inicio" class="nav-link">Inicio</a></li>
+                <li class="dropdown">
+                    <a class="nav-link arrow-down">Nosotros</a>
+                    <ul class="dropdown-content">
+                        <li><a href="nosotros" class="nav-link">Acerca de Radio UAA</a></li>
+                        <li><a href="preguntas-frecuentes" class="nav-link">Preguntas Frecuentes</a></li>
+                        <li><a href="consejo-ciudadano" class="nav-link">Consejo Ciudadano</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="nav-link arrow-down">Defensoría</a>
+                    <ul class="dropdown-content">
+                        <li><a href="defensoria-de-las-audiencias" class="nav-link">Defensoría de las Audiencias</a></li>
+                        <li><a href="derechos-de-la-audiencia" class="nav-link">Derechos de las Audiencias</a></li>
+                        <li><a href="quejas-sugerencias" class="nav-link">Quejas y Sugerencias</a></li>
+                        <li><a href="transparencia" class="nav-link">Transparencia</a></li>
+                        <li><a href="politica-de-privacidad" class="nav-link">Políticas de privacidad</a></li>
+                    </ul>
+                </li>
+                <li><a href="programacion" class="nav-link">Programación</a></li>
+                <li><a href="contenido" class="nav-link">Contenido</a></li>
+                <li><a href="contacto" class="nav-link">Contacto</a></li>
+            </ul>
+        </div>
 
         <div class="cont-bars-search">
             <input type="text" id="inputSearch" placeholder="Buscar..." aria-label="Search">
@@ -55,6 +51,11 @@
                 <!-- <i id="theme-icon" class="fa-solid fa-moon"></i> -->
             </label>
             <input type="checkbox" id="toggle" aria-hidden="true" <?php echo ($currentTheme === 'dark' ? 'checked' : ''); ?>>
+        </div>
+        <div id="menu-icon">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
         </div>
         
         <!-- Search Suggestions -->

@@ -218,7 +218,7 @@
     </style>
 </head>
 <body>
-<div>
+<div class="table-wrap">
     <table>
         <thead>
         <tr>
