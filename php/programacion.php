@@ -218,7 +218,7 @@
     </style>
 </head>
 <body>
-<div class="table-wrap">
+<div class="table-container">
     <table>
         <thead>
         <tr>
@@ -273,7 +273,5 @@
         </tbody>
     </table>
 </div>
-<hr>
-
 </body>
 </html>

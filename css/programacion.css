@@ -1,14 +1,16 @@
-.table-wrap{
+.table-container{
     width: 90%;
-    /* height: calc(100vh - (130px + 200px)); */
+    height: calc(100vh - (120px + 100px));
     margin: auto;
     overflow: auto;
-    border-radius: 12px;
+    border-radius: 12px 0 0 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 table td, table th {
     /* border: 1px solid #ddd; */
-    border: 1px solid #ddd;
+    border: solid #ddd;
+    border-width: 0 1px 0 1px;
     padding: 0;
     margin: 0;
     text-align: center;
@@ -54,7 +56,6 @@ table {
     width: 100%;
     border-collapse: collapse;
     /* margin: auto; */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     /* border-radius: 12px; */
     /* border-radius: 12px 12px 0 0; */
     /* overflow: hidden; */
@@ -78,22 +79,22 @@ table thead > tr:first-child th:not(:first-child):not(:last-child) {
 
 table thead > tr:first-child th:last-child{ /*top-right corner*/
     border-width: 0 0 1px 1px;
-    border-radius: 0 12px 0 0;
+    /* border-radius: 0 12px 0 0; */
 }
 
 table tbody > tr:last-child td:first-child{ /*bottom-left corner*/
-    border-width: 1px 1px 0 0;
+    border-width: 1px 0 0 0;
     border-radius: 0 0 0 12px;
 }
 
 table tbody > tr:first-child td:last-child { /*bottom-right corner*/
     /* border-width: 0 0 0 0; */
     overflow: hidden;
-    border-radius: 0 0 12px 0;
+    /* border-radius: 0 0 12px 0; */
 }
 
 table tbody > tr:not(:last-child) td:first-child {
-    border-width: 1px 1px 1px 0;
+    border-width: 1px 0 1px 0;
     /* background-color: teal; */
 }
 
@@ -109,8 +110,8 @@ table tbody > tr:first-child td:last-child{
     .table-wrap {
         height: calc(100vh - (80px + 200px));
     }
-    /* table td, table th {
-        background-color: red;
-        width: 500px;
-    } */
+    table td, table th {
+        /* background-color: red; */
+        width: 20%;
+    }
 }

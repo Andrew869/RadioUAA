@@ -1,6 +1,6 @@
 // Single Page Application (SPA)!!!!
 import { ShowPrograms } from './contenido.js';
-import { IsSticky } from './cal.js';
+// import { IsSticky } from './cal.js';
 // Obtener todos los enlaces de navegación
 // const navLinks = document.querySelectorAll('.nav-link');
 const mainContent = document.getElementById('content');
@@ -34,6 +34,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
             .then(response => response.text())
             .then(data => {
                 // Suponiendo que tienes un div con el ID 'content' para cargar el nuevo contenido
+                window.scrollTo(0, 0);
                 mainContent.innerHTML = data;
                 
                 // Actualizar la URL sin recargar
@@ -66,6 +67,7 @@ window.addEventListener('popstate', function(event) {
     })
         .then(response => response.text())
         .then(data => {
+            window.scrollTo(0, 0);
             document.getElementById('content').innerHTML = data;
             ExecuteBehavior(displayedUrl.split('/').pop());
         })
@@ -77,9 +79,9 @@ function ExecuteBehavior(request){
         case 'contenido':
             ShowPrograms();       
             break;
-        case 'programacion':
-            IsSticky();
-            break;
+        // case 'programacion':
+        //     IsSticky();
+        //     break;
         default:
             break;
     }
@@ -118,14 +120,15 @@ function GetURLFile(url){
 
 menuIcon.addEventListener('click', function(e){
     menuIcon.classList.toggle("change");
-    navLinks.classList.toggle("show");
+    navLinks.classList.toggle("show-navlinks");
     options.classList.toggle('show-options');
 });
 
 window.addEventListener('click', function(e){
-    if(e.target === navLinks){
+    const element = e.target;
+    if(element === navLinks || (element.classList.contains('nav-link') && !element.classList.contains('arrow-down'))){
         menuIcon.classList.remove("change");
-        navLinks.classList.remove("show");
+        navLinks.classList.remove("show-navlinks");
         options.classList.remove('show-options');
     }
 });

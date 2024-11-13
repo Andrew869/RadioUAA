@@ -1,6 +1,15 @@
 <?php
     include "db_connect.php";
 
+    $carpeta = '../';
+
+    if (is_dir($carpeta)) {
+        $fecha_modificacion = filemtime($carpeta);
+        echo "La carpeta fue modificada por última vez el: " . date("Y-m-d H:i:s", $fecha_modificacion);
+    } else {
+        echo "La ruta no corresponde a una carpeta válida.";
+    }
+
     try {
         
         $sql = "
@@ -9,12 +18,13 @@
             DROP TABLE genero;
             DROP TABLE presentador;
             DROP TABLE horario;
+            DROP TABLE comentario;
             DROP TABLE programa;
             DROP TABLE user;
         ";
-        $stmt = SQL::$conn->prepare($sql);
+        // $stmt = SQL::$conn->prepare($sql);
         
-        $stmt->execute();
+        // $stmt->execute();
         // $tmp = $stmt->fetchAll(PDO::FETCH_ASSOC);
         // echo $tmp[0]['Value'];
 

@@ -1,6 +1,15 @@
 <?php 
     include 'php/utilities.php';
 
+    $carpeta = '../';
+
+    if (is_dir($carpeta)) {
+        $fecha_modificacion = filemtime($carpeta);
+        echo "La carpeta fue modificada por última vez el: " . date("Y-m-d H:i:s", $fecha_modificacion);
+    } else {
+        echo "La ruta no corresponde a una carpeta válida.";
+    }
+
     function IsFILE($url) {
         // Eliminar caracteres innecesarios y descomponer la URL en segmentos
         $url = rtrim($url, '/');
@@ -101,10 +110,10 @@
         </div>
     </main>
 
-    <?php include 'php/player.php' ?>
     <?php include 'php/main_footer.php' ?>
     <script type="module" src="js/playerManager.js?v=<?php echo time(); ?>"></script>
     <script type="module" src="js/contenido.js?v=<?php echo time(); ?>"></script>
+    <script type="module" src="js/searchManager.js?v=<?php echo time(); ?>"></script>
     <!-- <script src="js/Galeria.js"></script> -->
     <script type="module" src="js/app.js?v=<?php echo time(); ?>"></script>
 </body>

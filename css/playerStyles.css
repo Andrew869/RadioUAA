@@ -1,10 +1,9 @@
 .radio-player {
     background-color: #027543;
     position: sticky;
-    left: 0;
     bottom: 0;
     width: 100%;
-    max-height: 200px;
+    max-height: 100px;
     /* height: 100px; */
     display: flex;
     flex-direction: row;
@@ -75,7 +74,7 @@
 
 .curr-pro {
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 .curr-pro-txt,
@@ -227,11 +226,25 @@
     background-color: wheat;
 }
 
+@media (max-width: 1024px){
+    .radio-player {
+        max-height: 200px;
+    }
+}
+
 @media (max-width: 768px) {
     .radio-player {
         flex-direction: column;
     }
+
     .current-program-info {
         width: initial;
+    }
+}
+
+@media (max-width: 350px) {
+    .radio-player {
+        overflow: auto;
+        justify-content: start;
     }
 }
