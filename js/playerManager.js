@@ -5,8 +5,8 @@ const playPauseBtn = document.getElementById('playPauseBtn');
 const playPauseIcon = document.getElementById('playPauseIcon');
 const syncBtn = document.getElementById('syncBtn');
 const volumeSlider = document.getElementById('volumeSlider');
-const loading = document.getElementById('loading');
-const metadata = document.getElementById('metadata');
+// const loading = document.getElementById('loading');
+// const metadata = document.getElementById('metadata');
 
 // const seekBar = document.getElementById('seekBar');
 // const currentTime = document.getElementById('currentTime');
@@ -59,22 +59,22 @@ window.addEventListener('load', function() {
 });
 
 // Muestra el indicador de carga mientras el audio se está cargando
-audio.addEventListener('waiting', () => {
-    loading.style.display = 'block';
-});
+// audio.addEventListener('waiting', () => {
+//     loading.style.display = 'block';
+// });
 
-// Oculta el indicador de carga cuando el audio empieza a reproducirse
-audio.addEventListener('playing', () => {
-    loading.style.display = 'none';
-});
+// // Oculta el indicador de carga cuando el audio empieza a reproducirse
+// audio.addEventListener('playing', () => {
+//     loading.style.display = 'none';
+// });
 
 // Para el caso de que la emisora transmita metadata adicional, puedes capturarla
 audio.addEventListener('timeupdate', () => {
-    const currentTime = new Date().toLocaleTimeString();
+    // const currentTime = new Date().toLocaleTimeString();
 
-    // Simulando metadata dinámica
-    const simulatedMetadata = `Canción actual a las ${currentTime}`;
-    metadata.textContent = simulatedMetadata;
+    // // Simulando metadata dinámica
+    // const simulatedMetadata = `Canción actual a las ${currentTime}`;
+    // metadata.textContent = simulatedMetadata;
 });
 
 // Función para reproducir en vivo

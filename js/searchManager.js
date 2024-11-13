@@ -2,9 +2,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // document.getElementById("icon-menu").addEventListener("click", toggleMenu);
     let searchBarVisible = false;
-    let icon = document.getElementById("icon-search");
+    const btnSearch = document.getElementById("button-search");
+    const searchBar = document.getElementsByClassName("search-bar-container")[0];
+    const closeBtn = document.querySelector(".search-bar-container .close-btn");
 
-    icon.addEventListener('click', toggleSearchBar);
+    btnSearch.addEventListener('click', showSearchBar);
+    closeBtn.addEventListener('click', hideSearchBar);
+
+    let mq = window.matchMedia("(max-width: 1024px)");
+
+    function handleMediaQueryChange(mq) {
+        if (!mq.matches) {
+            hideSearchBar();
+        }
+    }
+
+    // Añadir un listener para cambios en la media query
+    mq.addEventListener('change', handleMediaQueryChange);
+
+    // Llamar a la función al inicio para verificar el estado inicial
+    handleMediaQueryChange(mq);
 
     // document.getElementById("cover-ctn-search").addEventListener("click", hideSearchBar);
     document.getElementById("inputSearch").addEventListener("input", searchInternal);
@@ -30,26 +47,29 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function showSearchBar() {
-        const barsSearch = document.getElementById("cont-bars-search");
-        // const coverCtnSearch = document.getElementById("cover-ctn-search");
-        const inputSearch = document.getElementById("inputSearch");
-        barsSearch.style.top = "115px";
-        barsSearch.classList.add('zchange');
-        // barsSearch.style.display = "block";
-        // coverCtnSearch.style.display = "block";
-        inputSearch.focus();
-        if (inputSearch.value === "") {
-            boxSearch.style.display = "none";
-        }
+        searchBar.classList.add('show-searchBar');
+        let inputElement = document.getElementById('inputSearch');
+        inputElement.focus();
+        // // const coverCtnSearch = document.getElementById("cover-ctn-search");
+        // const inputSearch = document.getElementById("inputSearch");
+        // searchBar.style.top = "115px";
+        // searchBar.classList.add('zchange');
+        // // barsSearch.style.display = "block";
+        // // coverCtnSearch.style.display = "block";
+        // inputSearch.focus();
+        // if (inputSearch.value === "") {
+        //     boxSearch.style.display = "none";
+        // }
     }
 
     function hideSearchBar() {
-        const barsSearch = document.getElementById("cont-bars-search");
+        searchBar.classList.remove('show-searchBar');
+        // const barsSearch = document.getElementById("cont-bars-search");
         // const coverCtnSearch = document.getElementById("cover-ctn-search");
-        const inputSearch = document.getElementById("inputSearch");
+        // const inputSearch = document.getElementById("inputSearch");
 
-        barsSearch.style.top = "40px";
-        barsSearch.classList.remove('zchange');
+        // barsSearch.style.top = "40px";
+        // barsSearch.classList.remove('zchange');
         // barsSearch.style.display = "none";
     }
 

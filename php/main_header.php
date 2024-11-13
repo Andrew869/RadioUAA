@@ -1,7 +1,7 @@
 <header>
     <nav class="navbar">
         <div class="logo">
-            <a href="./">
+            <a class="nav-link" href="./">
                 <!-- <img src="resources/img/logo-radio-uaa-blanco.png" alt="Radio UAA Logo"> -->
                 <?php echo GetSVG('resources/img/svg/logoRadioUAA.svg', ["40px", "40px", "white"]) ?>
             </a>
@@ -33,14 +33,19 @@
             </ul>
         </div>
 
-        <div class="cont-bars-search">
-            <input type="text" id="inputSearch" placeholder="Buscar..." aria-label="Search">
-            <div class="icon search-icon">
-                <?php echo GetSVG('resources/img/svg/search.svg', ["18px", "18px", "black"]) ?>
+        <div class="search-bar-container">
+            <div class="search-Bar">
+                <input type="text" id="inputSearch" placeholder="Buscar..." aria-label="Search">
+                <label id="search-icon" class="icon" for="inputSearch">
+                    <?php echo GetSVG('resources/img/svg/search.svg', ["18px", "18px", "black"]) ?>
+                </label>
+            </div>
+            <div class="close-btn">
+                &times;
             </div>
         </div>
 
-        <div class="icon button-search">
+        <div id="button-search" class="icon">
             <?php echo GetSVG('resources/img/svg/search.svg', ["18px", "18px", "white"]) ?>
         </div>
 
@@ -60,18 +65,18 @@
         
         <!-- Search Suggestions -->
         <ul id="box-search">
-            <li><a href="Index.html"><i class="fas fa-search"></i>Inicio</a></li>
-            <li><a href="Acerca de Radio UAA.html"><i class="fas fa-search"></i>Acerca de Radio UAA</a></li>
-            <li><a href="Preguntas Frecuentes.html"><i class="fas fa-search"></i>Preguntas Frecuentes</a></li>
-            <li><a href="Consejo Ciudadano.html"><i class="fas fa-search"></i>Consejo Ciudadano</a></li>
-            <li><a href="Defensoria.html"><i class="fas fa-search"></i>Defensoría de las Audiencias</a></li>
-            <li><a href="Derechos de las Audiencias.html"><i class="fas fa-search"></i>Derechos de las Audiencias</a></li>
-            <li><a href="Quejas y Sugerencias.html"><i class="fas fa-search"></i>Quejas y Sugerencias</a></li>
-            <li><a href="Transparencia.html"><i class="fas fa-search"></i>Transparencia</a></li>
-            <li><a href="Politicas de Privacidad.html"><i class="fas fa-search"></i>Políticas de privacidad</a></li>
-            <li><a href="programacion.html"><i class="fas fa-search"></i>Programación</a></li>
-            <li><a href="#"><i class="fas fa-search"></i>Contenido</a></li>
-            <li><a href="Contacto.html"><i class="fas fa-search"></i>Contacto</a></li>
+            <li><a  href="inicio"><?php echo GetSVG('resources/img/svg/search.svg', ['18px', '18px', 'black']) ?>Inicio</a></li>
+            <li><a href="nosotros"><?php echo GetSVG('resources/img/svg/search.svg', ['18px', '18px', 'black']) ?>Acerca de Radio UAA</a></li>
+            <li><a href="preguntas-frecuentes"><?php echo GetSVG('resources/img/svg/search.svg', ['18px', '18px', 'black']) ?>Preguntas Frecuentes</a></li>
+            <li><a href="consejo-ciudadano"><?php echo GetSVG('resources/img/svg/search.svg', ['18px', '18px', 'black']) ?>Consejo Ciudadano</a></li>
+            <li><a href="defensoria-de-las-audiencias"><?php echo GetSVG('resources/img/svg/search.svg', ['18px', '18px', 'black']) ?>Defensoría de las Audiencias</a></li>
+            <li><a href="derechos-de-la-audiencia"><?php echo GetSVG('resources/img/svg/search.svg', ['18px', '18px', 'black']) ?>Derechos de las Audiencias</a></li>
+            <li><a href="quejas-sugerencias"><?php echo GetSVG('resources/img/svg/search.svg', ['18px', '18px', 'black']) ?>Quejas y Sugerencias</a></li>
+            <li><a href="transparencia"><?php echo GetSVG('resources/img/svg/search.svg', ['18px', '18px', 'black']) ?>Transparencia</a></li>
+            <li><a href="politica-de-privacidad"><?php echo GetSVG('resources/img/svg/search.svg', ['18px', '18px', 'black']) ?>Políticas de privacidad</a></li>
+            <li><a href="programacion"><?php echo GetSVG('resources/img/svg/search.svg', ['18px', '18px', 'black']) ?>Programación</a></li>
+            <li><a href="contenido"><?php echo GetSVG('resources/img/svg/search.svg', ['18px', '18px', 'black']) ?>Contenido</a></li>
+            <li><a href="contacto"><?php echo GetSVG('resources/img/svg/search.svg', ['18px', '18px', 'black']) ?>Contacto</a></li>
         </ul>
     </nav>
 </header>

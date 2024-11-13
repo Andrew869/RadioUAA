@@ -46,22 +46,22 @@
 //     }, 5000);
 // };
 
-export function IsSticky(){
-    console.log("amIhere");
-    window.addEventListener('scroll', function() {
-        const thead = document.querySelector('thead');
-        const isSticky = thead.getBoundingClientRect().top <= 60;
-        const top_Left = document.querySelector('thead > tr:first-child th:first-child');
-        const top_right = document.querySelector('thead > tr:first-child th:last-child');
+// export function IsSticky(){
+//     console.log("amIhere");
+//     window.addEventListener('scroll', function() {
+//         const thead = document.querySelector('thead');
+//         const isSticky = thead.getBoundingClientRect().top <= 60;
+//         const top_Left = document.querySelector('thead > tr:first-child th:first-child');
+//         const top_right = document.querySelector('thead > tr:first-child th:last-child');
 
-        if (isSticky) {
-            // console.log('El encabezado está en modo sticky.');
-            top_Left.style.borderRadius = "0";
-            top_right.style.borderRadius = "0";
-        } else {
-            // console.log('El encabezado ya no está en modo sticky.');
-            top_Left.style.borderRadius = "12px 0 0 0";
-            top_right.style.borderRadius = "0 12px 0 0";
-        }
-    });
-}
+//         if (isSticky) {
+//             // console.log('El encabezado está en modo sticky.');
+//             top_Left.style.borderRadius = "0";
+//             top_right.style.borderRadius = "0";
+//         } else {
+//             // console.log('El encabezado ya no está en modo sticky.');
+//             top_Left.style.borderRadius = "12px 0 0 0";
+//             top_right.style.borderRadius = "0 12px 0 0";
+//         }
+//     });
+// }

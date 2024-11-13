@@ -49,15 +49,29 @@ li {
     align-items: center;
 }
 
+.container-social-buttons {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* width: max-content;
+    margin-left: auto; */
+    /* top: 120px; */
+    bottom: calc(50vh - 285px / 2);
+    right: 0;
+    width: 60px;
+    /* height: calc(100vh - (100px)); */
+    /* background-color: yellow; */
+    z-index: 2;
+    /* margin-right: 10px; */
+}
 
 /* Botones de redes sociales inicio */
 .social-buttons {
-    position: fixed;
-    bottom: 10%;
-    right: 10px;
     display: flex;
     flex-direction: column;
     gap: 15px;
+    /* background-color: tan; */
 }
 
 .social-button {
