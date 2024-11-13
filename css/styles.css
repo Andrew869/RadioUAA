@@ -9,6 +9,7 @@
     --snow: #FFFAFA;
     --verdeaqua: #66CDAA;
     --verdemasclaro: #4bb578;
+    --Bisque: #FFE4C4;
 }
 
 *, *::after, *::before{
@@ -19,6 +20,8 @@
 
 html{
     font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--GrisClaro);
+
     /* margin: 0;
     padding: 0; */
 }
