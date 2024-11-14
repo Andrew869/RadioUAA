@@ -13,6 +13,7 @@
 
 <body>
     <?php include 'main_header.php' ?>
+
     <div class="container">
         <div class="controles">
             <select id="filtroGenero">
@@ -54,8 +55,6 @@
             </div>
         </div>
     </div>
-
-
 
     <?php include 'main_footer.php' ?>
     <script src="js/contenido.js"></script>

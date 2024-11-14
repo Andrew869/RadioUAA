@@ -151,4 +151,4 @@ buscadorNombre.addEventListener('input', renderizarProgramas);
 alternarVista.addEventListener('click', alternarVistaModo);
 
 llenarFiltros();
-renderizarProgramas()
+renderizarProgramas();
