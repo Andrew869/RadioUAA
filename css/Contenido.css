@@ -1,33 +1,21 @@
 :root {
-    --Blanco: #fff;
-    --AzulCLaro: #3498db;
-    --VerdeClaro: #2ecc71;
-    --Rojo: #e74c3c;
-    --GrisClaro: #dfe9f3;
-    --obscuro: #333;
-    --AzulGris: #2c3e50;
-    --Naranja: #e67e22;
-    --seagreen: #2E8B57;
-    --VerdeObscuro: #006400;
-    --verdeaqua: #66CDAA;
-    --Azulligero: #ADD8E6;
-    --verdemasclaro: #4bb578;
-    --Amarillo: #FFD700;
+    --verde-principal: #4CAF50;
+    --verde-hover: #45a049;
+    --verde-claro: #e8f5e9;
+    --blanco: #ffffff;
+    --gris-claro: #f0f0f0;
+    --gris-oscuro: #333333;
 }
-
-/* * {box-sizing:border-box} */
 
 body, html {
     height: 100%;
-} 
-
-body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    background-color: var(--gris-claro);
 }
-.container{
+
+.container {
     max-width: 85%;
     margin: 0 auto;
     padding: 20px;
@@ -38,54 +26,93 @@ body {
     flex-wrap: wrap;
     gap: 10px;
     margin-bottom: 20px;
+    background-color: var(--verde-claro);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 select, input, button {
-    padding: 8px;
+    padding: 10px;
     font-size: 16px;
+    border: 1px solid var(--verde-principal);
+    border-radius: 4px;
+    background-color: var(--blanco);
+    color: var(--gris-oscuro);
 }
+
+select, input {
+    flex-grow: 1;
+}
+
+select:focus, input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--verde-principal);
+}
+
+button {
+    background-color: var(--verde-principal);
+    color: var(--blanco);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--verde-hover);
+}
+
 .cuadricula {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
 }
+
 .lista {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
+
 .programa {
-    background-color: #fff;
+    background-color: var(--blanco);
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .programa:hover {
     transform: scale(1.015);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
+
 .programa img {
     width: 100%;
     height: 200px;
     object-fit: cover;
 }
+
 .programa-info {
-    padding: 10px;
+    padding: 15px;
 }
+
 .programa-nombre {
     font-weight: bold;
     margin-bottom: 5px;
+    color: var(--verde-principal);
 }
+
 .lista .programa {
     display: flex;
     align-items: center;
 }
+
 .lista .programa img {
     width: 100px;
     height: 100px;
 }
+
 .modal {
     display: none;
     position: fixed;
@@ -97,8 +124,9 @@ select, input, button {
     background-color: rgba(0, 0, 0, 0.5);
     overflow-y: auto;
 }
+
 .contenido-modal {
-    background-color: #fff;
+    background-color: var(--blanco);
     margin: 5% auto;
     padding: 20px;
     border-radius: 8px;
@@ -106,10 +134,10 @@ select, input, button {
     width: 90%;
     position: relative;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding-top: 40px;
 }
+
 .cerrar {
-    color: #aaa;
+    color: var(--gris-oscuro);
     position: absolute;
     top: 10px;
     right: 20px;
@@ -117,9 +145,11 @@ select, input, button {
     font-weight: bold;
     cursor: pointer;
 }
+
 .cerrar:hover {
-    color: #000;
+    color: var(--verde-principal);
 }
+
 .imagen-modal {
     width: 50%;
     height: auto;
@@ -128,12 +158,20 @@ select, input, button {
     margin: 0 auto 30px;
     display: block;
 }
+
 .modal-info {
     margin-top: 20px;
 }
+
 .modal-info h2 {
     margin-top: 0;
+    color: var(--verde-principal);
 }
+
+svg {
+    fill: var(--blanco);
+}
+
 @media (max-width: 600px) {
     .cuadricula {
         grid-template-columns: 1fr;
@@ -144,33 +182,5 @@ select, input, button {
     }
     .imagen-modal {
         width: 80%;
-        height: auto;
     }
-}
-button {
-    background-color: #4CAF50;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-svg {
-    fill: white;
-}
-.cuadricula .programa {
-    display: inline-block;
-    width: 200px;
-    margin: 10px;
-}
-
-.lista .programa {
-    display: flex;
-    width: 100%;
-    margin: 10px 0;
 }
