@@ -1,14 +1,14 @@
 <?php 
     include 'php/utilities.php';
 
-    $carpeta = '../';
+    // $carpeta = '../';
 
-    if (is_dir($carpeta)) {
-        $fecha_modificacion = filemtime($carpeta);
-        echo "La carpeta fue modificada por última vez el: " . date("Y-m-d H:i:s", $fecha_modificacion);
-    } else {
-        echo "La ruta no corresponde a una carpeta válida.";
-    }
+    // if (is_dir($carpeta)) {
+    //     $fecha_modificacion = filemtime($carpeta);
+    //     echo "La carpeta fue modificada por última vez el: " . date("Y-m-d H:i:s", $fecha_modificacion);
+    // } else {
+    //     echo "La ruta no corresponde a una carpeta válida.";
+    // }
 
     function IsFILE($url) {
         // Eliminar caracteres innecesarios y descomponer la URL en segmentos

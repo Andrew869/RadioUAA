@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // document.getElementById("icon-menu").addEventListener("click", toggleMenu);
     let searchBarVisible = false;
     const btnSearch = document.getElementById("button-search");
-    const searchBar = document.getElementsByClassName("search-bar-container")[0];
-    const closeBtn = document.querySelector(".search-bar-container .close-btn");
+    const searchBar = document.getElementsByClassName("search-bar-content")[0];
+    const closeBtn = document.querySelector(".search-bar-content .close-btn");
 
     btnSearch.addEventListener('click', showSearchBar);
     closeBtn.addEventListener('click', hideSearchBar);

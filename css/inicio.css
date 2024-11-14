@@ -148,12 +148,8 @@ h1 {
     animation: colorChange 5s infinite; /* Cambia los colores cada 3 segundos */
     text-align: center;
 }
-h2, p {
-    margin-left: 10%;
-    margin-right: 10%;
-}
 h2 {
-    font-size: 35px;
+    font-size: 5vw;
     margin-bottom: 0; /* Elimina el margen inferior */
 }
 p {
@@ -220,46 +216,4 @@ p {
     }
 }
 /* Barra de busqueda Fin */
-
-
-/* uaa inicio */
-.container-uaa {
-    display: flex;
-    flex-flow: row;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.container-uaa a {
-    text-decoration: none;
-}
-
-.container-uaa img {
-    border-radius: 6px;
-    width: 150px;
-    height: 150px;
-    object-fit: contain;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    padding: 20px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
-
-}
-
-.container-uaa img .dark {
-    background-color: var(--GrisClaro);
-} 
-
-.container-uaa img:hover {
-    transform: scale(1.1);
-}
-/* uaa fin */
-
-footer {
-    background-color: var(--VerdeClaro);
-    text-align: center;
-    font-weight: bold;
-    padding-left: 13%;
-}
-
 
