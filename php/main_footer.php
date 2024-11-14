@@ -23,25 +23,27 @@
 
 <?php include 'php/player.php' ?>
 
-<div class="container-uaa">
-    <a href="https://www.uaa.mx/portal/" target="_blank">
-        <img src="resources/img/UAA-LOGO.png" alt="Logo UAA" class="logo-uaa" />
-    </a>
-    <a href="https://www.uaa.mx/dgdv/" target="_blank">
-        <img src="resources/img/UAA-DG.png" alt="Logo UAA" class="logo-uaa" />
-    </a>
-    <!-- <a href="https://www.uaa.mx/portal/comunicacion/radio-y-tv/" target="_blank">
-                <img src="resources/img/UAA-TV-RADIO.png" alt="Logo UAA" class="logo-uaa">
-            </a> -->
-</div>
 <footer>
-    <p>© Derechos de autor 1978-2024 Radio UAA – Proyección de la voz universitaria
-        |
-        <a href="Politicas de Privacidad.html">Política de privacidad</a>
-        |
-        <a href="Transparencia.html">Transparencia</a>
-        |
-    </p>
+    <div class="container-uaa">
+        <a href="https://www.uaa.mx/portal/" target="_blank">
+            <img src="resources/img/UAA-LOGO.png" alt="Logo UAA" class="logo-uaa" />
+        </a>
+        <a href="https://www.uaa.mx/dgdv/" target="_blank">
+            <img src="resources/img/UAA-DG.png" alt="Logo UAA" class="logo-uaa" />
+        </a>
+        <!-- <a href="https://www.uaa.mx/portal/comunicacion/radio-y-tv/" target="_blank">
+                    <img src="resources/img/UAA-TV-RADIO.png" alt="Logo UAA" class="logo-uaa">
+                </a> -->
+    </div>
+    <div class="copyright-container">
+        <div class="copyright">
+            <p>&copy; Derechos de autor 1978-2024 Radio UAA – Proyección de la voz universitaria</p>
+        </div>
+        <div class="copyright-links">
+            <a class="internal-link" href="politica-de-privacidad">Política de privacidad</a>
+            <a class="internal-link" href="transparencia">Transparencia</a>
+        </div>
+    </div>
 </footer>
 <script type="module" src="js/light-dark-mode.js?v=<?php echo time(); ?>"></script>
 <script src="js/navbar.js?v=<?php echo time(); ?>"></script>

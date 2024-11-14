@@ -88,18 +88,3 @@
 .archivos-Consejo strong{
     color: var(--obscuro);
 }
-
-
-/* consejo ciudadano fin */
-
-footer {
-    background-color: var(--VerdeClaro);
-    text-align: center;
-    font-weight: bold;
-    padding-left: 15%;
-}
-
-html body footer p {
-    margin: 0;
-    padding: 5px 0;
-}

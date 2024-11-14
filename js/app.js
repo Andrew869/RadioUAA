@@ -10,41 +10,43 @@ const navLinks = document.querySelector('.nav-links');
 
 ExecuteBehavior(window.location.pathname.split('/').pop());
 
-// Agregar evento click a cada enlace de navegación
-document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', function(event) {
-        event.preventDefault(); // Evita la acción por defecto del enlace
+SetupInternalLinks();
 
-        let url = this.getAttribute('href'); // Obtener la URL del enlace
+// // Agregar evento click a cada enlace de navegación
+// document.querySelectorAll('.nav-link').forEach(link => {
+//     link.addEventListener('click', function(event) {
+//         event.preventDefault(); // Evita la acción por defecto del enlace
 
-        if(!url)
-            return;
+//         let url = this.getAttribute('href'); // Obtener la URL del enlace
 
-        const displayedUrl = url;
-        url = GetURLFile(url);
-        // console.log(url);
-        let formData = new FormData();
-        formData.append('onlyContent', '1');
+//         if(!url)
+//             return;
 
-        // Cargar contenido nuevo
-        fetch(url, {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.text())
-            .then(data => {
-                // Suponiendo que tienes un div con el ID 'content' para cargar el nuevo contenido
-                window.scrollTo(0, 0);
-                mainContent.innerHTML = data;
+//         const displayedUrl = url;
+//         url = GetURLFile(url);
+//         // console.log(url);
+//         let formData = new FormData();
+//         formData.append('onlyContent', '1');
+
+//         // Cargar contenido nuevo
+//         fetch(url, {
+//             method: 'POST',
+//             body: formData
+//         })
+//             .then(response => response.text())
+//             .then(data => {
+//                 // Suponiendo que tienes un div con el ID 'content' para cargar el nuevo contenido
+//                 window.scrollTo(0, 0);
+//                 mainContent.innerHTML = data;
                 
-                // Actualizar la URL sin recargar
-                window.history.pushState({path: displayedUrl}, '', displayedUrl);
+//                 // Actualizar la URL sin recargar
+//                 window.history.pushState({path: displayedUrl}, '', displayedUrl);
 
-                ExecuteBehavior(displayedUrl);
-            })
-            .catch(error => console.error('Error al cargar el contenido:', error));
-    });
-});
+//                 ExecuteBehavior(displayedUrl);
+//             })
+//             .catch(error => console.error('Error al cargar el contenido:', error));
+//     });
+// });
 
 // Manejar el historial del navegador (para usar el botón "Atrás" o "Adelante")
 // 'popstate' Se dispara cuando el usuario navega hacia atrás o hacia adelante en el historial usando los botones del navegador, pero no ocurre cuando se carga una nueva página.
@@ -132,6 +134,47 @@ window.addEventListener('click', function(e){
         options.classList.remove('show-options');
     }
 });
+
+function SetupInternalLinks(){
+    const navLink = document.querySelectorAll('.internal-link');
+    navLink.forEach(link => {
+        link.onclick = (e) => {LinkBehavior(e)};
+    });
+}
+
+function LinkBehavior(event){
+    event.preventDefault(); // Evita la acción por defecto del enlace
+
+    let url = event.currentTarget.getAttribute('href'); // Obtener la URL del enlace
+    console.log(url);
+    if(!url)
+        return;
+
+    const displayedUrl = url;
+    url = GetURLFile(url);
+    // console.log(url);
+    let formData = new FormData();
+    formData.append('onlyContent', '1');
+
+    // Cargar contenido nuevo
+    fetch(url, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        // Suponiendo que tienes un div con el ID 'content' para cargar el nuevo contenido
+        window.scrollTo(0, 0);
+        mainContent.innerHTML = data;
+        SetupInternalLinks();
+
+        // Actualizar la URL sin recargar
+        window.history.pushState({path: displayedUrl}, '', displayedUrl);
+
+        ExecuteBehavior(displayedUrl);
+    })
+    .catch(error => console.error('Error al cargar el contenido:', error));
+}
 
 // function myFunction(x) {
 //     x.classList.toggle("change");

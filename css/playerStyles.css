@@ -18,7 +18,7 @@
 
 .current-program-info {
     /* background-color: teal; */
-    width: calc(50% - ((350px / 2) + 40px)); /* player = 350, margins = 40 */
+    width: calc(50% - ((350px / 2) + 30px)); /* player = 350, margins = 20, half margin player = 10px  */
     height: 100%;
     display: flex;
     margin: 10px;
@@ -131,7 +131,7 @@
 .volume-control,
 .controls button#syncBtn {
     /* color: white; */
-    font-weight: bold;
+    /* font-weight: bold; */
     width: 110px;
     height: 30px;
     padding: 0 15px;
@@ -151,7 +151,7 @@
 
 .controls button:hover,
 .volume-control:hover {
-    transform: scale(1.01);
+    transform: scale(1.02);
     background-color: #fff;
 }
 

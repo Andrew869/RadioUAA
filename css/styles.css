@@ -15,6 +15,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    text-decoration: none;
 }
 
 html{
@@ -178,9 +179,103 @@ li {
     margin-left: 10px;
 } */
 
+footer {
+    padding: 0 10px;
+    background-color: #027543;
+    /* background-color: yellow; */
+}
+
+.container-uaa {
+    border: solid rgba(0, 0, 0, 0.15);
+    border-width: 1px 0 1px 0;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    padding: 20px;
+    justify-content: space-evenly;
+    /* background-color: tan; */
+}
+
+.container-uaa a{
+    text-decoration: none;
+}
+
+.container-uaa img {
+    border-radius: 6px;
+    max-width: 180px;
+    min-width: 100px;
+    width: 10vw;
+    max-height: 180px;
+    min-height: 100px;
+    height: 10vw;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+    background-color: white;
+}
+
+/* .container-uaa img .dark{
+    background-color: var(--GrisClaro);
+}  */
+
+.container-uaa img:hover {
+    transform: scale(1.1);
+}
+
+.copyright-container {
+    /* background-color: teal; */
+    padding: 10px 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.copyright-container .copyright{
+    /* background-color: tan; */
+    padding: 10px 10px 0 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.copyright-container .copyright-links{
+    width: 100%;
+    /* background-color: #128C7E; */
+    display: flex;
+    flex-direction: row;
+}
+
+.copyright-container .copyright-links a{
+    text-align: center;
+    width: 50%;
+    padding: 10px;
+}
 
 @media (max-width: 768px){
     main{
         margin-top: 70px;
+    }
+
+    .copyright-container .copyright-links{
+        flex-direction: column;
+        /* border-width: ; */
+    }
+
+    .copyright-container .copyright-links a {
+        width: 100%;
+    }
+
+    .copyright-container .copyright-links a:first-child {
+        padding: 20px 0 10px 0;
+    }
+
+    .copyright-container .copyright-links a:last-child{
+        padding: 10px 0 20px 0;
     }
 }

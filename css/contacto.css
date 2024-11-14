@@ -28,46 +28,12 @@
   border-radius: 3px 0 0 3px;
 }
 
-/* Fin Proyectos */
-
-
-/* uaa inicio */
-.container-uaa {
-    display: flex;
-    flex-flow: row;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.container-uaa a{
-    text-decoration: none;
-}
-
-.container-uaa img {
-    border-radius: 6px;
-    width: 180px;
-    height: 180px;
-    object-fit: contain;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    padding: 20px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
-}
-
-.container-uaa img .dark{
-    background-color: var(--GrisClaro);
-} 
-
-.container-uaa img:hover {
-    transform: scale(1.1);
-} 
-/* uaa fin */
 
 /* google maps */
 /* Estilo para el mapa de Google con marco */
 .map-container {
-    margin: 20px auto;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;   
+    margin: 70px auto;
+    box-shadow: rgba(33, 176, 8, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;   
     border-radius: 1rem; /* Esquinas redondeadas */
     height: 56%;
     width: 60%; /* Controlar el ancho del marco */
@@ -79,4 +45,17 @@
     height: 400px; /* Altura del iframe */
     border-radius: 1rem;
     border: none; /* Sin borde en el iframe */
+}
+
+/* textos */
+h1{
+  font-size: 40px;
+}
+h4{
+  text-align: center;
+  font-size: 30px;
+  margin: auto;
+}
+li{
+  text-align: center;
 }
