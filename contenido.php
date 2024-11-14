@@ -10,49 +10,61 @@
     <title>Contenido</title>
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/Contenido.css">
+
 </head>
 
 <body>
     <?php include 'main_header.php' ?>
 
     <div class="container">
-        <h2>Contenido</h2>
-        <div class="grid" id="programas-grid"></div>
+        <div class="controles">
+            <select id="filtroGenero">
+                <option value="">Todos los géneros</option>
+            </select>
+
+            <select id="filtroPresentador">
+                <option value="">Todos los presentadores</option>
+            </select>
+
+            <input type="text" id="buscadorNombre" placeholder="Buscar por nombre">
+            <button id="alternarVista" aria-label="Alternar vista" onclick="alternarVistaModo()">
+                <svg id="icon" viewBox="0 0 24 24" width="24" height="24">
+                    <!-- Icono de cuadrícula (grid) -->
+                    <g id="gridIcon">
+                        <rect x="3" y="3" width="8" height="8" />
+                        <rect x="13" y="3" width="8" height="8" />
+                        <rect x="3" y="13" width="8" height="8" />
+                        <rect x="13" y="13" width="8" height="8" />
+                    </g>
+                    <!-- Icono de lista (oculto al inicio) -->
+                    <g id="listIcon" style="display: none;">
+                        <rect x="3" y="3" width="18" height="4" />
+                        <rect x="3" y="10" width="18" height="4" />
+                        <rect x="3" y="17" width="18" height="4" />
+                    </g>
+                </svg>
+            </button>
+
+        </div>
+        <div id="contenedorProgramas" class="cuadricula"></div>
     </div>
 
     <div id="modal" class="modal">
-        <div class="modal-content">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3 id="modal-titulo"></h3>
-            <img id="modal-imagen" class="modal-image">
-            <p><strong>Presentado por <br></strong> <span id="modal-produccion"></span></p>
-            <p><strong>Género <br></strong> <span id="modal-genero"></span></p>
-            <p><strong>Horario <br></strong> <span id="modal-horario"></span> </p>
-            <p><strong>Acerca del programa <br></strong> <span id="modal-descripcion"></span></p>
-
-            <!-- Contenedor para los comentarios -->
-            <h4>Comentarios</h4>
-            <div id="comentarios-lista"></div> <!-- Aquí se cargarán los comentarios -->
-
-            <!-- Formulario de comentarios -->
-            <p>Deja tu comentario!</p> 
-            <form id="form-comentario">
-            <input type="hidden" id="programa-id" name="programa_id">
-            
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required>
-                
-                <label for="comentario">Comentario:</label>
-                <textarea id="comentario" name="comentario" required></textarea>
-                
-                <button type="submit">Publicar comentario</button>
-            </form>
-        </div>
-
+        <div class="contenido-modal">
+            <span class="cerrar">&times;</span>
+            <img id="imagenModal" class="imagen-modal" src="" alt="">
+            <div class="modal-info">
+                <h2 id="nombreModal"></h2>
+                <p id="descripcionModal"></p>
+                <p><strong>Horario:</strong> <span id="horarioModal"></span></p>
+                <p><strong>Presentadores:</strong> <span id="presentadoresModal"></span></p>
+                <p><strong>Género:</strong> <span id="generoModal"></span></p>
+            </div>
         </div>
     </div>
+
     <?php include 'main_footer.php' ?>
     <script src="js/contenido.js"></script>
 </body>
+
 </html>
