@@ -25,8 +25,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // document.getElementById("cover-ctn-search").addEventListener("click", hideSearchBar);
     document.getElementById("inputSearch").addEventListener("input", searchInternal);
+    document.getElementById("inputSearch").addEventListener("focus", function(){
+        if(this.value !== '')
+            boxSearch.classList.add('show-boxSearch')
+    });
+    document.getElementById("inputSearch").addEventListener("blur", function(){boxSearch.classList.remove('show-boxSearch')});
 
-    const boxSearch = document.getElementById("box-search");
+    const boxSearch = document.getElementsByClassName("box-search")[0];
     const noResultsMessage = document.createElement('li');
     noResultsMessage.textContent = 'No se encontraron resultados';
     noResultsMessage.id = 'no-results-message';
@@ -80,7 +85,8 @@ document.addEventListener("DOMContentLoaded", function () {
         let allItemsHidden = true;
 
         if (filter === "") {
-            boxSearch.style.display = "none";
+            // boxSearch.style.display = "none";
+            boxSearch.classList.remove('show-boxSearch');
             return;
         }
 
@@ -109,6 +115,12 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        boxSearch.style.display = found || allItemsHidden ? "block" : "none";
+        // boxSearch.style.display = found || allItemsHidden ? "block" : "none";
+
+        if(found || allItemsHidden)
+            boxSearch.classList.add('show-boxSearch');
+        else
+            boxSearch.classList.remove('show-boxSearch');
+
     }
 });
