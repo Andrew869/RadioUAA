@@ -1,0 +1,284 @@
+:root {
+    --Blanco: #fff;
+    --VerdeClaro: #2ecc71;
+    --Rojo: #e74c3c;
+    --GrisClaro: #dfe9f3;
+    --obscuro: #333;
+    --seagreen: #2E8B57;
+    --VerdeObscuro: #006400;
+    --snow: #FFFAFA;
+    --verdeaqua: #66CDAA;
+    --verdemasclaro: #4bb578;
+    --Bisque: #FFE4C4;
+}
+
+*, *::after, *::before{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+html{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--GrisClaro);
+
+    /* margin: 0;
+    padding: 0; */
+}
+
+body {
+    height: 100%;
+    /* margin: 0;
+    padding: 0; */
+}
+
+main {
+    margin-top: calc(60px + 60px);
+}
+
+.dark {
+    background: none;
+    background-color: #333;
+    color: white;
+}
+
+li {
+    list-style: none;
+}
+
+.icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-social-buttons {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* width: max-content;
+    margin-left: auto; */
+    /* top: 120px; */
+    bottom: calc(50vh - 285px / 2);
+    right: 0;
+    width: 60px;
+    /* height: calc(100vh - (100px)); */
+    /* background-color: yellow; */
+    z-index: 2;
+    /* margin-right: 10px; */
+}
+
+/* Botones de redes sociales inicio */
+.social-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    /* background-color: tan; */
+}
+
+.social-button {
+    text-decoration: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    /* transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; */
+}
+
+/* .social-button i {
+    font-size: 25px;
+} */
+
+.whatsapp {
+    background: linear-gradient(145deg, #25D366, #128C7E); /* Verde de WhatsApp */
+}
+
+.instagram {
+    background: linear-gradient(145deg, #F58529, #DD2A7B, #8134B8); /* Colores de Instagram */
+}
+
+.facebook {
+    background: linear-gradient(145deg, #4267B2, #3B5998); /* Azul de Facebook */
+}
+
+.spotify {
+    background: linear-gradient(145deg, #1DB954, #1ED760); /* Verde de Spotify */
+}
+
+.google-play {
+    background: linear-gradient(145deg, #34A853, #4285F4); /* Verde y azul de Google Play */
+}
+
+.apple-store {
+    background: linear-gradient(145deg, #A2AAAD, #1C1C1E); /* Gris y negro de Apple Store */
+}
+
+.social-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    background-color: var(--Amarillo);
+}
+/* Botones de redes sociales fin */
+
+/* .app-promo {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #007bff;
+    color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    max-width: 300px;
+}
+
+.app-promo-content {
+    text-align: center;
+}
+
+.app-promo h3 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.app-promo p {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.app-links {
+    display: flex;
+    justify-content: space-around;
+}
+
+.app-link {
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    background-color: #28a745;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.app-link:hover {
+    background-color: #218838;
+}
+
+.app-link.android {
+    background-color: #007bff;
+}
+
+.app-link.ios {
+    background-color: #ffc107;
+    margin-left: 10px;
+} */
+
+footer {
+    padding: 0 10px;
+    background-color: #027543;
+    /* background-color: yellow; */
+}
+
+.container-uaa {
+    border: solid rgba(0, 0, 0, 0.15);
+    border-width: 1px 0 1px 0;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    padding: 20px;
+    justify-content: space-evenly;
+    /* background-color: tan; */
+}
+
+.container-uaa a{
+    text-decoration: none;
+}
+
+.container-uaa img {
+    border-radius: 6px;
+    max-width: 180px;
+    min-width: 100px;
+    width: 10vw;
+    max-height: 180px;
+    min-height: 100px;
+    height: 10vw;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+    background-color: white;
+}
+
+/* .container-uaa img .dark{
+    background-color: var(--GrisClaro);
+}  */
+
+.container-uaa img:hover {
+    transform: scale(1.1);
+}
+
+.copyright-container {
+    /* background-color: teal; */
+    padding: 10px 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.copyright-container .copyright{
+    /* background-color: tan; */
+    padding: 10px 10px 0 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.copyright-container .copyright-links{
+    width: 100%;
+    /* background-color: #128C7E; */
+    display: flex;
+    flex-direction: row;
+}
+
+.copyright-container .copyright-links a{
+    text-align: center;
+    width: 50%;
+    padding: 10px;
+}
+
+@media (max-width: 768px){
+    main{
+        margin-top: 70px;
+    }
+
+    .copyright-container .copyright-links{
+        flex-direction: column;
+        /* border-width: ; */
+    }
+
+    .copyright-container .copyright-links a {
+        width: 100%;
+    }
+
+    .copyright-container .copyright-links a:first-child {
+        padding: 20px 0 10px 0;
+    }
+
+    .copyright-container .copyright-links a:last-child{
+        padding: 10px 0 20px 0;
+    }
+}

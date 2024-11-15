@@ -1,32 +1,10 @@
 <?php
-    session_start();
-    date_default_timezone_set("America/Mexico_City");
-
-    if(!isset($_SESSION['id_user'])){
-        header('Location: login');
-        exit();
-    }
-
-    include "../db_connect.php";
-
-    $db_token = SQL::Select(SQL::USER, ["id_user" => $_SESSION['id_user']], ["session_token"])->fetchColumn();
-
-    if($_SESSION['session_token'] !== $db_token){
-        setcookie("session_token", "", time() - 3600);
-        session_unset();
-        session_destroy();
-        
-        header("Location: login");
-        exit();
-    }else if(!isset($_COOKIE['session_token'])){
-        header("Location: logout");
-        exit();
-    }
+    include "connNCheck.php";
 
     function LoadImage() : string{
         $uploadOk = 0;
         $next_id = SQL::GetCurrentIdIndex($_POST['contentName'], SQL::GetPrimaryKeyName($_POST['contentName'])) + 1;
-        $target_dir = "../resources/uploads/img/";
+        $target_dir = "resources/uploads/img/";
         if(count($_FILES)){
             $imageFileType = strtolower(pathinfo(basename($_FILES["fileToUpload"]["name"]),PATHINFO_EXTENSION));
             $target_file = $target_dir . $_POST['contentName'] . '_' . $next_id . "[v0].$imageFileType";
@@ -36,7 +14,7 @@
                     if($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "jpeg" || $imageFileType == "gif" ) { // Allow certain file formats
                         $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]); // Check if image file is a actual image or fake image
                         if($check !== false) { 
-                            $uploadOk = move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
+                            $uploadOk = move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "../$target_file");
                         }
                     }
                 }
@@ -47,7 +25,7 @@
             $defaultImg_Path = "../resources/img/" . $_POST['contentName'] . "_default.jpg";
             $imageFileType = strtolower(pathinfo(basename($defaultImg_Path),PATHINFO_EXTENSION));
             $target_file = $target_dir . $_POST['contentName'] . '_' . $next_id . "[v0].$imageFileType";
-            copy($defaultImg_Path, $target_file);
+            copy($defaultImg_Path, "../$target_file");
         }
 
         return $target_file;

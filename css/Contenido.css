@@ -1,3 +1,4 @@
+<<<<<<< HEAD:css/Contenido.css
 :root {
     --verde-principal: #4CAF50;
     --verde-hover: #45a049;
@@ -15,11 +16,14 @@ body, html {
     background-color: var(--gris-claro);
 }
 
+=======
+>>>>>>> origin/EduardoPruebasWeb:css/contenido.css
 .container {
     max-width: 85%;
     margin: 0 auto;
     padding: 20px;
 }
+<<<<<<< HEAD:css/Contenido.css
 
 .controles {
     display: flex;
@@ -62,6 +66,9 @@ button:hover {
 }
 
 .cuadricula {
+=======
+.grid {
+>>>>>>> origin/EduardoPruebasWeb:css/contenido.css
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;

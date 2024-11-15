@@ -37,11 +37,15 @@ const programas = [
     }
 ];
 
+<<<<<<< HEAD
 const contenedorProgramas = document.getElementById('contenedorProgramas');
 const filtroGenero = document.getElementById('filtroGenero');
 const filtroPresentador = document.getElementById('filtroPresentador');
 const buscadorNombre = document.getElementById('buscadorNombre');
 const alternarVista = document.getElementById('alternarVista');
+=======
+
+>>>>>>> origin/EduardoPruebasWeb
 const modal = document.getElementById('modal');
 const btnCerrar = document.getElementsByClassName('cerrar')[0];
 
@@ -149,6 +153,7 @@ function abrirModal(programa) {
     modal.style.display = 'block';
 }
 
+<<<<<<< HEAD
 function agregarComentario(parentId = null) {
     const nombre = document.getElementById('nombre').value;
     const email = document.getElementById('email').value;
@@ -282,6 +287,11 @@ function responderComentario(comentarioId) {
 btnCerrar.onclick = function() {
     modal.style.display = 'none';
 }
+=======
+// closeBtn.onclick = function() {
+//     modal.style.display = 'none';
+// }
+>>>>>>> origin/EduardoPruebasWeb
 
 window.onclick = function(evento) {
     if (evento.target == modal) {
@@ -289,6 +299,7 @@ window.onclick = function(evento) {
     }
 }
 
+<<<<<<< HEAD
 filtroGenero.addEventListener('change', renderizarProgramas);
 filtroPresentador.addEventListener('change', renderizarProgramas);
 buscadorNombre.addEventListener('input', renderizarProgramas);
@@ -296,3 +307,21 @@ alternarVista.addEventListener('click', alternarVistaModo);
 
 llenarFiltros();
 renderizarProgramas();
+=======
+export function ShowPrograms(){
+    const grid = document.getElementById('programas-grid');
+    programas.forEach(programa => {
+        grid.appendChild(crearTarjetaPrograma(programa));
+    });
+}
+
+// document.getElementById('form-comentario').addEventListener('submit', function(event) {
+//     event.preventDefault(); // Evita que se recargue la página
+
+//     const nombre = document.getElementById('nombre').value;
+//     const comentario = document.getElementById('comentario').value;
+
+//     // Limpiar el formulario
+//     document.getElementById('form-comentario').reset();
+// });
+>>>>>>> origin/EduardoPruebasWeb

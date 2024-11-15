@@ -1,11 +1,12 @@
+import { GetSVG } from './utilities.js';
 const audio = document.getElementById('audio');
 
 const playPauseBtn = document.getElementById('playPauseBtn');
 const playPauseIcon = document.getElementById('playPauseIcon');
 const syncBtn = document.getElementById('syncBtn');
 const volumeSlider = document.getElementById('volumeSlider');
-const loading = document.getElementById('loading');
-const metadata = document.getElementById('metadata');
+// const loading = document.getElementById('loading');
+// const metadata = document.getElementById('metadata');
 
 // const seekBar = document.getElementById('seekBar');
 // const currentTime = document.getElementById('currentTime');
@@ -47,31 +48,33 @@ document.addEventListener('DOMContentLoaded', function() {
     const savedVolume = localStorage.getItem('audioVolume');
     if (savedVolume !== null) {
         volumeSlider.value = savedVolume;
+        const value = (volumeSlider.value - volumeSlider.min) / (volumeSlider.max - volumeSlider.min) * 100;
+        volumeSlider.style.background = `linear-gradient(to right, #4CAF50 0%, #4CAF50 ${value}%, #ddd ${value}%, #ddd 100%)`;
         audio.volume = savedVolume;
     }
 });
 // debe esperar a que toda la pagina este completamente cargada
 window.addEventListener('load', function() {
-    console.log('La página se ha cargado completamente.');
+    // console.log('La página se ha cargado completamente.');
 });
 
 // Muestra el indicador de carga mientras el audio se está cargando
-audio.addEventListener('waiting', () => {
-    loading.style.display = 'block';
-});
+// audio.addEventListener('waiting', () => {
+//     loading.style.display = 'block';
+// });
 
-// Oculta el indicador de carga cuando el audio empieza a reproducirse
-audio.addEventListener('playing', () => {
-    loading.style.display = 'none';
-});
+// // Oculta el indicador de carga cuando el audio empieza a reproducirse
+// audio.addEventListener('playing', () => {
+//     loading.style.display = 'none';
+// });
 
 // Para el caso de que la emisora transmita metadata adicional, puedes capturarla
 audio.addEventListener('timeupdate', () => {
-    const currentTime = new Date().toLocaleTimeString();
+    // const currentTime = new Date().toLocaleTimeString();
 
-    // Simulando metadata dinámica
-    const simulatedMetadata = `Canción actual a las ${currentTime}`;
-    metadata.textContent = simulatedMetadata;
+    // // Simulando metadata dinámica
+    // const simulatedMetadata = `Canción actual a las ${currentTime}`;
+    // metadata.textContent = simulatedMetadata;
 });
 
 // Función para reproducir en vivo
@@ -91,6 +94,7 @@ playPauseBtn.addEventListener('click', () => {
         audio.play();
         // playLive();
         // playPauseIcon.className = 'fa-solid fa-pause';
+        
     } else {
         audio.pause();
         // playPauseIcon.className = 'fa-solid fa-play';
@@ -103,10 +107,13 @@ syncBtn.addEventListener('click', () => {
 
 // Control de volumen
 volumeSlider.addEventListener('input', (e) => {
+    const value = (volumeSlider.value - volumeSlider.min) / (volumeSlider.max - volumeSlider.min) * 100;
+    volumeSlider.style.background = `linear-gradient(to right, #4CAF50 0%, #4CAF50 ${value}%, #ddd ${value}%, #ddd 100%)`;
+    console.log(value);
     audio.volume = e.target.value;
     localStorage.setItem('audioVolume', audio.volume);
     if(localStorage.getItem('audioVolume') !== null){
-        console.log("volumen saved");
+        // console.log("volumen saved");
     }
 });
 
@@ -130,11 +137,13 @@ audio.addEventListener('loadedmetadata', () => {
 });
 
 audio.addEventListener('play', () => {
-    playPauseIcon.className = 'fa-solid fa-pause';
-    console.log("has played");
+    // playPauseIcon.className = 'fa-solid fa-pause';
+    GetSVG(playPauseBtn, "../resources/img/svg/pause.svg", ["24px", "24px", "black"]);
+    // console.log("has played");
 });
 
 audio.addEventListener('pause', () => {
-    playPauseIcon.className = 'fa-solid fa-play';
-    console.log("has paused");
+    // playPauseIcon.className = 'fa-solid fa-play';
+    GetSVG(playPauseBtn, "../resources/img/svg/play.svg", ["24px", "24px", "black"]);
+    // console.log("has paused");
 });
