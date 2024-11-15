@@ -69,6 +69,13 @@
     font-size: 0.8rem;
     padding: 2px 8px;
     border-radius: 6px;
+}
+
+.live {
+    background-color: #27ae60;
+}
+
+.retransmission {
     background-color: #f39c12;
 }
 

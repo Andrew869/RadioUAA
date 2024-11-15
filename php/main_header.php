@@ -41,7 +41,7 @@
                         <?php echo GetSVG('resources/img/svg/search.svg', ["18px", "18px", "black"]) ?>
                     </label>
                 </div>
-                <ul id="box-search">
+                <ul class="box-search">
                     <li><a class="internal-link" href="inicio"><?php echo GetSVG('resources/img/svg/search.svg', ['18px', '18px', 'black']) ?>Inicio</a></li>
                     <li><a class="internal-link" href="nosotros"><?php echo GetSVG('resources/img/svg/search.svg', ['18px', '18px', 'black']) ?>Acerca de Radio UAA</a></li>
                     <li><a class="internal-link" href="preguntas-frecuentes"><?php echo GetSVG('resources/img/svg/search.svg', ['18px', '18px', 'black']) ?>Preguntas Frecuentes</a></li>
