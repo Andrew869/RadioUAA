@@ -45,6 +45,8 @@ const alternarVista = document.getElementById('alternarVista');
 const modal = document.getElementById('modal');
 const btnCerrar = document.getElementsByClassName('cerrar')[0];
 
+const comentariosPorPrograma = {};
+
 function llenarFiltros() {
     const generos = [...new Set(programas.flatMap(programa => programa.genero.split(', ')))];
     generos.forEach(genero => {
@@ -126,13 +128,155 @@ function alternarVistaModo() {
 
 function abrirModal(programa) {
     document.getElementById('nombreModal').textContent = programa.nombre;
+    document.getElementById('nombreModal').dataset.programaId = programa.id;
     document.getElementById('imagenModal').src = programa.imagen;
     document.getElementById('imagenModal').alt = programa.nombre;
     document.getElementById('descripcionModal').textContent = programa.descripcion;
     document.getElementById('horarioModal').textContent = programa.horario;
     document.getElementById('presentadoresModal').textContent = programa.presentadores;
     document.getElementById('generoModal').textContent = programa.genero;
+    
+    const comentariosContainer = document.getElementById('comentarios');
+    comentariosContainer.innerHTML = '<h3>Comentarios</h3>';
+
+    if (comentariosPorPrograma[programa.id]) {
+        comentariosPorPrograma[programa.id].forEach(comentario => {
+            const comentarioElement = crearElementoComentario(comentario.nombre, comentario.fecha, comentario.mensaje);
+            comentariosContainer.appendChild(comentarioElement);
+        });
+    }
+
     modal.style.display = 'block';
+}
+
+function agregarComentario(parentId = null) {
+    const nombre = document.getElementById('nombre').value;
+    const email = document.getElementById('email').value;
+    const mensaje = document.getElementById('mensaje').value;
+    const errorMensaje = document.getElementById('error-mensaje');
+    const programaId = document.getElementById('nombreModal').dataset.programaId;
+
+    if (!validarCampos(nombre, email, mensaje, errorMensaje)) {
+        return;
+    }
+
+    const fecha = new Date();
+    const fechaFormateada = formatearFecha(fecha);
+
+    const nuevoComentario = {
+        nombre: nombre,
+        fecha: fechaFormateada,
+        mensaje: mensaje
+    };
+
+    if (!comentariosPorPrograma[programaId]) {
+        comentariosPorPrograma[programaId] = [];
+    }
+    comentariosPorPrograma[programaId].unshift(nuevoComentario);
+
+    const comentarioElement = crearElementoComentario(nombre, fechaFormateada, mensaje);
+    document.getElementById('comentarios').insertBefore(comentarioElement, document.getElementById('comentarios').firstChild.nextSibling);
+
+    document.getElementById('nombre').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('mensaje').value = '';
+    errorMensaje.textContent = '';
+}
+
+function validarCampos(nombre, email, mensaje, errorMensaje) {
+    if (!nombre || !email || !mensaje) {
+        errorMensaje.textContent = 'Por favor, completa todos los campos.';
+        return false;
+    }
+
+    if (!validarEmail(email)) {
+        errorMensaje.textContent = 'Por favor, ingresa un correo electrónico válido.';
+        return false;
+    }
+
+    return true;
+}
+
+function validarEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
+
+function formatearFecha(fecha) {
+    const opciones = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+    return fecha.toLocaleDateString('es-ES', opciones);
+}
+
+function crearElementoComentario(nombre, fecha, mensaje, respondiendo = null) {
+    const comentario = document.createElement('div');
+    comentario.className = 'comentario';
+    comentario.id = 'comentario-' + Date.now();
+
+    let headerText = nombre;
+    if (respondiendo) {
+        headerText = `${nombre} respondió a ${respondiendo}`;
+    }
+
+    comentario.innerHTML = `
+        <div class="comentario-header">
+            <div class="comentario-info">
+                <p class="comentario-autor">${headerText}</p>
+                <p class="comentario-fecha">${fecha}</p>
+            </div>
+        </div>
+        <div class="comentario-contenido">${mensaje}</div>
+        <button class="btn-responder" onclick="mostrarFormularioRespuesta('${comentario.id}', '${nombre}')">Responder</button>
+    `;
+
+    return comentario;
+}
+
+function mostrarFormularioRespuesta(comentarioId, nombreOriginal) {
+    const comentario = document.getElementById(comentarioId);
+    const formularioExistente = comentario.querySelector('.formulario-comentario');
+    
+    if (formularioExistente) {
+        formularioExistente.remove();
+        return;
+    }
+
+    const formulario = document.createElement('div');
+    formulario.className = 'formulario-comentario';
+    formulario.innerHTML = `
+        <h4>Responder a ${nombreOriginal}</h4>
+        <input type="text" placeholder="Tu nombre" maxlength="20" required>
+        <input type="email" placeholder="Tu correo electrónico" maxlength="20" required>
+        <textarea placeholder="Tu respuesta" maxlength="100" required></textarea>
+        <div class="error"></div>
+        <button onclick="responderComentario('${comentarioId}')">Enviar respuesta</button>
+    `;
+
+    comentario.appendChild(formulario);
+}
+
+function responderComentario(comentarioId) {
+    const comentario = document.getElementById(comentarioId);
+    const formulario = comentario.querySelector('.formulario-comentario');
+    const nombre = formulario.querySelector('input[type="text"]').value;
+    const email = formulario.querySelector('input[type="email"]').value;
+    const mensaje = formulario.querySelector('textarea').value;
+    const errorMensaje = formulario.querySelector('.error');
+
+    if (!validarCampos(nombre, email, mensaje, errorMensaje)) {
+        return;
+    }
+
+    const fecha = new Date();
+    const fechaFormateada = formatearFecha(fecha);
+
+    const comentarioOriginal = comentario.querySelector('.comentario-autor').textContent;
+    const nombreOriginal = comentarioOriginal.split(' respondió')[0];
+
+    const respuestaElement = crearElementoComentario(nombre, fechaFormateada, mensaje, nombreOriginal);
+    respuestaElement.classList.add('respuesta');
+    comentario.insertAdjacentElement('afterend', respuestaElement);
+
+    formulario.remove();
 }
 
 btnCerrar.onclick = function() {

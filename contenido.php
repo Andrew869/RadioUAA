@@ -53,6 +53,15 @@
                 <p><strong>Presentadores:</strong> <span id="presentadoresModal"></span></p>
                 <p><strong>Género:</strong> <span id="generoModal"></span></p>
             </div>
+            <div class="formulario-comentario">
+                <h3>Agregar un comentario</h3>
+                <input type="text" id="nombre" placeholder="Tu nombre" maxlength="20" required>
+                <input type="email" id="email" placeholder="Tu correo electrónico" maxlength="20" required>
+                <textarea id="mensaje" placeholder="Tu comentario" maxlength="100" required></textarea>
+                <div id="error-mensaje" class="error"></div>
+                <button onclick="agregarComentario()">Enviar comentario</button>
+            </div>
+            <div id="comentarios"></div>
         </div>
     </div>
 

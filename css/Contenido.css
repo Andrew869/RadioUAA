@@ -172,6 +172,112 @@ svg {
     fill: var(--blanco);
 }
 
+.comentario {
+    border: 1px solid #e1e1e1;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #fff;
+}
+
+.comentario-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.comentario-info {
+    flex-grow: 1;
+}
+
+.comentario-autor {
+    font-weight: bold;
+    margin: 0;
+    color: var(--gris-oscuro);
+}
+
+.comentario-fecha {
+    font-size: 0.8em;
+    color: #666;
+    margin: 5px 0 0 0;
+}
+
+.comentario-contenido {
+    margin: 10px 0;
+    line-height: 1.4;
+}
+
+.btn-responder {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--verde-principal);
+    font-size: 14px;
+}
+
+.btn-responder:hover {
+    font-weight: bold;
+}
+
+.formulario-comentario {
+    margin-top: 20px;
+    border: 1px solid #e1e1e1;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.formulario-comentario h3,
+.formulario-comentario h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--gris-oscuro);
+}
+
+.formulario-comentario input,
+.formulario-comentario textarea {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.formulario-comentario textarea {
+    height: 100px;
+    resize: vertical;
+    min-height: 60px;
+}
+
+.formulario-comentario button {
+    background-color: var(--verde-principal);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.error {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.respuesta {
+    margin-left: 20px;
+    margin-top: 10px;
+    padding-left: 15px;
+}
+
 @media (max-width: 600px) {
     .cuadricula {
         grid-template-columns: 1fr;
@@ -183,12 +289,4 @@ svg {
     .imagen-modal {
         width: 80%;
     }
-}
-
-.modal-info h2 {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: var(--verde-principal);
-    margin: 0;
-    text-align: center;
 }
