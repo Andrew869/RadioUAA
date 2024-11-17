@@ -30,43 +30,55 @@
 
 
 
-/* Text styling */
+/* consejo ciudadano inicio */
 .titulo-consejo h1 {
     font-size: 3rem;
     text-align: center;
-  }
+}
   
 .texto-consejo h2 {
     text-align: justify;
     font-size: 30px;
-    margin:  0px 30px;
+    margin: 10px 30px;
 }
+
+.texto-consejo h3 {
+    text-align: center;
+    font-size: 30px;
+    margin: 90px 40px 30px;
+}
+
 .texto-consejo p {
     margin: 20px 90px;
     /* list-style: none; */
 }
-  
-.texto-consejo li {
-    text-align: center;
-    list-style: none;
-    margin: 8px 0;
-}
-
 
 .links-consejo {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Asegura que los hijos se apilen verticalmente */
+    gap: 10px; /* Espaciado entre los enlaces */
     font-size: 16px;
     margin: 0px 30px;
 }
 
-.icono-pdf {
-    width: 20px;
-    height: auto;
-    margin-right: 10px;
+.texto-consejo a {
+    display: flex; 
+    align-items: center;
+    margin: 5px 0; 
+    text-decoration: none; 
 }
 
-  
+.texto-consejo a:hover {
+    text-decoration: underline; /* Añade subrayado al pasar el mouse */
+}
+
+.icono-pdf {
+    width: 20px; 
+    height: auto;
+    margin-right: 10px;
+    flex-shrink: 0; 
+}
+
 .container-consejo {
     display: flex;
     flex-direction: row;
@@ -83,3 +95,67 @@
     border-radius: 8px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
+
+
+.consejo-integrantes {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espaciado entre los contenedores de cada integrante */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+
+.integrante {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px;
+    padding: 20px;
+    gap: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animación para interacción */
+}
+
+.integrante:hover {
+    transform: translateY(-5px); /* Sutil elevación al pasar el cursor */
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 12px -2px;
+}
+
+.integrante-img {
+    width: 150px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
+    object-fit: cover; /* Mejora la presentación de la imagen */
+}
+
+.integrante h2 {
+    margin: 0 0 10px;
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: bold; /* Acentúa el nombre del integrante */
+    border-bottom: 2px solid #007BFF; /* Línea decorativa */
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.integrante p {
+    margin: 0;
+    line-height: 1.8; /* Mejora el espaciado entre líneas */
+    font-size: 1rem; /* Ajusta el tamaño del texto */
+    color: #555; /* Texto ligeramente más oscuro */
+    text-align: justify; /* Hace que el texto quede más uniforme */
+}
+
+.integrante p span {
+    color: #007BFF; /* Destaca los títulos como "Presidente", "Secretario", etc. */
+    font-weight: bold;
+}
+
+
+
+/* consejo ciudadano fin */
