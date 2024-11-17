@@ -29,6 +29,7 @@
     height: 80px;
     object-fit: contain;
     border-radius: 6px;
+    background-color: #005530;
 }
 
 .current-program-info > div {

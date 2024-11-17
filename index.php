@@ -120,6 +120,7 @@
     <script type="module" src="js/contenido.js?v=<?php echo time(); ?>"></script>
     <script type="module" src="js/searchManager.js?v=<?php echo time(); ?>"></script>
     <!-- <script src="js/Galeria.js"></script> -->
+    <!-- <script type="module" src="js/utilities.js?v=<?php echo time(); ?>"></script> -->
     <script type="module" src="js/app.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

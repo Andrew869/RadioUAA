@@ -168,7 +168,9 @@ function SetupTimetoUpdate(){
     .then(response => response.json())
     .then(data => {
         // programContainer.innerHTML = data;
-        timeToUpdate = (ToSeconds(data[1]['hora_fin']) - ToSeconds(data[0])) * 1000;
+        let horaFin = ToSeconds(data[1]['hora_fin']);
+        if(horaFin === 0) horaFin = 86400;
+        timeToUpdate = (horaFin - ToSeconds(data[0])) * 1000;
         setTimeout(UpdateProgramInfo , timeToUpdate);
         console.log("milisec to update: " + timeToUpdate);
     })
@@ -188,7 +190,7 @@ function UpdateProgramInfo(){
         // console.log(data);
         // programContainer.innerHTML = data;
         programName.textContent = data[1]['nombre_programa'];
-        programImg.src = data[1]['url_img'];
+        programImg.src = data[1]['url_img'] + ".300";
         if(programTag.classList.contains('live'))
             programTag.classList.remove('live');
         else
@@ -197,7 +199,9 @@ function UpdateProgramInfo(){
         programTag.textContent = data[1]['es_retransmision'] ? "Retransmision" : "En vivo";
         programTag.classList.add(data[1]['es_retransmision'] ? "retransmission" : "live");
         
-        timeToUpdate = (ToSeconds(data[1]['hora_fin']) - ToSeconds(data[0])) * 1000;
+        let horaFin = ToSeconds(data[1]['hora_fin']);
+        if(horaFin === 0) horaFin = 86400000;
+        timeToUpdate = (horaFin - ToSeconds(data[0])) * 1000;
         setTimeout(UpdateProgramInfo , timeToUpdate);
         console.log("milisec to update: " + timeToUpdate);
     })

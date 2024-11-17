@@ -15,9 +15,8 @@ const routes = {
     "contacto": "pages/contacto.html",
     "404": "pages/404.html"
 };
-
 // Single Page Application (SPA)!!!!
-import { ToSeconds } from './utilities.js';
+import { ToSeconds, FormatTime } from './utilities.js';
 import { ShowPrograms } from './contenido.js';
 // import { IsSticky } from './cal.js';
 // Obtener todos los enlaces de navegación
@@ -193,7 +192,9 @@ function SetupTimetoUpdate(){
     })
     .then(response => response.json())
     .then(data => {
-        timeToUpdate = (ToSeconds(data[1]['hora_fin']) - ToSeconds(data[0])) * 1000;
+        let horaFin = ToSeconds(data[1]['hora_fin']);
+        if(horaFin === 0) horaFin = 86400;
+        timeToUpdate = (horaFin - ToSeconds(data[0])) * 1000;
         timeoutId = setTimeout(UpdateProgramsInfo , timeToUpdate);
         console.log("miliseconds to update programs: " + timeToUpdate);
     })
@@ -222,6 +223,9 @@ function UpdateProgramsInfo(){
     })
     .then(response => response.json())
     .then(data => {
+        while (programsContainer.firstChild) {
+            programsContainer.removeChild(programsContainer.firstChild);
+        }
         data[1].forEach(program => {
             let nextProgram = document.createElement('div');
             nextProgram.classList.add('next-program');
@@ -239,18 +243,20 @@ function UpdateProgramsInfo(){
         
             let schedule = document.createElement('div');
             schedule.classList.add('schedule');
-            schedule.innerHTML = `<span>${program.hora_inicio} - ${program.hora_fin}</span>`;
+            schedule.innerHTML = `<span>${FormatTime(program.hora_inicio)} - ${FormatTime(program.hora_fin)}</span>`;
         
             info.appendChild(name);
             info.appendChild(schedule);
         
             nextProgram.appendChild(img);
             nextProgram.appendChild(info);
-        
+                    
             programsContainer.appendChild(nextProgram);
         });
 
-        timeToUpdate = (ToSeconds(data[1][0]['hora_inicio']) - ToSeconds(data[0])) * 1000;
+        let horaInicio = ToSeconds(data[1][0]['hora_inicio']);
+        if(horaInicio === 0) horaInicio = 86400;
+        timeToUpdate = (horaInicio - ToSeconds(data[0])) * 1000;
         timeoutId = setTimeout(UpdateProgramsInfo , timeToUpdate);
         console.log("miliseconds to update programs: " + timeToUpdate);
     })

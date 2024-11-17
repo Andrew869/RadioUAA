@@ -5,8 +5,8 @@
 }
 
 .facebook-embed {
-    /* width: 560px; */
-    height: calc(100vh - 280px);
+    width: calc(50vw);
+    /* height: calc(100vh - 280px); */
     aspect-ratio: 16/9;
 }
 

@@ -1199,6 +1199,17 @@ export function ToSeconds(time) {
     return segundosTotales;
 }
 
+export function FormatTime(time) {
+    // Verifica si el tiempo tiene el formato HH:MM:SS
+    if (/^\d{2}:\d{2}:\d{2}$/.test(time)) {
+        // Extrae la parte de HH:MM y devuelve solo eso
+        return time.substr(0, 5); // Devuelve los primeros 5 caracteres (HH:MM)
+    } else {
+        // Si no tiene el formato esperado, devuelve el tiempo original
+        return time;
+    }
+}
+
 export function createModalExit(){
     createModal.style.display = 'none';
 
