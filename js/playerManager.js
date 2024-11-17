@@ -1,4 +1,4 @@
-import { GetSVG, ToSeconds } from './utilities.js';
+import { GetSVG, ToSeconds } from './utilities.js?v=2a4a54';
 const audio = document.getElementById('audio');
 
 const playPauseBtn = document.getElementById('playPauseBtn');
@@ -11,6 +11,7 @@ const programName = document.querySelector('.current-program-info .curr-pro');
 const programImg = document.querySelector('.current-program-info img');
 const programTag = document.querySelector('.current-program-info .current-tag-info');
 
+let timeoutId;
 let timeToUpdate = 0;
 
 // const loading = document.getElementById('loading');
@@ -171,7 +172,7 @@ function SetupTimetoUpdate(){
         let horaFin = ToSeconds(data[1]['hora_fin']);
         if(horaFin === 0) horaFin = 86400;
         timeToUpdate = (horaFin - ToSeconds(data[0])) * 1000;
-        setTimeout(UpdateProgramInfo , timeToUpdate);
+        timeoutId = setTimeout(UpdateProgramInfo , timeToUpdate);
         console.log("milisec to update: " + timeToUpdate);
     })
     .catch(error => console.error('Error al cargar el contenido:', error));
@@ -202,7 +203,7 @@ function UpdateProgramInfo(){
         let horaFin = ToSeconds(data[1]['hora_fin']);
         if(horaFin === 0) horaFin = 86400000;
         timeToUpdate = (horaFin - ToSeconds(data[0])) * 1000;
-        setTimeout(UpdateProgramInfo , timeToUpdate);
+        timeoutId = setTimeout(UpdateProgramInfo , timeToUpdate);
         console.log("milisec to update: " + timeToUpdate);
     })
     .catch(error => console.error('Error al cargar el contenido:', error));
@@ -220,3 +221,9 @@ function UpdateProgramInfo(){
 //         });
 //     }
 // });
+
+window.addEventListener('focus', function() {
+    // console.log('asdLa aplicación web ha vuelto al primer plano');
+    clearTimeout(timeoutId);
+    SetupTimetoUpdate();
+});

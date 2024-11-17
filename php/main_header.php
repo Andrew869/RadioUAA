@@ -36,7 +36,7 @@
         <div class="search-bar-content">
             <div class="search-bar-container">
                 <div class="search-bar">
-                    <input type="text" id="inputSearch" placeholder="Buscar..." aria-label="Search">
+                    <input type="text" class="search-bar-input" id="inputSearch" placeholder="Buscar..." aria-label="Search">
                     <label id="search-icon" class="icon" for="inputSearch">
                         <?php echo GetSVG('resources/img/svg/search.svg', ["18px", "18px", "black"]) ?>
                     </label>

@@ -16,8 +16,8 @@ const routes = {
     "404": "pages/404.html"
 };
 // Single Page Application (SPA)!!!!
-import { ToSeconds, FormatTime } from './utilities.js';
-import { ShowPrograms } from './contenido.js';
+import { ToSeconds, FormatTime } from './utilities.js?v=2a4a54';
+import { ShowPrograms } from './contenido.js?v=2a4a54';
 // import { IsSticky } from './cal.js';
 // Obtener todos los enlaces de navegación
 // const navLinks = document.querySelectorAll('.nav-link');
@@ -25,6 +25,7 @@ const mainContent = document.getElementById('content');
 const options = document.querySelector('.nav-links > ul');
 const menuIcon = document.getElementById('menu-icon');
 const navLinks = document.querySelector('.nav-links');
+const searchBarContent = document.getElementsByClassName("search-bar-content")[0];
 const boxSearch = document.getElementsByClassName("box-search")[0];
 let programsContainer;
 let timeoutId;
@@ -63,7 +64,13 @@ window.addEventListener('popstate', function(event) {
 
 function AfterClick(data, request){
     window.scrollTo(0, 0);
-    boxSearch.classList.remove('show-boxSearch')
+
+    searchBarContent.classList.remove('show-searchBar');
+    boxSearch.classList.remove('show-boxSearch');
+    menuIcon.classList.remove("change");
+    navLinks.classList.remove("show-navlinks");
+    options.classList.remove('show-options');
+
     document.getElementById("inputSearch").value = '';
     mainContent.innerHTML = data;
     SetupInternalLinks();
@@ -71,7 +78,7 @@ function AfterClick(data, request){
 }
 
 function ExecuteBehavior(request){
-    clearInterval(timeoutId);
+    clearTimeout(timeoutId);
     switch (request) {
         case 'contenido':
             ShowPrograms();       
@@ -262,3 +269,16 @@ function UpdateProgramsInfo(){
     })
     .catch(error => console.error('Error al cargar el contenido:', error));
 }
+
+// document.addEventListener('visibilitychange', function() {
+//     if (document.visibilityState === 'visible') {
+//         console.log('La aplicación web ha vuelto al primer plano');
+//         // Realizar acciones necesarias cuando la aplicación vuelve al primer plano
+//     }
+// });
+
+window.addEventListener('focus', function() {
+    // console.log('asdLa aplicación web ha vuelto al primer plano');
+    clearTimeout(timeoutId);
+    SetupTimetoUpdate();
+});

@@ -7,14 +7,17 @@
     include_once $initPath . 'php/db_connect.php';
 ?>
 <div class="main-content">
-    <iframe
+    <!-- <iframe
         class="facebook-embed"
         src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/270053706369750/videos/595368126259614"
         scrolling="no"
         frameborder="0" 
         allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
         allowFullScreen="true">
-    </iframe>
+    </iframe> -->
+    <div class="facebook-embed">
+        asd
+    </div>
     <div class="next-programs-content">
         <div>A continuación</div>
         <div class="next-programs-container">

@@ -262,10 +262,10 @@
         rel="stylesheet">
     <link rel="stylesheet" href="../css/normalize.css">
     <!-- <link rel="stylesheet" href="../css/bem.css"> -->
-    <link rel="stylesheet" href="../css/commonStyles.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="../css/styleContent.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="../css/formStyles.css?v=<?php echo time(); ?>">
-    <script type="module" src="../js/utilities.js?v=<?php echo time(); ?>"></script>
+    <link rel="stylesheet" href="../css/commonStyles.css?v=<?php echo PROJECT_HASH ?>">
+    <link rel="stylesheet" href="../css/styleContent.css?v=<?php echo PROJECT_HASH ?>">
+    <link rel="stylesheet" href="../css/formStyles.css?v=<?php echo PROJECT_HASH ?>">
+    <script type="module" src="../js/utilities.js?v=<?php echo PROJECT_HASH ?>"></script>
 </head>
 
 <body>
@@ -399,17 +399,17 @@
             }
         ?>
         </div>
-        <script src="../js/tabsManager.js?v=<?php echo time(); ?>"></script>
+        <script src="../js/tabsManager.js?v=<?php echo PROJECT_HASH ?>"></script>
         <?php
         }
         // include "createForms.php";
         ?>
-        <script src="../js/contentManager.js?v=<?php echo time(); ?>"></script>
+        <script src="../js/contentManager.js?v=<?php echo PROJECT_HASH ?>"></script>
         <!-- <script src="../js/createManager.js"></script> -->
         <!-- <button onclick="AddContent('programa')">crear</button> -->
         <div id="modals_container">
         </div>
-        <script type="module" src="../js/modalsManager.js?v=<?php echo time(); ?>"></script>
+        <script type="module" src="../js/modalsManager.js?v=<?php echo PROJECT_HASH ?>"></script>
     </main>
 </body>
 

@@ -223,6 +223,7 @@ header {
 
 .search-bar-content .close-btn {
     display: none;
+    cursor: pointer;
 }
 
 .search-bar {

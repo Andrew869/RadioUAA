@@ -36,7 +36,9 @@
         header('Location: /404');
     }
 
-    $js_content = file_get_contents('js/app.js');
+    $js_path = 'js/app.js';
+
+    $js_content = file_get_contents($js_path);
     $pattern = '/const routes = (\{[^;]+)\;/s';
     preg_match($pattern, $js_content, $matches);
 
@@ -94,15 +96,15 @@
     <title>Radio UAA</title>
     <link rel="shortcut icon" href="resources/img/logoRadioUAA.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/styles.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/headerStyles.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/playerStyles.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/contacto.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/contenido.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/defensoria.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/inicio.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/nosotros.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/programacion.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/styles.css?v=<?php echo PROJECT_HASH ?>">
+    <link rel="stylesheet" href="css/headerStyles.css?v=<?php echo PROJECT_HASH ?>">
+    <link rel="stylesheet" href="css/playerStyles.css?v=<?php echo PROJECT_HASH ?>">
+    <link rel="stylesheet" href="css/contacto.css?v=<?php echo PROJECT_HASH ?>">
+    <link rel="stylesheet" href="css/contenido.css?v=<?php echo PROJECT_HASH ?>">
+    <link rel="stylesheet" href="css/defensoria.css?v=<?php echo PROJECT_HASH ?>">
+    <link rel="stylesheet" href="css/inicio.css?v=<?php echo PROJECT_HASH ?>">
+    <link rel="stylesheet" href="css/nosotros.css?v=<?php echo PROJECT_HASH ?>">
+    <link rel="stylesheet" href="css/programacion.css?v=<?php echo PROJECT_HASH ?>">
 </head>
 <body class="<?php echo ($currentTheme === 'dark' ? $currentTheme : '')?>">
     <?php 
@@ -116,11 +118,11 @@
     </main>
 
     <?php include 'php/main_footer.php' ?>
-    <script type="module" src="js/playerManager.js?v=<?php echo time(); ?>"></script>
-    <script type="module" src="js/contenido.js?v=<?php echo time(); ?>"></script>
-    <script type="module" src="js/searchManager.js?v=<?php echo time(); ?>"></script>
+    <script type="module" src="js/playerManager.js?v=<?php echo PROJECT_HASH ?>"></script>
+    <script type="module" src="js/contenido.js?v=<?php echo PROJECT_HASH ?>"></script>
+    <script type="module" src="js/searchManager.js?v=<?php echo PROJECT_HASH ?>"></script>
     <!-- <script src="js/Galeria.js"></script> -->
-    <!-- <script type="module" src="js/utilities.js?v=<?php echo time(); ?>"></script> -->
-    <script type="module" src="js/app.js?v=<?php echo time(); ?>"></script>
+    <!-- <script type="module" src="js/utilities.js?v=<?php echo PROJECT_HASH ?>"></script> -->
+    <script type="module" src="js/app.js?v=<?php echo PROJECT_HASH ?>"></script>
 </body>
 </html>

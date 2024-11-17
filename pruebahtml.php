@@ -47,8 +47,8 @@
 </div>
 
 <div>
-    <img style="width: 50%" id="image1" src="resources/uploads/img/programa_103[v0]?v=<?php echo time(); ?>" alt="">
-    <img style="width: 50%" id="image2" src="resources/uploads/img/programa_109[v0].300?v=<?php echo time(); ?>" alt="">
+    <img style="width: 50%" id="image1" src="resources/uploads/img/programa_103[v0]?v=<?php echo "PROJECT_HASH" ?>" alt="">
+    <img style="width: 50%" id="image2" src="resources/uploads/img/programa_109[v0].300?v=<?php echo "PROJECT_HASH" ?>" alt="">
 </div>
 <script type="module" src="js/cal.js"></script>
 </body>

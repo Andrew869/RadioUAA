@@ -8,6 +8,7 @@
     width: calc(50vw);
     /* height: calc(100vh - 280px); */
     aspect-ratio: 16/9;
+    background-color: #0866FF;
 }
 
 .next-programs-content {
