@@ -129,23 +129,8 @@
     color: #E9E9E9;
 } */
 
-
-@keyframes colorChange {
-    0% {
-        color: var(--Rojo);
-    }
-    33% {
-        color: var(--VerdeClaro);
-    }
-    66% {
-        color: var(--AzulCLaro);
-    }
-    100% {
-        color: var(--Rojo);
-    }
-}
 h1 {
-    animation: colorChange 5s infinite; /* Cambia los colores cada 3 segundos */
+    color: brown;
     text-align: center;
 }
 h2 {
@@ -216,4 +201,3 @@ p {
     }
 }
 /* Barra de busqueda Fin */
-
