@@ -39,7 +39,7 @@
 .texto-consejo h2 {
     text-align: justify;
     font-size: 30px;
-    margin: 10px 30px;
+    margin: 10px 0px;
 }
 
 .texto-consejo h3 {
@@ -49,7 +49,7 @@
 }
 
 .texto-consejo p {
-    margin: 20px 90px;
+    margin: 20px 190px;
     /* list-style: none; */
 }
 
@@ -66,6 +66,7 @@
     align-items: center;
     margin: 5px 0; 
     text-decoration: none; 
+    color: red; 
 }
 
 .texto-consejo a:hover {
@@ -117,42 +118,47 @@
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px;
     padding: 20px;
     gap: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animación para interacción */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .integrante:hover {
-    transform: translateY(-5px); /* Sutil elevación al pasar el cursor */
+    transform: translateY(-5px);
     box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 12px -2px;
 }
 
 .integrante-img {
-    width: 150px;
+    flex: 0 0 25%; /* Hace que la imagen ocupe un 25% del ancho del contenedor */
+    max-width: 25%; /* Previene que exceda el 25% del contenedor */
     height: auto;
     border-radius: 8px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
-    object-fit: cover; /* Mejora la presentación de la imagen */
+    object-fit: cover; /* La imagen se ajusta sin deformarse */
+    transition: all 0.3s ease; /* Animación suave al redimensionar */
+}
+
+.integrante div {
+    flex: 1; /* El texto ocupa el espacio restante */
 }
 
 .integrante h2 {
     margin: 0 0 10px;
     font-size: 1.5rem;
     color: #333;
-    font-weight: bold; /* Acentúa el nombre del integrante */
-    border-bottom: 2px solid #007BFF; /* Línea decorativa */
+    font-weight: bold;
+    border-bottom: 2px solid #007BFF;
     display: inline-block;
     padding-bottom: 5px;
 }
 
 .integrante p {
     margin: 0;
-    line-height: 1.8; /* Mejora el espaciado entre líneas */
-    font-size: 1rem; /* Ajusta el tamaño del texto */
-    color: #555; /* Texto ligeramente más oscuro */
-    text-align: justify; /* Hace que el texto quede más uniforme */
+    line-height: 1.8;
+    font-size: 1rem;
+    color: #555;
+    text-align: justify;
 }
 
 .integrante p span {
-    color: #007BFF; /* Destaca los títulos como "Presidente", "Secretario", etc. */
+    color: #007BFF;
     font-weight: bold;
 }
 
