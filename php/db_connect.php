@@ -1,4 +1,6 @@
 <?php
+    date_default_timezone_set("America/Mexico_City");
+
     class SQL{
         public static $conn = NULL;
         public static $stmt = NULL;

@@ -1,5 +1,5 @@
 .table-container{
-    width: 90%;
+    /* width: 90%; */
     height: calc(100vh - (120px + 100px));
     margin: auto;
     overflow: auto;

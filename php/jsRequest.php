@@ -53,6 +53,24 @@
                 echo $output;
                 // echo json_encode($output);
                 break;
+            case 'GetCurrProgram':
+                {
+                    include "db_connect.php";
+                    $output = [];
+                    $output[] = date('H:i:s');
+                    $output[] = GetCurrProgram();
+                    echo json_encode($output);
+                    break;
+                }
+            case 'GetNextPrograms':
+                {
+                    include "db_connect.php";
+                    $output = [];
+                    $output[] = date('H:i:s');
+                    $output[] = array_merge(GetNextPrograms(intval($args[0])));
+                    echo json_encode($output);
+                    break;
+                }
         }
 
     }

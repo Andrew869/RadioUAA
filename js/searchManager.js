@@ -25,11 +25,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // document.getElementById("cover-ctn-search").addEventListener("click", hideSearchBar);
     document.getElementById("inputSearch").addEventListener("input", searchInternal);
+
     document.getElementById("inputSearch").addEventListener("focus", function(){
         if(this.value !== '')
             boxSearch.classList.add('show-boxSearch')
     });
-    document.getElementById("inputSearch").addEventListener("blur", function(){boxSearch.classList.remove('show-boxSearch')});
+    document.getElementById("inputSearch").addEventListener("blur", function(e){
+        if(!e.target.classList.contains('internal-link'))
+            boxSearch.classList.remove('show-boxSearch')
+    });
 
     const boxSearch = document.getElementsByClassName("box-search")[0];
     const noResultsMessage = document.createElement('li');

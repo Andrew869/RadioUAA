@@ -27,7 +27,8 @@
 .current-program-info img {
     width: 80px;
     height: 80px;
-    object-fit: cover;
+    object-fit: contain;
+    border-radius: 6px;
 }
 
 .current-program-info > div {

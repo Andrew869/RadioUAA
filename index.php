@@ -1,5 +1,6 @@
 <?php 
-    include 'php/utilities.php';
+    include_once 'php/db_connect.php';
+    include_once 'php/utilities.php';
 
     // $carpeta = '../';
 
@@ -35,34 +36,49 @@
         header('Location: /404');
     }
 
-    $file = null;
+    $js_content = file_get_contents('js/app.js');
+    $pattern = '/const routes = (\{[^;]+)\;/s';
+    preg_match($pattern, $js_content, $matches);
+
+    $routes_json = $matches[1];
+    
+    $routes = json_decode($routes_json, true);
+
+    // Decodificar el contenido JSON a un array asociativo
+    // $routes = json_decode($jsonData, true);
+
+    $file = $routes[$request];
+
+    if(!$file)
+        $file = 'pages/404.html';
+
     // Verificar qué página se solicita
-    switch ($request) {
-        case 'inicio':
-        case 'nosotros':
-        case 'preguntas-frecuentes':
-        case 'consejo-ciudadano':
-        case 'defensoria-de-las-audiencias':
-        case 'derechos-de-la-audiencia':
-        case 'quejas-sugerencias':
-        case 'transparencia':
-        case 'politica-de-privacidad':
-        case 'contenido':
-        case 'contacto':
-            $file = "pages/$request.html";
-            break;
-        case 'programacion':
-            $file = 'php/programacion.php';
-            break;
-        case '':
-            $file = 'pages/inicio.html';
-            break;
-        case '404':
-        default:
-            // Página no encontrada (404)
-            $file = 'pages/404.html';
-            break;
-    } 
+    // switch ($request) {
+    //     case 'nosotros':
+    //     case 'preguntas-frecuentes':
+    //     case 'consejo-ciudadano':
+    //     case 'defensoria-de-las-audiencias':
+    //     case 'derechos-de-la-audiencia':
+    //     case 'quejas-sugerencias':
+    //     case 'transparencia':
+    //     case 'politica-de-privacidad':
+    //     case 'contenido':
+    //     case 'contacto':
+    //         $file = "pages/$request.html";
+    //         break;
+    //     case 'programacion':
+    //         $file = 'php/programacion.php';
+    //         break;
+    //     case '':
+    //     case 'inicio':
+    //         $file = 'php/inicio.php';
+    //         break;
+    //     case '404':
+    //     default:
+    //         // Página no encontrada (404)
+    //         $file = 'pages/404.html';
+    //         break;
+    // } 
 
     // if( $_SERVER["REQUEST_METHOD"] == "POST"){
     //     // echo file_get_contents($file);
@@ -93,22 +109,10 @@
         include 'php/main_header.php';
     ?>
 
-    <main>
-        <!-- <iframe 
-        src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FRadioUAA%2Fvideos%2F1095161882345068%2F&show_text=false&width=560&t=0" 
-        width="560" 
-        height="314" 
-        style="border:none;overflow:hidden" 
-        scrolling="no" 
-        frameborder="0" 
-        allowfullscreen="false" 
-        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-    </iframe> -->
-        <div id="content">
-            <?php
-                include($file);
-            ?>
-        </div>
+    <main id="content">
+        <?php
+            include($file);
+        ?>
     </main>
 
     <?php include 'php/main_footer.php' ?>
