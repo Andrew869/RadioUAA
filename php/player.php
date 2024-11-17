@@ -1,8 +1,30 @@
+<?php 
+    // include_once "db_connect.php";
+
+    // $currentTime = date("H:i:s\n");
+
+    // $sql = "
+    //     SELECT p.id_programa, p.nombre_programa, p.url_img, h.dia_semana, h.hora_inicio, h.hora_fin, h.es_retransmision
+    //     FROM programa p
+    //     INNER JOIN horario h ON p.id_programa = h.id_programa
+    //     WHERE (WEEKDAY(NOW()) + 1) = h.dia_semana AND TIME(NOW()) >= h.hora_inicio
+    //     ORDER BY h.dia_semana, h.hora_inicio DESC
+    //     LIMIT 1;
+    // ";
+
+    // $stmt = SQL::$conn->prepare($sql);
+    // // Ejecutar la consulta
+    // $stmt->execute();
+    // // Obtener todos los resultados en forma de arreglo asociativo
+    // $program = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $program = GetCurrProgram();
+?>
 <!-- <div class="player container-radio-player"> -->
     <div class="radio-player">
         <audio id="audio" src="https://streamingcwsradio30.com/8148/stream"></audio>
         <div class="current-program-info">
-            <img src="resources/uploads/img/programa_109[v0].300" alt="logo_programa">
+            <img src="<?php echo $program['url_img'] ?>.300" alt="logo_programa">
             <div>
                 <div>
                     <span class="curr-pro-txt">
@@ -11,19 +33,18 @@
                 </div>
                 <div>
                     <span class="curr-pro">
-                        #SoyComunicación Radio: Fanáticos del fandom
+                        <?php echo $program['nombre_programa'] ?>
                     </span>
                 </div>
                 <div class="container-tag-info">
-                    <span class='current-tag-info'>
-                        Retransmision
-                    </span>
+                    <?php
+                    $tagText = $program['es_retransmision'] ? "Retransmision" : "En vivo";
+                    $tagClass = $program['es_retransmision'] ? "retransmission" : "live";
+                    echo "<span class='current-tag-info $tagClass'>";
+                    echo $tagText;
+                    echo "</span>";
+                    ?>
                 </div>
-                <!-- <div class="frequency-band">
-                    <span>
-                        94.5FM
-                    </span>
-                </div> -->
             </div>
         </div>
         <!-- <div id="loading" class="loading">Cargando...</div> -->

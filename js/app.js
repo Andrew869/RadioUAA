@@ -1,5 +1,23 @@
+const routes = {
+    "": "pages/inicio.php",
+    "./": "pages/inicio.php",
+    "inicio": "pages/inicio.php",
+    "nosotros": "pages/nosotros.html",
+    "preguntas-frecuentes": "pages/preguntas-frecuentes.html",
+    "consejo-ciudadano": "pages/consejo-ciudadano.html",
+    "defensoria-de-las-audiencias": "pages/defensoria-de-las-audiencias.html",
+    "derechos-de-la-audiencia": "pages/derechos-de-la-audiencia.html",
+    "quejas-sugerencias": "pages/quejas-sugerencias.html",
+    "transparencia": "pages/transparencia.html",
+    "politica-de-privacidad": "pages/politica-de-privacidad.html",
+    "programacion": "php/programacion.php",
+    "contenido": "pages/contenido.html",
+    "contacto": "pages/contacto.html",
+    "404": "pages/404.html"
+};
 // Single Page Application (SPA)!!!!
-import { ShowPrograms } from './contenido.js';
+import { ToSeconds, FormatTime } from './utilities.js?v=2a4a54';
+import { ShowPrograms } from './contenido.js?v=2a4a54';
 // import { IsSticky } from './cal.js';
 // Obtener todos los enlaces de navegación
 // const navLinks = document.querySelectorAll('.nav-link');
@@ -7,46 +25,15 @@ const mainContent = document.getElementById('content');
 const options = document.querySelector('.nav-links > ul');
 const menuIcon = document.getElementById('menu-icon');
 const navLinks = document.querySelector('.nav-links');
+const searchBarContent = document.getElementsByClassName("search-bar-content")[0];
+const boxSearch = document.getElementsByClassName("box-search")[0];
+let programsContainer;
+let timeoutId;
+let timeToUpdate = 0;
 
 ExecuteBehavior(window.location.pathname.split('/').pop());
 
 SetupInternalLinks();
-
-// // Agregar evento click a cada enlace de navegación
-// document.querySelectorAll('.nav-link').forEach(link => {
-//     link.addEventListener('click', function(event) {
-//         event.preventDefault(); // Evita la acción por defecto del enlace
-
-//         let url = this.getAttribute('href'); // Obtener la URL del enlace
-
-//         if(!url)
-//             return;
-
-//         const displayedUrl = url;
-//         url = GetURLFile(url);
-//         // console.log(url);
-//         let formData = new FormData();
-//         formData.append('onlyContent', '1');
-
-//         // Cargar contenido nuevo
-//         fetch(url, {
-//             method: 'POST',
-//             body: formData
-//         })
-//             .then(response => response.text())
-//             .then(data => {
-//                 // Suponiendo que tienes un div con el ID 'content' para cargar el nuevo contenido
-//                 window.scrollTo(0, 0);
-//                 mainContent.innerHTML = data;
-                
-//                 // Actualizar la URL sin recargar
-//                 window.history.pushState({path: displayedUrl}, '', displayedUrl);
-
-//                 ExecuteBehavior(displayedUrl);
-//             })
-//             .catch(error => console.error('Error al cargar el contenido:', error));
-//     });
-// });
 
 // Manejar el historial del navegador (para usar el botón "Atrás" o "Adelante")
 // 'popstate' Se dispara cuando el usuario navega hacia atrás o hacia adelante en el historial usando los botones del navegador, pero no ocurre cuando se carga una nueva página.
@@ -57,26 +44,41 @@ window.addEventListener('popstate', function(event) {
     }
 
     const displayedUrl = url;
-    url = GetURLFile(url);
+    // url = GetURLFile(url);
+    url = routes[url];
 
     let formData = new FormData();
-    formData.append('onlyContent', '1');
+    formData.append('initPath', '../');
     // console.log(url);
     // Volver a cargar el contenido cuando se use "atrás" o "adelante"
     fetch(url, {
         method: 'POST',
         body: formData
     })
-        .then(response => response.text())
-        .then(data => {
-            window.scrollTo(0, 0);
-            document.getElementById('content').innerHTML = data;
-            ExecuteBehavior(displayedUrl.split('/').pop());
-        })
-        .catch(error => console.error('Error al manejar popstate:', error));
+    .then(response => response.text())
+    .then(data => {
+        AfterClick(data, displayedUrl.split('/').pop());
+    })
+    .catch(error => console.error('Error al manejar popstate:', error));
 });
 
+function AfterClick(data, request){
+    window.scrollTo(0, 0);
+
+    searchBarContent.classList.remove('show-searchBar');
+    boxSearch.classList.remove('show-boxSearch');
+    menuIcon.classList.remove("change");
+    navLinks.classList.remove("show-navlinks");
+    options.classList.remove('show-options');
+
+    document.getElementById("inputSearch").value = '';
+    mainContent.innerHTML = data;
+    SetupInternalLinks();
+    ExecuteBehavior(request);
+}
+
 function ExecuteBehavior(request){
+    clearTimeout(timeoutId);
     switch (request) {
         case 'contenido':
             ShowPrograms();       
@@ -84,40 +86,31 @@ function ExecuteBehavior(request){
         // case 'programacion':
         //     IsSticky();
         //     break;
+        case '':
+        case './':
+        case 'inicio':
+            {
+                programsContainer = document.querySelector('.next-programs-container');
+                SetupTimetoUpdate();
+                // timeoutId = setInterval(() => {UpdateProgramsInfo(programsContainer)} , 5000);
+                // console.log("inicioooooo");
+                break;
+            }
         default:
             break;
     }
 }
 
 function GetURLFile(url){
-    switch (url) {
-        case 'inicio':
-        case 'nosotros':
-        case 'preguntas-frecuentes':
-        case 'consejo-ciudadano':
-        case 'defensoria-de-las-audiencias':
-        case 'derechos-de-la-audiencia':
-        case 'quejas-sugerencias':
-        case 'transparencia':
-        case 'politica-de-privacidad':
-        case 'contenido':
-        case 'contacto':
-            url = `pages/${url}.html`;
-            break;
-        case 'programacion':
-            url = 'php/programacion.php';
-            break;
-        case './':
-        case '':
-            url = 'pages/inicio.html';
-            break;
-        case '404':
-        default:
-            // Página no encontrada (404)
-            url = 'pages/404.html';
-            break;
-    }
-    return url;
+    fetch('internal_links.json')
+    .then(response => response.json())
+    .then(data => {
+        resolve(data[url]);
+    })
+    .catch(error => {
+        console.error('Error al cargar routes.json', error);
+        reject(error);
+    });
 }
 
 menuIcon.addEventListener('click', function(e){
@@ -151,10 +144,13 @@ function LinkBehavior(event){
         return;
 
     const displayedUrl = url;
-    url = GetURLFile(url);
+
+    url = routes[url];
+
+    // url = GetURLFile(url);
     // console.log(url);
     let formData = new FormData();
-    formData.append('onlyContent', '1');
+    formData.append('initPath', '../');
 
     // Cargar contenido nuevo
     fetch(url, {
@@ -164,14 +160,17 @@ function LinkBehavior(event){
     .then(response => response.text())
     .then(data => {
         // Suponiendo que tienes un div con el ID 'content' para cargar el nuevo contenido
-        window.scrollTo(0, 0);
-        mainContent.innerHTML = data;
-        SetupInternalLinks();
+        AfterClick(data, displayedUrl);
+        // window.scrollTo(0, 0);
+        // boxSearch.classList.remove('show-boxSearch')
+        // document.getElementById("inputSearch").value = '';
+        // mainContent.innerHTML = data;
+        // SetupInternalLinks();
+        // ExecuteBehavior(displayedUrl);
 
         // Actualizar la URL sin recargar
         window.history.pushState({path: displayedUrl}, '', displayedUrl);
 
-        ExecuteBehavior(displayedUrl);
     })
     .catch(error => console.error('Error al cargar el contenido:', error));
 }
@@ -188,3 +187,98 @@ function LinkBehavior(event){
 //     event.returnValue = confirmationMessage; // Esto es necesario para algunos navegadores
 //     return confirmationMessage; // Algunos navegadores mostrarán este mensaje
 // });
+
+// SetupTimetoUpdate();
+
+function SetupTimetoUpdate(){
+    let formData = new FormData();
+    formData.append('GetCurrProgram', '');
+    fetch('php/jsRequest.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        let horaFin = ToSeconds(data[1]['hora_fin']);
+        if(horaFin === 0) horaFin = 86400;
+        timeToUpdate = (horaFin - ToSeconds(data[0])) * 1000;
+        timeoutId = setTimeout(UpdateProgramsInfo , timeToUpdate);
+        console.log("miliseconds to update programs: " + timeToUpdate);
+    })
+    .catch(error => console.error('Error al cargar el contenido:', error));
+}
+
+// function UpdateProgramsInfo(programsContainer){
+//     // console.log(intervalId);
+//     // let formData = new FormData();
+//     // formData.append('initPath', '../');
+//     fetch('php/programs_info.php')
+//     .then(response => response.text())
+//     .then(data => {
+//         programsContainer.innerHTML = data;
+//     })
+//     .catch(error => console.error('Error al cargar el contenido:', error));
+// }
+
+function UpdateProgramsInfo(){
+    // console.log("asdasd " + timeToUpdate);
+    let formData = new FormData();
+    formData.append('GetNextPrograms', '4');
+    fetch('php/jsRequest.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        while (programsContainer.firstChild) {
+            programsContainer.removeChild(programsContainer.firstChild);
+        }
+        data[1].forEach(program => {
+            let nextProgram = document.createElement('div');
+            nextProgram.classList.add('next-program');
+        
+            let img = document.createElement('img');
+            img.src = program.url_img + '.300';
+            img.alt = 'logo_programa';
+        
+            let info = document.createElement('div');
+            info.classList.add('info');
+        
+            let name = document.createElement('div');
+            name.classList.add('name');
+            name.innerHTML = `<span>${program.nombre_programa}</span>`;
+        
+            let schedule = document.createElement('div');
+            schedule.classList.add('schedule');
+            schedule.innerHTML = `<span>${FormatTime(program.hora_inicio)} - ${FormatTime(program.hora_fin)}</span>`;
+        
+            info.appendChild(name);
+            info.appendChild(schedule);
+        
+            nextProgram.appendChild(img);
+            nextProgram.appendChild(info);
+                    
+            programsContainer.appendChild(nextProgram);
+        });
+
+        let horaInicio = ToSeconds(data[1][0]['hora_inicio']);
+        if(horaInicio === 0) horaInicio = 86400;
+        timeToUpdate = (horaInicio - ToSeconds(data[0])) * 1000;
+        timeoutId = setTimeout(UpdateProgramsInfo , timeToUpdate);
+        console.log("miliseconds to update programs: " + timeToUpdate);
+    })
+    .catch(error => console.error('Error al cargar el contenido:', error));
+}
+
+// document.addEventListener('visibilitychange', function() {
+//     if (document.visibilityState === 'visible') {
+//         console.log('La aplicación web ha vuelto al primer plano');
+//         // Realizar acciones necesarias cuando la aplicación vuelve al primer plano
+//     }
+// });
+
+window.addEventListener('focus', function() {
+    // console.log('asdLa aplicación web ha vuelto al primer plano');
+    clearTimeout(timeoutId);
+    SetupTimetoUpdate();
+});

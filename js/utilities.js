@@ -1186,6 +1186,30 @@ export function ToHours(minutes) {
     return hours + ':' + mins;
 }
 
+export function ToSeconds(time) {
+    // Separar horas, minutos y segundos
+    let partes = time.split(':');
+    let horas = parseInt(partes[0], 10);
+    let minutos = parseInt(partes[1], 10);
+    let segundos = parseInt(partes[2], 10);
+
+    // Calcular los segundos totales
+    let segundosTotales = horas * 3600 + minutos * 60 + segundos;
+
+    return segundosTotales;
+}
+
+export function FormatTime(time) {
+    // Verifica si el tiempo tiene el formato HH:MM:SS
+    if (/^\d{2}:\d{2}:\d{2}$/.test(time)) {
+        // Extrae la parte de HH:MM y devuelve solo eso
+        return time.substr(0, 5); // Devuelve los primeros 5 caracteres (HH:MM)
+    } else {
+        // Si no tiene el formato esperado, devuelve el tiempo original
+        return time;
+    }
+}
+
 export function createModalExit(){
     createModal.style.display = 'none';
 

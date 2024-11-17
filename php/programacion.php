@@ -1,5 +1,5 @@
 <?php
-    include "db_connect.php";
+    include_once "db_connect.php";
 
     $hourHeight = 160; // 40px
     $maxSize = 18;

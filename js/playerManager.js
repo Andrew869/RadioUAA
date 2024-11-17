@@ -1,10 +1,19 @@
-import { GetSVG } from './utilities.js';
+import { GetSVG, ToSeconds } from './utilities.js?v=2a4a54';
 const audio = document.getElementById('audio');
 
 const playPauseBtn = document.getElementById('playPauseBtn');
 const playPauseIcon = document.getElementById('playPauseIcon');
 const syncBtn = document.getElementById('syncBtn');
 const volumeSlider = document.getElementById('volumeSlider');
+const programContainer = document.querySelector('.current-program-info');
+
+const programName = document.querySelector('.current-program-info .curr-pro');
+const programImg = document.querySelector('.current-program-info img');
+const programTag = document.querySelector('.current-program-info .current-tag-info');
+
+let timeoutId;
+let timeToUpdate = 0;
+
 // const loading = document.getElementById('loading');
 // const metadata = document.getElementById('metadata');
 
@@ -146,4 +155,75 @@ audio.addEventListener('pause', () => {
     // playPauseIcon.className = 'fa-solid fa-play';
     GetSVG(playPauseBtn, "../resources/img/svg/play.svg", ["24px", "24px", "black"]);
     // console.log("has paused");
+});
+
+SetupTimetoUpdate();
+
+function SetupTimetoUpdate(){
+    let formData = new FormData();
+    formData.append('GetCurrProgram', '');
+    fetch('php/jsRequest.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // programContainer.innerHTML = data;
+        let horaFin = ToSeconds(data[1]['hora_fin']);
+        if(horaFin === 0) horaFin = 86400;
+        timeToUpdate = (horaFin - ToSeconds(data[0])) * 1000;
+        timeoutId = setTimeout(UpdateProgramInfo , timeToUpdate);
+        console.log("milisec to update: " + timeToUpdate);
+    })
+    .catch(error => console.error('Error al cargar el contenido:', error));
+}
+
+function UpdateProgramInfo(){
+    // console.log("asdasd " + timeToUpdate);
+    let formData = new FormData();
+    formData.append('GetCurrProgram', '');
+    fetch('php/jsRequest.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // console.log(data);
+        // programContainer.innerHTML = data;
+        programName.textContent = data[1]['nombre_programa'];
+        programImg.src = data[1]['url_img'] + ".300";
+        if(programTag.classList.contains('live'))
+            programTag.classList.remove('live');
+        else
+            programTag.classList.remove('retransmission');
+
+        programTag.textContent = data[1]['es_retransmision'] ? "Retransmision" : "En vivo";
+        programTag.classList.add(data[1]['es_retransmision'] ? "retransmission" : "live");
+        
+        let horaFin = ToSeconds(data[1]['hora_fin']);
+        if(horaFin === 0) horaFin = 86400000;
+        timeToUpdate = (horaFin - ToSeconds(data[0])) * 1000;
+        timeoutId = setTimeout(UpdateProgramInfo , timeToUpdate);
+        console.log("milisec to update: " + timeToUpdate);
+    })
+    .catch(error => console.error('Error al cargar el contenido:', error));
+}
+
+// setTimeout(() => { audio.play() }, 5000);
+
+// let hasInteract = false
+
+// document.addEventListener('click', function() {
+//     if(!hasInteract) {
+//         hasInteract = true;
+//         audio.play().catch(error => {
+//             console.log('Error al reproducir audio:', error.message);
+//         });
+//     }
+// });
+
+window.addEventListener('focus', function() {
+    // console.log('asdLa aplicación web ha vuelto al primer plano');
+    clearTimeout(timeoutId);
+    SetupTimetoUpdate();
 });

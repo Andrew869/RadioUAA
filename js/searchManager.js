@@ -3,8 +3,12 @@ document.addEventListener("DOMContentLoaded", function () {
     // document.getElementById("icon-menu").addEventListener("click", toggleMenu);
     let searchBarVisible = false;
     const btnSearch = document.getElementById("button-search");
-    const searchBar = document.getElementsByClassName("search-bar-content")[0];
+    const searchBarContent = document.getElementsByClassName("search-bar-content")[0];
+    const searchBar = document.getElementsByClassName("search-bar-container")[0];
     const closeBtn = document.querySelector(".search-bar-content .close-btn");
+    // const links = document.querySelectorAll('box-search li a');
+
+    let isLink = false;
 
     btnSearch.addEventListener('click', showSearchBar);
     closeBtn.addEventListener('click', hideSearchBar);
@@ -26,7 +30,24 @@ document.addEventListener("DOMContentLoaded", function () {
     // document.getElementById("cover-ctn-search").addEventListener("click", hideSearchBar);
     document.getElementById("inputSearch").addEventListener("input", searchInternal);
 
-    const boxSearch = document.getElementById("box-search");
+    document.getElementById("inputSearch").addEventListener("focus", function(){
+        if(this.value !== '')
+            boxSearch.classList.add('show-boxSearch')
+    });
+    document.addEventListener('click', (e)=>{
+        if(!e.target.classList.contains('internal-link') && !e.target.classList.contains('search-bar-input')){
+            boxSearch.classList.remove('show-boxSearch')
+        }
+    });
+    // document.getElementById("inputSearch").addEventListener("blur", function(e){
+    //     document.addEventListener('click', (e)=>{
+
+    //     });
+    //     if(!isLink)
+    //         boxSearch.classList.remove('show-boxSearch')
+    // });
+
+    const boxSearch = document.getElementsByClassName("box-search")[0];
     const noResultsMessage = document.createElement('li');
     noResultsMessage.textContent = 'No se encontraron resultados';
     noResultsMessage.id = 'no-results-message';
@@ -47,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function showSearchBar() {
-        searchBar.classList.add('show-searchBar');
+        searchBarContent.classList.add('show-searchBar');
         let inputElement = document.getElementById('inputSearch');
         inputElement.focus();
         // // const coverCtnSearch = document.getElementById("cover-ctn-search");
@@ -63,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function hideSearchBar() {
-        searchBar.classList.remove('show-searchBar');
+        searchBarContent.classList.remove('show-searchBar');
         // const barsSearch = document.getElementById("cont-bars-search");
         // const coverCtnSearch = document.getElementById("cover-ctn-search");
         // const inputSearch = document.getElementById("inputSearch");
@@ -80,7 +101,8 @@ document.addEventListener("DOMContentLoaded", function () {
         let allItemsHidden = true;
 
         if (filter === "") {
-            boxSearch.style.display = "none";
+            // boxSearch.style.display = "none";
+            boxSearch.classList.remove('show-boxSearch');
             return;
         }
 
@@ -109,6 +131,12 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        boxSearch.style.display = found || allItemsHidden ? "block" : "none";
+        // boxSearch.style.display = found || allItemsHidden ? "block" : "none";
+
+        if(found || allItemsHidden)
+            boxSearch.classList.add('show-boxSearch');
+        else
+            boxSearch.classList.remove('show-boxSearch');
+
     }
 });

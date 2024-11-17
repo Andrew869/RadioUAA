@@ -48,6 +48,6 @@
         </div>
     </div>
 </footer>
-<script type="module" src="js/light-dark-mode.js?v=<?php echo time(); ?>"></script>
-<script src="js/navbar.js?v=<?php echo time(); ?>"></script>
-<!-- <script src="js/barrabuscar.js?v=<?php echo time(); ?>"></script> -->
+<script type="module" src="js/light-dark-mode.js?v=<?php echo PROJECT_HASH ?>"></script>
+<script src="js/navbar.js?v=<?php echo PROJECT_HASH ?>"></script>
+<!-- <script src="js/barrabuscar.js?v=<?php echo PROJECT_HASH ?>"></script> -->

@@ -36,12 +36,12 @@
         <div class="search-bar-content">
             <div class="search-bar-container">
                 <div class="search-bar">
-                    <input type="text" id="inputSearch" placeholder="Buscar..." aria-label="Search">
+                    <input type="text" class="search-bar-input" id="inputSearch" placeholder="Buscar..." aria-label="Search">
                     <label id="search-icon" class="icon" for="inputSearch">
                         <?php echo GetSVG('resources/img/svg/search.svg', ["18px", "18px", "black"]) ?>
                     </label>
                 </div>
-                <ul id="box-search">
+                <ul class="box-search">
                     <li><a class="internal-link" href="inicio"><?php echo GetSVG('resources/img/svg/search.svg', ['18px', '18px', 'black']) ?>Inicio</a></li>
                     <li><a class="internal-link" href="nosotros"><?php echo GetSVG('resources/img/svg/search.svg', ['18px', '18px', 'black']) ?>Acerca de Radio UAA</a></li>
                     <li><a class="internal-link" href="preguntas-frecuentes"><?php echo GetSVG('resources/img/svg/search.svg', ['18px', '18px', 'black']) ?>Preguntas Frecuentes</a></li>

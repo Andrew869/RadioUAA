@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radio Admin</title>
-    <link rel="stylesheet" href="../css/commonStyles.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../css/commonStyles.css?v=<?php echo PROJECT_HASH ?>">
 </head>
 <body>
     <header class="header">
