@@ -1,5 +1,5 @@
 <?php
-    define('PROJECT_HASH', '2a4a54');
+    define('PROJECT_HASH', 'c40e99');
     $currentTheme = null;
     if(isset($_COOKIE['theme']))
         $currentTheme = $_COOKIE['theme'];
@@ -126,6 +126,37 @@
             // $programs = array_merge($rows);
 
         }
+
+        return $programs;
+    }
+
+    function GetProgramsInfo(){
+        $sql = "
+            SELECT 
+                p.id_programa AS id,
+                p.nombre_programa AS nombre,
+                p.url_img AS imagen,
+                p.descripcion,
+                (
+                    SELECT GROUP_CONCAT(pr.nombre_presentador SEPARATOR ', ')
+                    FROM programa_presentador pp
+                    JOIN presentador pr ON pp.id_presentador = pr.id_presentador
+                    WHERE pp.id_programa = p.id_programa
+                ) AS presentadores,
+                (
+                    SELECT GROUP_CONCAT(g.nombre_genero SEPARATOR ', ')
+                    FROM programa_genero pg
+                    JOIN genero g ON pg.id_genero = g.id_genero
+                    WHERE pg.id_programa = p.id_programa
+                ) AS generos
+            FROM programa p;
+        ";
+
+        $stmt = SQL::$conn->prepare($sql);
+        // Ejecutar la consulta
+        $stmt->execute();
+        // Obtener todos los resultados en forma de arreglo asociativo
+        $programs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $programs;
     }

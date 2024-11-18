@@ -67,7 +67,19 @@
                     include "db_connect.php";
                     $output = [];
                     $output[] = date('H:i:s');
-                    $output[] = array_merge(GetNextPrograms(intval($args[0])));
+                    $output[] = GetNextPrograms(intval($args[0]));
+                    echo json_encode($output);
+                    break;
+                }
+            case 'GetProgramsInfo':
+                {
+                    include "db_connect.php";
+                    $info = [];
+                    $output = [];
+                    $info[] = SQL::Select(SQL::PRESENTADOR, [], ['nombre_presentador'])->fetchAll(PDO::FETCH_COLUMN);
+                    $info[] = SQL::Select(SQL::GENERO, [], ['nombre_genero'])->fetchAll(PDO::FETCH_COLUMN);
+                    $output[] = $info;
+                    $output[] = GetProgramsInfo();
                     echo json_encode($output);
                     break;
                 }

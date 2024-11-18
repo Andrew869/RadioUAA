@@ -13,7 +13,7 @@
         public static $servername = "localhost";
         public static $username = "root";
         public static $password = "";
-        public static $dbname='radio_db';
+        public static $dbname='radio_dbv2';
 
         const NULL = "null";
         const ALL = "*";
