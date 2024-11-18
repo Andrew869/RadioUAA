@@ -9,6 +9,8 @@
     --snow: #FFFAFA;
     --verdeaqua: #66CDAA;
     --verdemasclaro: #4bb578;
+    --Bisque: #FFE4C4;
+    --silver: #C0C0C0;
 }
 
 *, *::after, *::before{
@@ -27,6 +29,8 @@ html{
 body {
     /* background-color: yellow; */
     height: 100%;
+    background-color: var(--GrisClaro);
+
     /* margin: 0;
     padding: 0; */
 }
@@ -67,7 +71,6 @@ li {
     /* height: calc(100vh - (100px)); */
     /* background-color: yellow; */
     z-index: 2;
-    /* margin-right: 10px; */
 }
 
 /* Botones de redes sociales inicio */
@@ -111,6 +114,41 @@ li {
     background: linear-gradient(145deg, #1DB954, #1ED760); /* Verde de Spotify */
 }
 
+
+/* Botones de redes sociales fin */
+.container-descarga-buttons {
+    display: flex;
+    justify-content: center;
+    bottom: 10px; /* Posición fija en el fondo de la pantalla */
+    /* width: 50px; */
+    left: 50%; /* Centra el contenedor en el footer */
+    z-index: 2;
+}
+
+.descarga-buttons {
+    display: flex;
+    flex-direction: row; /* Cambiado a fila para el footer */
+    gap: 15px;
+}
+
+.descarga-button {
+    text-decoration: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.descarga-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    background-color: var(--Amarillo);
+}
+
 .google-play {
     background: linear-gradient(145deg, #34A853, #4285F4); /* Verde y azul de Google Play */
 }
@@ -119,12 +157,11 @@ li {
     background: linear-gradient(145deg, #A2AAAD, #1C1C1E); /* Gris y negro de Apple Store */
 }
 
-.social-button:hover {
+.descarga-button:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
     background-color: var(--Amarillo);
 }
-/* Botones de redes sociales fin */
 
 /* .app-promo {
     position: fixed;
@@ -249,7 +286,6 @@ footer {
 
 .copyright-container .copyright-links{
     width: 100%;
-    /* background-color: #128C7E; */
     display: flex;
     flex-direction: row;
 }
