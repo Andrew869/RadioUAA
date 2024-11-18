@@ -7,7 +7,7 @@
         exit();
     }
 
-    include "../db_connect.php";
+    include "../php/db_connect.php";
 
     $db_token = SQL::Select(SQL::USER, ["id_user" => $_SESSION['id_user']], ["session_token"])->fetchColumn();
 
@@ -94,7 +94,7 @@
         }
         else if($length === 3){ // types: list y img
             if(count($_FILES)){
-                $target_dir = "../resources/uploads/img/";
+                $target_dir = "/resources/uploads/img/";
                 $image_path = SQL::Select($_POST['contentName'], [SQL::GetPrimaryKeyName($_POST['contentName']) => $_POST['contentId']], [$_POST['fieldName']])->fetchColumn();
                 $nombrePrograma = null;
                 $version = null;
@@ -111,7 +111,7 @@
                 $target_file = $target_dir . $nombrePrograma . "[v$version]." . $newImageFileType;
                 if(isset($version))
                     if(ValidateFile($file))
-                        if(move_uploaded_file($file["tmp_name"], $target_file)){
+                        if(move_uploaded_file($file["tmp_name"], "../$target_file")){
                             SQL::Update($_POST['contentName'], $_POST['contentId'], [$_POST['fieldName'] => $target_file]);
                             unlink($image_path);
                         }

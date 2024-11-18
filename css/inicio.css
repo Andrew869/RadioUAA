@@ -1,0 +1,64 @@
+.main-content {
+    /* background-color: yellow; */
+    display: flex;
+    justify-content: space-around;
+}
+
+.facebook-embed {
+    width: calc(50vw);
+    /* height: calc(100vh - 280px); */
+    aspect-ratio: 16/9;
+    background-color: #0866FF;
+}
+
+.next-programs-content {
+    /* background-color: yellow; */
+    /* background-color: #00a85f; */
+    /* width: 50%; */
+}
+
+.next-programs-content > div:first-child {
+    color: #27AE60;
+    padding: 10px 10px 0 10px;
+}
+
+.next-programs-content > div:not(:first-child):not(:last-child){
+    /* margin: 30px 0; */
+}
+
+.next-program{
+    /* background-color: tan; */
+    /* width: 300px; */
+    height: 100px;
+    display: flex;
+    margin: 10px;
+}
+
+.next-program img{
+    background-color: #005530;
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    border-radius: 6px;
+}
+
+.next-program .info {
+    /* background-color: rgba(0, 128, 128, 0.26); */
+    width: calc(100% - 80px);
+    padding-left: 10px;
+}
+
+.next-program .info > div {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.next-program .info .name {
+    /* font-size: 1.2rem; */
+    font-weight: bold;
+}
+
+.next-program .info .schedule {
+    font-size: 0.8rem;
+}

@@ -1,4 +1,4 @@
-import { AddInputToCurrentLayer, CheckHeights, GetInputHeight, AddContent, CreateEvent, SumbitCreateRequest, SumbitUpdateRequest ,CreateModal, CreateInput, SubmitDeleteRequest, ToHours } from './utilities.js';
+import { AddInputToCurrentLayer, CheckHeights, GetInputHeight, AddContent, CreateEvent, SumbitCreateRequest, SumbitUpdateRequest ,CreateModal, CreateInput, SubmitDeleteRequest, ToHours } from './utilities.js?v=2a4a54';
 // const modals_container = document.getElementById('modals_container');
 // const originalModal = modals_container.querySelector('#originalModal');
 // const original_forms = document.getElementById('original_forms');
@@ -104,7 +104,7 @@ function UpdateContent(contentName, contentId, fieldName, fieldTitle, inputType,
         case 'schedules':
             {
                 let values = JSON.parse(currentValue);
-                let daysArray = values[0];  
+                let daysArray = values[0];
                 let timesInMinutes = values[1];
                 let retrasmision = values[2];
 
@@ -114,7 +114,7 @@ function UpdateContent(contentName, contentId, fieldName, fieldTitle, inputType,
                     let options = daysList.querySelectorAll('li');
                     daysArray.forEach(selectedDay => {
                         for (let i = 0; i < options.length; i++) {
-                            if (options[i].textContent === selectedDay) {
+                            if (options[i].getAttribute('id_day') === selectedDay) {
                                 options[i].classList.add('selected');
                                 break;
                             }

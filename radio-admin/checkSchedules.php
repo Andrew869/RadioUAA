@@ -1,6 +1,5 @@
-<?php 
-include "../db_connect.php";
-
+<?php
+    include "connNCheck.php";
 // $dia_semana = $_GET['dia_semana'];
 // $hora_inicio = $_GET['hora_inicio'];
 // $hora_fin = $_GET['hora_fin'];

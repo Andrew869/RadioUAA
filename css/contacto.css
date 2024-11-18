@@ -1,0 +1,61 @@
+/* Galeria container */
+.slideshow-container {
+  max-width: 700px;
+  position: relative;
+  margin: auto;
+  text-align: center; /* Centra el contenido */
+  z-index: -1;
+
+}
+
+.mySlides img {
+    border-radius: 12px;
+    text-align: center;
+    width: 50%;
+    /* border: 5px solid var(--VerdeObscuro); */
+    padding: 6px;
+    margin: 20px auto;
+    box-shadow: 0 4px 15px rgba(0, 128, 0, 0.4);
+    background: linear-gradient(145deg, #66ff99, #00cc44, #006600); 
+}
+.mySlides {
+  display: none;
+  margin-top: 50px;
+}
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+
+/* google maps */
+/* Estilo para el mapa de Google con marco */
+.map-container {
+    margin: 70px auto;
+    box-shadow: rgba(33, 176, 8, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;   
+    border-radius: 1rem; /* Esquinas redondeadas */
+    height: 56%;
+    width: 60%; /* Controlar el ancho del marco */
+    max-width: 800px; /* Ancho máximo del marco */
+}
+
+.map-container iframe {
+    width: 100%; /* El iframe ocupa todo el ancho del contenedor */
+    height: 400px; /* Altura del iframe */
+    border-radius: 1rem;
+    border: none; /* Sin borde en el iframe */
+}
+
+/* textos */
+h1{
+  font-size: 40px;
+}
+h4{
+  text-align: center;
+  font-size: 30px;
+  margin: auto;
+}
+li{
+  text-align: center;
+}

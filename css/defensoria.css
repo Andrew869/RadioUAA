@@ -1,0 +1,297 @@
+/*nuevo*/
+.defensoria-fondo{
+    background-image: url(../resources/img/defaudi.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 450px;
+    position: relative;
+    z-index: -1;
+}
+
+.contenido-defensoria-fondo{
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0 0 0 / 0.3);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.contenido-defensoria-fondo h2,
+.contenido-defensoria-fondo p{
+    animation: colorChange 5s infinite;
+}
+
+.new-boton{
+    background-color: var(--seagreen);
+    color: var(--blanco);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    display: inline-block;
+    margin: 0;
+    margin-top: 0.5rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: .5rem;
+    text-align: center;
+    border: none;
+    margin-left: 10%;
+}
+.new-boton:hover{
+    cursor: pointer;
+    color: var(--Blanco);
+}
+@media (prefers-color-scheme: dark) {
+    .new-boton:hover {
+        color: var(--obscuro); 
+    }
+}
+.new-boton p{
+    color: var(--Blanco);
+}
+.contenedor-Lic {
+    display: flex;
+    justify-content: space-between; 
+    align-items: flex-start; 
+    gap: 10px; 
+}
+
+.lado-derecho-Lic figure {
+    text-align: center;
+}
+
+.lado-derecho-Lic img {
+    width: 450px;
+    height: 300px;
+}
+
+.lado-izqueirdo-Lic {
+    flex: 1; /* El lado derecho tomará el espacio restante */
+    margin-left: 3.75%;
+}
+.normatividad {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+.documentos-texto-Defensoria ul {
+    padding-left: 10%;
+}
+.documentos-texto-Defensoria li {
+    margin-bottom: 20px;
+}
+
+.documentos-texto-Defensoria a {
+    color: var(--obscuro);
+}
+
+.documentos-texto-Defensoria a strong {
+    padding: 1px 13px;
+    background-color: var(--VerdeClaro);
+    border-radius: 1rem;
+    font-size: 20px;
+}
+
+.documentos-texto-Defensoria a:hover strong {
+    background-color: var(--seagreen);
+}
+
+.archivo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    margin-left: 10%;
+}
+.archivo a{
+    color: var(--seagreen);
+}
+.archivo strong{
+    color: var(--obscuro);
+}
+
+.enlace-pdf {
+    display: flex;
+    align-items: center;
+    color: var(--obscuro);
+    margin-right: 20px;
+    font-size: 16px;
+}
+
+.icono-pdf {
+    width: 20px;
+    height: auto;
+    margin-right: 10px;
+}
+.derechos{
+    margin-left: 11%;
+}
+
+.derechos ul li{
+    position: relative;
+    list-style: none;
+    margin-left: 20px;
+    margin-top: 1rem;
+}
+
+.derechos ul li::before {
+    content: '';
+    position: absolute;
+    left: -20px; 
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle, var(--seagreen), var(--VerdeObscuro),var(--VerdeClaro),var(--verdemasclaro));
+    border-radius: 50%;
+}
+.container-quejas {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+.izquierda-quejas,
+.derecha-quejas {
+    width: 48%; /* Ambas columnas tendrán un 48% de ancho */
+}
+
+/* Estilos para la Columna Izquierda */
+.izquierda-quejas h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+
+.izquierda-quejas h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.izquierda-quejas p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+.derecha-quejas h2{
+    margin-left: 40%;
+}
+.formulario{
+    background-color: var(--seagreen);
+    width: min( 60rem, 100%);
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: 1rem;
+}
+.formulario fieldset {
+    border: none;
+}
+.formulario legend {
+    text-align: center;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: var(--Blanco);
+}
+
+
+.campo{
+    margin-bottom: 1rem;
+}
+.campo label {
+    color: var(--blanco);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+.campo textarea{
+    height: 15rem;
+}
+.w-sm-100{
+    width: 100%;
+}
+@media (min-width: 768px) {
+    .w-sm-100{
+        width: auto;
+    }
+}
+.input-text{
+    width: 80%;
+    border: none;
+    padding: 1.5rem;
+    border-radius: .5rem;
+}
+
+.flex{
+    display: flex;
+}
+.alinear-derecha{
+    justify-content: flex-end;
+}
+
+.new-boton-formulario{
+    background-color: var(--VerdeObscuro);
+    color: var(--Blanco);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    display: inline-block;
+    margin: 0;
+    margin-top: 0.5rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: .5rem;
+    text-align: center;
+    border: none;
+    margin-left: 80%;
+}
+.new-boton:hover{
+    cursor: pointer;
+    color: var(--Blanco);
+}
+@media (prefers-color-scheme: dark) {
+    .new-boton:hover {
+        color: var(--obscuro); 
+    }
+}
+.new-boton p{
+    color: var(--Blanco);
+}
+.opciones-transparencia{
+    margin-left: 10%;
+}
+.lista-op{
+    margin-left: 10%;
+}
+
+.lista-op ul {
+    counter-reset: list-counter; /* Reinicia el contador */
+}
+.lista-op a{
+    color: var(--seagreen);
+}
+
+.lista-op ul li {
+    position: relative;
+    list-style: none;
+    margin-left: 30px; 
+    counter-increment: list-counter; 
+    margin-top: 0.5rem;
+}
+
+.lista-op ul li::before {
+    content: counter(list-counter) '. ';
+    position: absolute;
+    left: -30px; /* Ajusta la posición del número */
+    display: inline-block;
+    margin-right: 10px;
+    padding: 2px;
+    color: black;
+    font-weight: bold;
+}

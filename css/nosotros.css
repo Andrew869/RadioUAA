@@ -1,0 +1,90 @@
+/* consejo ciudadano inicio */
+
+/* Contenedor específico para los Licenciados */
+.consejo-licenciados {
+    width: 80%; /* Ajusta el ancho del contenedor */
+    padding: 20px 0; /* Añade espacio arriba y abajo */
+}
+
+/* Alinear los miembros del consejo en forma de lista vertical */
+.consejo-integrantes {
+    display: block;
+    flex-direction: column;
+    padding: 5%;
+}
+
+.integrante {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px; /* Espaciado entre cada integrante */
+    justify-content: flex-start; /* Alinear el contenido a la izquierda */
+    padding: .5rem; /* Añadir padding dentro de cada sección de integrante */
+    background-color: var(--GrisClaro); /* Fondo para diferenciar */
+    border-radius: 1rem;
+}
+
+.integrante-img {
+    display: flex;
+    width: 180px;
+    height: 180px;
+    margin-right: 50px;
+    border-radius: 1rem;
+}
+
+.integrante h2 {
+    font-size: 1.8rem; 
+    margin-bottom: 10px; 
+}
+
+.integrante p {
+    text-align: justify;
+    margin: 1rem;
+}
+
+.consejo-documentos {
+    display: flex;
+    margin: 40px 10%;
+    justify-content: space-between;
+}
+
+.documentos-img {
+    border-radius: 1rem;
+    width: 50%;
+    height: 50%;
+}
+
+.documentos-texto ul {
+    padding-left: 10%;
+}
+
+.documentos-texto li {
+    margin-bottom: 20px;
+}
+
+.documentos-texto a {
+    color: var(--obscuro);
+}
+
+.documentos-texto a strong {
+    padding: 1px 13px;
+    background-color: var(--VerdeClaro);
+    border-radius: 1rem;
+    font-size: 20px;
+}
+
+.documentos-texto a:hover strong {
+    background-color: var(--seagreen);
+}
+
+.archivos-Consejo{
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    margin-left: 10%;
+}
+.archivos-Consejo a{
+    color: var(--seagreen);
+}
+.archivos-Consejo strong{
+    color: var(--obscuro);
+}

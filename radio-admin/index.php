@@ -1,27 +1,5 @@
 <?php 
-    session_start();
-    date_default_timezone_set("America/Mexico_City");
-
-    if(!isset($_SESSION['id_user'])){
-        header('Location: login');
-        exit();
-    }
-
-    include "../db_connect.php";
-
-    $db_token = SQL::Select(SQL::USER, ["id_user" => $_SESSION['id_user']], ["session_token"])->fetchColumn();
-
-    if($_SESSION['session_token'] !== $db_token){
-        setcookie("session_token", "", time() - 3600);
-        session_unset();
-        session_destroy();
-        
-        header("Location: login");
-        exit();
-    }else if(!isset($_COOKIE['session_token'])){
-        header("Location: logout");
-        exit();
-    }
+    include "connNCheck.php";
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -29,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radio Admin</title>
-    <link rel="stylesheet" href="../css/commonStyles.css">
+    <link rel="stylesheet" href="../css/commonStyles.css?v=<?php echo PROJECT_HASH ?>">
 </head>
 <body>
     <header class="header">
