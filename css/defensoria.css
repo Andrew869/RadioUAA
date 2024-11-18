@@ -27,7 +27,7 @@
   
 .texto-defensoria p {
     margin: 20px 90px;
-    /* list-style: none; */
+    list-style: none;
 }
 
 .texto-defensoria a {
@@ -82,6 +82,7 @@
 
 }
 .archivo-documentos a:hover {
+    color: inherit;
     text-decoration: underline; 
 }
 
@@ -306,6 +307,7 @@
 }
 
 .texto-transparencia a:hover {
+    color: inherit;
     text-decoration: underline; 
 }
 
@@ -315,8 +317,6 @@
     margin-right: 10px;
     flex-shrink: 0; 
 }
-
-
 /* Transparencia fin */
 
 
