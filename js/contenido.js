@@ -1,115 +1,296 @@
-const programas = [
-    {
-        id: 1,
-        titulo: "#Cultura Freak",
-        imagen: "https://radio.uaa.mx/wp-content/uploads/2021/08/Anchor-16a-temporada-300x300.jpg",
-        nombre: "#Cultura Freak",
-        produccion: "Vladimir Guerrero , Julio Cortez , Isaac Benitez 'El Cheche' y Gerardo 'Roger' Loera",
-        genero: "Hablado, Informativo, Opinión",
-        horario: "",
-        descripcion: "#CulturaFreak es un espacio de discusión, análisis y (des)información sobre todo lo relacionado del mundo de los Cómics, Manga, Anime, Películas de Culto, Series, Literatura Fantástica, Juegos de Rol, Juegos de Cartas Coleccionables, Wargames y demás cosas que antes eran de Frikis, pero ahora se han ganado un lugar dentro del gusto y la Cultura Popular en México y el Mundo. Todo esto y muchas incoherencias más, platicado y a veces analizado por tus 4 Frikis favoritos desde su muy particular y extraño punto de vista."
-    },
-    {
-        id: 2,
-        titulo: "#SoyComunicacoión Radio: Ce de Casa",
-        imagen: "https://radio.uaa.mx/wp-content/uploads/2024/04/Captura-de-Pantalla-2024-04-04-a-las-9.47.15-300x135.png",
-        nombre: "#SoyComunicación Radio: Ce de Casa",
-        produccion: "",
-        genero: "",
-        horario: "",
-        descripcion: "Programa del departamento académico de comunicación."
-    },
-    {
-        id: 3,
-        titulo: "#SoyComunicación Radio: Es Arte",
-        imagen: "https://radio.uaa.mx/wp-content/uploads/2024/04/Captura-de-Pantalla-2024-06-18-a-las-16.19.42-300x124.png",
-        nombre: "#SoyComunicación Radio: Es Arte",
-        produccion: "",
-        genero: "",
-        horario:"",
-        descripcion: "Acompaña a nuestros estudiantes del 4o. Semestre de la Licenciatura en Comunicación e Información a descubrir si sus películas, videojuegos, libros y canciones favoritas son arte… o no."
-    },
-    {
-        id: 4,
-        titulo: "#SoyComunicación Radio: Fanáticos del Fandom",
-        imagen: "https://radio.uaa.mx/wp-content/uploads/2024/04/277174872_1152867362205010_1555495053818311406_n-150x150.jpeg",
-        nombre: "#SoyComunicación Radio: Fanáticos del Fandom",
-        produccion: "",
-        genero: "",
-        horario: "",
-        descripcion: "Todos somos fanáticos de algo, nosotros del fandom 😄Espacio radiofónico que da voz a los fanáticos sobre eso que les apasiona."
-    },
-    {
-        id: 5,
-        titulo: "#SoyComunicación Radio: HollyWow",
-        imagen: "https://radio.uaa.mx/wp-content/uploads/2024/04/278078471_119057040737799_4942402925644699556_n-300x300.jpeg",
-        nombre: "#SoyComunicación Radio: HollyWow",
-        produccion: "",
-        genero: "",
-        horario: "",
-        descripcion: "Hollywow te trae todos los viernes, una nueva edición con noticias, entrevistas, cápsulas y recomendaciones sobre las series y películas que no te puedes perder. «Hollywow, donde damos opiniones impopulares sobre cinema popular»."
-    },
-    {
-        id: 6,
-        titulo: "Natty Reggae",
-        imagen: "https://radio.uaa.mx/wp-content/uploads/2023/06/Logo-Natty-Reggae-300x300.png",
-        nombre: "Natty Reggae",
-        produccion: "Osvaldo Rodriguez",
-        genero: "Musical",
-        horario: "",
-        descripcion: "Un programa musical que te transporta a los vibrantes ritmos del reggue y otros géneros. Disfruta de la mejor música con una fusión de estilos autóctonos y contemporáneos."
-    }
-];
+let programas;
+let filtroGenero;
+let filtroPresentador 
+let buscadorNombre
 
+export function SetupPrograms(){
+    const contenedorProgramas = document.getElementById('contenedorProgramas');
+    filtroGenero = document.getElementById('filtroGenero');
+    filtroPresentador = document.getElementById('filtroPresentador');
+    buscadorNombre = document.getElementById('buscadorNombre');
+    const alternarVista = document.getElementById('alternarVista');
+    const modal = document.getElementById('modal');
+    const btnCerrar = document.getElementsByClassName('cerrar')[0];
 
-const modal = document.getElementById('modal');
-const closeBtn = document.getElementsByClassName('close')[0];
+    GetProgramsInfo();
 
-function crearTarjetaPrograma(programa) {
-    const tarjeta = document.createElement('div');
-    tarjeta.className = 'programa';
-    tarjeta.innerHTML = `
-        <img src="${programa.imagen}" alt="${programa.titulo}">
-        <div class="descripcion-breve">${programa.nombre}</div>
-    `;
-    tarjeta.addEventListener('click', () => abrirModal(programa));
-    return tarjeta;
-}
-
-function abrirModal(programa) {
-    document.getElementById('modal-titulo').textContent = programa.titulo;
-    document.getElementById('modal-imagen').src = programa.imagen;
-    document.getElementById('modal-imagen').alt = programa.titulo;
-    document.getElementById('modal-produccion').textContent = programa.produccion;
-    document.getElementById('modal-genero').textContent = programa.genero;
-    document.getElementById('modal-horario').textContent = programa.horario;
-    document.getElementById('modal-descripcion').textContent = programa.descripcion;
-    modal.style.display = 'block';
-}
-
-// closeBtn.onclick = function() {
-//     modal.style.display = 'none';
-// }
-
-window.onclick = function(event) {
-    if (event.target == modal) {
+    btnCerrar.onclick = function() {
         modal.style.display = 'none';
     }
+
+    window.onclick = function(evento) {
+        if (evento.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+    filtroGenero.addEventListener('change', renderizarProgramas);
+    filtroPresentador.addEventListener('change', renderizarProgramas);
+    buscadorNombre.addEventListener('input', renderizarProgramas);
+    alternarVista.addEventListener('click', alternarVistaModo);
 }
 
-export function ShowPrograms(){
-    const grid = document.getElementById('programas-grid');
-    programas.forEach(programa => {
-        grid.appendChild(crearTarjetaPrograma(programa));
+function GetProgramsInfo(){
+    let formData = new FormData();
+    formData.append('GetProgramsInfo', '');
+    fetch('php/jsRequest.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        programas = data[1];
+        programas.forEach(programa => {
+            if(!programa.presentadores) programa.presentadores = '';
+            if(!programa.generos) programa.generos = '';
+        });
+        llenarFiltros(data[0]);
+        renderizarProgramas();
+    })
+    .catch(error => console.error('Error al cargar el contenido:', error));
+}
+
+
+const comentariosPorPrograma = {};
+
+function llenarFiltros(info) {
+    const generos = info[1];
+    
+    // const generos = [...new Set(programas.flatMap(programa => programa.genero.split(', ')))];
+
+    generos.forEach(genero => {
+        const opcion = document.createElement('option');
+        opcion.value = genero;
+        opcion.textContent = genero;
+        filtroGenero.appendChild(opcion);
+    });
+
+    // const presentadores = [...new Set(programas.flatMap(programa => programa.presentadores.split(', ')))];
+    const presentadores = info[0];
+    presentadores.forEach(presentador => {
+        const opcion = document.createElement('option');
+        opcion.value = presentador.trim();
+        opcion.textContent = presentador.trim();
+        filtroPresentador.appendChild(opcion);
     });
 }
 
-// document.getElementById('form-comentario').addEventListener('submit', function(event) {
-//     event.preventDefault(); // Evita que se recargue la página
+function crearElementoPrograma(programa) {
+    const elemento = document.createElement('div');
+    elemento.className = 'programa';
 
-//     const nombre = document.getElementById('nombre').value;
-//     const comentario = document.getElementById('comentario').value;
+    const esListaView = contenedorProgramas.classList.contains('lista');
 
-//     // Limpiar el formulario
-//     document.getElementById('form-comentario').reset();
-// });
+    let generos = programa.generos? programa.generos : '';
+
+    if (esListaView) {
+        elemento.innerHTML = `
+            <img src="${programa.imagen}.300" alt="${programa.nombre}">
+            <div class="programa-info">
+                <div class="programa-nombre">${programa.nombre}</div>
+                <div>${programa.descripcion}</div>
+            </div>
+        `;
+    } else {
+        elemento.innerHTML = `
+            <img src="${programa.imagen}.300" alt="${programa.nombre}">
+            <div class="programa-info">
+                <div class="programa-nombre">${programa.nombre}</div>
+                <div>${generos}</div>
+            </div>
+        `;
+    }
+    
+    elemento.addEventListener('click', () => abrirModal(programa));
+    return elemento;
+}
+
+function renderizarProgramas() {
+    const programasFiltrados = programas
+        .filter(programa => 
+            (filtroGenero.value === '' || programa.generos.includes(filtroGenero.value)) &&
+            (filtroPresentador.value === '' || programa.presentadores.toLowerCase().includes(filtroPresentador.value.toLowerCase())) &&
+            programa.nombre.toLowerCase().includes(buscadorNombre.value.toLowerCase())
+        );
+    contenedorProgramas.innerHTML = '';
+    programasFiltrados.forEach(programa => {
+        contenedorProgramas.appendChild(crearElementoPrograma(programa));
+    });
+}
+
+function alternarVistaModo() {
+    const gridIcon = document.getElementById('gridIcon');
+    const listIcon = document.getElementById('listIcon');
+
+    if (contenedorProgramas.classList.contains('cuadricula')) {
+        contenedorProgramas.classList.remove('cuadricula');
+        contenedorProgramas.classList.add('lista');
+        gridIcon.style.display = 'block';
+        listIcon.style.display = 'none';
+    } else {
+        contenedorProgramas.classList.remove('lista');
+        contenedorProgramas.classList.add('cuadricula');
+        gridIcon.style.display = 'none';
+        listIcon.style.display = 'block';
+    }
+
+    renderizarProgramas();
+}
+
+function abrirModal(programa) {
+    document.getElementById('nombreModal').textContent = programa.nombre;
+    document.getElementById('nombreModal').dataset.programaId = programa.id;
+    document.getElementById('imagenModal').src = programa.imagen;
+    document.getElementById('imagenModal').alt = programa.nombre;
+    document.getElementById('descripcionModal').textContent = programa.descripcion;
+    document.getElementById('horarioModal').textContent = programa.horario;
+    document.getElementById('presentadoresModal').textContent = programa.presentadores;
+    document.getElementById('generoModal').textContent = programa.genero;
+    
+    const comentariosContainer = document.getElementById('comentarios');
+    comentariosContainer.innerHTML = '<h3>Comentarios</h3>';
+
+    if (comentariosPorPrograma[programa.id]) {
+        comentariosPorPrograma[programa.id].forEach(comentario => {
+            const comentarioElement = crearElementoComentario(comentario.nombre, comentario.fecha, comentario.mensaje);
+            comentariosContainer.appendChild(comentarioElement);
+        });
+    }
+
+    modal.style.display = 'block';
+}
+
+function agregarComentario(parentId = null) {
+    const nombre = document.getElementById('nombre').value;
+    const email = document.getElementById('email').value;
+    const mensaje = document.getElementById('mensaje').value;
+    const errorMensaje = document.getElementById('error-mensaje');
+    const programaId = document.getElementById('nombreModal').dataset.programaId;
+
+    if (!validarCampos(nombre, email, mensaje, errorMensaje)) {
+        return;
+    }
+
+    const fecha = new Date();
+    const fechaFormateada = formatearFecha(fecha);
+
+    const nuevoComentario = {
+        nombre: nombre,
+        fecha: fechaFormateada,
+        mensaje: mensaje
+    };
+
+    if (!comentariosPorPrograma[programaId]) {
+        comentariosPorPrograma[programaId] = [];
+    }
+    comentariosPorPrograma[programaId].unshift(nuevoComentario);
+
+    const comentarioElement = crearElementoComentario(nombre, fechaFormateada, mensaje);
+    document.getElementById('comentarios').insertBefore(comentarioElement, document.getElementById('comentarios').firstChild.nextSibling);
+
+    document.getElementById('nombre').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('mensaje').value = '';
+    errorMensaje.textContent = '';
+}
+
+function validarCampos(nombre, email, mensaje, errorMensaje) {
+    if (!nombre || !email || !mensaje) {
+        errorMensaje.textContent = 'Por favor, completa todos los campos.';
+        return false;
+    }
+
+    if (!validarEmail(email)) {
+        errorMensaje.textContent = 'Por favor, ingresa un correo electrónico válido.';
+        return false;
+    }
+
+    return true;
+}
+
+function validarEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
+
+function formatearFecha(fecha) {
+    const opciones = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+    return fecha.toLocaleDateString('es-ES', opciones);
+}
+
+function crearElementoComentario(nombre, fecha, mensaje, respondiendo = null) {
+    const comentario = document.createElement('div');
+    comentario.className = 'comentario';
+    comentario.id = 'comentario-' + Date.now();
+
+    let headerText = nombre;
+    if (respondiendo) {
+        headerText = `${nombre} respondió a ${respondiendo}`;
+    }
+
+    comentario.innerHTML = `
+        <div class="comentario-header">
+            <div class="comentario-info">
+                <p class="comentario-autor">${headerText}</p>
+                <p class="comentario-fecha">${fecha}</p>
+            </div>
+        </div>
+        <div class="comentario-contenido">${mensaje}</div>
+        <button class="btn-responder" onclick="mostrarFormularioRespuesta('${comentario.id}', '${nombre}')">Responder</button>
+    `;
+
+    return comentario;
+}
+
+function mostrarFormularioRespuesta(comentarioId, nombreOriginal) {
+    const comentario = document.getElementById(comentarioId);
+    const formularioExistente = comentario.querySelector('.formulario-comentario');
+    
+    if (formularioExistente) {
+        formularioExistente.remove();
+        return;
+    }
+
+    const formulario = document.createElement('div');
+    formulario.className = 'formulario-comentario';
+    formulario.innerHTML = `
+        <h4>Responder a ${nombreOriginal}</h4>
+        <input type="text" placeholder="Tu nombre" maxlength="20" required>
+        <input type="email" placeholder="Tu correo electrónico" maxlength="20" required>
+        <textarea placeholder="Tu respuesta" maxlength="100" required></textarea>
+        <div class="error"></div>
+        <button onclick="responderComentario('${comentarioId}')">Enviar respuesta</button>
+    `;
+
+    comentario.appendChild(formulario);
+}
+
+function responderComentario(comentarioId) {
+    const comentario = document.getElementById(comentarioId);
+    const formulario = comentario.querySelector('.formulario-comentario');
+    const nombre = formulario.querySelector('input[type="text"]').value;
+    const email = formulario.querySelector('input[type="email"]').value;
+    const mensaje = formulario.querySelector('textarea').value;
+    const errorMensaje = formulario.querySelector('.error');
+
+    if (!validarCampos(nombre, email, mensaje, errorMensaje)) {
+        return;
+    }
+
+    const fecha = new Date();
+    const fechaFormateada = formatearFecha(fecha);
+
+    const comentarioOriginal = comentario.querySelector('.comentario-autor').textContent;
+    const nombreOriginal = comentarioOriginal.split(' respondió')[0];
+
+    const respuestaElement = crearElementoComentario(nombre, fechaFormateada, mensaje, nombreOriginal);
+    respuestaElement.classList.add('respuesta');
+    comentario.insertAdjacentElement('afterend', respuestaElement);
+
+    formulario.remove();
+}
+
+
+
+// llenarFiltros();
+// renderizarProgramas();

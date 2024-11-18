@@ -17,7 +17,7 @@
         $segments = explode('/', $url);
         
         // Obtener el último segmento de la URL
-        $last_segment = end($segments);
+        // $last_segment = end($segments);
         
         // Verificar si el último segmento es un archivo (contiene un punto)
         if (count($segments) <= 1) {
@@ -119,7 +119,7 @@
 
     <?php include 'php/main_footer.php' ?>
     <script type="module" src="js/playerManager.js?v=<?php echo PROJECT_HASH ?>"></script>
-    <script type="module" src="js/contenido.js?v=<?php echo PROJECT_HASH ?>"></script>
+    <!-- <script type="module" src="js/contenido.js?v=<?php echo PROJECT_HASH ?>"></script> -->
     <script type="module" src="js/searchManager.js?v=<?php echo PROJECT_HASH ?>"></script>
     <!-- <script src="js/Galeria.js"></script> -->
     <!-- <script type="module" src="js/utilities.js?v=<?php echo PROJECT_HASH ?>"></script> -->

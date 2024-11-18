@@ -1,4 +1,4 @@
-import { GetSVG, ToSeconds } from './utilities.js?v=2a4a54';
+import { GetSVG, ToSeconds } from './utilities.js?v=c40e99';
 const audio = document.getElementById('audio');
 
 const playPauseBtn = document.getElementById('playPauseBtn');
@@ -225,5 +225,5 @@ function UpdateProgramInfo(){
 window.addEventListener('focus', function() {
     // console.log('asdLa aplicación web ha vuelto al primer plano');
     clearTimeout(timeoutId);
-    SetupTimetoUpdate();
+    UpdateProgramInfo();
 });

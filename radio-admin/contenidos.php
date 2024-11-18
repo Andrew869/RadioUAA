@@ -1,4 +1,5 @@
 <?php
+    include_once "../php/utilities.php";
     include "connNCheck.php";
 
     function Display404() : void{

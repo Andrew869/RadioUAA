@@ -11,13 +11,13 @@ const routes = {
     "transparencia": "pages/transparencia.html",
     "politica-de-privacidad": "pages/politica-de-privacidad.html",
     "programacion": "php/programacion.php",
-    "contenido": "pages/contenido.html",
+    "contenido": "pages/contenido.php",
     "contacto": "pages/contacto.html",
     "404": "pages/404.html"
 };
 // Single Page Application (SPA)!!!!
-import { ToSeconds, FormatTime } from './utilities.js?v=2a4a54';
-import { ShowPrograms } from './contenido.js?v=2a4a54';
+import { ToSeconds, FormatTime } from './utilities.js?v=c40e99';
+import { SetupPrograms } from './contenido.js?v=c40e99';
 // import { IsSticky } from './cal.js';
 // Obtener todos los enlaces de navegación
 // const navLinks = document.querySelectorAll('.nav-link');
@@ -27,6 +27,9 @@ const menuIcon = document.getElementById('menu-icon');
 const navLinks = document.querySelector('.nav-links');
 const searchBarContent = document.getElementsByClassName("search-bar-content")[0];
 const boxSearch = document.getElementsByClassName("box-search")[0];
+
+let displayedUrl = '';
+
 let programsContainer;
 let timeoutId;
 let timeToUpdate = 0;
@@ -43,7 +46,7 @@ window.addEventListener('popstate', function(event) {
         url = url.slice(1);
     }
 
-    const displayedUrl = url;
+    displayedUrl = url;
     // url = GetURLFile(url);
     url = routes[url];
 
@@ -81,7 +84,7 @@ function ExecuteBehavior(request){
     clearTimeout(timeoutId);
     switch (request) {
         case 'contenido':
-            ShowPrograms();       
+            SetupPrograms();     
             break;
         // case 'programacion':
         //     IsSticky();
@@ -143,7 +146,7 @@ function LinkBehavior(event){
     if(!url)
         return;
 
-    const displayedUrl = url;
+    displayedUrl = url;
 
     url = routes[url];
 
@@ -278,7 +281,7 @@ function UpdateProgramsInfo(){
 // });
 
 window.addEventListener('focus', function() {
-    // console.log('asdLa aplicación web ha vuelto al primer plano');
     clearTimeout(timeoutId);
-    SetupTimetoUpdate();
+    if(displayedUrl === './' || displayedUrl === "inicio")
+        UpdateProgramsInfo();
 });
