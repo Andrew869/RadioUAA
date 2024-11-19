@@ -115,53 +115,6 @@ li {
 }
 
 
-/* Botones de redes sociales fin */
-.container-descarga-buttons {
-    display: flex;
-    justify-content: center;
-    bottom: 10px; /* Posición fija en el fondo de la pantalla */
-    /* width: 50px; */
-    left: 50%; /* Centra el contenedor en el footer */
-    z-index: 2;
-}
-
-.descarga-buttons {
-    display: flex;
-    flex-direction: row; /* Cambiado a fila para el footer */
-    gap: 15px;
-}
-
-.descarga-button {
-    text-decoration: none;
-    width: 60px;
-    height: 60px;
-    border-radius: 16px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-}
-
-.descarga-button:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-    background-color: var(--Amarillo);
-}
-
-.google-play {
-    background: linear-gradient(145deg, #34A853, #4285F4); /* Verde y azul de Google Play */
-}
-
-.apple-store {
-    background: linear-gradient(145deg, #A2AAAD, #1C1C1E); /* Gris y negro de Apple Store */
-}
-
-.descarga-button:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-    background-color: var(--Amarillo);
-}
 
 /* .app-promo {
     position: fixed;
@@ -219,6 +172,8 @@ li {
     margin-left: 10px;
 } */
 
+
+
 footer {
     padding: 0 10px;
     background-color: #027543;
@@ -264,13 +219,91 @@ footer {
     transform: scale(1.1);
 }
 
-.copyright-container {
-    /* background-color: teal; */
-    padding: 10px 0;
-    width: 100%;
+
+
+/* footer ultima parte inicio */
+
+/* botones descarga inicio */
+.container-descarga-buttons {
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
+    /* background-color: #f3f3f3; */
+    font-size: 18px;
+    font-weight: bold;
+    padding: 20px;
+}
+
+
+.animated-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ff6600; /* Vibrant orange for attention */
+    margin-bottom: 15px;
+    animation: fadeInMove 2s ease-in-out;
+}
+
+@keyframes fadeInMove {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.descarga-buttons {
+    display: flex;
+    gap: 15px; 
+}
+
+.button-logo {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.google-play {
+    background-color: #000000;
+    color: #ffffff;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: 200px; 
+    height: 50px;
+}
+
+.google-play:hover {
+    background-color: #333333;
+    transform: translateY(-3px);
+}
+
+.apple-store {
+    background-color: #ffffff;
+    color: #000000;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: 200px; 
+    height: 50px;
+}
+
+.apple-store:hover {
+    background-color: #333333;
+    transform: translateY(-3px);
+}
+/* botones descarga fin */
+
+
+
+
+.copyright-container {
+    /* background-color: teal;  */
+    padding: 10px 0; 
+    /* width: 100%;  */
+    display: flex; 
+    /* flex-direction: column;  */
+    justify-content: center; 
+    font-size: 18px;
     align-items: center;
 }
 
@@ -279,22 +312,47 @@ footer {
     padding: 10px 10px 0 10px;
     width: 100%;
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     justify-content: center;
     align-items: center;
 }
 
 .copyright-container .copyright-links{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
+    /* width: 100%; */
+    /* display: flex; */
+    /* flex-direction: row; */
 }
 
 .copyright-container .copyright-links a{
     text-align: center;
     width: 50%;
-    padding: 10px;
+    /* padding: 10px; */
 }
+
+.copyright-links a {
+    /* display: flex;  */
+    align-items: center;
+    margin: 0px 0; 
+    text-decoration: none; 
+    color: white; 
+}
+.copyright-links a:hover {
+    color: inherit;
+    text-decoration: underline; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media (max-width: 768px){
     main{
@@ -318,3 +376,5 @@ footer {
         padding: 10px 0 20px 0;
     }
 }
+
+/* footer ultima parte fin */

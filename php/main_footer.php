@@ -15,16 +15,6 @@
     </div>
 </div>
 
-<div class="container-descarga-buttons">
-    <div class="descarga-buttons">
-        <a href="https://play.google.com/store/search?q=radio+uaa+94.5fm&c=apps&pli=1" target="_blank" class="social-button google-play">
-            <?php echo GetSVG('resources/img/svg/google-play.svg', ["20px", "20px", "white"]) ?>
-        </a>
-        <a href="https://apps.apple.com/mx/app/radio-uaa-94-5fm/id6670407197"target="_blank" class="social-button apple-store">
-            <?php echo GetSVG('resources/img/svg/app-store.svg', ["24px", "24px", "white"]) ?>
-        </a>
-    </div>
-</div>
 
 
 <?php include 'php/player.php' ?>
@@ -38,16 +28,38 @@
             <img src="resources/img/UAA-DG.png" alt="Logo UAA" class="logo-uaa" />
         </a>
     </div>
+
+
+<div class="container-descarga-buttons">
+<div class="animated-text">
+        <span>¡Descarga nuestra app y síguenos a todos lados, viva RADIO UAA!!!</span>
+    </div>
+    <div class="descarga-buttons">
+        <a href="https://play.google.com/store/search?q=radio+uaa+94.5fm&c=apps&pli=1" target="_blank" class="social-button google-play">
+            <img src="resources/img/svg/google-play.svg" alt="Google Play Logo" class="button-logo">
+            <span>Google Play</span>
+        </a>
+        <a href="https://apps.apple.com/mx/app/radio-uaa-94-5fm/id6670407197" target="_blank" class="social-button apple-store">
+            <img src="resources/img/svg/app-store.svg" alt="App Store Logo" class="button-logo">
+            <span>App Store</span>
+        </a>
+    </div>
+</div>
+
+
+
     <div class="copyright-container">
-        <div class="copyright">
-            <p>&copy; Derechos de autor 1978-2024 Radio UAA – Proyección de la voz universitaria</p>
-        </div>
         <div class="copyright-links">
-            <a class="internal-link" href="politica-de-privacidad"> <span style="color: white;"><b>| Politica de Privacidad |</span>.</b></a>
-            <a class="internal-link" href="transparencia"> <span style="color: white;"><b>Transparencia</span>.</b></a>
+            <p><b>&copy; Derechos de autor 1978-2024 Radio UAA – Proyección de la voz universitaria</b>
+            <a class="internal-link" href="politica-de-privacidad">| Politica de Privacidad |</a>
+            <a class="internal-link" href="transparencia">Transparencia |</a>
+            </p>
         </div>
     </div>
+
 </footer>
+
+
 <script type="module" src="js/light-dark-mode.js?v=<?php echo PROJECT_HASH ?>"></script>
 <script src="js/navbar.js?v=<?php echo PROJECT_HASH ?>"></script>
 <!-- <script src="js/barrabuscar.js?v=<?php echo PROJECT_HASH ?>"></script> -->
