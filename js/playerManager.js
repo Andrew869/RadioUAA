@@ -173,7 +173,7 @@ function SetupTimetoUpdate(){
         if(horaFin === 0) horaFin = 86400;
         timeToUpdate = (horaFin - ToSeconds(data[0])) * 1000;
         timeoutId = setTimeout(UpdateProgramInfo , timeToUpdate);
-        console.log("milisec to update: " + timeToUpdate);
+        console.log("1# milisec to update: " + timeToUpdate);
     })
     .catch(error => console.error('Error al cargar el contenido:', error));
 }
@@ -203,8 +203,10 @@ function UpdateProgramInfo(){
         let horaFin = ToSeconds(data[1]['hora_fin']);
         if(horaFin === 0) horaFin = 86400000;
         timeToUpdate = (horaFin - ToSeconds(data[0])) * 1000;
-        timeoutId = setTimeout(UpdateProgramInfo , timeToUpdate);
-        console.log("milisec to update: " + timeToUpdate);
+        if(timeToUpdate > 0){
+            timeoutId = setTimeout(UpdateProgramInfo , timeToUpdate);
+            console.log("milisec to update: " + timeToUpdate);
+        }
     })
     .catch(error => console.error('Error al cargar el contenido:', error));
 }

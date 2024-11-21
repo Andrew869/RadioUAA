@@ -6,6 +6,7 @@
 
     include_once $initPath . 'php/db_connect.php';
 ?>
+<h1>Contenido</h1>
 <div class="container">
     <div class="controles">
         <select class="program-filter" id="filtroGenero">

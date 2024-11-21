@@ -10,7 +10,7 @@ const routes = {
     "quejas-sugerencias": "pages/quejas-sugerencias.html",
     "transparencia": "pages/transparencia.html",
     "politica-de-privacidad": "pages/politica-de-privacidad.html",
-    "programacion": "php/programacion.php",
+    "programacion": "pages/programacion.php",
     "contenido": "pages/contenido.php",
     "contacto": "pages/contacto.html",
     "404": "pages/404.html"
@@ -18,6 +18,7 @@ const routes = {
 // Single Page Application (SPA)!!!!
 import { ToSeconds, FormatTime } from './utilities.js?v=c40e99';
 import { SetupPrograms } from './contenido.js?v=c40e99';
+import { slideTimeout, SetupSlideshow } from './slideshowManager.js?v=c40e99';
 // import { IsSticky } from './cal.js';
 // Obtener todos los enlaces de navegación
 // const navLinks = document.querySelectorAll('.nav-link');
@@ -82,6 +83,7 @@ function AfterClick(data, request){
 
 function ExecuteBehavior(request){
     clearTimeout(timeoutId);
+    clearTimeout(slideTimeout);
     switch (request) {
         case 'contenido':
             SetupPrograms();     
@@ -95,6 +97,7 @@ function ExecuteBehavior(request){
             {
                 programsContainer = document.querySelector('.next-programs-container');
                 SetupTimetoUpdate();
+                SetupSlideshow();
                 // timeoutId = setInterval(() => {UpdateProgramsInfo(programsContainer)} , 5000);
                 // console.log("inicioooooo");
                 break;
@@ -282,6 +285,7 @@ function UpdateProgramsInfo(){
 
 window.addEventListener('focus', function() {
     clearTimeout(timeoutId);
-    if(displayedUrl === './' || displayedUrl === "inicio")
+    console.log('current url: ' + this.location.pathname);
+    if(this.location.pathname === '/' || displayedUrl === "/inicio")
         UpdateProgramsInfo();
 });

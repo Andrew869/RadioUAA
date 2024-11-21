@@ -6,6 +6,10 @@
 
     include_once $initPath . 'php/db_connect.php';
 ?>
+<div class="main-title">
+    <h1>Radio UAA</h1>
+    <p>Proyección de la Voz Universitaria</p>
+</div>
 <div class="main-content">
     <!-- <iframe
         class="facebook-embed"
@@ -15,8 +19,35 @@
         allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
         allowFullScreen="true">
     </iframe> -->
-    <div class="facebook-embed">
-        asd
+    <div class="slideshow-content">
+        <div class="slideshow-container">
+            <div class="slide fade">
+                <!-- <div class="numbertext">1 / 3</div> -->
+                <img src="resources/img/promo-AppRadioUAA.png">
+                <div class="text">Caption Text</div>
+            </div>
+
+            <div class="slide fade">
+            <!-- <div class="numbertext">2 / 3</div> -->
+            <img src="resources/img/IMG_0716.jpg">
+            <div class="text">Caption Two</div>
+            </div>
+
+            <div class="slide fade">
+            <!-- <div class="numbertext">3 / 3</div> -->
+            <img src="resources/img/IMG_0716.jpg">
+            <div class="text">Caption Three</div>
+            </div>
+
+            <a class="prev">❮</a>
+            <a class="next">❯</a>
+
+        </div>
+        <div class="slideshow-dots">
+            <span class="dot"></span> 
+            <span class="dot"></span> 
+            <span class="dot"></span> 
+        </div>
     </div>
     <div class="next-programs-content">
         <div>A continuación</div>
