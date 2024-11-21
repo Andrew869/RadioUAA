@@ -1,4 +1,63 @@
-<div class="texto-nosotros">
+<div class="texto-titulo">
+    <h1>ACERCA DE RADIO UAA</h1>
+</div>
+
+<div class="parallax-container">
+    <div class="parallax-item">
+        <!-- <div class="texto1"> -->
+            <p class="parrafo1">1. Radio UAA nace el 13 de enero de 1978 con la premisa fundamental de ser un vínculo entre la Institución y la sociedad en general...</p>
+            <p class="parrafo2">2. El 19 de junio del 2006 la emisora incursiona en la Frecuencia Modulada, transmitiendo en los 94.5 MHz...</p>
+            <p class="parrafo3">3. Radio UAA cuenta con una variada programación musical para todos los gustos...</p>
+        <!-- </div> -->
+    </div>
+    <div class="parallax-item">
+        <!-- <div class="texto2"> -->
+            <p class="parrafo1">4. Dos son los espacios informativos transmitidos a través de Radio UAA...</p>
+            <p class="parrafo2">5. En análisis y debate de temas de interés, destaca el programa “Prospectiva 94.5”...</p>
+            <p class="parrafo3">6. Dentro de la barra de difusión del quehacer en los Centros Académicos...</p>
+        <!-- </div> -->
+    </div>
+    <div class="parallax-item">
+        <!-- <div class="texto3"> -->
+            <p class="parrafo1">7. La Extensión Universitaria se difunde a través de nuestras nuevas producciones...</p>
+            <p class="parrafo2">8. También destaca la participación de productores externos...</p>
+            <p class="parrafo3">9. Finalmente, Radio UAA se integra a “La Red” de radiodifusoras y televisoras educativas...</p>
+        <!-- </div> -->
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    // Divide cada texto en letras envueltas en spans
+    const textos = document.querySelectorAll('.parrafo1, .parrafo2, .parrafo3');
+    textos.forEach(texto => {
+        const letras = texto.textContent.split('');
+        texto.innerHTML = letras
+            .map((letra, i) => `<span style="--index: ${i}">${letra === ' ' ? '&nbsp;' : letra}</span>`)
+            .join('');
+    });
+});
+
+document.addEventListener('scroll', () => {
+    const textos = document.querySelectorAll('.parrafo1, .parrafo2, .parrafo3');
+    textos.forEach(texto => {
+        const rect = texto.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+        
+        if (isVisible) {
+            texto.classList.add('scrolled');
+        } else {
+            texto.classList.remove('scrolled'); // Vuelve a desaparecer
+        }
+    });
+});
+
+ </script>
+
+
+
+<!-- <div class="texto-nosotros">
     <h1>ACERCA DE RADIO UAA</h1>
 
     <p>1. Radio UAA nace el 13 de enero de 1978 con la premisa fundamental de ser un vínculo entre la Institución y la sociedad en general, de manera especial con la comunidad de nuestra Máxima Casa de Estudios, transmitiendo la cultura en sus diversas manifestaciones, el conocimiento, los valores y el quehacer universitario con plena responsabilidad social.</p>
@@ -18,4 +77,4 @@
     <p>8. También destaca la participación de productores externos de otras instituciones de Educación Superior como el Instituto Tecnológico de Aguascalientes y la Universidad Pedagógica Nacional; así como de dependencias gubernamentales y municipales, entre ellas el IMAC e ICA quienes completan el vínculo entre la Universidad y Sociedad.</p>
 
     <p>9. Finalmente, Radio UAA se integra a “La Red” de radiodifusoras y televisoras educativas y culturales de México, con la que colabora desde 2014 y en el año 2015 forma parte de los miembros fundadores de la RRUM (Red de Radiodifusoras Universitarias de México) participando así de manera activa en la difusión de la cultura y la transmisión del conocimiento.</p>
-</div>
+</div> -->

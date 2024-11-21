@@ -108,6 +108,7 @@ header {
 
 .nav-links li {
     /* margin-left: 50px; */
+    text-align: center;
     position: relative;
     /* height: 100%; */
 }

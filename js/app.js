@@ -18,6 +18,7 @@ const routes = {
 // Single Page Application (SPA)!!!!
 import { ToSeconds, FormatTime } from './utilities.js?v=c40e99';
 import { SetupPrograms } from './contenido.js?v=c40e99';
+import { showSlides } from './slideshowManager.js?v=c40e99';
 // import { IsSticky } from './cal.js';
 // Obtener todos los enlaces de navegación
 // const navLinks = document.querySelectorAll('.nav-link');
@@ -93,6 +94,7 @@ function ExecuteBehavior(request){
         case './':
         case 'inicio':
             {
+                showSlides(1);
                 programsContainer = document.querySelector('.next-programs-container');
                 SetupTimetoUpdate();
                 // timeoutId = setInterval(() => {UpdateProgramsInfo(programsContainer)} , 5000);

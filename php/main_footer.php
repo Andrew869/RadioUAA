@@ -31,9 +31,13 @@
 
 
 <div class="container-descarga-buttons">
-<div class="animated-text">
-        <span>¡Descarga nuestra app y síguenos a todos lados, viva RADIO UAA!!!</span>
+    <div class="animated-text">
+        <span>Descarga</span>
+        <span>la</span>
+        <span>App</span>
     </div>
+   
+    
     <div class="descarga-buttons">
         <a href="https://play.google.com/store/search?q=radio+uaa+94.5fm&c=apps&pli=1" target="_blank" class="social-button google-play">
             <img src="resources/img/svg/google-play.svg" alt="Google Play Logo" class="button-logo">
@@ -46,16 +50,14 @@
     </div>
 </div>
 
-
-
-    <div class="copyright-container">
-        <div class="copyright-links">
-            <p><b>&copy; Derechos de autor 1978-2024 Radio UAA – Proyección de la voz universitaria</b>
+<div class="copyright-container">
+    <div class="copyright-links">
+        <p><b>&copy; Derechos de autor 1978-2024 Radio UAA – Proyección de la voz universitaria</b>
             <a class="internal-link" href="politica-de-privacidad">| Politica de Privacidad |</a>
             <a class="internal-link" href="transparencia">Transparencia |</a>
-            </p>
-        </div>
+        </p>
     </div>
+</div>
 
 </footer>
 
@@ -63,3 +65,4 @@
 <script type="module" src="js/light-dark-mode.js?v=<?php echo PROJECT_HASH ?>"></script>
 <script src="js/navbar.js?v=<?php echo PROJECT_HASH ?>"></script>
 <!-- <script src="js/barrabuscar.js?v=<?php echo PROJECT_HASH ?>"></script> -->
+

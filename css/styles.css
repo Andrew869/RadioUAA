@@ -235,26 +235,6 @@ footer {
     padding: 20px;
 }
 
-
-.animated-text {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #ff6600; /* Vibrant orange for attention */
-    margin-bottom: 15px;
-    animation: fadeInMove 2s ease-in-out;
-}
-
-@keyframes fadeInMove {
-    0% {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 .descarga-buttons {
     display: flex;
     gap: 15px; 
@@ -339,6 +319,50 @@ footer {
 .copyright-links a:hover {
     color: inherit;
     text-decoration: underline; 
+}
+
+
+
+.animated-text {
+    display: flex;
+    gap: 10px; 
+    justify-content: center;
+    align-items: center;
+    height: 10vh; 
+    font-size: 1.8rem; 
+    font-weight: bold;
+    color: #ffffff;
+    overflow: hidden;
+}
+
+.animated-text span {
+    display: inline-block;
+    transform: translateY(0);
+    animation: bounceIn 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+}
+
+.animated-text span:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.animated-text span:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.animated-text span:nth-child(3) {
+    animation-delay: 0.7s;
+}
+
+@keyframes bounceIn {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px); 
+    }
+    70% {
+        transform: translateY(5px); 
+    }
 }
 
 
