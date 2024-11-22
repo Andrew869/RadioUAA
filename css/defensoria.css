@@ -11,12 +11,13 @@
 
 .contenido-defensoria-fondo img {
     display: block;
-    margin: 0 auto; 
+    margin: 0 auto 100px; /* Espacio abajo de 20px */
     max-width: 100%; 
     height: auto; 
-    border-radius: 2%;
+    border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
+
 
 /* Text styling */
 .texto-defensoria h2 {
@@ -86,13 +87,6 @@
     text-decoration: underline; 
 }
 
-.icono-pdf {
-    width: 20px; 
-    height: auto;
-    margin-right: 0px;
-    flex-shrink: 0; 
-}
-  
   
 @media (prefers-color-scheme: dark) {
     .new-boton:hover {
@@ -311,12 +305,6 @@
     text-decoration: underline; 
 }
 
-.icono-pdf {
-    width: 20px; 
-    height: auto;
-    margin-right: 10px;
-    flex-shrink: 0; 
-}
 /* Transparencia fin */
 
 

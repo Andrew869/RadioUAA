@@ -29,18 +29,12 @@
   text-decoration: underline; 
 }
 
-.contact-container .icono-pdf {
+.contact-container {
   background: none;
   border: none;
 }
 
-.icono-pdf {
-  width: 90px; 
-  height: 90px;
-  background-color: white;
-  margin-right: 10px;
-  flex-shrink: 0; 
-}
+
 
 
 /* Layout for contact section */

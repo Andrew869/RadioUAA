@@ -177,13 +177,6 @@
     /* list-style: none; */
 }
 
-.icono-gallo {
-    align-items: center;
-    width: 30px; 
-    height: 30px;
-    margin-right: 10px;
-    flex-shrink: 0; 
-}
 /* Preguntas frecuentes fin */
 
 
@@ -233,12 +226,7 @@
     text-decoration: underline; 
 }
 
-.icono-pdf {
-    width: 20px; 
-    height: auto;
-    margin-right: 10px;
-    flex-shrink: 0; 
-}
+
 
 .container-consejo {
     display: flex;

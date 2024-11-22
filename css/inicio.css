@@ -144,3 +144,22 @@
 .next-program .info .schedule {
     font-size: 0.8rem;
 }
+
+
+.icono-gallo {
+  align-items: center;
+  width: 30px; 
+  height: auto;
+  margin-right: 10px;
+  flex-shrink: 0; 
+}
+
+.icono-pdf {
+  background: none;
+  border: none;
+  width: 20px; 
+  height: auto;
+  margin-right: 10px;
+  flex-shrink: 0; 
+}
+
