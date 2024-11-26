@@ -1,6 +1,16 @@
+<?php
+    $jsInitPath = '';
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $initPath = '';
+        $jsInitPath = $_POST['initPath'];
+    }
+
+    include_once $jsInitPath . 'php/db_connect.php';
+    include_once $jsInitPath . 'php/utilities.php';
+?>
 <div class="texto-transparencia">
 
-<h1>TRANSPARENCIA</h1>
+<h1>Transparencia</h1>
 
 <p
 >Si deseas información tenemos la siguientes opciones:
@@ -32,12 +42,12 @@
     <div class="texto-transparencia">
         <h2>Actas de sesion</h2>
     <a href="https://radio.uaa.mx/wp-content/uploads/2021/07/Ley-Organica-UAA.pdf" class="enlace-pdf">
-        <img src="resources/img/svg/file pdf.svg" alt="PDF" class="icono-pdf">
+        <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px", "black"]) ?></div>
                 Consultar actas de sesión        
     </a>
     
     <a href="https://radio.uaa.mx/wp-content/uploads/2021/07/Ley-Organica-UAA.pdf" class="enlace-pdf">
-        <img src="resources/img/svg/file pdf.svg" alt="PDF" class="icono-pdf">
+        <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px", "black"]) ?></div>
                 Consultar actas de sesión        
     </a>
     </div>
@@ -47,7 +57,7 @@
         <h2>Actas de sesion</h2>
 
     <a href="https://radio.uaa.mx/wp-content/uploads/2021/07/Ley-Organica-UAA.pdf" class="enlace-pdf">
-        <img src="resources/img/svg/file pdf.svg" alt="PDF" class="icono-pdf">
+        <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px", "black"]) ?></div>
                 Consultar actas de sesión        
     </a>
     </div>

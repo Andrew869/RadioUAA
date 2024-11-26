@@ -1,7 +1,4 @@
-<div class="texto-titulo">
-    <h1>ACERCA DE RADIO UAA</h1>
-</div>
-
+<h1>Acerca de Radio UAA</h1>
 <div class="parallax-container">
     <!-- Primer bloque -->
     <div class="parallax-item">

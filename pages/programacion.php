@@ -1,5 +1,10 @@
 <?php
-    include_once "db_connect.php";
+    $initPath = '';
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $initPath = $_POST['initPath'];
+    }
+
+    include_once $initPath . 'php/db_connect.php';
 
     $hourHeight = 160; // 40px
     $maxSize = 18;
@@ -218,6 +223,7 @@
     </style>
 </head>
 <body>
+<h1>Programación</h1>
 <div class="table-container">
     <table>
         <thead>

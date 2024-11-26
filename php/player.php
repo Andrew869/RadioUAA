@@ -24,7 +24,7 @@
     <div class="radio-player">
         <audio id="audio" src="https://streamingcwsradio30.com/8148/stream"></audio>
         <div class="current-program-info">
-            <img src="<?php echo $program['url_img'] ?>.300" alt="logo_programa">
+            <img src="<?php echo $initPath . $program['url_img'] ?>.300" alt="logo_programa">
             <div>
                 <div>
                     <span class="curr-pro-txt">

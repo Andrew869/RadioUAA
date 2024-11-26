@@ -1,5 +1,5 @@
 <div class="derechos">
-    <h1>DERECHOS DE LA AUDIENCIA</h1>
+    <h1>Derechos de las Audiencias</h1>
     <p>
         Se reconocen como derechos de las audiencias de Radio Universidad Autónoma de 
         Aguascalientes 94.5 FMXHUAA los siguientes:
@@ -43,5 +43,5 @@
 </div>
 
 <div class="button-back">
-<a href="defensoria-de-las-audiencias" class="button internal-link">Regresar</a>
+<a href="/defensoria-de-las-audiencias" class="button internal-link">Regresar</a>
 </div>

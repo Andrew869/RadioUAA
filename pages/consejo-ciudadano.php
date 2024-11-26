@@ -1,7 +1,14 @@
-<div class="titulo-consejo">
-    <h1>CONSEJO CIUDADANO DE RADIO UNIVERSIDAD</h1>
-</div>
+<?php
+    $jsInitPath = '';
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $initPath = '';
+        $jsInitPath = $_POST['initPath'];
+    }
 
+    include_once $jsInitPath . 'php/db_connect.php';
+    include_once $jsInitPath . 'php/utilities.php';
+?>
+<h1>Consejo Ciudadano</h1>
 <div class="container-consejo">
     
     <div class="img-container">
@@ -13,7 +20,8 @@
     <div class="texto-consejo">
         <h2>Actas de sesion</h2>
     <a href="https://radio.uaa.mx/wp-content/uploads/2021/07/Ley-Organica-UAA.pdf" class="enlace-pdf">
-        <img src="resources/img/svg/file pdf.svg" alt="PDF" class="icono-pdf">
+        <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px", "black"]) ?></div>
+        <!-- <img src="resources/img/svg/file pdf.svg" alt="PDF" class="icono-pdf"> -->
                     Consultar actas de sesión        
     </a>
     </div>
@@ -21,7 +29,8 @@
         <div class="texto-consejo">
             <h2>Actas de sesion</h2>
         <a href="https://radio.uaa.mx/wp-content/uploads/2021/07/Ley-Organica-UAA.pdf" class="enlace-pdf">
-            <img src="resources/img/svg/file pdf.svg" alt="PDF" class="icono-pdf">
+            <!-- <img src="resources/img/svg/file pdf.svg" alt="PDF" class="icono-pdf"> -->
+            <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px", "black"]) ?></div>
                         Consultar informes anuales
         </a>
         </div>
@@ -31,22 +40,22 @@
             <h2>Actas de sesion</h2>
 
         <a href="https://radio.uaa.mx/wp-content/uploads/2021/07/Ley-Organica-UAA.pdf" class="enlace-pdf">
-            <img src="resources/img/svg/file pdf.svg" alt="PDF" class="icono-pdf">
+            <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px", "black"]) ?></div>
                         Criterios de operación del consejo ciudadano        
         </a>
 
         <a href="https://radio.uaa.mx/wp-content/uploads/2021/07/Ley-Organica-UAA.pdf" class="enlace-pdf">
-            <img src="resources/img/svg/file pdf.svg" alt="PDF" class="icono-pdf">
+            <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px", "black"]) ?></div>
                         Criterios para asegurar independencia y una política editorial imparcial y objetiva        
         </a>
 
         <a href="https://radio.uaa.mx/wp-content/uploads/2021/07/Ley-Organica-UAA.pdf" class="enlace-pdf">
-            <img src="resources/img/svg/file pdf.svg" alt="PDF" class="icono-pdf">
+            <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px", "black"]) ?></div>
                         Reglas para la expresión de diversidades ideológicas, étnicas y culturales        
         </a>
 
         <a href="https://radio.uaa.mx/wp-content/uploads/2021/07/Ley-Organica-UAA.pdf" class="enlace-pdf">
-            <img src="resources/img/svg/file pdf.svg" alt="PDF" class="icono-pdf">
+            <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px", "black"]) ?></div>
                         Mecanismos para garantizar la participación ciudadana a fin de atender las inquietudes y propuestas de las audiencias        
         </a>
         </div>

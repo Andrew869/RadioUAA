@@ -1,3 +1,5 @@
+import { LinkBehavior } from './app.js?v=c40e99';
+import { GetRelativePath } from './utilities.js?v=c40e99';
 let programas;
 let filtroGenero;
 let filtroPresentador 
@@ -33,7 +35,7 @@ export function SetupPrograms(){
 function GetProgramsInfo(){
     let formData = new FormData();
     formData.append('GetProgramsInfo', '');
-    fetch('php/jsRequest.php', {
+    fetch(GetRelativePath() + 'php/jsRequest.php', {
         method: 'POST',
         body: formData
     })
@@ -76,8 +78,11 @@ function llenarFiltros(info) {
 }
 
 function crearElementoPrograma(programa) {
-    const elemento = document.createElement('div');
-    elemento.className = 'programa';
+    const elemento = document.createElement('a');
+    elemento.classList.add('programa');
+    elemento.classList.add('internal-link');
+    elemento.href = "/programa/" + programa.id;
+    elemento.onclick = (e) => {LinkBehavior(e)};
 
     const esListaView = contenedorProgramas.classList.contains('lista');
 
@@ -101,7 +106,7 @@ function crearElementoPrograma(programa) {
         `;
     }
     
-    elemento.addEventListener('click', () => abrirModal(programa));
+    // elemento.addEventListener('click', () => abrirModal(programa));
     return elemento;
 }
 

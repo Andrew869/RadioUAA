@@ -20,20 +20,10 @@
 <?php include 'php/player.php' ?>
 
 <footer>
-    <div class="container-uaa">
-        <a href="https://www.uaa.mx/portal/" target="_blank">
-            <img src="resources/img/UAA-LOGO.png" alt="Logo UAA" class="logo-uaa" />
-        </a>
-        <a href="https://www.uaa.mx/dgdv/" target="_blank">
-            <img src="resources/img/UAA-DG.png" alt="Logo UAA" class="logo-uaa" />
-        </a>
-    </div>
-
-
 <div class="container-descarga-buttons">
     <div class="animated-text">
         <span>Descarga</span>
-        <span>la</span>
+        <span>nuestra</span>
         <span>App</span>
     </div>
    
@@ -50,19 +40,22 @@
     </div>
 </div>
 
+<div class="container-uaa">
+    <a href="https://www.uaa.mx/portal/" target="_blank">
+        <img src="<?php echo $initPath ?>resources/img/UAA-LOGO.png" alt="Logo UAA" class="logo-uaa" />
+    </a>
+    <a href="https://www.uaa.mx/dgdv/" target="_blank">
+        <img src="resources/img/UAA-DG.png" alt="Logo UAA" class="logo-uaa" />
+    </a>
+</div>
+
 <div class="copyright-container">
     <div class="copyright-links">
         <p><b>&copy; Derechos de autor 1978-2024 Radio UAA – Proyección de la voz universitaria</b>
-            <a class="internal-link" href="politica-de-privacidad">| Politica de Privacidad |</a>
-            <a class="internal-link" href="transparencia">Transparencia |</a>
+            <a class="internal-link" href="/politica-de-privacidad">| Politica de Privacidad |</a>
+            <a class="internal-link" href="/transparencia">Transparencia |</a>
         </p>
     </div>
 </div>
 
 </footer>
-
-
-<script type="module" src="js/light-dark-mode.js?v=<?php echo PROJECT_HASH ?>"></script>
-<script src="js/navbar.js?v=<?php echo PROJECT_HASH ?>"></script>
-<!-- <script src="js/barrabuscar.js?v=<?php echo PROJECT_HASH ?>"></script> -->
-

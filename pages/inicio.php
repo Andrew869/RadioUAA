@@ -1,11 +1,16 @@
 <?php
-    $initPath = '';
+    $jsInitPath = '';
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $initPath = $_POST['initPath'];
+        $initPath = '';
+        $jsInitPath = $_POST['initPath'];
     }
 
-    include_once $initPath . 'php/db_connect.php';
+    include_once $jsInitPath . 'php/db_connect.php';
 ?>
+<div class="main-title">
+    <h1>Radio UAA</h1>
+    <p>Proyección de la Voz Universitaria</p>
+</div>
 <div class="main-content">
     <!-- <iframe
         class="facebook-embed"
@@ -15,51 +20,40 @@
         allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
         allowFullScreen="true">
     </iframe> -->
+    <div class="slideshow-content">
+        <div class="slideshow-container">
+            <div class="slide fade">
+                <!-- <div class="numbertext">1 / 3</div> -->
+                <img src="<?php echo $jsInitPath ?>resources/img/promo-AppRadioUAA.png">
+                <div class="text">Caption Text</div>
+            </div>
 
-    
+            <div class="slide fade">
+            <!-- <div class="numbertext">2 / 3</div> -->
+            <img src="<?php echo $jsInitPath ?>resources/img/IMG_0716.jpg">
+            <div class="text">Caption Two</div>
+            </div>
 
-    <!-- Slideshow container -->
-    <div class="slideshow-container">
+            <div class="slide fade">
+            <!-- <div class="numbertext">3 / 3</div> -->
+            <img src="<?php echo $jsInitPath ?>resources/img/IMG_0716.jpg">
+            <div class="text">Caption Three</div>
+            </div>
 
-<!-- Full-width images with number and caption text -->
-<div class="mySlides fade">
-  <div class="numbertext">1 / 3</div>
-  <img src="resources/img/programa_default.jpg" style="width:100%">
-  <div class="text">Caption Text</div>
-</div>
+            <a class="prev">❮</a>
+            <a class="next">❯</a>
 
-<div class="mySlides fade">
-  <div class="numbertext">2 / 3</div>
-  <img src="resources/img/programa_default.jpg" style="width:100%">
-  <div class="text">Caption Two</div>
-</div>
-
-<div class="mySlides fade">
-  <div class="numbertext">3 / 3</div>
-  <img src="resources/img/presentador_default.jpg" style="width:100%">
-  <div class="text">Caption Three</div>
-</div>
-
-<!-- Next and previous buttons -->
-<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-<a class="next" onclick="plusSlides(1)">&#10095;</a>
-</div>
-<br>
-
-<!-- The dots/circles -->
-<div style="text-align:center">
-<span class="dot" onclick="currentSlide(1)"></span>
-<span class="dot" onclick="currentSlide(2)"></span>
-<span class="dot" onclick="currentSlide(3)"></span>
-</div>
-
-
-
-
+        </div>
+        <div class="slideshow-dots">
+            <span class="dot"></span> 
+            <span class="dot"></span> 
+            <span class="dot"></span> 
+        </div>
+    </div>
     <div class="next-programs-content">
         <div>A continuación</div>
         <div class="next-programs-container">
-            <?php include $initPath . 'php/programs_info.php' ?>
+            <?php include $jsInitPath . 'php/programs_info.php' ?>
         </div>
     </div>
 </div>

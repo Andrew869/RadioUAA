@@ -37,7 +37,8 @@ body {
 
 main#content {
     width: 90%;
-    margin: 120px auto 60px auto;
+    margin: 0 auto;
+    padding: 100px 0 60px 0;
     /* background-color: yellow; */
 }
 
@@ -47,12 +48,18 @@ main#content {
     color: white;
 }
 
+h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    padding-bottom: 10px;
+}
+
 li {
     list-style: none;
 }
 
 .icon {
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
 }

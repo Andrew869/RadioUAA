@@ -1,6 +1,15 @@
-<div class="texto-politica">
-<h1>POLÍTICA DE PRIVACIDAD</h1>
+<?php
+    $jsInitPath = '';
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $initPath = '';
+        $jsInitPath = $_POST['initPath'];
+    }
 
+    include_once $jsInitPath . 'php/db_connect.php';
+    include_once $jsInitPath . 'php/utilities.php';
+?>
+<h1>POLÍTICA DE PRIVACIDAD</h1>
+<div class="texto-politica">
 <p>
     Por medio de nuestra política de privacidad le ponemos al tanto de las debidas condiciones de uso 
     en este sitio. La utilización de estos implica su aceptación plena y sin reservas a todas y cada 
@@ -11,7 +20,7 @@
     su aceptación de tales cambios.
 </p>
 
-<h2><img src="/resources/img/svg/Gallo.svg" alt="Gallo" class="icono-gallo">Cookies</h2>
+<h2><div class="icon"><div class="icon"><div class="icon"><div class="icon"><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/gallo-min.svg", ["30px", "30px", "black"]) ?></div></div></div></div></div>Cookies</h2>
 
 <p>
     Este sitio hace uso de cookies, el cual son pequeños ficheros de datos que se generan en su ordenador, 
@@ -21,7 +30,7 @@
     responsabilizamos de que la desactivación de los mismos impida el buen funcionamiento del sitio.
 </p>
 
-<h2><img src="/resources/img/svg/Gallo.svg" alt="Gallo" class="icono-gallo">Marcas Web o Web Beacons</h2>
+<h2><div class="icon"><div class="icon"><div class="icon"><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/gallo-min.svg", ["30px", "30px", "black"]) ?></div></div></div></div>Marcas Web o Web Beacons</h2>
 
 <p>
     Al igual que las cookies este sitio también puede contener web beacons, un archivo electrónico gráfico 
@@ -29,7 +38,7 @@
     de esta manera, podremos ofrecerle una experiencia aún más personalizada.
 </p>
 
-<h2><img src="/resources/img/svg/Gallo.svg" alt="Gallo" class="icono-gallo">Política de protección de datos personales</h2>
+<h2><div class="icon"><div class="icon"><div class="icon"><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/gallo-min.svg", ["30px", "30px", "black"]) ?></div></div></div></div>Política de protección de datos personales</h2>
 
 <p>Para utilizar algunos de los servicios o acceder a determinados contenidos, deberá proporcionar previamente 
     ciertos datos de carácter personal, que solo serán utilizados para el propósito que fueron recopilados. 
@@ -46,7 +55,7 @@
     controlamos las acciones de nuestros visitantes y usuarios.
 </p>
 
-<h2><img src="/resources/img/svg/Gallo.svg" alt="Gallo" class="icono-gallo">Conducta responsable</h2>
+<h2><div class="icon"><div class="icon"><div class="icon"><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/gallo-min.svg", ["30px", "30px", "black"]) ?></div></div></div></div>Conducta responsable</h2>
 
 <p>
     Toda la información que facilite deberá ser veraz. A estos efectos, usted garantiza la autenticidad de todos 
@@ -57,11 +66,11 @@
     sitio y a tratar a otros visitantes con respeto.
 </p>
 
-<h2><img src="/resources/img/svg/Gallo.svg" alt="Gallo" class="icono-gallo">Contacto</h2>
+<h2><div class="icon"><div class="icon"><div class="icon"><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/gallo-min.svg", ["30px", "30px", "black"]) ?></div></div></div></div>Contacto</h2>
 
 <p class="lista-op">
     Si tiene preguntas o cuestiones sobre esta Política, no dude en contactarse en cualquier momento a través del
-    <a class="internal-link" href="quejas-sugerencias">formulario de contacto</a>
+    <a class="/internal-link" href="quejas-sugerencias">formulario de contacto</a>
 </p>
 
 </div>

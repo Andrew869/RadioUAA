@@ -1,23 +1,33 @@
+<?php
+    $jsInitPath = '';
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $initPath = '';
+        $jsInitPath = $_POST['initPath'];
+    }
+
+    include_once $jsInitPath . 'php/db_connect.php';
+    include_once $jsInitPath . 'php/utilities.php';
+?>
 <div class="titulo-contacto">
-<h1>CONTACTO</h1>
+<h1>Contacto</h1>
 </div>
 
 <div class="contact-container">
     <div class="texto-contacto">
 
-        <h2><img src="resources/img/svg/clock.svg" alt="PDF" class="icono-pdf"> Horario de Oficina</h2>
+        <h2><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/clock.svg", ["20px", "20px", "black"]) ?></div> Horario de Oficina</h2>
         <p>Lunes a viernes de 8:00 hrs a 15:30 hrs</p>
 
-        <h2><img src="resources/img/svg/envelope.svg" alt="PDF" class="icono-pdf"> Correo Electrónico</h2>
+        <h2><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/envelope.svg", ["20px", "20px", "black"]) ?></div> Correo Electrónico</h2>
         <a href="Quejas_y_Sugerencias.html" class="enlace-pdf internal-link">
-            <img src="resources/img/svg/file pdf.svg" alt="PDF" class="icono-pdf">
+            <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px", "black"]) ?></div>
             Comunica tus quejas y sugerencias aquí
         </a>
     
-        <h2><img src="resources/img/svg/phone.svg" alt="PDF" class="icono-pdf"> Telefonos</h2>
+        <h2><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/phone.svg", ["20px", "20px", "black"]) ?></div> Telefonos</h2>
         <p>449-9-10-74-55 <br>449-9-10-74-59</p>
 
-        <h2><img src="/resources/img/svg/location.svg" alt="PDF" class="icono-pdf"> Dirección</h2>
+        <h2><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/location.svg", ["20px", "20px", "black"]) ?></div> Dirección</h2>
         <p>Av. Universidad #940, Ciudad Universitaria</p> 
         <p>C.P. 20100 Aguascalientes, Ags. México</p>
         <p><b>Edificio 14, Unidad «José Dávila Rodríguez»</b></p>

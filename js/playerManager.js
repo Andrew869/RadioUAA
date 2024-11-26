@@ -1,4 +1,4 @@
-import { GetSVG, ToSeconds } from './utilities.js?v=c40e99';
+import { GetRelativePath, GetSVG, ToSeconds } from './utilities.js?v=c40e99';
 const audio = document.getElementById('audio');
 
 const playPauseBtn = document.getElementById('playPauseBtn');
@@ -162,7 +162,7 @@ SetupTimetoUpdate();
 function SetupTimetoUpdate(){
     let formData = new FormData();
     formData.append('GetCurrProgram', '');
-    fetch('php/jsRequest.php', {
+    fetch(GetRelativePath() + 'php/jsRequest.php', {
         method: 'POST',
         body: formData
     })
@@ -173,7 +173,7 @@ function SetupTimetoUpdate(){
         if(horaFin === 0) horaFin = 86400;
         timeToUpdate = (horaFin - ToSeconds(data[0])) * 1000;
         timeoutId = setTimeout(UpdateProgramInfo , timeToUpdate);
-        console.log("milisec to update: " + timeToUpdate);
+        console.log("1# milisec to update: " + timeToUpdate);
     })
     .catch(error => console.error('Error al cargar el contenido:', error));
 }
@@ -182,7 +182,7 @@ function UpdateProgramInfo(){
     // console.log("asdasd " + timeToUpdate);
     let formData = new FormData();
     formData.append('GetCurrProgram', '');
-    fetch('php/jsRequest.php', {
+    fetch(GetRelativePath() + 'php/jsRequest.php', {
         method: 'POST',
         body: formData
     })
@@ -191,7 +191,7 @@ function UpdateProgramInfo(){
         // console.log(data);
         // programContainer.innerHTML = data;
         programName.textContent = data[1]['nombre_programa'];
-        programImg.src = data[1]['url_img'] + ".300";
+        programImg.src = GetRelativePath() + data[1]['url_img'] + ".300";
         if(programTag.classList.contains('live'))
             programTag.classList.remove('live');
         else
@@ -203,8 +203,10 @@ function UpdateProgramInfo(){
         let horaFin = ToSeconds(data[1]['hora_fin']);
         if(horaFin === 0) horaFin = 86400000;
         timeToUpdate = (horaFin - ToSeconds(data[0])) * 1000;
-        timeoutId = setTimeout(UpdateProgramInfo , timeToUpdate);
-        console.log("milisec to update: " + timeToUpdate);
+        if(timeToUpdate > 0){
+            timeoutId = setTimeout(UpdateProgramInfo , timeToUpdate);
+            console.log("milisec to update: " + timeToUpdate);
+        }
     })
     .catch(error => console.error('Error al cargar el contenido:', error));
 }

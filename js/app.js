@@ -2,23 +2,24 @@ const routes = {
     "": "pages/inicio.php",
     "./": "pages/inicio.php",
     "inicio": "pages/inicio.php",
-    "nosotros": "pages/nosotros.html",
-    "preguntas-frecuentes": "pages/preguntas-frecuentes.html",
-    "consejo-ciudadano": "pages/consejo-ciudadano.html",
-    "defensoria-de-las-audiencias": "pages/defensoria-de-las-audiencias.html",
-    "derechos-de-la-audiencia": "pages/derechos-de-la-audiencia.html",
-    "quejas-sugerencias": "pages/quejas-sugerencias.html",
-    "transparencia": "pages/transparencia.html",
-    "politica-de-privacidad": "pages/politica-de-privacidad.html",
-    "programacion": "php/programacion.php",
+    "nosotros": "pages/nosotros.php",
+    "preguntas-frecuentes": "pages/preguntas-frecuentes.php",
+    "consejo-ciudadano": "pages/consejo-ciudadano.php",
+    "defensoria-de-las-audiencias": "pages/defensoria-de-las-audiencias.php",
+    "derechos-de-la-audiencia": "pages/derechos-de-la-audiencia.php",
+    "quejas-sugerencias": "pages/quejas-sugerencias.php",
+    "transparencia": "pages/transparencia.php",
+    "politica-de-privacidad": "pages/politica-de-privacidad.php",
+    "programacion": "pages/programacion.php",
     "contenido": "pages/contenido.php",
-    "contacto": "pages/contacto.html",
-    "404": "pages/404.html"
+    "programa": "pages/programa.php",
+    "contacto": "pages/contacto.php",
+    "404": "pages/404.php"
 };
 // Single Page Application (SPA)!!!!
-import { ToSeconds, FormatTime } from './utilities.js?v=c40e99';
+import { GetRelativePath, ToSeconds, FormatTime } from './utilities.js?v=c40e99';
 import { SetupPrograms } from './contenido.js?v=c40e99';
-import { showSlides } from './slideshowManager.js?v=c40e99';
+import { slideTimeout, SetupSlideshow } from './slideshowManager.js?v=c40e99';
 // import { IsSticky } from './cal.js';
 // Obtener todos los enlaces de navegación
 // const navLinks = document.querySelectorAll('.nav-link');
@@ -29,6 +30,8 @@ const navLinks = document.querySelector('.nav-links');
 const searchBarContent = document.getElementsByClassName("search-bar-content")[0];
 const boxSearch = document.getElementsByClassName("box-search")[0];
 
+let request
+let filePath
 let displayedUrl = '';
 
 let programsContainer;
@@ -39,29 +42,97 @@ ExecuteBehavior(window.location.pathname.split('/').pop());
 
 SetupInternalLinks();
 
-// Manejar el historial del navegador (para usar el botón "Atrás" o "Adelante")
-// 'popstate' Se dispara cuando el usuario navega hacia atrás o hacia adelante en el historial usando los botones del navegador, pero no ocurre cuando se carga una nueva página.
-window.addEventListener('popstate', function(event) {
-    let url = window.location.pathname;
-    if (url.startsWith('/')) {
-        url = url.slice(1);
-    }
+function URLManager(){
+    console.log("request: " + request);
+    if(!request)
+        return;
 
-    displayedUrl = url;
-    // url = GetURLFile(url);
-    url = routes[url];
+    let segments = request.split('/');
+
+    if (request.startsWith("/"))
+        displayedUrl = request.substring(1);
+    else
+        displayedUrl = request;
+
+    console.log("displayedUrl: " + displayedUrl);
+
+    filePath = routes[segments[1]];
 
     let formData = new FormData();
     formData.append('initPath', '../');
-    // console.log(url);
-    // Volver a cargar el contenido cuando se use "atrás" o "adelante"
-    fetch(url, {
+    formData.append('REQUEST_URI', request);
+    return formData;
+}
+
+export function LinkBehavior(event){
+    event.preventDefault(); // Evita la acción por defecto del enlace
+
+    request = event.currentTarget.getAttribute('href'); // Obtener la URL del enlace
+    // console.log("request: " + request);
+    // if(!request)
+    //     return;
+
+    // let segments = request.split('/');
+
+    // if (request.startsWith("/"))
+    //     displayedUrl = request.substring(1);
+    // else
+    //     displayedUrl = request;
+
+    // console.log("displayedUrl: " + displayedUrl);
+
+    // let url = routes[segments[1]];
+
+    let formData = URLManager();
+    // formData.append('initPath', '../');
+    // formData.append('REQUEST_URI', request);
+
+    // Cargar contenido nuevo
+    fetch(GetRelativePath() + filePath, {
         method: 'POST',
         body: formData
     })
     .then(response => response.text())
     .then(data => {
-        AfterClick(data, displayedUrl.split('/').pop());
+        // Suponiendo que tienes un div con el ID 'content' para cargar el nuevo contenido
+        AfterClick(data, displayedUrl);
+        // window.scrollTo(0, 0);
+        // boxSearch.classList.remove('show-boxSearch')
+        // document.getElementById("inputSearch").value = '';
+        // mainContent.innerHTML = data;
+        // SetupInternalLinks();
+        // ExecuteBehavior(displayedUrl);
+
+        // Actualizar la URL sin recargar
+        window.history.pushState({path: displayedUrl}, '', GetRelativePath() + displayedUrl);
+
+    })
+    .catch(error => console.error('Error al cargar el contenido:', error));
+}
+
+// Manejar el historial del navegador (para usar el botón "Atrás" o "Adelante")
+// 'popstate' Se dispara cuando el usuario navega hacia atrás o hacia adelante en el historial usando los botones del navegador, pero no ocurre cuando se carga una nueva página.
+window.addEventListener('popstate', function(event) {
+    request = window.location.pathname;
+    // if (url.startsWith('/')) {
+    //     url = url.slice(1);
+    // }
+
+    // displayedUrl = url;
+    // // url = GetURLFile(url);
+    // url = routes[url];
+
+    let formData = URLManager();
+    // formData.append('initPath', '../');
+    // console.log(url);
+    // Volver a cargar el contenido cuando se use "atrás" o "adelante"
+    fetch(GetRelativePath() + filePath, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        AfterClick(data, displayedUrl);
     })
     .catch(error => console.error('Error al manejar popstate:', error));
 });
@@ -83,6 +154,7 @@ function AfterClick(data, request){
 
 function ExecuteBehavior(request){
     clearTimeout(timeoutId);
+    clearTimeout(slideTimeout);
     switch (request) {
         case 'contenido':
             SetupPrograms();     
@@ -94,9 +166,9 @@ function ExecuteBehavior(request){
         case './':
         case 'inicio':
             {
-                showSlides(1);
                 programsContainer = document.querySelector('.next-programs-container');
                 SetupTimetoUpdate();
+                SetupSlideshow();
                 // timeoutId = setInterval(() => {UpdateProgramsInfo(programsContainer)} , 5000);
                 // console.log("inicioooooo");
                 break;
@@ -140,65 +212,10 @@ function SetupInternalLinks(){
     });
 }
 
-function LinkBehavior(event){
-    event.preventDefault(); // Evita la acción por defecto del enlace
-
-    let url = event.currentTarget.getAttribute('href'); // Obtener la URL del enlace
-    console.log(url);
-    if(!url)
-        return;
-
-    displayedUrl = url;
-
-    url = routes[url];
-
-    // url = GetURLFile(url);
-    // console.log(url);
-    let formData = new FormData();
-    formData.append('initPath', '../');
-
-    // Cargar contenido nuevo
-    fetch(url, {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.text())
-    .then(data => {
-        // Suponiendo que tienes un div con el ID 'content' para cargar el nuevo contenido
-        AfterClick(data, displayedUrl);
-        // window.scrollTo(0, 0);
-        // boxSearch.classList.remove('show-boxSearch')
-        // document.getElementById("inputSearch").value = '';
-        // mainContent.innerHTML = data;
-        // SetupInternalLinks();
-        // ExecuteBehavior(displayedUrl);
-
-        // Actualizar la URL sin recargar
-        window.history.pushState({path: displayedUrl}, '', displayedUrl);
-
-    })
-    .catch(error => console.error('Error al cargar el contenido:', error));
-}
-
-// function myFunction(x) {
-//     x.classList.toggle("change");
-// } 
-
-// window.addEventListener('beforeunload', function (event) {
-//     // Puedes mostrar un mensaje personalizado, pero la mayoría de los navegadores no lo mostrarán.
-//     const confirmationMessage = '¿Estás seguro de que deseas salir?';
-    
-//     // Establecer el mensaje de confirmación
-//     event.returnValue = confirmationMessage; // Esto es necesario para algunos navegadores
-//     return confirmationMessage; // Algunos navegadores mostrarán este mensaje
-// });
-
-// SetupTimetoUpdate();
-
 function SetupTimetoUpdate(){
     let formData = new FormData();
     formData.append('GetCurrProgram', '');
-    fetch('php/jsRequest.php', {
+    fetch(GetRelativePath() + 'php/jsRequest.php', {
         method: 'POST',
         body: formData
     })
@@ -213,23 +230,11 @@ function SetupTimetoUpdate(){
     .catch(error => console.error('Error al cargar el contenido:', error));
 }
 
-// function UpdateProgramsInfo(programsContainer){
-//     // console.log(intervalId);
-//     // let formData = new FormData();
-//     // formData.append('initPath', '../');
-//     fetch('php/programs_info.php')
-//     .then(response => response.text())
-//     .then(data => {
-//         programsContainer.innerHTML = data;
-//     })
-//     .catch(error => console.error('Error al cargar el contenido:', error));
-// }
-
 function UpdateProgramsInfo(){
     // console.log("asdasd " + timeToUpdate);
     let formData = new FormData();
     formData.append('GetNextPrograms', '4');
-    fetch('php/jsRequest.php', {
+    fetch(GetRelativePath() + 'php/jsRequest.php', {
         method: 'POST',
         body: formData
     })
@@ -275,15 +280,9 @@ function UpdateProgramsInfo(){
     .catch(error => console.error('Error al cargar el contenido:', error));
 }
 
-// document.addEventListener('visibilitychange', function() {
-//     if (document.visibilityState === 'visible') {
-//         console.log('La aplicación web ha vuelto al primer plano');
-//         // Realizar acciones necesarias cuando la aplicación vuelve al primer plano
-//     }
-// });
-
 window.addEventListener('focus', function() {
     clearTimeout(timeoutId);
-    if(displayedUrl === './' || displayedUrl === "inicio")
+    console.log('current url: ' + this.location.pathname);
+    if(this.location.pathname === '/' || displayedUrl === "/inicio")
         UpdateProgramsInfo();
 });

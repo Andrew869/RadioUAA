@@ -1,13 +1,13 @@
 /* Defensoria de las audiencias fin */
 
-.contenido-defensoria-fondo {
+/* .contenido-defensoria-fondo {
     text-align: center; 
-}
+} */
 
-.contenido-defensoria-fondo h1 {
+/* .contenido-defensoria-fondo h1 {
     margin-bottom: 40px; 
     font-size: 3rem; 
-}
+} */
 
 .contenido-defensoria-fondo img {
     display: block;
@@ -105,10 +105,10 @@
 /* Defensoria de las audiencias fin */
 
 /* Defensoria de la audiencia inicio */
-.derechos h1{
+/* .derechos h1{
     text-align: center;
     font-size: 3rem;
-}
+} */
 .derechos p{
     margin: 20px 90px;
 }
@@ -259,11 +259,11 @@
 /* Quejas inicio */
 
 /* Transparencia inicio */
-.texto-transparencia h1{
+/* .texto-transparencia h1{
     text-align: center;
     font-size: 3rem;
 
-}
+} */
 .texto-transparencia h2 {
     text-align: justify;
     font-size: 30px;

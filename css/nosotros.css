@@ -119,21 +119,21 @@
 
 
 /* Preguntas frecuentes inicio */
-.texto-frecuentes h1{
-    text-align: center;
-    font-size: 3rem;
-
+.texto-frecuentes {
+    max-width: 960px;
+    margin: 0 auto;
 }
+
 .texto-frecuentes h2 {
     display: flex; /* Habilita flexbox */
-    text-align: justify;
+    /* text-align: justify; */
     font-size: 30px;
-    margin:  8px 90px;
+    margin:  8px 0;
 }
   
 .texto-frecuentes p {
     text-align: justify;
-    margin: 20px 90px;
+    margin: 20px 0px;
     /* list-style: none; */
 }
 
