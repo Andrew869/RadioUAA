@@ -1,8 +1,8 @@
 /* Acerca de Radio UAA - Inicio */
-.texto-titulo h1{
+/* Títulos */
+.texto-titulo h1 {
     text-align: center;
     font-size: 3rem;
-
 }
 
 /* Contenedor principal */
@@ -11,14 +11,13 @@
     flex-direction: column;
     overflow: hidden;
     width: 100%;
+    height: auto;
 }
 
 .parallax-item {
     position: relative;
-    height: 100vh;
+    height: 150vh;
     display: flex;
-    justify-content: center;
-    align-items: center;
     overflow: hidden;
 }
 
@@ -41,6 +40,7 @@
 
 .parallax-item:nth-child(1)::before {
     background-image: url('/resources/img/programa_default.jpg');
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .parallax-item:nth-child(2)::before {
@@ -53,109 +53,69 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-
-/* Estilo para el párrafo 1: alineado a la izquierda */
-.parrafo1 {
-    position: absolute; 
-    z-index: 2;
-    top: 10%; 
-    right: 5%; 
-    font-size: 2.5rem;
-    font-family: "Times New Roman", Times, serif; 
-    /* padding: 20px;  */
-    margin: 0 290px; 
-    background-color: rgba(0, 0, 0, 0.5); 
-    color: aqua; 
-    border-radius: 10px; 
-    /* border: 1px solid aqua;  */
-    opacity: 0; 
-    transform: translateY(-50px); 
-    transition: opacity 1s ease, transform 1s ease;
-}
-
-/* Estilo para el párrafo 2: centrado y más abajo */
-.parrafo2 {
+/* Estilo para los párrafos */
+.parrafo1, .parrafo2, .parrafo3 {
     position: absolute;
-    z-index: 2;
-    top: 40%; 
-    left: 50%; 
-    transform: translateX(-50%); 
-    font-size: 2.5rem;
-    font-family: "Times New Roman", Times, serif; 
-    /* padding: 20px;  */
-    margin: 0 10px; 
-    background-color: rgba(0, 0, 0, 0.5); 
-    color: red;
-    border-radius: 10px;
-    /* border: 1px solid aqua; */
-    opacity: 0; 
-    transform: translateY(-50px); 
-    transition: opacity 1s ease, transform 1s ease;
-}
-
-/* Estilo para el párrafo 3: alineado a la derecha y más abajo */
-.parrafo3 {
-    position: absolute;
-    z-index: 2;
-    top: 70%; 
-    right: 5%; 
-    font-size: 2.5rem;
-    font-family: "Times New Roman", Times, serif; 
-    /* padding: 20px;  */
-    margin: 0 290px; 
-    background-color: rgba(0, 0, 0, 0.5);
-    color: aqua;
-    border-radius: 10px;
-    /* border: 1px solid aqua; */
-    opacity: 0; 
-    transform: translateY(-50px); 
-    transition: opacity 1s ease, transform 1s ease;
-}
-
-
-
-/* Cada letra con animación independiente */
-.parrafo1 span, .parrafo2 span, .parrafo3 span {
-    display: inline-block;
-    transform: translateY(-100%); /* Letras empiezan por encima de su posición */
-    opacity: 0; /* Letras invisibles inicialmente */
-    transition: transform 0.6s ease-out, opacity 0.6s ease-out;
-}
-
-
-/* Animación al aparecer en pantalla */
-.parrafo1.scrolled, 
-.parrafo2.scrolled, 
-.parrafo3.scrolled {
-    opacity: 1;
-    transform: translateY(0); /* Aparece en su posición final */
+    z-index: 1;
+    font-size: 1.5rem;
     color: white;
+    font-family: "Times New Roman", Times, serif;
+    opacity: 0; /* Oculto inicialmente */
+    transform: translateY(50px); /* Inicial (movimiento hacia abajo) */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Animaciones fluidas */
+    will-change: opacity, transform; /* Sugerir optimización */
 }
 
-/* Cada letra se anima en orden */
-.parrafo1.scrolled span, 
-.parrafo2.scrolled span, 
-.parrafo3.scrolled span {
-    transform: translateY(0); /* Letras llegan a su posición final */
-    opacity: 1;
-    transition-delay: calc(var(--index) * 0.05s); /* Retrasa cada letra progresivamente */
+.parrafo1 {
+    top: 10%;
+    right: 60%;
+    left: 9%;
+    text-align: center;
 }
 
-/* Animación inversa al desaparecer */
-.parrafo1,
-.parrafo2,
+.parrafo2 {
+    top: 40%;
+    right: 9%;
+    left: 60%;
+}
+
 .parrafo3 {
-    opacity: 0;
-    transform: translateY(-50px); /* Vuelve a desaparecer desde arriba */
-    color: rgba(0, 255, 255, 0);
+    top: 70%;
+    right: 60%;
+    left: 9%;
 }
 
-.parrafo1 span, .parrafo2 span, .parrafo3 span {
-    transform: translateY(-100%);
-    opacity: 0;
+/* Cuando los párrafos están visibles en pantalla */
+.parrafo1.scrolled,
+.parrafo2.scrolled,
+.parrafo3.scrolled {
+    opacity: 1; /* Aparece */
+    transform: translateY(0); /* Se posiciona correctamente */
 }
 
-/* Acerca de Radio UAA - Fin */
+/* Animaciones para cada letra */
+.parrafo1 span,
+.parrafo2 span,
+.parrafo3 span {
+    display: inline-block;
+    transform: translateY(-100%); /* Cada letra sube */
+    opacity: 0; /* Oculta inicialmente */
+    transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+    will-change: transform, opacity; /* Sugerir optimización */
+}
+
+/* Animaciones al estar visibles */
+.parrafo1.scrolled span,
+.parrafo2.scrolled span,
+.parrafo3.scrolled span {
+    transform: translateY(0); /* Vuelve a su posición */
+    opacity: 1; /* Aparece */
+    transition-delay: calc(var(--index) * 0.05s); /* Diferencia de tiempo entre letras */
+}
+
+
+/* Acerca de Radio UAA - fin */
+
 
 
 /* Preguntas frecuentes inicio */
