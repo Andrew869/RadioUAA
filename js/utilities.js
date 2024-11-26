@@ -5,10 +5,10 @@ let isDragging = false;
 const fullPath = window.location.pathname;
 
 // Elimina la última barra si está en la raíz, y divide la ruta en segmentos
-const segments = fullPath.endsWith('/') ? fullPath.slice(0, -1).split('/') : fullPath.split('/');
+// const segments = fullPath.endsWith('/') ? fullPath.slice(0, -1).split('/') : fullPath.split('/');
 
 // Obtiene la carpeta anterior al archivo, o una cadena vacía si está en la raíz
-const currentDir = segments.length > 1 ? segments[segments.length - 2] : '';
+// const currentDir = segments.length > 1 ? segments[segments.length - 2] : '';
 
 // console.log(currentDir);
 
@@ -37,10 +37,28 @@ window.addEventListener('resize', () => {
     }, 200);
 });
 
+export function GetRelativePath() {
+    // Get the current URL
+    var relativePath = '';
+    var currentUrl = window.location.pathname;
+
+    // Calculate the relative path from the root of the site
+    var parts = currentUrl.split('/');
+    var numLevels = parts.length - 2;
+
+
+    if (numLevels > 0) {
+        for (var i = 0; i < numLevels; i++) {
+            relativePath += '../';
+        }
+    }
+    return relativePath;
+}
+
 export function GetSVG(parentNode, url, styles){
     console.log(`seahorse ${window.location.pathname}`);
     let args = url + ',' + styles;
-    fetch((currentDir === '' ? '' : "../" ) + "php/jsRequest.php", {
+    fetch(GetRelativePath() + "../php/jsRequest.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"

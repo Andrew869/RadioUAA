@@ -32,10 +32,10 @@
 <footer>
     <div class="container-uaa">
         <a href="https://www.uaa.mx/portal/" target="_blank">
-            <img src="resources/img/UAA-LOGO.png" alt="Logo UAA" class="logo-uaa" />
+            <img src="<?php echo $initPath ?>resources/img/UAA-LOGO.png" alt="Logo UAA" class="logo-uaa" />
         </a>
         <a href="https://www.uaa.mx/dgdv/" target="_blank">
-            <img src="resources/img/UAA-DG.png" alt="Logo UAA" class="logo-uaa" />
+            <img src="<?php echo $initPath ?>resources/img/UAA-DG.png" alt="Logo UAA" class="logo-uaa" />
         </a>
     </div>
     <div class="copyright-container">
@@ -48,6 +48,3 @@
         </div>
     </div>
 </footer>
-<script type="module" src="js/light-dark-mode.js?v=<?php echo PROJECT_HASH ?>"></script>
-<script src="js/navbar.js?v=<?php echo PROJECT_HASH ?>"></script>
-<!-- <script src="js/barrabuscar.js?v=<?php echo PROJECT_HASH ?>"></script> -->

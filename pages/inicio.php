@@ -1,10 +1,11 @@
 <?php
-    $initPath = '';
+    $jsInitPath = '';
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $initPath = $_POST['initPath'];
+        $initPath = '';
+        $jsInitPath = $_POST['initPath'];
     }
 
-    include_once $initPath . 'php/db_connect.php';
+    include_once $jsInitPath . 'php/db_connect.php';
 ?>
 <div class="main-title">
     <h1>Radio UAA</h1>
@@ -23,19 +24,19 @@
         <div class="slideshow-container">
             <div class="slide fade">
                 <!-- <div class="numbertext">1 / 3</div> -->
-                <img src="resources/img/promo-AppRadioUAA.png">
+                <img src="<?php echo $jsInitPath ?>resources/img/promo-AppRadioUAA.png">
                 <div class="text">Caption Text</div>
             </div>
 
             <div class="slide fade">
             <!-- <div class="numbertext">2 / 3</div> -->
-            <img src="resources/img/IMG_0716.jpg">
+            <img src="<?php echo $jsInitPath ?>resources/img/IMG_0716.jpg">
             <div class="text">Caption Two</div>
             </div>
 
             <div class="slide fade">
             <!-- <div class="numbertext">3 / 3</div> -->
-            <img src="resources/img/IMG_0716.jpg">
+            <img src="<?php echo $jsInitPath ?>resources/img/IMG_0716.jpg">
             <div class="text">Caption Three</div>
             </div>
 
@@ -52,7 +53,7 @@
     <div class="next-programs-content">
         <div>A continuación</div>
         <div class="next-programs-container">
-            <?php include $initPath . 'php/programs_info.php' ?>
+            <?php include $jsInitPath . 'php/programs_info.php' ?>
         </div>
     </div>
 </div>

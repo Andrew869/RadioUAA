@@ -149,7 +149,7 @@
                     JOIN genero g ON pg.id_genero = g.id_genero
                     WHERE pg.id_programa = p.id_programa
                 ) AS generos
-            FROM programa p;
+            FROM programa p
         ";
 
         $stmt = SQL::$conn->prepare($sql);

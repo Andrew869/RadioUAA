@@ -11,9 +11,9 @@
     //     echo "La ruta no corresponde a una carpeta válida.";
     // }
 
-    function IsFILE($url) {
+    function CheckRoutes(&$url) {
         // Eliminar caracteres innecesarios y descomponer la URL en segmentos
-        $url = rtrim($url, '/');
+        // $url = rtrim($url, '/');
         $segments = explode('/', $url);
         
         // Obtener el último segmento de la URL
@@ -23,7 +23,28 @@
         if (count($segments) <= 1) {
             return true; // Es un archivo
         } else {
-            return false; // Es una carpeta
+            if($segments[0] === "programa") {
+                $url = "programa";
+                return true;
+            }
+            else
+                return false;
+            // return false;
+        }
+    }
+
+    function getRelativePath($request) {
+        // Get the current URL
+    
+        // Calculate the number of directory levels from the root of the site
+        $numLevels = substr_count($request, '/'); // Subtracting 2 because the URL includes '/' at the start and '/file.php' at the end
+    
+        if ($numLevels > 0) {
+            $relativePath = '';
+            for ($i = 0; $i < $numLevels; $i++) {
+                $relativePath .= '../';
+            }
+            return $relativePath;
         }
     }
 
@@ -31,10 +52,12 @@
 
     // Filtrar la URL para evitar ataques y eliminar caracteres innecesarios
     $request = trim($request, '/');
+    $initPath = getRelativePath($request);
 
-    if(!IsFILE($request)){
+    if(!CheckRoutes($request)){
         header('Location: /404');
     }
+
 
     $js_path = 'js/app.js';
 
@@ -50,6 +73,9 @@
     // $routes = json_decode($jsonData, true);
 
     $file = $routes[$request];
+    // if($request === "programa"){
+    //     $initPath = "../";
+    // }
 
     if(!$file)
         $file = 'pages/404.html';
@@ -94,17 +120,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radio UAA</title>
-    <link rel="shortcut icon" href="resources/img/logoRadioUAA.ico" type="image/x-icon">
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/styles.css?v=<?php echo PROJECT_HASH ?>">
-    <link rel="stylesheet" href="css/headerStyles.css?v=<?php echo PROJECT_HASH ?>">
-    <link rel="stylesheet" href="css/playerStyles.css?v=<?php echo PROJECT_HASH ?>">
-    <link rel="stylesheet" href="css/contacto.css?v=<?php echo PROJECT_HASH ?>">
-    <link rel="stylesheet" href="css/contenido.css?v=<?php echo PROJECT_HASH ?>">
-    <link rel="stylesheet" href="css/defensoria.css?v=<?php echo PROJECT_HASH ?>">
-    <link rel="stylesheet" href="css/inicio.css?v=<?php echo PROJECT_HASH ?>">
-    <link rel="stylesheet" href="css/nosotros.css?v=<?php echo PROJECT_HASH ?>">
-    <link rel="stylesheet" href="css/programacion.css?v=<?php echo PROJECT_HASH ?>">
+    <link rel="shortcut icon" href="<?php echo $initPath ?>resources/img/logoRadioUAA.ico" type="image/x-icon">
+    <link rel="stylesheet" href="<?php echo $initPath ?>css/normalize.css">
+    <link rel="stylesheet" href="<?php echo $initPath ?>css/styles.css?v=<?php echo PROJECT_HASH ?>">
+    <link rel="stylesheet" href="<?php echo $initPath ?>css/headerStyles.css?v=<?php echo PROJECT_HASH ?>">
+    <link rel="stylesheet" href="<?php echo $initPath ?>css/playerStyles.css?v=<?php echo PROJECT_HASH ?>">
+    <link rel="stylesheet" href="<?php echo $initPath ?>css/contacto.css?v=<?php echo PROJECT_HASH ?>">
+    <link rel="stylesheet" href="<?php echo $initPath ?>css/contenido.css?v=<?php echo PROJECT_HASH ?>">
+    <link rel="stylesheet" href="<?php echo $initPath ?>css/defensoria.css?v=<?php echo PROJECT_HASH ?>">
+    <link rel="stylesheet" href="<?php echo $initPath ?>css/inicio.css?v=<?php echo PROJECT_HASH ?>">
+    <link rel="stylesheet" href="<?php echo $initPath ?>css/nosotros.css?v=<?php echo PROJECT_HASH ?>">
+    <link rel="stylesheet" href="<?php echo $initPath ?>css/programacion.css?v=<?php echo PROJECT_HASH ?>">
 </head>
 <body class="<?php echo ($currentTheme === 'dark' ? $currentTheme : '')?>">
     <?php 
@@ -118,11 +144,13 @@
     </main>
 
     <?php include 'php/main_footer.php' ?>
-    <script type="module" src="js/playerManager.js?v=<?php echo PROJECT_HASH ?>"></script>
-    <!-- <script type="module" src="js/contenido.js?v=<?php echo PROJECT_HASH ?>"></script> -->
-    <script type="module" src="js/searchManager.js?v=<?php echo PROJECT_HASH ?>"></script>
-    <!-- <script src="js/Galeria.js"></script> -->
-    <!-- <script type="module" src="js/utilities.js?v=<?php echo PROJECT_HASH ?>"></script> -->
-    <script type="module" src="js/app.js?v=<?php echo PROJECT_HASH ?>"></script>
+    <script type="module" src="<?php echo $initPath ?>js/playerManager.js?v=<?php echo PROJECT_HASH ?>"></script>
+    <!-- <script type="module" src="<?php echo $initPath ?>js/contenido.js?v=<?php echo PROJECT_HASH ?>"></script> -->
+    <script type="module" src="<?php echo $initPath ?>js/searchManager.js?v=<?php echo PROJECT_HASH ?>"></script>
+    <!-- <script src="<?php echo $initPath ?>js/Galeria.js"></script> -->
+    <!-- <script type="module" src="<?php echo $initPath ?>js/utilities.js?v=<?php echo PROJECT_HASH ?>"></script> -->
+    <script type="module" src="<?php echo $initPath ?>js/app.js?v=<?php echo PROJECT_HASH ?>"></script>
+    <script type="module" src="<?php echo $initPath ?>js/light-dark-mode.js?v=<?php echo PROJECT_HASH ?>"></script>
+    <script src="<?php echo $initPath ?>js/navbar.js?v=<?php echo PROJECT_HASH ?>"></script>
 </body>
 </html>

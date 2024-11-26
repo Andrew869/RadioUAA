@@ -1,4 +1,4 @@
-import { GetSVG, ToSeconds } from './utilities.js?v=c40e99';
+import { GetRelativePath, GetSVG, ToSeconds } from './utilities.js?v=c40e99';
 const audio = document.getElementById('audio');
 
 const playPauseBtn = document.getElementById('playPauseBtn');
@@ -162,7 +162,7 @@ SetupTimetoUpdate();
 function SetupTimetoUpdate(){
     let formData = new FormData();
     formData.append('GetCurrProgram', '');
-    fetch('php/jsRequest.php', {
+    fetch(GetRelativePath() + 'php/jsRequest.php', {
         method: 'POST',
         body: formData
     })
@@ -182,7 +182,7 @@ function UpdateProgramInfo(){
     // console.log("asdasd " + timeToUpdate);
     let formData = new FormData();
     formData.append('GetCurrProgram', '');
-    fetch('php/jsRequest.php', {
+    fetch(GetRelativePath() + 'php/jsRequest.php', {
         method: 'POST',
         body: formData
     })
@@ -191,7 +191,7 @@ function UpdateProgramInfo(){
         // console.log(data);
         // programContainer.innerHTML = data;
         programName.textContent = data[1]['nombre_programa'];
-        programImg.src = data[1]['url_img'] + ".300";
+        programImg.src = GetRelativePath() + data[1]['url_img'] + ".300";
         if(programTag.classList.contains('live'))
             programTag.classList.remove('live');
         else

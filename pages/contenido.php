@@ -1,10 +1,10 @@
 <?php
-    $initPath = '';
+    $jsInitPath = '';
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $initPath = $_POST['initPath'];
+        $jsInitPath = $_POST['initPath'];
     }
 
-    include_once $initPath . 'php/db_connect.php';
+    include_once $jsInitPath . 'php/db_connect.php';
 ?>
 <h1>Contenido</h1>
 <div class="container">
