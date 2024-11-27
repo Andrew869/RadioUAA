@@ -253,7 +253,7 @@
     }
     
     SQL::Connect();
-<<<<<<< HEAD
+
     // SQL::Update(SQL::GENERO, "1", "password_hash", "Admin123");
     // $asd = SQL::Select("user","1")->fetch(PDO::FETCH_ASSOC);
     // foreach ($asd as $key => $value) {
@@ -261,16 +261,14 @@
     // }
     // $clase = null;
     // SQL::Create(SQL::GENERO, ["nom" => "Kids", "asd"=>"asd"])
-=======
+
 
     function ToMinutes($time) {
         // Convierte el formato HH:MM en minutos totales desde la medianoche
         list($hours, $minutes) = explode(':', $time);
         return ($hours * 60) + $minutes;
     }
-<<<<<<< HEAD:db_connect.php
 
->>>>>>> 77415401fcf3c68b4a5befe7a21f9d1ce5ef5df0
-=======
->>>>>>> origin/EduardoPruebasWeb:php/db_connect.php
+
+
 ?>
