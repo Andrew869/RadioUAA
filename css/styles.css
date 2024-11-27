@@ -27,12 +27,6 @@ html{
 }
 
 body {
-    /* background-color: yellow; */
-    height: 100%;
-    background-color: var(--GrisClaro);
-
-    /* margin: 0;
-    padding: 0; */
 }
 
 main#content {
@@ -42,10 +36,48 @@ main#content {
     /* background-color: yellow; */
 }
 
+.light {
+    background-color: #F8F8F8;
+    color: black;
+    fill: black;
+}
+
+.light .c1 {
+    background-color: #EDEDED;
+    color: black;
+    fill: black;
+}
+
+.light .c2 {
+    background-color: #c0c0c0;
+    color: black;
+    fill: black;
+}
+
+.light .shadow {
+    box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+}
+
 .dark {
-    background: none;
     background-color: #171717;
     color: white;
+    fill: white;
+}
+
+.dark .c1 {
+    background-color: #292929;
+    color: white;
+    fill: white;
+}
+
+.dark .c2 {
+    background-color: #505050;
+    color: white;
+    fill: white;
+}
+
+.dark .shadow {
+    box-shadow: rgba(204, 204, 204, 0.5) 2px 2px 2px;
 }
 
 h1 {
@@ -105,85 +137,24 @@ li {
     font-size: 25px;
 } */
 
-.whatsapp {
-    background: linear-gradient(145deg, #25D366, #128C7E); /* Verde de WhatsApp */
+/* .whatsapp {
+    background: linear-gradient(145deg, #25D366, #128C7E);
 }
 
 .instagram {
-    background: linear-gradient(145deg, #F58529, #DD2A7B, #8134B8); /* Colores de Instagram */
+    background: linear-gradient(145deg, #F58529, #DD2A7B, #8134B8);
 }
 
 .facebook {
-    background: linear-gradient(145deg, #4267B2, #3B5998); /* Azul de Facebook */
+    background: linear-gradient(145deg, #4267B2, #3B5998);
 }
 
 .spotify {
-    background: linear-gradient(145deg, #1DB954, #1ED760); /* Verde de Spotify */
-}
-
-
-
-/* .app-promo {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background-color: #007bff;
-    color: #fff;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-    max-width: 300px;
-}
-
-.app-promo-content {
-    text-align: center;
-}
-
-.app-promo h3 {
-    margin-top: 0;
-    font-size: 20px;
-}
-
-.app-promo p {
-    font-size: 16px;
-    margin-bottom: 15px;
-}
-
-.app-links {
-    display: flex;
-    justify-content: space-around;
-}
-
-.app-link {
-    display: inline-block;
-    text-decoration: none;
-    color: #fff;
-    background-color: #28a745;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
-}
-
-.app-link:hover {
-    background-color: #218838;
-}
-
-.app-link.android {
-    background-color: #007bff;
-}
-
-.app-link.ios {
-    background-color: #ffc107;
-    margin-left: 10px;
+    background: linear-gradient(145deg, #1DB954, #1ED760);
 } */
-
-
 
 footer {
     padding: 0 10px;
-    background-color: #027543;
     /* background-color: yellow; */
 }
 
@@ -199,7 +170,7 @@ footer {
 }
 
 .container-uaa a{
-    text-decoration: none;
+    fill: inherit;
 }
 
 .container-uaa img {
@@ -214,8 +185,7 @@ footer {
     cursor: pointer;
     transition: transform 0.3s ease;
     padding: 20px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
-    background-color: white;
+    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px; */
 }
 
 /* .container-uaa img .dark{
@@ -225,10 +195,6 @@ footer {
 .container-uaa img:hover {
     transform: scale(1.1);
 }
-
-
-
-/* footer ultima parte inicio */
 
 /* botones descarga inicio */
 .container-descarga-buttons {
@@ -281,8 +247,6 @@ footer {
 /* botones descarga fin */
 
 
-
-
 .copyright-container {
     /* background-color: teal;  */
     padding: 10px 0; 
@@ -320,15 +284,13 @@ footer {
     /* display: flex;  */
     align-items: center;
     margin: 0px 0; 
-    text-decoration: none; 
-    color: white; 
+    text-decoration: wavy;
+    color: inherit; 
 }
 .copyright-links a:hover {
-    color: inherit;
-    text-decoration: underline; 
+    /* color: inherit; */
+    /* text-decoration: underline;  */
 }
-
-
 
 .animated-text {
     display: flex;
@@ -338,7 +300,6 @@ footer {
     height: 10vh; 
     font-size: 1.8rem; 
     font-weight: bold;
-    color: #ffffff;
     overflow: hidden;
 }
 
@@ -372,19 +333,6 @@ footer {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 @media (max-width: 768px){
     main{
         margin-top: 70px;
@@ -407,5 +355,3 @@ footer {
         padding: 10px 0 20px 0;
     }
 }
-
-/* footer ultima parte fin */

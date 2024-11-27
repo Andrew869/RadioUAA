@@ -41,7 +41,6 @@
 }
 
 .next-program img {
-    background-color: #005530;
     width: 100px;
     height: 100px;
     object-fit: contain;
@@ -81,7 +80,7 @@
     /* max-width: 1000px; */
     position: relative;
     max-width: 960px;
-    max-height: 480px;
+    max-height: 540px;
     width: 60vw;
     aspect-ratio: 16/9;
     overflow: hidden;
@@ -97,7 +96,6 @@
 }
 
 .slide img {
-    background-color: #005530;
     width: inherit;
     height: inherit;
     object-fit: contain;

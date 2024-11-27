@@ -48,7 +48,7 @@
                 }
                 break;
             case 'GetSVG':
-                $styles = [$args[1], $args[2], $args[3]];
+                $styles = [$args[1], $args[2]];
                 $output = GetSVG($args[0], $styles);
                 echo $output;
                 // echo json_encode($output);

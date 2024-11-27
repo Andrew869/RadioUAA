@@ -67,27 +67,27 @@ export function GetSVG(parentNode, url, styles){
     })
     .then(response => response.text())
     .then(svgContent => {
-        let [width, height, fill] = styles;
+        // let [width, height] = styles;
 
-        // Reemplazar width
-        svgContent = svgContent.replace(/width:\s*\d+px/, `width: ${width}`);
+        // // Reemplazar width
+        // svgContent = svgContent.replace(/width:\s*\d+px/, `width: ${width}`);
 
-        // Verificar si el height ya está en el SVG
-        if (svgContent.includes('height:')) {
-            // Reemplazar el height si existe
-            svgContent = svgContent.replace(/height:\s*\d+px/, `height: ${height}`);
-        } else {
-            // Agregar el height si no existe
-            svgContent = svgContent.replace('<svg ', `<svg style="height: ${height}; " `);
-        }
+        // // Verificar si el height ya está en el SVG
+        // if (svgContent.includes('height:')) {
+        //     // Reemplazar el height si existe
+        //     svgContent = svgContent.replace(/height:\s*\d+px/, `height: ${height}`);
+        // } else {
+        //     // Agregar el height si no existe
+        //     svgContent = svgContent.replace('<svg ', `<svg style="height: ${height}; " `);
+        // }
 
         // Reemplazar fill si existe, o agregarlo si no
-        if (svgContent.includes('fill:')) {
-            svgContent = svgContent.replace(/fill:\s*[^;]+/, `fill: ${fill}`);
-        } else {
-            // Si no existe, agregar fill al estilo
-            svgContent = svgContent.replace('style="', `style="fill: ${fill}; `);
-        }
+        // if (svgContent.includes('fill:')) {
+        //     svgContent = svgContent.replace(/fill:\s*[^;]+/, `fill: ${fill}`);
+        // } else {
+        //     // Si no existe, agregar fill al estilo
+        //     svgContent = svgContent.replace('style="', `style="fill: ${fill}; `);
+        // }
 
         // Insertar el SVG en el nodo padre
         parentNode.innerHTML = svgContent;

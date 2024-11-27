@@ -132,7 +132,7 @@
     <link rel="stylesheet" href="<?php echo $initPath ?>css/nosotros.css?v=<?php echo PROJECT_HASH ?>">
     <link rel="stylesheet" href="<?php echo $initPath ?>css/programacion.css?v=<?php echo PROJECT_HASH ?>">
 </head>
-<body class="<?php echo ($currentTheme === 'dark' ? $currentTheme : '')?>">
+<body class="<?php echo $currentTheme ?>">
     <?php 
         include 'php/main_header.php';
     ?>

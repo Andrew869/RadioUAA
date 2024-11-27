@@ -12,7 +12,7 @@
 
     foreach (GetNextPrograms(4) as $program) {
         echo "<div class='next-program'>";
-            echo "<img src='" . $jsInitPath . $program['url_img'] .".300' alt='logo_programa'>";
+            echo "<img src='" . $jsInitPath . $program['url_img'] .".300' alt='logo_programa' class='c1 $currentTheme'>";
             echo "<div class='info'>";
                 echo "<div class='name'><span>". $program['nombre_programa'] ."</span></div>";
                 echo "<div class='schedule'><span>". date("H:i", strtotime($program['hora_inicio'])) .' - '. date("H:i", strtotime($program['hora_fin'])) ."</span></div>";    

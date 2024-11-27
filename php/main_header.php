@@ -1,25 +1,25 @@
-<header>
+<header class="<?php echo $currentTheme ?>">
     <nav class="navbar">
         <div class="logo">
             <a class="nav-link internal-link" href="./">
                 <!-- <img src="resources/img/logo-radio-uaa-blanco.png" alt="Radio UAA Logo"> -->
-                <?php echo GetSVG('resources/img/svg/logoRadioUAA.svg', ["40px", "40px", "white"]) ?>
+                <?php echo GetSVG('resources/img/svg/logoRadioUAA.svg', ["40px", "40px"]) ?>
             </a>
         </div>
         <div class="nav-links">
             <ul>
                 <li><a href="/inicio" class="nav-link internal-link">Inicio</a></li>
                 <li class="dropdown">
-                    <a class="nav-link arrow-down">Nosotros</a>
-                    <ul class="dropdown-content">
+                    <a class="nav-link arrow-down <?php echo $currentTheme ?>">Nosotros</a>
+                    <ul class="dropdown-content c1 <?php echo $currentTheme ?>">
                         <li><a href="/nosotros" class="nav-link internal-link">Acerca de Radio UAA</a></li>
                         <li><a href="/preguntas-frecuentes" class="nav-link internal-link">Preguntas Frecuentes</a></li>
                         <li><a href="/consejo-ciudadano" class="nav-link internal-link">Consejo Ciudadano</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a class="nav-link arrow-down">Defensoría</a>
-                    <ul class="dropdown-content">
+                    <a class="nav-link arrow-down <?php echo $currentTheme ?>">Defensoría</a>
+                    <ul class="dropdown-content c1 <?php echo $currentTheme ?>">
                         <li><a href="/defensoria-de-las-audiencias" class="nav-link internal-link">Defensoría de las Audiencias</a></li>
                         <li><a href="/derechos-de-la-audiencia" class="nav-link internal-link">Derechos de las Audiencias</a></li>
                         <li><a href="/quejas-sugerencias" class="nav-link internal-link">Quejas y Sugerencias</a></li>
@@ -36,7 +36,7 @@
         <div class="search-bar-content">
             <div class="search-bar-container">
                 <div class="search-bar">
-                    <input type="text" class="search-bar-input" id="inputSearch" placeholder="Buscar..." aria-label="Search">
+                    <input type="text" class="search-bar-input c1 <?php echo $currentTheme ?>" id="inputSearch" placeholder="Buscar..." aria-label="Search">
                     <label id="search-icon" class="icon" for="inputSearch">
                         <?php echo GetSVG('resources/img/svg/search.svg', ["18px", "18px", "black"]) ?>
                     </label>

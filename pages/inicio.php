@@ -24,19 +24,19 @@
         <div class="slideshow-container">
             <div class="slide fade">
                 <!-- <div class="numbertext">1 / 3</div> -->
-                <img src="<?php echo $jsInitPath ?>resources/img/promo-AppRadioUAA.png">
+                <img src="<?php echo $jsInitPath ?>resources/img/16x9.png" class="c1 <?php echo $currentTheme ?>">
                 <div class="text">Caption Text</div>
             </div>
 
             <div class="slide fade">
             <!-- <div class="numbertext">2 / 3</div> -->
-            <img src="<?php echo $jsInitPath ?>resources/img/IMG_0716.jpg">
+            <img src="<?php echo $jsInitPath ?>resources/img/promo-AppRadioUAA.png" class="c1 <?php echo $currentTheme ?>">
             <div class="text">Caption Two</div>
             </div>
 
             <div class="slide fade">
             <!-- <div class="numbertext">3 / 3</div> -->
-            <img src="<?php echo $jsInitPath ?>resources/img/IMG_0716.jpg">
+            <img src="<?php echo $jsInitPath ?>resources/img/IMG_0716.jpg" class="c1 <?php echo $currentTheme ?>">
             <div class="text">Caption Three</div>
             </div>
 
@@ -44,7 +44,7 @@
             <a class="next">❯</a>
 
         </div>
-        <div class="slideshow-dots">
+        <div class="slideshow-dots c1 <?php echo $currentTheme ?>">
             <span class="dot"></span> 
             <span class="dot"></span> 
             <span class="dot"></span> 

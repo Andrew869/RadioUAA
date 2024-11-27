@@ -21,10 +21,10 @@
     $program = GetCurrProgram();
 ?>
 <!-- <div class="player container-radio-player"> -->
-    <div class="radio-player">
+    <div class="radio-player <?php echo $currentTheme ?>">
         <audio id="audio" src="https://streamingcwsradio30.com/8148/stream"></audio>
         <div class="current-program-info">
-            <img src="<?php echo $initPath . $program['url_img'] ?>.300" alt="logo_programa">
+            <img src="<?php echo $initPath . $program['url_img'] ?>.300" alt="logo_programa" class="c1 <?php echo $currentTheme ?>">
             <div>
                 <div>
                     <span class="curr-pro-txt">
@@ -52,13 +52,13 @@
             <h2>Radio UAA</h2>
             <p id="metadata">Transmisión en vivo</p>
         </div> -->
-        <div class="controls">
+        <div class="controls c1 <?php echo $currentTheme ?>">
             <!-- <div class="control-buttons"> -->
-                <button id="syncBtn">Sincronizar</button>
-                <button id="playPauseBtn">
+                <button id="syncBtn" class="c2 <?php echo $currentTheme ?>">Sincronizar</button>
+                <button id="playPauseBtn" class="c2 <?php echo $currentTheme ?>">
                     <?php echo GetSVG('resources/img/svg/play.svg', ["24px", "24px", "black"]) ?>
                 </button>
-                <div class="volume-control">
+                <div class="volume-control c2 <?php echo $currentTheme ?>">
                     <div class="icon">
                         <?php echo GetSVG('resources/img/svg/volume-high.svg', ["18px", "18px", "black"]) ?>
                     </div>
