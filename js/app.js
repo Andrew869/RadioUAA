@@ -1,5 +1,25 @@
+const routes = {
+    "": "pages/inicio.php",
+    "./": "pages/inicio.php",
+    "inicio": "pages/inicio.php",
+    "nosotros": "pages/nosotros.php",
+    "preguntas-frecuentes": "pages/preguntas-frecuentes.php",
+    "consejo-ciudadano": "pages/consejo-ciudadano.php",
+    "defensoria-de-las-audiencias": "pages/defensoria-de-las-audiencias.php",
+    "derechos-de-la-audiencia": "pages/derechos-de-la-audiencia.php",
+    "quejas-sugerencias": "pages/quejas-sugerencias.php",
+    "transparencia": "pages/transparencia.php",
+    "politica-de-privacidad": "pages/politica-de-privacidad.php",
+    "programacion": "pages/programacion.php",
+    "contenido": "pages/contenido.php",
+    "programa": "pages/programa.php",
+    "contacto": "pages/contacto.php",
+    "404": "pages/404.php"
+};
 // Single Page Application (SPA)!!!!
-import { ShowPrograms } from './contenido.js';
+import { GetRelativePath, ToSeconds, FormatTime } from './utilities.js?v=c40e99';
+import { SetupPrograms } from './contenido.js?v=c40e99';
+import { slideTimeout, SetupSlideshow } from './slideshowManager.js?v=c40e99';
 // import { IsSticky } from './cal.js';
 // Obtener todos los enlaces de navegación
 // const navLinks = document.querySelectorAll('.nav-link');
@@ -7,117 +27,167 @@ const mainContent = document.getElementById('content');
 const options = document.querySelector('.nav-links > ul');
 const menuIcon = document.getElementById('menu-icon');
 const navLinks = document.querySelector('.nav-links');
+const searchBarContent = document.getElementsByClassName("search-bar-content")[0];
+const boxSearch = document.getElementsByClassName("box-search")[0];
+
+let request
+let filePath
+let displayedUrl = '';
+
+let programsContainer;
+let timeoutId;
+let timeToUpdate = 0;
 
 ExecuteBehavior(window.location.pathname.split('/').pop());
 
 SetupInternalLinks();
 
-// // Agregar evento click a cada enlace de navegación
-// document.querySelectorAll('.nav-link').forEach(link => {
-//     link.addEventListener('click', function(event) {
-//         event.preventDefault(); // Evita la acción por defecto del enlace
+function URLManager(){
+    console.log("request: " + request);
+    if(!request)
+        return;
 
-//         let url = this.getAttribute('href'); // Obtener la URL del enlace
+    let segments = request.split('/');
 
-//         if(!url)
-//             return;
+    if (request.startsWith("/"))
+        displayedUrl = request.substring(1);
+    else
+        displayedUrl = request;
 
-//         const displayedUrl = url;
-//         url = GetURLFile(url);
-//         // console.log(url);
-//         let formData = new FormData();
-//         formData.append('onlyContent', '1');
+    console.log("displayedUrl: " + displayedUrl);
 
-//         // Cargar contenido nuevo
-//         fetch(url, {
-//             method: 'POST',
-//             body: formData
-//         })
-//             .then(response => response.text())
-//             .then(data => {
-//                 // Suponiendo que tienes un div con el ID 'content' para cargar el nuevo contenido
-//                 window.scrollTo(0, 0);
-//                 mainContent.innerHTML = data;
-                
-//                 // Actualizar la URL sin recargar
-//                 window.history.pushState({path: displayedUrl}, '', displayedUrl);
+    filePath = routes[segments[1]];
 
-//                 ExecuteBehavior(displayedUrl);
-//             })
-//             .catch(error => console.error('Error al cargar el contenido:', error));
-//     });
-// });
+    let formData = new FormData();
+    formData.append('initPath', '../');
+    formData.append('REQUEST_URI', request);
+    return formData;
+}
+
+export function LinkBehavior(event){
+    event.preventDefault(); // Evita la acción por defecto del enlace
+
+    request = event.currentTarget.getAttribute('href'); // Obtener la URL del enlace
+    // console.log("request: " + request);
+    // if(!request)
+    //     return;
+
+    // let segments = request.split('/');
+
+    // if (request.startsWith("/"))
+    //     displayedUrl = request.substring(1);
+    // else
+    //     displayedUrl = request;
+
+    // console.log("displayedUrl: " + displayedUrl);
+
+    // let url = routes[segments[1]];
+
+    let formData = URLManager();
+    // formData.append('initPath', '../');
+    // formData.append('REQUEST_URI', request);
+
+    // Cargar contenido nuevo
+    fetch(GetRelativePath() + filePath, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        // Suponiendo que tienes un div con el ID 'content' para cargar el nuevo contenido
+        AfterClick(data, displayedUrl);
+        // window.scrollTo(0, 0);
+        // boxSearch.classList.remove('show-boxSearch')
+        // document.getElementById("inputSearch").value = '';
+        // mainContent.innerHTML = data;
+        // SetupInternalLinks();
+        // ExecuteBehavior(displayedUrl);
+
+        // Actualizar la URL sin recargar
+        window.history.pushState({path: displayedUrl}, '', GetRelativePath() + displayedUrl);
+
+    })
+    .catch(error => console.error('Error al cargar el contenido:', error));
+}
 
 // Manejar el historial del navegador (para usar el botón "Atrás" o "Adelante")
 // 'popstate' Se dispara cuando el usuario navega hacia atrás o hacia adelante en el historial usando los botones del navegador, pero no ocurre cuando se carga una nueva página.
 window.addEventListener('popstate', function(event) {
-    let url = window.location.pathname;
-    if (url.startsWith('/')) {
-        url = url.slice(1);
-    }
+    request = window.location.pathname;
+    // if (url.startsWith('/')) {
+    //     url = url.slice(1);
+    // }
 
-    const displayedUrl = url;
-    url = GetURLFile(url);
+    // displayedUrl = url;
+    // // url = GetURLFile(url);
+    // url = routes[url];
 
-    let formData = new FormData();
-    formData.append('onlyContent', '1');
+    let formData = URLManager();
+    // formData.append('initPath', '../');
     // console.log(url);
     // Volver a cargar el contenido cuando se use "atrás" o "adelante"
-    fetch(url, {
+    fetch(GetRelativePath() + filePath, {
         method: 'POST',
         body: formData
     })
-        .then(response => response.text())
-        .then(data => {
-            window.scrollTo(0, 0);
-            document.getElementById('content').innerHTML = data;
-            ExecuteBehavior(displayedUrl.split('/').pop());
-        })
-        .catch(error => console.error('Error al manejar popstate:', error));
+    .then(response => response.text())
+    .then(data => {
+        AfterClick(data, displayedUrl);
+    })
+    .catch(error => console.error('Error al manejar popstate:', error));
 });
 
+function AfterClick(data, request){
+    window.scrollTo(0, 0);
+
+    searchBarContent.classList.remove('show-searchBar');
+    boxSearch.classList.remove('show-boxSearch');
+    menuIcon.classList.remove("change");
+    navLinks.classList.remove("show-navlinks");
+    options.classList.remove('show-options');
+
+    document.getElementById("inputSearch").value = '';
+    mainContent.innerHTML = data;
+    SetupInternalLinks();
+    ExecuteBehavior(request);
+}
+
 function ExecuteBehavior(request){
+    clearTimeout(timeoutId);
+    clearTimeout(slideTimeout);
     switch (request) {
         case 'contenido':
-            ShowPrograms();       
+            SetupPrograms();     
             break;
         // case 'programacion':
         //     IsSticky();
         //     break;
+        case '':
+        case './':
+        case 'inicio':
+            {
+                programsContainer = document.querySelector('.next-programs-container');
+                SetupTimetoUpdate();
+                SetupSlideshow();
+                // timeoutId = setInterval(() => {UpdateProgramsInfo(programsContainer)} , 5000);
+                // console.log("inicioooooo");
+                break;
+            }
         default:
             break;
     }
 }
 
 function GetURLFile(url){
-    switch (url) {
-        case 'inicio':
-        case 'nosotros':
-        case 'preguntas-frecuentes':
-        case 'consejo-ciudadano':
-        case 'defensoria-de-las-audiencias':
-        case 'derechos-de-la-audiencia':
-        case 'quejas-sugerencias':
-        case 'transparencia':
-        case 'politica-de-privacidad':
-        case 'contenido':
-        case 'contacto':
-            url = `pages/${url}.html`;
-            break;
-        case 'programacion':
-            url = 'php/programacion.php';
-            break;
-        case './':
-        case '':
-            url = 'pages/inicio.html';
-            break;
-        case '404':
-        default:
-            // Página no encontrada (404)
-            url = 'pages/404.html';
-            break;
-    }
-    return url;
+    fetch('internal_links.json')
+    .then(response => response.json())
+    .then(data => {
+        resolve(data[url]);
+    })
+    .catch(error => {
+        console.error('Error al cargar routes.json', error);
+        reject(error);
+    });
 }
 
 menuIcon.addEventListener('click', function(e){
@@ -142,49 +212,77 @@ function SetupInternalLinks(){
     });
 }
 
-function LinkBehavior(event){
-    event.preventDefault(); // Evita la acción por defecto del enlace
-
-    let url = event.currentTarget.getAttribute('href'); // Obtener la URL del enlace
-    console.log(url);
-    if(!url)
-        return;
-
-    const displayedUrl = url;
-    url = GetURLFile(url);
-    // console.log(url);
+function SetupTimetoUpdate(){
     let formData = new FormData();
-    formData.append('onlyContent', '1');
-
-    // Cargar contenido nuevo
-    fetch(url, {
+    formData.append('GetCurrProgram', '');
+    fetch(GetRelativePath() + 'php/jsRequest.php', {
         method: 'POST',
         body: formData
     })
-    .then(response => response.text())
+    .then(response => response.json())
     .then(data => {
-        // Suponiendo que tienes un div con el ID 'content' para cargar el nuevo contenido
-        window.scrollTo(0, 0);
-        mainContent.innerHTML = data;
-        SetupInternalLinks();
-
-        // Actualizar la URL sin recargar
-        window.history.pushState({path: displayedUrl}, '', displayedUrl);
-
-        ExecuteBehavior(displayedUrl);
+        let horaFin = ToSeconds(data[1]['hora_fin']);
+        if(horaFin === 0) horaFin = 86400;
+        timeToUpdate = (horaFin - ToSeconds(data[0])) * 1000;
+        timeoutId = setTimeout(UpdateProgramsInfo , timeToUpdate);
+        console.log("miliseconds to update programs: " + timeToUpdate);
     })
     .catch(error => console.error('Error al cargar el contenido:', error));
 }
 
-// function myFunction(x) {
-//     x.classList.toggle("change");
-// } 
+function UpdateProgramsInfo(){
+    // console.log("asdasd " + timeToUpdate);
+    let formData = new FormData();
+    formData.append('GetNextPrograms', '4');
+    fetch(GetRelativePath() + 'php/jsRequest.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        while (programsContainer.firstChild) {
+            programsContainer.removeChild(programsContainer.firstChild);
+        }
+        data[1].forEach(program => {
+            let nextProgram = document.createElement('div');
+            nextProgram.classList.add('next-program');
+        
+            let img = document.createElement('img');
+            img.src = program.url_img + '.300';
+            img.alt = 'logo_programa';
+        
+            let info = document.createElement('div');
+            info.classList.add('info');
+        
+            let name = document.createElement('div');
+            name.classList.add('name');
+            name.innerHTML = `<span>${program.nombre_programa}</span>`;
+        
+            let schedule = document.createElement('div');
+            schedule.classList.add('schedule');
+            schedule.innerHTML = `<span>${FormatTime(program.hora_inicio)} - ${FormatTime(program.hora_fin)}</span>`;
+        
+            info.appendChild(name);
+            info.appendChild(schedule);
+        
+            nextProgram.appendChild(img);
+            nextProgram.appendChild(info);
+                    
+            programsContainer.appendChild(nextProgram);
+        });
 
-// window.addEventListener('beforeunload', function (event) {
-//     // Puedes mostrar un mensaje personalizado, pero la mayoría de los navegadores no lo mostrarán.
-//     const confirmationMessage = '¿Estás seguro de que deseas salir?';
-    
-//     // Establecer el mensaje de confirmación
-//     event.returnValue = confirmationMessage; // Esto es necesario para algunos navegadores
-//     return confirmationMessage; // Algunos navegadores mostrarán este mensaje
-// });
+        let horaInicio = ToSeconds(data[1][0]['hora_inicio']);
+        if(horaInicio === 0) horaInicio = 86400;
+        timeToUpdate = (horaInicio - ToSeconds(data[0])) * 1000;
+        timeoutId = setTimeout(UpdateProgramsInfo , timeToUpdate);
+        console.log("miliseconds to update programs: " + timeToUpdate);
+    })
+    .catch(error => console.error('Error al cargar el contenido:', error));
+}
+
+window.addEventListener('focus', function() {
+    clearTimeout(timeoutId);
+    console.log('current url: ' + this.location.pathname);
+    if(this.location.pathname === '/' || displayedUrl === "/inicio")
+        UpdateProgramsInfo();
+});

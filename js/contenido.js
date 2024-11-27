@@ -37,22 +37,25 @@ const programas = [
     }
 ];
 
-<<<<<<< HEAD
+<<<<<<<<< Temporary merge branch 1
+
+=========
 const contenedorProgramas = document.getElementById('contenedorProgramas');
 const filtroGenero = document.getElementById('filtroGenero');
 const filtroPresentador = document.getElementById('filtroPresentador');
 const buscadorNombre = document.getElementById('buscadorNombre');
 const alternarVista = document.getElementById('alternarVista');
-=======
-
->>>>>>> origin/EduardoPruebasWeb
+>>>>>>>>> Temporary merge branch 2
 const modal = document.getElementById('modal');
 const btnCerrar = document.getElementsByClassName('cerrar')[0];
 
 const comentariosPorPrograma = {};
 
-function llenarFiltros() {
-    const generos = [...new Set(programas.flatMap(programa => programa.genero.split(', ')))];
+function llenarFiltros(info) {
+    const generos = info[1];
+    
+    // const generos = [...new Set(programas.flatMap(programa => programa.genero.split(', ')))];
+
     generos.forEach(genero => {
         const opcion = document.createElement('option');
         opcion.value = genero;
@@ -60,7 +63,8 @@ function llenarFiltros() {
         filtroGenero.appendChild(opcion);
     });
 
-    const presentadores = [...new Set(programas.flatMap(programa => programa.presentadores.split(', ')))];
+    // const presentadores = [...new Set(programas.flatMap(programa => programa.presentadores.split(', ')))];
+    const presentadores = info[0];
     presentadores.forEach(presentador => {
         const opcion = document.createElement('option');
         opcion.value = presentador.trim();
@@ -70,38 +74,42 @@ function llenarFiltros() {
 }
 
 function crearElementoPrograma(programa) {
-    const elemento = document.createElement('div');
-    elemento.className = 'programa';
+    const elemento = document.createElement('a');
+    elemento.classList.add('programa');
+    elemento.classList.add('internal-link');
+    elemento.href = "/programa/" + programa.id;
+    elemento.onclick = (e) => {LinkBehavior(e)};
 
     const esListaView = contenedorProgramas.classList.contains('lista');
 
+    let generos = programa.generos? programa.generos : '';
+
     if (esListaView) {
         elemento.innerHTML = `
-            <img src="${programa.imagen}" alt="${programa.nombre}">
+            <img src="${programa.imagen}.300" alt="${programa.nombre}">
             <div class="programa-info">
                 <div class="programa-nombre">${programa.nombre}</div>
                 <div>${programa.descripcion}</div>
-                <div>${programa.genero}</div>
             </div>
         `;
     } else {
         elemento.innerHTML = `
-            <img src="${programa.imagen}" alt="${programa.nombre}">
+            <img src="${programa.imagen}.300" alt="${programa.nombre}">
             <div class="programa-info">
                 <div class="programa-nombre">${programa.nombre}</div>
-                <div>${programa.genero}</div>
+                <div>${generos}</div>
             </div>
         `;
     }
     
-    elemento.addEventListener('click', () => abrirModal(programa));
+    // elemento.addEventListener('click', () => abrirModal(programa));
     return elemento;
 }
 
 function renderizarProgramas() {
     const programasFiltrados = programas
         .filter(programa => 
-            (filtroGenero.value === '' || programa.genero.includes(filtroGenero.value)) &&
+            (filtroGenero.value === '' || programa.generos.includes(filtroGenero.value)) &&
             (filtroPresentador.value === '' || programa.presentadores.toLowerCase().includes(filtroPresentador.value.toLowerCase())) &&
             programa.nombre.toLowerCase().includes(buscadorNombre.value.toLowerCase())
         );
@@ -118,13 +126,13 @@ function alternarVistaModo() {
     if (contenedorProgramas.classList.contains('cuadricula')) {
         contenedorProgramas.classList.remove('cuadricula');
         contenedorProgramas.classList.add('lista');
-        gridIcon.style.display = 'none';
-        listIcon.style.display = 'block';
+        gridIcon.style.display = 'block';
+        listIcon.style.display = 'none';
     } else {
         contenedorProgramas.classList.remove('lista');
         contenedorProgramas.classList.add('cuadricula');
-        gridIcon.style.display = 'block';
-        listIcon.style.display = 'none';
+        gridIcon.style.display = 'none';
+        listIcon.style.display = 'block';
     }
 
     renderizarProgramas();
@@ -153,7 +161,11 @@ function abrirModal(programa) {
     modal.style.display = 'block';
 }
 
-<<<<<<< HEAD
+<<<<<<<<< Temporary merge branch 1
+// closeBtn.onclick = function() {
+//     modal.style.display = 'none';
+// }
+=========
 function agregarComentario(parentId = null) {
     const nombre = document.getElementById('nombre').value;
     const email = document.getElementById('email').value;
@@ -287,11 +299,7 @@ function responderComentario(comentarioId) {
 btnCerrar.onclick = function() {
     modal.style.display = 'none';
 }
-=======
-// closeBtn.onclick = function() {
-//     modal.style.display = 'none';
-// }
->>>>>>> origin/EduardoPruebasWeb
+>>>>>>>>> Temporary merge branch 2
 
 window.onclick = function(evento) {
     if (evento.target == modal) {
@@ -299,15 +307,7 @@ window.onclick = function(evento) {
     }
 }
 
-<<<<<<< HEAD
-filtroGenero.addEventListener('change', renderizarProgramas);
-filtroPresentador.addEventListener('change', renderizarProgramas);
-buscadorNombre.addEventListener('input', renderizarProgramas);
-alternarVista.addEventListener('click', alternarVistaModo);
-
-llenarFiltros();
-renderizarProgramas();
-=======
+<<<<<<<<< Temporary merge branch 1
 export function ShowPrograms(){
     const grid = document.getElementById('programas-grid');
     programas.forEach(programa => {
@@ -324,4 +324,12 @@ export function ShowPrograms(){
 //     // Limpiar el formulario
 //     document.getElementById('form-comentario').reset();
 // });
->>>>>>> origin/EduardoPruebasWeb
+=========
+filtroGenero.addEventListener('change', renderizarProgramas);
+filtroPresentador.addEventListener('change', renderizarProgramas);
+buscadorNombre.addEventListener('input', renderizarProgramas);
+alternarVista.addEventListener('click', alternarVistaModo);
+
+llenarFiltros();
+renderizarProgramas();
+>>>>>>>>> Temporary merge branch 2

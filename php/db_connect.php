@@ -254,21 +254,9 @@
     
     SQL::Connect();
 
-    // SQL::Update(SQL::GENERO, "1", "password_hash", "Admin123");
-    // $asd = SQL::Select("user","1")->fetch(PDO::FETCH_ASSOC);
-    // foreach ($asd as $key => $value) {
-    //     echo "$key -> $value" . "<br>";
-    // }
-    // $clase = null;
-    // SQL::Create(SQL::GENERO, ["nom" => "Kids", "asd"=>"asd"])
-
-
     function ToMinutes($time) {
         // Convierte el formato HH:MM en minutos totales desde la medianoche
         list($hours, $minutes) = explode(':', $time);
         return ($hours * 60) + $minutes;
     }
-
-
-
 ?>

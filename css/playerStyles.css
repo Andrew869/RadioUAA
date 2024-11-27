@@ -1,5 +1,5 @@
 .radio-player {
-    background-color: #027543;
+    /* background-color: #027543; */
     position: sticky;
     bottom: 0;
     width: 100%;
@@ -11,6 +11,17 @@
     align-items: center;
     z-index: 1;
 }
+
+.radio-player.light {
+    border: solid #EDEDED;
+    border-width: 1px 0 1px 0;
+}
+
+.radio-player.dark {
+    border: solid #292929;
+    border-width: 1px 0 0 0;
+}
+
 
 .radio-player > div {
     /* background-color: yellow; */
@@ -27,7 +38,9 @@
 .current-program-info img {
     width: 80px;
     height: 80px;
-    object-fit: cover;
+    object-fit: contain;
+    border-radius: 6px;
+    /* background-color: #005530; */
 }
 
 .current-program-info > div {
@@ -86,14 +99,14 @@
 
 .curr-pro-txt,
 .frequency-band {
-    color: #e2e2e2;
+    /* color: #e2e2e2; */
     font-size: 0.8rem;
 }
 
 .controls {
     margin: 10px;
     padding: 0 20px;
-    background-color: #005530;
+    /* background-color: #005530; */
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -159,7 +172,7 @@
 .controls button:hover,
 .volume-control:hover {
     transform: scale(1.02);
-    background-color: #fff;
+    /* background-color: #fff; */
 }
 
 .volume-control .icon {

@@ -5,10 +5,10 @@ let isDragging = false;
 const fullPath = window.location.pathname;
 
 // Elimina la última barra si está en la raíz, y divide la ruta en segmentos
-const segments = fullPath.endsWith('/') ? fullPath.slice(0, -1).split('/') : fullPath.split('/');
+// const segments = fullPath.endsWith('/') ? fullPath.slice(0, -1).split('/') : fullPath.split('/');
 
 // Obtiene la carpeta anterior al archivo, o una cadena vacía si está en la raíz
-const currentDir = segments.length > 1 ? segments[segments.length - 2] : '';
+// const currentDir = segments.length > 1 ? segments[segments.length - 2] : '';
 
 // console.log(currentDir);
 
@@ -37,10 +37,28 @@ window.addEventListener('resize', () => {
     }, 200);
 });
 
+export function GetRelativePath() {
+    // Get the current URL
+    var relativePath = '';
+    var currentUrl = window.location.pathname;
+
+    // Calculate the relative path from the root of the site
+    var parts = currentUrl.split('/');
+    var numLevels = parts.length - 2;
+
+
+    if (numLevels > 0) {
+        for (var i = 0; i < numLevels; i++) {
+            relativePath += '../';
+        }
+    }
+    return relativePath;
+}
+
 export function GetSVG(parentNode, url, styles){
     console.log(`seahorse ${window.location.pathname}`);
     let args = url + ',' + styles;
-    fetch((currentDir === '' ? '' : "../" ) + "php/jsRequest.php", {
+    fetch(GetRelativePath() + "../php/jsRequest.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
@@ -49,27 +67,27 @@ export function GetSVG(parentNode, url, styles){
     })
     .then(response => response.text())
     .then(svgContent => {
-        let [width, height, fill] = styles;
+        // let [width, height] = styles;
 
-        // Reemplazar width
-        svgContent = svgContent.replace(/width:\s*\d+px/, `width: ${width}`);
+        // // Reemplazar width
+        // svgContent = svgContent.replace(/width:\s*\d+px/, `width: ${width}`);
 
-        // Verificar si el height ya está en el SVG
-        if (svgContent.includes('height:')) {
-            // Reemplazar el height si existe
-            svgContent = svgContent.replace(/height:\s*\d+px/, `height: ${height}`);
-        } else {
-            // Agregar el height si no existe
-            svgContent = svgContent.replace('<svg ', `<svg style="height: ${height}; " `);
-        }
+        // // Verificar si el height ya está en el SVG
+        // if (svgContent.includes('height:')) {
+        //     // Reemplazar el height si existe
+        //     svgContent = svgContent.replace(/height:\s*\d+px/, `height: ${height}`);
+        // } else {
+        //     // Agregar el height si no existe
+        //     svgContent = svgContent.replace('<svg ', `<svg style="height: ${height}; " `);
+        // }
 
         // Reemplazar fill si existe, o agregarlo si no
-        if (svgContent.includes('fill:')) {
-            svgContent = svgContent.replace(/fill:\s*[^;]+/, `fill: ${fill}`);
-        } else {
-            // Si no existe, agregar fill al estilo
-            svgContent = svgContent.replace('style="', `style="fill: ${fill}; `);
-        }
+        // if (svgContent.includes('fill:')) {
+        //     svgContent = svgContent.replace(/fill:\s*[^;]+/, `fill: ${fill}`);
+        // } else {
+        //     // Si no existe, agregar fill al estilo
+        //     svgContent = svgContent.replace('style="', `style="fill: ${fill}; `);
+        // }
 
         // Insertar el SVG en el nodo padre
         parentNode.innerHTML = svgContent;
@@ -1184,6 +1202,30 @@ export function ToHours(minutes) {
     hours = hours < 10 ? '0' + hours : hours;
     mins = mins < 10 ? '0' + mins : mins;
     return hours + ':' + mins;
+}
+
+export function ToSeconds(time) {
+    // Separar horas, minutos y segundos
+    let partes = time.split(':');
+    let horas = parseInt(partes[0], 10);
+    let minutos = parseInt(partes[1], 10);
+    let segundos = parseInt(partes[2], 10);
+
+    // Calcular los segundos totales
+    let segundosTotales = horas * 3600 + minutos * 60 + segundos;
+
+    return segundosTotales;
+}
+
+export function FormatTime(time) {
+    // Verifica si el tiempo tiene el formato HH:MM:SS
+    if (/^\d{2}:\d{2}:\d{2}$/.test(time)) {
+        // Extrae la parte de HH:MM y devuelve solo eso
+        return time.substr(0, 5); // Devuelve los primeros 5 caracteres (HH:MM)
+    } else {
+        // Si no tiene el formato esperado, devuelve el tiempo original
+        return time;
+    }
 }
 
 export function createModalExit(){

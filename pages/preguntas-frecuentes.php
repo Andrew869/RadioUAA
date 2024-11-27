@@ -1,9 +1,5 @@
-
-
-<br>
-<br>
-
 <h1>Preguntas Frecuentes</h1>
+<div class="texto-frecuentes">
 
 <h2>¿Qué es Radio UAA?</h2>
 <p>Radio Universidad, nace el 13 de enero de 1978 con la premisa fundamental de ser un vínculo entre la Institución
@@ -39,3 +35,5 @@
 
 <h2>¿Dónde encuentro los términos de servicio?</h2>
 <p>Consúltalo en Políticas de Privacidad y Términos de Servicio</p>
+
+</div>
