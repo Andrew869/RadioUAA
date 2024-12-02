@@ -225,8 +225,8 @@
 <body>
 <h1>Programación</h1>
 <div class="table-container">
-    <table>
-        <thead>
+    <table class="c1">
+        <thead class="c2">
         <tr>
                 <th>Horas</th>
                 <th class="day-column">Lunes</th>

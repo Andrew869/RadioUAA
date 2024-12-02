@@ -14,7 +14,7 @@
 
 .radio-player.light {
     border: solid #EDEDED;
-    border-width: 1px 0 1px 0;
+    border-width: 1px 0 0 0;
 }
 
 .radio-player.dark {
@@ -189,8 +189,8 @@
     appearance: none;
     background: linear-gradient(
         to right,
-        #4caf50 0%,
-        #4caf50 100%,
+        #27AE60 0%,
+        #27AE60 100%,
         #ddd 100%,
         #ddd 100%
     );
@@ -205,7 +205,7 @@
     appearance: none;
     width: 15px;
     height: 15px;
-    background: #4caf50;
+    background: #27AE60;
     border-radius: 50%;
     cursor: pointer;
     position: relative;
@@ -216,7 +216,7 @@
     /* visibility: hidden; */
     width: 15px;
     height: 15px;
-    background: #4caf50;
+    background: #27AE60;
     border-radius: 50%;
     cursor: pointer;
     position: relative;
@@ -235,7 +235,7 @@
     /* visibility: hidden; */
     width: 20px;
     height: 20px;
-    background: #4caf50;
+    background: #27AE60;
     border-radius: 50%;
     cursor: pointer;
     position: relative;

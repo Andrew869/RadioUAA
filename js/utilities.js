@@ -870,7 +870,7 @@ export function CreateEvent(element, eventName, detail) {
 function GetList(container, tableName){
     let args = tableName;
     let list;
-    fetch((currentDir === '' ? "" : "../" ) + "php/jsRequest.php", {
+    fetch(GetRelativePath() + "php/jsRequest.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
@@ -903,7 +903,7 @@ function GetList(container, tableName){
 
 function EnumToList(container, tableName, fieldName, tagName){
     let args = tableName + ',' + fieldName;
-    fetch((currentDir === '' ? "" : "../" ) + "php/jsRequest.php", {
+    fetch(GetRelativePath() + "php/jsRequest.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"

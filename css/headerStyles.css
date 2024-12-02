@@ -76,7 +76,8 @@ header.dark {
 .logo {
     width: 40px;
     height: 100%;
-    fill: #027543;
+    fill: #27AE60;
+    /* fill: #027543; */
 }
 
 .logo a {

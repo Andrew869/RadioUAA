@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (savedVolume !== null) {
         volumeSlider.value = savedVolume;
         const value = (volumeSlider.value - volumeSlider.min) / (volumeSlider.max - volumeSlider.min) * 100;
-        volumeSlider.style.background = `linear-gradient(to right, #4CAF50 0%, #4CAF50 ${value}%, #ddd ${value}%, #ddd 100%)`;
+        volumeSlider.style.background = `linear-gradient(to right, #27AE60 0%, #27AE60 ${value}%, #ddd ${value}%, #ddd 100%)`;
         audio.volume = savedVolume;
     }
 });
@@ -117,7 +117,7 @@ syncBtn.addEventListener('click', () => {
 // Control de volumen
 volumeSlider.addEventListener('input', (e) => {
     const value = (volumeSlider.value - volumeSlider.min) / (volumeSlider.max - volumeSlider.min) * 100;
-    volumeSlider.style.background = `linear-gradient(to right, #4CAF50 0%, #4CAF50 ${value}%, #ddd ${value}%, #ddd 100%)`;
+    volumeSlider.style.background = `linear-gradient(to right, #27AE60 0%, #27AE60 ${value}%, #ddd ${value}%, #ddd 100%)`;
     console.log(value);
     audio.volume = e.target.value;
     localStorage.setItem('audioVolume', audio.volume);
