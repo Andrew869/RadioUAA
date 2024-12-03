@@ -17,6 +17,59 @@
         ]
     ];
 
+    define('DAYS', [
+        1 => 'Lunes',
+        2 => 'Martes',
+        3 => 'Miércoles',
+        4 => 'Jueves',
+        5 => 'Viernes',
+        6 => 'Sábado',
+        7 => 'Domingo'
+    ]);
+    
+
+    function resize_image($input_image_path, $output_image_path, $target_width) {
+        // Obtener información de la imagen original
+        list($original_width, $original_height, $image_type) = getimagesize($input_image_path);
+    
+        // Crear una imagen a partir del archivo original según su tipo
+        switch ($image_type) {
+            case IMAGETYPE_JPEG:
+                $img = imagecreatefromjpeg($input_image_path);
+                break;
+            case IMAGETYPE_PNG:
+                $img = imagecreatefrompng($input_image_path);
+                break;
+            case IMAGETYPE_GIF:
+                $img = imagecreatefromgif($input_image_path);
+                break;
+            default:
+                throw new Exception('Formato de imagen no soportado');
+        }
+    
+        // Verificar si la imagen ya tiene un ancho menor o igual al objetivo
+        if ($original_width <= $target_width) {
+            $target_width = $original_width;
+            $target_height = $original_height;
+        } else {
+            // Calcular el nuevo alto manteniendo el aspect ratio original
+            $target_height = intval(($original_height / $original_width) * $target_width);
+        }
+    
+        // Crear una nueva imagen en blanco con las dimensiones deseadas
+        $resized_img = imagecreatetruecolor($target_width, $target_height);
+    
+        // Redimensionar la imagen original a la nueva imagen
+        imagecopyresampled($resized_img, $img, 0, 0, 0, 0, $target_width, $target_height, $original_width, $original_height);
+    
+        // Guardar la imagen redimensionada en formato WEBP
+        imagejpeg($resized_img, $output_image_path);
+    
+        // Liberar memoria
+        imagedestroy($img);
+        imagedestroy($resized_img);    
+    }
+
     function GetSVG($url, $styles) {
         // Obtener el contenido del archivo SVG
         $svgContent = file_get_contents($url);

@@ -3,6 +3,11 @@ let rows = document.getElementsByClassName('values');
 let currentContent;
 let currentPK;
 
+if(localStorage.getItem('currentContent') !== null)
+	ShowContent(localStorage.getItem('currentContent'));
+else
+	ShowContent("programa")
+
 for (let i = 0; i < rows.length; i++) {
 	rows[i].addEventListener('click', function () {
 		currentPK = rows[i].querySelector('.contentId').textContent;
@@ -10,7 +15,7 @@ for (let i = 0; i < rows.length; i++) {
 	});
 }
 
-function ShowContent(evt, content) {
+function ShowContent(content) {
 	// Declare all variables
 	var i, tabcontent, tablinks;
 
@@ -25,13 +30,14 @@ function ShowContent(evt, content) {
 	// Get all elements with class="tablinks" and remove the class "active"
 	tablinks = document.getElementsByClassName("tablinks");
 	for (i = 0; i < tablinks.length; i++) {
-		tablinks[i].className = tablinks[i].className.replace(" active", "");
+		// tablinks[i].className = tablinks[i].className.replace(" active", "");
+		tablinks[i].classList.remove('active');
 	}
+	document.querySelector(`.tablinks.${content}`).classList.add("active");
 
 	// Show the current tab, and add an "active" class to the button that opened the tab
 	document.getElementById(content).style.display = "block";
-	evt.currentTarget.className += " active";
-}
+	// evt.currentTarget.className += " active";
 
-if(defaultTab)
-	defaultTab.click();
+	localStorage.setItem('currentContent', content);
+}
