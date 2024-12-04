@@ -176,8 +176,8 @@
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            resize: vertical; /* Permite redimensionar solo en dirección vertical */
-            max-width: 100%;  /* Asegura que no se desborde del contenedor */
+            resize: vertical;
+            max-width: 100%; 
         }
         .comment-form button {
             background-color: #5eaf4d;
@@ -240,9 +240,7 @@
             <div id="comentarios"></div>
         </div>
     </div>
-    <script>
-        // Aquí iría tu función JavaScript agregarComentario()
-    </script>
+
 </body>
 </html>
 <?php
