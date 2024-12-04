@@ -70,7 +70,7 @@
 
 <p class="lista-op">
     Si tiene preguntas o cuestiones sobre esta Política, no dude en contactarse en cualquier momento a través del
-    <a class="/internal-link" href="quejas-sugerencias">formulario de contacto</a>
+    <a class="/internal-link" href="quejas-sugerencias">Formulario de contacto</a>.
 </p>
 
 </div>

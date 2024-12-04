@@ -26,7 +26,7 @@
 </p>
 <h2><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/gallo-min.svg", ["30px", "30px", "black"]) ?></div>¿Cuáles son los derechos de la audiencia?</h2>
 <p>
-    Puedes revisar los derechos de la audiencia <a class="new-boton internal-link" href="/derechos-de-la-audiencia">aquí.</a>
+    Puedes revisar los derechos de la audiencia <a class="new-boton internal-link" href="/derechos-de-la-audiencia">Aquí</a>.
 </p>
 
 <h2><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/gallo-min.svg", ["30px", "30px", "black"]) ?></div>¿Quién es el defensor?</h2>
@@ -38,7 +38,7 @@
     <div class="texto-defensoria">
         <p>
             A continuación, les presentamos a quien funge actualmente como Defensor de las Audiencias de Radio
-            Universidad Autónoma de Aguascalientes
+            Universidad Autónoma de Aguascalientes.
         </p>
         <p>
             La Dra. Sandra Yesenia Pinzón Castro, rectora de la Universidad Autónoma de Aguascalientes,
@@ -80,7 +80,7 @@
 <p>Tiene la posibilidad de expresar sus comentarios, sugerencias o aclaraciones en caso de considerar que se ha 
     visto afectado algún derecho que le corresponde como audiencia. Este espacio está destinado a garantizar la 
     transparencia, atender sus inquietudes y promover una comunicación efectiva entre los usuarios y la organización, y 
-    este será publicado en la siguiente página: <a href="/quejas-sugerencias" class="new-boton internal-link">Realizar una queja o sugerencia</a>
+    este será publicado en la siguiente página: <a href="/quejas-sugerencias" class="new-boton internal-link">Realizar una queja o sugerencia</a>.
 </p>
 
 <h2><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/gallo-min.svg", ["30px", "30px", "black"]) ?></div>Normatividad:</h2>
@@ -94,29 +94,24 @@
 <div class="links-defensoria">
 
 <div class="archivo-documentos">
-    <a href="https://radio.uaa.mx/wp-content/uploads/2021/07/Ley-Organica-UAA.pdf" class="enlace-pdf">
+    <a href="resources/docs/Ley-Organica-UAA.pdf">
         <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px", "black"]) ?></div>
-                Ley orgánica de la Universidad Autónoma de Aguascalientes
+                Ley orgánica de la Universidad Autónoma de Aguascalientes.
     </a>
-    <a href="https://radio.uaa.mx/wp-content/uploads/2021/07/Ley-Organica-UAA.pdf" download=""></a>
 
-    <a href="https://radio.uaa.mx/wp-content/uploads/2021/07/Codigo-de-etica.pdf" class="enlace-pdf">
+    <a href="resources/docs/Codigo-de-etica.pdf">
         <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px", "black"]) ?></div>
-                Código de ética
+                Código de ética.
     </a>
-    <a href="https://radio.uaa.mx/wp-content/uploads/2021/07/Codigo-de-etica.pdf" download="Codigo-de-etica.pdf"></a>
 
-    <a href="https://radio.uaa.mx/wp-content/uploads/2024/08/VI-DF-NO-04-Politicas-de-la-Seccion-de-Radio-Universidad.pdf" class="enlace-pdf">
+    <a href="resources/docs/Politicas-de-la-Seccion-de-Radio-Universidad.pdf">
         <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px", "black"]) ?></div>
-                Políticas de la Sección de Radio Universidad
+                Políticas de la Sección de Radio Universidad.
     </a>
-    <a href="https://radio.uaa.mx/wp-content/uploads/2024/08/VI-DF-NO-04-Politicas-de-la-Seccion-de-Radio-Universidad.pdf"></a>
 
-    <a href="https://radio.uaa.mx/wp-content/uploads/2021/07/Ley-federal-de-telecomunicaciones.pdf" class="enlace-pdf">
+    <a href="resources/docs/Ley-federal-de-telecomunicaciones.pdf">
         <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px", "black"]) ?></div>
-                Ley federal de telecomunicaciones
+                Ley federal de telecomunicaciones.
     </a>
-    <a href="https://radio.uaa.mx/wp-content/uploads/2021/07/Ley-federal-de-telecomunicaciones.pdf"></a>
 </div>
-
 </div>

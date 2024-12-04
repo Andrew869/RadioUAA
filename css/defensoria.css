@@ -1,4 +1,4 @@
-/* Defensoria de las audiencias fin */
+/* Defensoria de las audiencias inicio */
 
 /* .contenido-defensoria-fondo {
     text-align: center; 
@@ -15,7 +15,7 @@
     max-width: 100%; 
     height: auto; 
     border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
 }
 
 
@@ -36,10 +36,11 @@
     align-items: center;
     margin: 5px 0; 
     text-decoration: none; 
-    color: red; 
+    color: #027543; 
 }
 
 .texto-defensoria a:hover {
+    color: inherit;
     text-decoration: underline; 
 }
 
@@ -79,7 +80,7 @@
     align-items: center;
     margin: 5px 90px; 
     text-decoration: none; 
-    color: red;
+    color: #027543;
 
 }
 .archivo-documentos a:hover {
@@ -176,7 +177,7 @@
 
 
 .formulario {
-    background-color: #2e8b57; /* Seagreen */
+    background-color: #027543; /* Seagreen */
     width: min(60rem, 100%);
     margin: 2rem auto;
     padding: 2rem;
@@ -297,7 +298,7 @@
     align-items: center;
     margin: 5px 30px; 
     text-decoration: none; 
-    color: red; 
+    color: #027543; 
 }
 
 .texto-transparencia a:hover {
@@ -324,6 +325,27 @@
 .texto-politica p {
     margin: 20px 90px;
     /* list-style: none; */
+}
+
+/* .lista-op {
+    display: flex;
+    flex-direction: column; 
+    gap: 10px; 
+    font-size: 16px;
+    margin: 0px 60px;
+} */
+
+.lista-op a {
+    /* display: flex;  */
+    align-items: center;
+    /* margin: 10px 0;  */
+    text-decoration: none; 
+    color: #027543; 
+}
+
+.lista-op a:hover {
+    color: inherit;
+    text-decoration: underline; 
 }
 
 /* Politica fin */

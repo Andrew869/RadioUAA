@@ -40,32 +40,29 @@
 <div class="links-transparencia">
     
     <div class="texto-transparencia">
-        <h2>Actas de sesion</h2>
-    <a href="https://radio.uaa.mx/wp-content/uploads/2021/07/Ley-Organica-UAA.pdf" class="enlace-pdf">
+        <h2>Normatividad</h2>
+    <a href="resources/docs/Anexo-I-Ley-Organica-UAA.pdf">
         <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px", "black"]) ?></div>
-                Consultar actas de sesión        
+                Anexo I – Ley Orgánica UAA.        
     </a>
     
-    <a href="https://radio.uaa.mx/wp-content/uploads/2021/07/Ley-Organica-UAA.pdf" class="enlace-pdf">
+    <a href="/resources/docs/Anexo-II-Comite-transparencia.pdf">
         <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px", "black"]) ?></div>
-                Consultar actas de sesión        
+                Anexo II – Comité transparencia.       
     </a>
     </div>
 
 
     <div class="texto-transparencia">
-        <h2>Actas de sesion</h2>
+        <h2>Informacion Financiera</h2>
 
-    <a href="https://radio.uaa.mx/wp-content/uploads/2021/07/Ley-Organica-UAA.pdf" class="enlace-pdf">
+    <a href="resources/docs/Presupuesto-2018.pdf">
         <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px", "black"]) ?></div>
-                Consultar actas de sesión        
+                Presupuesto 2018 con salarios.        
     </a>
     </div>
 
     
 </div>
-
 </div>
-
-
 </div>

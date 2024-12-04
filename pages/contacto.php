@@ -19,10 +19,9 @@
         <p>Lunes a viernes de 8:00 hrs a 15:30 hrs</p>
 
         <h2><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/envelope.svg", ["20px", "20px", "black"]) ?></div> Correo Electrónico</h2>
-        <a href="Quejas_y_Sugerencias.html" class="enlace-pdf internal-link">
-            <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px", "black"]) ?></div>
-            Comunica tus quejas y sugerencias aquí
-        </a>
+        <a href="/quejas-sugerencias" class="new-boton internal-link">
+        <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px", "black"]) ?></div>
+            Comunica tus Quejas y Sugerencias Aquí.</a>
     
         <h2><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/phone.svg", ["20px", "20px", "black"]) ?></div> Telefonos</h2>
         <p>449-9-10-74-55 <br>449-9-10-74-59</p>

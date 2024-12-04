@@ -23,7 +23,7 @@
 <div class="container-descarga-buttons">
     <div class="animated-text">
         <span>Descarga</span>
-        <span>nuestra</span>
+        <span>Nuestra</span>
         <span>App</span>
     </div>
    
@@ -49,8 +49,11 @@
         </div>
         
     </a>
+
     <a href="https://www.uaa.mx/dgdv/" target="_blank">
-        <img src="resources/img/UAA-DG.png" alt="Logo UAA" class="logo-uaa c1 <?php echo $currentTheme ?>">
+        <div class="icon">
+            <?php echo GetSVG('resources/img/svg/uaa-dgdv.svg', ["150px", "150px"]) ?>
+        </div>
     </a>
 </div>
 

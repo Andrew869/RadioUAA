@@ -14,6 +14,7 @@ const routes = {
     "contenido": "pages/contenido.php",
     "programa": "pages/programa.php",
     "contacto": "pages/contacto.php",
+    "documentos-consejo-ciudadano" : "pages/documentos-consejo-ciudadano.php", 
     "404": "pages/404.php"
 };
 // Single Page Application (SPA)!!!!
