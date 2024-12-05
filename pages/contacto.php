@@ -35,7 +35,7 @@
 
     <!-- Add your image here -->
     <div class="imagen-container">
-        <img src="/resources/img/IMG_0716.jpg" alt="" />
+        <img src="resources/img/radiouaa.jpg" alt="" />
     </div>
 </div>
 
