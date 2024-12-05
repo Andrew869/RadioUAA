@@ -11,6 +11,7 @@
     }
 
     include_once $jsInitPath . 'php/db_connect.php';
+    include_once $jsInitPath . 'php/utilities.php';
 
     $request = rtrim($request, '/');
     $segments = explode('/', $request);
@@ -64,84 +65,88 @@
         include "pages/404.html";
     }
     else{
-        $dias_semana = [
-            1 => 'Lunes',
-            2 => 'Martes',
-            3 => 'Miércoles',
-            4 => 'Jueves',
-            5 => 'Viernes',
-            6 => 'Sábado',
-            7 => 'Domingo'
-        ];
         $presentadores = explode(',',$program['presentadores']);
         $generos = explode(',',$program['generos']);
         $horarios = SQL::Select(SQL::HORARIO, ["id_programa" => $program['id']], [], "dia_semana", SQL::ASCENDANT)->fetchAll(PDO::FETCH_ASSOC);
     
 ?>
-    <img id="imagenModal" class="imagen-modal" src="<?php echo $initPath . $program['imagen'] ?>" alt="imagen programa">
-    <div class="modal-info">
-        <h2 id="nombreModal"><?php echo $program['nombre'] ?></h2>
-        <p id="descripcionModal"><?php echo $program['descripcion'] ?></p>
-        <?php
-        $groups = [];
+<div class="program-container">
+    <div class="program-details">
+        <div class="program-image">
+            <img src="<?php echo $initPath . $jsInitPath . $program['imagen'] ?>" alt="imagen programa">
+        </div>
+        <div class="program-info">
+            <h1 class="program-title"><?php echo $program['nombre']; ?></h1>
+            <p class="program-description"><?php echo $program['descripcion']; ?></p>
+            <div class="program-metadata">
+                <p><strong>Presentadores:</strong> <?php echo $program['presentadores']; ?></p>
+                <p><strong>Género:</strong> <?php echo $program['generos']; ?></p>
+            </div>
+            <div class="program-schedule">
+                <h2>Horarios</h2>
+                <?php
+                $groups = [];
 
-        foreach ($horarios as $horario) {
-            $inicio = ToMinutes($horario['hora_inicio']);
-            $fin = ToMinutes($horario['hora_fin']);
-            $retra = $horario['es_retransmision'];
+                foreach ($horarios as $horario) {
+                    $inicio = ToMinutes($horario['hora_inicio']);
+                    $fin = ToMinutes($horario['hora_fin']);
+                    $retra = $horario['es_retransmision'];
 
-            $groups["$inicio,$fin,$retra"][] = $horario;
-        }
-        
-        echo "<div class='contentName'>Horarios</div>";
-        foreach ($groups as $key => $group) {
-            echo "<div class='contentField' contentName='horario'>";
-            echo "<div class='schedule-group'>";
-            $timeRange = '';
-            $isRetra = '';
-            $currentValuesElement = "<div class='currentValue' style='display: none;'>args</div>";
-            $args= '';
-            $days = [];
-            echo "<div><ul class='schedule-days'>";
-            foreach ($group as $horario) {
-                echo "<li>" . $dias_semana[$horario['dia_semana']] . "</li>";
-                $days[] = $horario['dia_semana'];
-                // if(!isset($retra)) $retra = $horario['es_retransmision'];
-                // echo $horario['dia_semana'] . ($horario['es_retransmision'] ? " (Retrasmision) " : "" ) . "";
-                $timeRange = "De " . $horario['hora_inicio'] . " a " . $horario['hora_fin'];
-                $isRetra = $horario['es_retransmision'];
-                // echo $rangoHorario;
-            }
-            echo "<ul></div>";
-            echo "<div class='schedule-time'>$timeRange</div>";
-            $tagText = ($isRetra ? "Retrasmision" : "En vivo" );
-            $tagStatus = ($isRetra ? "retransmission" : "live" );
-            echo "<div class='schedule-tag'><span class='$tagStatus'>$tagText</span></div>";
-            $jsonDays = json_encode($days, JSON_UNESCAPED_UNICODE);
-            // $jsonDays = str_replace('"', "'", $jsonDays);
-            // $jsonDays = addslashes($jsonDays);
-            $args = "[$jsonDays,[$key],$isRetra]";
-            $currentValuesElement = str_replace("args" , $args, $currentValuesElement);
-            $fieldNameElement = "<div class='fieldTitle' style='display: none;'>Horarios</div>";
-            echo $fieldNameElement;
-            echo $currentValuesElement;
-            echo "</div>";
-            echo "</div>";
-        }
-        echo "</div>";
-        ?>
-        <p><strong>Presentadores:</strong><span id="presentadoresModal"><?php echo $program['presentadores'] ?></span></p>
-        <p><strong>Género:</strong> <span id="generoModal"></span><?php echo $program['generos'] ?></p>
+                    $groups["$inicio,$fin,$retra"][] = $horario;
+                }
+                
+                foreach ($groups as $key => $group) {
+                    echo "<div class='schedule-group'>";
+                    $timeRange = '';
+                    $isRetra = '';
+                    $currentValuesElement = "<div class='currentValue' style='display: none;'>args</div>";
+                    $args= '';
+                    $days = [];
+                    echo "<div><ul class='schedule-days'>";
+                    foreach ($group as $horario) {
+                        echo "<li class='c1'>" . DAYS[$horario['dia_semana']] . "</li>";
+                        $days[] = $horario['dia_semana'];
+                        // if(!isset($retra)) $retra = $horario['es_retransmision'];
+                        // echo $horario['dia_semana'] . ($horario['es_retransmision'] ? " (Retrasmision) " : "" ) . "";
+                        $timeRange = "De " . $horario['hora_inicio'] . " a " . $horario['hora_fin'];
+                        $isRetra = $horario['es_retransmision'];
+                        // echo $rangoHorario;
+                    }
+                    echo "<ul></div>";
+                    echo "<div class='schedule-time'>$timeRange</div>";
+                    $tagText = ($isRetra ? "Retrasmision" : "En vivo" );
+                    $tagStatus = ($isRetra ? "retransmission" : "live" );
+                    echo "<div class='schedule-tag'><span class='$tagStatus'>$tagText</span></div>";
+                    $jsonDays = json_encode($days, JSON_UNESCAPED_UNICODE);
+                    // $jsonDays = str_replace('"', "'", $jsonDays);
+                    // $jsonDays = addslashes($jsonDays);
+                    $args = "[$jsonDays,[$key],$isRetra]";
+                    $currentValuesElement = str_replace("args" , $args, $currentValuesElement);
+                    $fieldNameElement = "<div class='fieldTitle' style='display: none;'>Horarios</div>";
+                    echo $fieldNameElement;
+                    echo $currentValuesElement;
+                    // echo "</div>";
+                    echo "</div>";
+                }
+                // echo "</div>";
+                ?>
+            </div>
+        </div>
     </div>
-    <div class="formulario-comentario">
-        <h3>Agregar un comentario</h3>
-        <input class="program-input" type="text" id="nombre" placeholder="Tu nombre" maxlength="20" required>
-        <input class="program-input" type="email" id="email" placeholder="Tu correo electrónico" maxlength="20" required>
-        <textarea id="mensaje" placeholder="Tu comentario" maxlength="100" required></textarea>
-        <div id="error-mensaje" class="error"></div>
-        <button onclick="agregarComentario()">Enviar comentario</button>
+
+    <div class="comments-section">
+        <h2>Agregar un comentario</h2>
+        <form class="comment-form">
+            <input type="text" id="nombre" class="c1" placeholder="Nombre..." required>
+            <input type="email" id="email" class="c1" placeholder="Email..." required>
+            <textarea id="mensaje" class="c1" placeholder="Comentario..." required></textarea>
+            <div id="error-mensaje" class="error"></div>
+            <button type="button" onclick="agregarComentario()" class="c2">Enviar</button>
+        </form>
+        <div id="comentarios"></div>
     </div>
     <div id="comentarios"></div>
+</div>
 <?php
     }
 ?>

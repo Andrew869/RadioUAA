@@ -40,9 +40,9 @@
                     <?php
                     $tagText = $program['es_retransmision'] ? "Retransmision" : "En vivo";
                     $tagClass = $program['es_retransmision'] ? "retransmission" : "live";
-                    echo "<span class='current-tag-info $tagClass'>";
+                    echo "<div class='schedule-tag'><span class='$tagClass'>";
                     echo $tagText;
-                    echo "</span>";
+                    echo "</span></div>";
                     ?>
                 </div>
             </div>

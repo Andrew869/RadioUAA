@@ -18,10 +18,10 @@
 .program-filter , .program-input, #alternarVista {
     padding: 10px;
     font-size: 16px;
-    border: 1px solid var(--verde-principal);
-    border-radius: 4px;
-    background-color: var(--blanco);
-    color: var(--gris-oscuro);
+    border: none;
+    border-radius: 6px;
+    /* background-color: var(--blanco); */
+    /* color: var(--gris-oscuro); */
 }
 
 .program-filter , .program-input {
@@ -98,7 +98,7 @@
     height: 100px;
 }
 
-.modal {
+/* .modal {
     display: none;
     position: fixed;
     z-index: 2;
@@ -151,13 +151,13 @@
 .modal-info h2 {
     margin-top: 0;
     color: var(--verde-principal);
-}
+} */
 
 svg.toggle-view {
     fill: #027543;
 }
 
-.comentario {
+/* .comentario {
     border: 1px solid #e1e1e1;
     border-radius: 5px;
     padding: 15px;
@@ -274,4 +274,4 @@ svg.toggle-view {
     .imagen-modal {
         width: 80%;
     }
-}
+} */

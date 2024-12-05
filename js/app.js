@@ -1,6 +1,6 @@
 const routes = {
     "": "pages/inicio.php",
-    "./": "pages/inicio.php",
+    "../": "pages/inicio.php",
     "inicio": "pages/inicio.php",
     "nosotros": "pages/nosotros.php",
     "preguntas-frecuentes": "pages/preguntas-frecuentes.php",
@@ -145,7 +145,7 @@ function ExecuteBehavior(request){
         //     IsSticky();
         //     break;
         case '':
-        case './':
+        case '../':
         case 'inicio':
             {
                 programsContainer = document.querySelector('.next-programs-container');

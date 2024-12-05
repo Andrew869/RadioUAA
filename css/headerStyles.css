@@ -262,9 +262,14 @@ header.dark {
     font-size: 1rem;
     border-radius: 6px;
     /* font-size: 17px; */
-    border: none;
-    outline: none;
+    /* border: none; */
+    /* outline: none; */
 }
+
+/* .search-bar input:focus {
+    outline: 3px solid;
+    outline-color: #1ec95a;
+} */
 
 #button-search {
     padding: 0 10px;
@@ -275,11 +280,6 @@ header.dark {
 
 .search-bar input::placeholder {
     /* color: #555; */
-}
-
-.search-bar input:focus {
-    outline: 3px solid;
-    outline-color: #1ec95a;
 }
 
 #search-icon {

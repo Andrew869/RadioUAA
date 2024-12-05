@@ -9,7 +9,7 @@ const programContainer = document.querySelector('.current-program-info');
 
 const programName = document.querySelector('.current-program-info .curr-pro');
 const programImg = document.querySelector('.current-program-info img');
-const programTag = document.querySelector('.current-program-info .current-tag-info');
+const programTag = document.querySelector('.current-program-info .schedule-tag');
 
 let timeoutId;
 let timeToUpdate = 0;

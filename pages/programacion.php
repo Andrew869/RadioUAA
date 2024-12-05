@@ -172,12 +172,12 @@
             /* border-radius: 0 0 6px 6px; */
         }
         .tag-info {
-            color: white;
-            font-size: 0.8rem;
-            font-weight: bold;
-            padding: 2px 8px;
-            border-radius: 4px;
-            background-color: #f39c12;
+            /* color: white; */
+            /* font-size: 0.8rem; */
+            /* font-weight: bold; */
+            /* padding: 2px 8px; */
+            /* border-radius: 4px; */
+            /* background-color: #f39c12; */
             position: absolute;
             top: 5px;
             right: 5px;
@@ -256,7 +256,7 @@
                             echo "<div class='i$id_programa" . '_' . $inicio . '_' . $fin . "'>";
                             if($id_programa){
                                 echo "<img src='../$urlImg.300' alt='void'>";
-                                echo ($program['es_retransmision']? "<div class='tag-info'>Retransmision</div>" : '' );
+                                echo ($program['es_retransmision']? "<div class='tag-info schedule-tag'><span class='retransmission'>Retransmision</span></div>" : '' );
                                 echo "<div class='program-info'>";
                                     echo "<div>" . htmlspecialchars($program['nombre_programa']) . "</div>";
                                     echo "<div>De $h_inicio a $h_fin</div>";
