@@ -1,5 +1,5 @@
 <?php
-    define('PROJECT_HASH', 'c40e99');
+    define('PROJECT_HASH', 'ae7eeb');
     $currentTheme = null;
     if(isset($_COOKIE['theme']))
         $currentTheme = $_COOKIE['theme'];

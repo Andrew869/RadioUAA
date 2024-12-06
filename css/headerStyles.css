@@ -142,6 +142,11 @@ header.dark {
     transition: transform 0.4s ease;
 }
 
+.nav-link:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
 .dropdown-content a:hover {
     /* color: var(--obscuro);
     background-color: var(--VerdeClaro); */

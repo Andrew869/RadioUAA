@@ -1,4 +1,4 @@
-import { AddInputToCurrentLayer, CheckHeights, GetInputHeight, AddContent, CreateEvent, SumbitCreateRequest, SumbitUpdateRequest ,CreateModal, CreateInput, SubmitDeleteRequest, ToHours } from './utilities.js?v=c40e99';
+import { AddInputToCurrentLayer, CheckHeights, GetInputHeight, AddContent, CreateEvent, SumbitCreateRequest, SumbitUpdateRequest ,CreateModal, CreateInput, SubmitDeleteRequest, ToHours } from './utilities.js?v=ae7eeb';
 // const modals_container = document.getElementById('modals_container');
 // const originalModal = modals_container.querySelector('#originalModal');
 // const original_forms = document.getElementById('original_forms');

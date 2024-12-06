@@ -34,6 +34,6 @@
 <p>Consúltalo en Políticas de Privacidad y Términos de Servicio.</p>
 
 <h2>¿Dónde encuentro los términos de servicio?</h2>
-<p>Consúltalo en Políticas de Privacidad y Términos de Servicio</p>
+<p>Consúltalo en Políticas de Privacidad y Términos de Servicio.</p>
 
 </div>

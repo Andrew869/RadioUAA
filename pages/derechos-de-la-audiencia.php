@@ -42,6 +42,6 @@
     <p>24. Contar con mecanismos de programas que fomenten y contribuyan a la alfabetización mediática, entendida ésta como las acciones que tienen la finalidad de promover la capacidad de análisis, comprensión y evaluación que permitan a las audiencias, ejercer los derechos inherentes a tal carácter para la eficiente utilización de los contenidos proporcionados a través del servicio de radiodifusión.</p>
 </div>
 
-<div class="button-back">
-<a href="/defensoria-de-las-audiencias" class="button internal-link">Regresar</a>
-</div>
+<!-- <div class="button-back">
+    <a href="/defensoria-de-las-audiencias" class="button internal-link">Volver a la Pagina Anterior</a>
+</div> -->

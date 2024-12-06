@@ -14,12 +14,13 @@ const routes = {
     "contenido": "pages/contenido.php",
     "programa": "pages/programa.php",
     "contacto": "pages/contacto.php",
+    "documentos-consejo-ciudadano" : "pages/documentos-consejo-ciudadano.php", 
     "404": "pages/404.php"
 };
 // Single Page Application (SPA)!!!!
-import { GetRelativePath, ToSeconds, FormatTime } from './utilities.js?v=c40e99';
-import { SetupPrograms } from './contenido.js?v=c40e99';
-import { slideTimeout, SetupSlideshow } from './slideshowManager.js?v=c40e99';
+import { GetRelativePath, ToSeconds, FormatTime } from './utilities.js?v=ae7eeb';
+import { SetupPrograms } from './contenido.js?v=ae7eeb';
+import { slideTimeout, SetupSlideshow } from './slideshowManager.js?v=ae7eeb';
 // import { IsSticky } from './cal.js';
 // Obtener todos los enlaces de navegación
 // const navLinks = document.querySelectorAll('.nav-link');

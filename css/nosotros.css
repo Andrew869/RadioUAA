@@ -177,16 +177,14 @@
     display: flex; 
     align-items: center;
     margin: 10px 0; 
-    text-decoration: none; 
-    color: red; 
+    /* text-decoration: none;  */
+    /* color: #027543;  */
 }
 
-.texto-consejo a:hover {
+/* .texto-consejo a:hover {
     color: inherit;
     text-decoration: underline; 
-}
-
-
+} */
 
 .container-consejo {
     display: flex;
@@ -220,8 +218,8 @@
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    background-color: #ffffff;
-    border: 1px solid #ddd;
+    /* background-color: #ffffff;
+    border: 1px solid #ddd; */
     border-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px;
     padding: 20px;
@@ -250,9 +248,8 @@
 .integrante h2 {
     margin: 0 0 10px;
     font-size: 1.5rem;
-    color: #333;
     font-weight: bold;
-    border-bottom: 2px solid #007BFF;
+    border-bottom: 2px solid #27AE60;
     display: inline-block;
     padding-bottom: 5px;
 }
@@ -261,7 +258,6 @@
     margin: 0;
     line-height: 1.8;
     font-size: 1rem;
-    color: #555;
     text-align: justify;
 }
 
@@ -271,3 +267,27 @@
 }
 
 /* consejo ciudadano fin */
+
+/* documentos consejo ciudadano inicio */
+.links-documentos {
+    display: flex;
+    flex-direction: column; 
+    gap: 10px; 
+    font-size: 16px;
+    margin: 0px 60px;
+}
+
+.texto-documentos a {
+    display: flex; 
+    align-items: center;
+    margin: 10px 0; 
+    text-decoration: none; 
+    color: #027543; 
+}
+
+.texto-documentos a:hover {
+    color: inherit;
+    text-decoration: underline; 
+}
+
+/* documentos consejo ciudadano fin */

@@ -111,6 +111,20 @@ input:focus, textarea:focus {
     align-items: center;
 }
 
+a {
+    color: #27AE60;
+}
+
+a:hover {
+    color: #27AE60;
+    text-decoration: underline;
+}
+
+button {
+    background-color: #27AE60;
+    color: inherit;
+}
+
 .schedule-tag span{
     /* display: inline-block; */
     color: white;
@@ -319,16 +333,6 @@ footer {
     align-items: center;
     gap: 10px;
 }
-
-.copyright-container .copyright-links a {
-    color: #27AE60;
-}
-
-.copyright-container .copyright-links a:hover {
-    color: #27AE60;
-    text-decoration: underline;
-}
-
 
 .animated-text {
     display: flex;

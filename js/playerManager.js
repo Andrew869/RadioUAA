@@ -1,4 +1,4 @@
-import { GetRelativePath, GetSVG, ToSeconds } from './utilities.js?v=c40e99';
+import { GetRelativePath, GetSVG, ToSeconds } from './utilities.js?v=ae7eeb';
 const audio = document.getElementById('audio');
 
 const playPauseBtn = document.getElementById('playPauseBtn');
@@ -10,6 +10,7 @@ const programContainer = document.querySelector('.current-program-info');
 const programName = document.querySelector('.current-program-info .curr-pro');
 const programImg = document.querySelector('.current-program-info img');
 const programTag = document.querySelector('.current-program-info .schedule-tag');
+const programTagSpan = document.querySelector('.current-program-info .schedule-tag span');
 
 let timeoutId;
 let timeToUpdate = 0;
@@ -192,13 +193,13 @@ function UpdateProgramInfo(){
         // programContainer.innerHTML = data;
         programName.textContent = data[1]['nombre_programa'];
         programImg.src = GetRelativePath() + data[1]['url_img'] + ".300";
-        if(programTag.classList.contains('live'))
-            programTag.classList.remove('live');
+        if(programTagSpan.classList.contains('live'))
+            programTagSpan.classList.remove('live');
         else
-            programTag.classList.remove('retransmission');
+            programTagSpan.classList.remove('retransmission');
 
-        programTag.textContent = data[1]['es_retransmision'] ? "Retransmision" : "En vivo";
-        programTag.classList.add(data[1]['es_retransmision'] ? "retransmission" : "live");
+        programTagSpan.textContent = data[1]['es_retransmision'] ? "Retransmision" : "En vivo";
+        programTagSpan.classList.add(data[1]['es_retransmision'] ? "retransmission" : "live");
         
         let horaFin = ToSeconds(data[1]['hora_fin']);
         if(horaFin === 0) horaFin = 86400000;

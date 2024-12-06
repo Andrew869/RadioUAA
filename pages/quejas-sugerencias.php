@@ -1,45 +1,39 @@
-
-<div class="container-quejas">
-    <!-- Columna Izquierda -->
+<h1>Quejas y Sugerencias</h1>
     <div class="izquierda-quejas">
-        <h1>QUEJAS Y SUGERENCIAS</h1>
-        <h2>Formulario de Contacto de Defensoría</h2>
-        <p>El objetivo de Radio UAA es tener contacto permanente con sus audiencias, por lo que te invitamos hacernos llegar tus comentarios y sugerencias de nuestros contenidos.</p>
+        <h2>¡Estamos para escucharte!</h2>
+        <p>¿Tienes algo que compartir con nosotros? Llena el formulario y envíanos tus comentarios. Valoramos tu opinión.</p>
     </div>
 
-    <!-- Columna Derecha -->
-    <div class="derecha-quejas">
-        <section>
-            <form class="formulario">
-                <fieldset>
-                    <legend>FORMULARIO</legend>
-                    <div class="campo">
-                        <label> Nombre: </label>
-                        <input class="input-text" type="text" placeholder="Ingrese su nombre" required>
-                    </div>
-                    <div class="campo">
-                        <label> E-mail: </label>
-                        <input class="input-text" type="email" placeholder="Ingrese su correo electrónico" required>
-                    </div>
-                    <div class="campo">
-                        <label> Mensaje: </label>
-                        <textarea class="input-text" placeholder="Escribe tu mensaje aquí" required></textarea>
-                    </div>
+    <!-- Formulario Section -->
+    <form class="formulario c1">
+        <h3>Formulario de Contacto</h3>
+        <div class="campo-container">
+            <div class="campo">
+                <label>Nombre:</label>
+                <div class="input-group">
+                    <input class="c2" type="text" placeholder="Tu nombre completo" required>
+                </div>
+            </div>
+            <div class="campo">
+                <label>Email:</label>
+                <div class="input-group">
+                <input class="c2" type="email" id="email" name="email" placeholder="Ejemplo@correo.com" required>
+                </div>
+            </div>
+            <div class="campo">
+                <label>Asunto:</label>
+                <div class="input-group">
+                    <input class="c2" type="text" placeholder="Motivo del mensaje" required>
+                </div>
+            </div>
+            <div class="campo">
+                <label>Mensaje:</label>
+                <div class="input-group">
+                    <textarea class="c2" placeholder="Escribe tu mensaje aquí" required></textarea>
+                </div>
+            </div>
+        </div>
 
-                    <!-- CAPTCHA de Google reCAPTCHA -->
-                    <div class="g-recaptcha" data-sitekey="TU_SITE_KEY_AQUÍ"></div>
-
-                    <!-- Botón de Enviar -->
-                    <div class="alinear-derecha">
-                        <input class="new-boton-formulario w-sm-100" type="submit" value="Enviar">
-                    </div>
-                </fieldset>
-            </form>
-        </section>
-    </div>
-</div>
-
-
-<div class="button-back">
-    <a href="/defensoria-de-las-audiencias" class="button internal-link">Regresar</a>
-</div>
+        <!-- Submit Button -->
+        <button class="new-boton-formulario" type="submit">Enviar</button>
+    </form>

@@ -20,14 +20,14 @@
   /* display: flex;  */
   align-items: center;
   margin: 5px 100px; 
-  text-decoration: none; 
-  color: red; 
+  /* text-decoration: none; */
+  /* color: #027543; */
 }
 
-.texto-contacto a:hover {
+/* .texto-contacto a:hover {
   color: inherit;
   text-decoration: underline; 
-}
+} */
 
 .contact-container {
   background: none;

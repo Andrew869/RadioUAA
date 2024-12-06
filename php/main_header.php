@@ -1,7 +1,7 @@
 <header class="<?php echo $currentTheme ?>">
     <nav class="navbar">
         <div class="logo">
-            <a class="nav-link internal-link" href="<?php echo $initPath ?>">
+            <a class="nav-link internal-link" href="../">
                 <!-- <img src="resources/img/logo-radio-uaa-blanco.png" alt="Radio UAA Logo"> -->
                 <?php echo GetSVG('resources/img/svg/logoRadioUAA.svg', ["40px", "40px"]) ?>
             </a>

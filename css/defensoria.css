@@ -1,4 +1,4 @@
-/* Defensoria de las audiencias fin */
+/* Defensoria de las audiencias inicio */
 
 /* .contenido-defensoria-fondo {
     text-align: center; 
@@ -15,7 +15,7 @@
     max-width: 100%; 
     height: auto; 
     border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
 }
 
 
@@ -35,13 +35,14 @@
     /* display: flex;  */
     align-items: center;
     margin: 5px 0; 
-    text-decoration: none; 
-    color: red; 
+    /* text-decoration: none; */
+    /* color: #027543; */
 }
 
-.texto-defensoria a:hover {
+/* .texto-defensoria a:hover {
+    color: inherit;
     text-decoration: underline; 
-}
+} */
 
 .defensoria-container {
     display: flex;
@@ -78,21 +79,21 @@
     display: flex; 
     align-items: center;
     margin: 5px 90px; 
-    text-decoration: none; 
-    color: red;
+    /* text-decoration: none;  */
+    /* color: #027543; */
 
 }
-.archivo-documentos a:hover {
+/* .archivo-documentos a:hover {
     color: inherit;
     text-decoration: underline; 
-}
+} */
 
   
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
     .new-boton:hover {
         color: var(--obscuro); 
     }
-}
+} */
 .new-boton p{
     color: var(--Blanco);
 }
@@ -139,124 +140,160 @@
 
 /* Defensoria de la audiencia fin */
 
+
+
 /* Quejas inicio */
 
+/* Container */
 .container-quejas {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 1000px;
+    margin: 40px auto;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    /* background-color: #ffffff; */
+    border-radius: 15px;
+    /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); */
 }
 
-.izquierda-quejas,
-.derecha-quejas {
-    width: 50%;
+/* Header Section */
+.izquierda-quejas {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .izquierda-quejas h1 {
-    font-size: 3rem;
+    /* font-size: 2.5rem; */
+    /* color: #218838; */
+    /* margin-bottom: 10px; */
 }
 
 .izquierda-quejas h2 {
-    font-size: 1.5rem;
-    margin: 0 10px;
-
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    /* color: #027543; */
 }
 
 .izquierda-quejas p {
-    text-align: justify;
     font-size: 1rem;
-    line-height: 1.6;
-    
+    line-height: 1.8;
+    /* color: white; */
 }
 
-
-
+/* Formulario Section */
 .formulario {
-    background-color: #2e8b57; /* Seagreen */
-    width: min(60rem, 100%);
-    margin: 2rem auto;
-    padding: 2rem;
-    border-radius: 1rem;
+    width: 100%;
+    max-width: 800px;
+    padding: 40px 20px;
+    margin:  0 280px;
+    /* background: linear-gradient(145deg, #027543, #218838); */
+    border-radius: 15px;
+    /* box-shadow: 0 4px 10px rgba(0, 0, 0, .9); */
 }
 
-.formulario legend {
+/* Form Title */
+.formulario h3 {
+    font-size: 2rem;
     text-align: center;
-    font-size: 1.8rem;
+    margin-bottom: 20px;
     text-transform: uppercase;
-    font-weight: 700;
-    margin-bottom: 2rem;
-    color: #ffffff; /* Blanco */
+    font-weight: bold;
     letter-spacing: 1px;
 }
 
+/* Field Layout */
+.campo-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
 .campo {
-    margin-bottom: 1.5rem;
+    flex: 1 1 calc(50% - 10px);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
 }
 
+/* Labels */
 .campo label {
-    color: #ffffff; /* Blanco */
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    display: block;
-    font-size: 1.1rem;
-}
-
-.input-text,
-.campo textarea {
-    width: 100%; /* Ajusta automáticamente al ancho del contenedor */
-    max-width: 500px; /* Ancho máximo controlable */
-    height: 40px; /* Altura estándar */
-    padding: 0.8rem 1rem;
-    border: 1px solid #dcdcdc; /* Gris borde */
-    border-radius: 5px;
     font-size: 1rem;
-    background-color: #f5f5f5; /* Gris claro */
-    box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.05);
-    transition: border-color 0.3s, box-shadow 0.3s;
+    font-weight: bold;
+    margin-bottom: 10px;
+    /* color: #ffffff; */
+    text-transform: uppercase;
 }
 
-.input-text:focus,
-.campo textarea:focus {
-    border-color: #218838; /* Verde oscuro */
-    outline: none;
-    box-shadow: 0px 0px 5px #218838;
+/* Input Fields */
+.input-group {
+    position: relative;
+    /* color: white; */
 }
 
-.campo textarea {
-    height: 150px; /* Altura controlable */
-    resize: vertical; /* Permite redimensionar verticalmente */
-}
-
-.new-boton-formulario {
-    background-color: #218838; /* Verde oscuro */
-    color: #ffffff; /* Blanco */
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1rem;
     border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 5px;
-    font-size: 1rem;
+    border-radius: 8px;
+    /* background-color: #f3eeee; */
+    /* box-shadow: 0 4px 10px rgba(0, 0, 0, .7); */
+    /* transition: all 0.3s ease; */
+    /* color: #d00000; */
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+    /* outline: none; */
+    /* box-shadow: 0 0 5px #28a745; */
+    /* background-color: #ffffff; */
+}
+
+/* Textarea */
+.campo textarea {
+    resize: vertical;
+    height: 120px;
+    
+}
+
+/* Submit Button */
+.new-boton-formulario {
+    padding: 15px 0;
+    font-size: 1.2rem;
     font-weight: bold;
+    border: none;
+    border-radius: 10px;
     cursor: pointer;
     text-transform: uppercase;
-    transition: background-color 0.3s, transform 0.2s;
+    text-align: center;
     display: block;
-    margin: 0 auto;
+    width: 80%;
+    /* box-shadow: 0 4px 10px rgba(0, 0, 0, .9); */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin: 20px 80px;
 }
 
 .new-boton-formulario:hover {
-    background-color: #28a745; /* Verde claro */
+    /* background-color: #218838; */
     transform: scale(1.05);
 }
 
-.new-boton-formulario:active {
-    background-color: #218838; /* Verde oscuro */
-    transform: scale(1);
-}
+/* Responsive Design */
+@media (max-width: 768px) {
+    .campo {
+        flex: 1 1 100%;
+    }
 
-/* Quejas inicio */
+    .formulario {
+        padding: 20px;
+    }
+}
+/* Quejas fin */
+
 
 /* Transparencia inicio */
 /* .texto-transparencia h1{
@@ -296,14 +333,14 @@
     display: flex; 
     align-items: center;
     margin: 5px 30px; 
-    text-decoration: none; 
-    color: red; 
+    /* text-decoration: none;  */
+    /* color: #027543; */
 }
 
-.texto-transparencia a:hover {
+/* .texto-transparencia a:hover {
     color: inherit;
     text-decoration: underline; 
-}
+} */
 
 /* Transparencia fin */
 
@@ -324,6 +361,27 @@
 .texto-politica p {
     margin: 20px 90px;
     /* list-style: none; */
+}
+
+/* .lista-op {
+    display: flex;
+    flex-direction: column; 
+    gap: 10px; 
+    font-size: 16px;
+    margin: 0px 60px;
+} */
+
+.lista-op a {
+    /* display: flex;  */
+    align-items: center;
+    /* margin: 10px 0;  */
+    text-decoration: none; 
+    color: #027543; 
+}
+
+.lista-op a:hover {
+    color: inherit;
+    text-decoration: underline; 
 }
 
 /* Politica fin */
