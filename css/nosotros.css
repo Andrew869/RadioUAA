@@ -119,10 +119,6 @@
 
 
 /* Preguntas frecuentes inicio */
-.texto-frecuentes {
-    max-width: 960px;
-    margin: 0 auto;
-}
 
 .texto-frecuentes h2 {
     display: flex; /* Habilita flexbox */
@@ -191,8 +187,8 @@
     flex-direction: row;
     align-items: flex-start;
     gap: 20px;
-    max-width: 1200px;
-    margin-left: 220px;
+    /* max-width: 1200px; */
+    /* margin: auto; */
     padding: 20px;
 }
   
@@ -208,8 +204,8 @@
     display: flex;
     flex-direction: column;
     gap: 20px; /* Espaciado entre los contenedores de cada integrante */
-    max-width: 1200px;
-    margin: 0 auto;
+    /* max-width: 1200px; */
+    margin: 0;
     padding: 20px;
 }
 
