@@ -43,5 +43,5 @@
 </div>
 
 <div class="button-back">
-<a href="/defensoria-de-las-audiencias" class="button internal-link">Volver a la Pagina Anterior</a>
+<a href="/defensoria-de-las-audiencias" class="button c2 internal-link">Volver a la Pagina Anterior</a>
 </div>
