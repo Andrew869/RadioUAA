@@ -1,5 +1,6 @@
 <?php
     include "connNCheck.php";
+    include "php/utilities.php";
 
     function LoadImage() : string{
         $uploadOk = 0;
@@ -7,7 +8,8 @@
         $target_dir = "resources/uploads/img/";
         if(count($_FILES)){
             $imageFileType = strtolower(pathinfo(basename($_FILES["fileToUpload"]["name"]),PATHINFO_EXTENSION));
-            $target_file = $target_dir . $_POST['contentName'] . '_' . $next_id . "[v0].$imageFileType";
+            // $target_file = $target_dir . $_POST['contentName'] . '_' . $next_id . "[v0].$imageFileType";
+            $target_file = $target_dir . $_POST['contentName'] . '_' . $next_id . "[v0]";
         
             // if (!file_exists($target_file)) { // Check if file already exists
                 if ($_FILES["fileToUpload"]["size"] <= 500000) { // Check file size
@@ -24,8 +26,13 @@
         if(!$uploadOk){
             $defaultImg_Path = "../resources/img/" . $_POST['contentName'] . "_default.jpg";
             $imageFileType = strtolower(pathinfo(basename($defaultImg_Path),PATHINFO_EXTENSION));
-            $target_file = $target_dir . $_POST['contentName'] . '_' . $next_id . "[v0].$imageFileType";
+            $target_file = $target_dir . $_POST['contentName'] . '_' . $next_id . "[v0]";
             copy($defaultImg_Path, "../$target_file");
+        }
+        else {
+            $lowResWidth = 300;
+            $lowResPath = $target_file . '.' . $lowResWidth;
+            resize_image("../".$target_file, "../".$lowResPath, $lowResWidth);
         }
 
         return $target_file;

@@ -76,7 +76,8 @@ header.dark {
 .logo {
     width: 40px;
     height: 100%;
-    fill: #027543;
+    fill: #27AE60;
+    /* fill: #027543; */
 }
 
 .logo a {
@@ -139,6 +140,11 @@ header.dark {
     text-decoration: none;
     font-size: 1rem;
     transition: transform 0.4s ease;
+}
+
+.nav-link:hover {
+    text-decoration: none;
+    color: inherit;
 }
 
 .dropdown-content a:hover {
@@ -261,9 +267,14 @@ header.dark {
     font-size: 1rem;
     border-radius: 6px;
     /* font-size: 17px; */
-    border: none;
-    outline: none;
+    /* border: none; */
+    /* outline: none; */
 }
+
+/* .search-bar input:focus {
+    outline: 3px solid;
+    outline-color: #1ec95a;
+} */
 
 #button-search {
     padding: 0 10px;
@@ -274,11 +285,6 @@ header.dark {
 
 .search-bar input::placeholder {
     /* color: #555; */
-}
-
-.search-bar input:focus {
-    outline: 3px solid;
-    outline-color: #1ec95a;
 }
 
 #search-icon {

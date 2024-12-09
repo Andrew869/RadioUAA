@@ -1,6 +1,6 @@
 const routes = {
     "": "pages/inicio.php",
-    "./": "pages/inicio.php",
+    "../": "pages/inicio.php",
     "inicio": "pages/inicio.php",
     "nosotros": "pages/nosotros.php",
     "preguntas-frecuentes": "pages/preguntas-frecuentes.php",
@@ -18,9 +18,9 @@ const routes = {
     "404": "pages/404.php"
 };
 // Single Page Application (SPA)!!!!
-import { GetRelativePath, ToSeconds, FormatTime } from './utilities.js?v=c40e99';
-import { SetupPrograms } from './contenido.js?v=c40e99';
-import { slideTimeout, SetupSlideshow } from './slideshowManager.js?v=c40e99';
+import { GetRelativePath, ToSeconds, FormatTime } from './utilities.js?v=ae7eeb';
+import { SetupPrograms } from './contenido.js?v=ae7eeb';
+import { slideTimeout, SetupSlideshow } from './slideshowManager.js?v=ae7eeb';
 // import { IsSticky } from './cal.js';
 // Obtener todos los enlaces de navegación
 // const navLinks = document.querySelectorAll('.nav-link');
@@ -66,49 +66,31 @@ function URLManager(){
 }
 
 export function LinkBehavior(event){
-    event.preventDefault(); // Evita la acción por defecto del enlace
+    let isModifierKey = event.ctrlKey || event.altKey || event.shiftKey || event.metaKey;
+    let isOpenInNewTab = event.currentTarget.getAttribute('target') === '_blank';
 
-    request = event.currentTarget.getAttribute('href'); // Obtener la URL del enlace
-    // console.log("request: " + request);
-    // if(!request)
-    //     return;
+    // Evitar el comportamiento por defecto solo si no se presionan teclas modificadoras y no es un enlace que debe abrirse en nueva pestaña
+    if (!isModifierKey && !isOpenInNewTab) {
+        event.preventDefault(); // Evita la acción por defecto del enlace
 
-    // let segments = request.split('/');
+        request = event.currentTarget.getAttribute('href'); // Obtener la URL del enlace
+        
 
-    // if (request.startsWith("/"))
-    //     displayedUrl = request.substring(1);
-    // else
-    //     displayedUrl = request;
+        let formData = URLManager();
 
-    // console.log("displayedUrl: " + displayedUrl);
+        // Cargar contenido nuevo
+        fetch(GetRelativePath() + filePath, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            AfterClick(data, displayedUrl);
+            window.history.pushState({path: displayedUrl}, '', GetRelativePath() + displayedUrl);
 
-    // let url = routes[segments[1]];
-
-    let formData = URLManager();
-    // formData.append('initPath', '../');
-    // formData.append('REQUEST_URI', request);
-
-    // Cargar contenido nuevo
-    fetch(GetRelativePath() + filePath, {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.text())
-    .then(data => {
-        // Suponiendo que tienes un div con el ID 'content' para cargar el nuevo contenido
-        AfterClick(data, displayedUrl);
-        // window.scrollTo(0, 0);
-        // boxSearch.classList.remove('show-boxSearch')
-        // document.getElementById("inputSearch").value = '';
-        // mainContent.innerHTML = data;
-        // SetupInternalLinks();
-        // ExecuteBehavior(displayedUrl);
-
-        // Actualizar la URL sin recargar
-        window.history.pushState({path: displayedUrl}, '', GetRelativePath() + displayedUrl);
-
-    })
-    .catch(error => console.error('Error al cargar el contenido:', error));
+        })
+        .catch(error => console.error('Error al cargar el contenido:', error));
+    }
 }
 
 // Manejar el historial del navegador (para usar el botón "Atrás" o "Adelante")
@@ -164,7 +146,7 @@ function ExecuteBehavior(request){
         //     IsSticky();
         //     break;
         case '':
-        case './':
+        case '../':
         case 'inicio':
             {
                 programsContainer = document.querySelector('.next-programs-container');

@@ -13,13 +13,12 @@
 
     function CheckRoutes(&$url) {
         // Eliminar caracteres innecesarios y descomponer la URL en segmentos
-        // $url = rtrim($url, '/');
+        $url = trim($url, '/');
         $segments = explode('/', $url);
         
         // Obtener el último segmento de la URL
         // $last_segment = end($segments);
         
-        // Verificar si el último segmento es un archivo (contiene un punto)
         if (count($segments) <= 1) {
             return true; // Es un archivo
         } else {
@@ -51,7 +50,7 @@
     $request = $_SERVER['REQUEST_URI'];
 
     // Filtrar la URL para evitar ataques y eliminar caracteres innecesarios
-    $request = trim($request, '/');
+    // $request = trim($request, '/');
     $initPath = getRelativePath($request);
 
     if(!CheckRoutes($request)){
@@ -127,6 +126,7 @@
     <link rel="stylesheet" href="<?php echo $initPath ?>css/playerStyles.css?v=<?php echo PROJECT_HASH ?>">
     <link rel="stylesheet" href="<?php echo $initPath ?>css/contacto.css?v=<?php echo PROJECT_HASH ?>">
     <link rel="stylesheet" href="<?php echo $initPath ?>css/contenido.css?v=<?php echo PROJECT_HASH ?>">
+    <link rel="stylesheet" href="<?php echo $initPath ?>css/programa.css?v=<?php echo PROJECT_HASH ?>">
     <link rel="stylesheet" href="<?php echo $initPath ?>css/defensoria.css?v=<?php echo PROJECT_HASH ?>">
     <link rel="stylesheet" href="<?php echo $initPath ?>css/inicio.css?v=<?php echo PROJECT_HASH ?>">
     <link rel="stylesheet" href="<?php echo $initPath ?>css/nosotros.css?v=<?php echo PROJECT_HASH ?>">

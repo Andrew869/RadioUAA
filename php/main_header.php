@@ -1,7 +1,7 @@
 <header class="<?php echo $currentTheme ?>">
     <nav class="navbar">
         <div class="logo">
-            <a class="nav-link internal-link" href="./">
+            <a class="nav-link internal-link" href="../">
                 <!-- <img src="resources/img/logo-radio-uaa-blanco.png" alt="Radio UAA Logo"> -->
                 <?php echo GetSVG('resources/img/svg/logoRadioUAA.svg', ["40px", "40px"]) ?>
             </a>
@@ -36,7 +36,7 @@
         <div class="search-bar-content">
             <div class="search-bar-container">
                 <div class="search-bar">
-                    <input type="text" class="search-bar-input c1 <?php echo $currentTheme ?>" id="inputSearch" placeholder="Buscar..." aria-label="Search">
+                    <input type="text" class="search-bar c1" id="inputSearch" placeholder="Buscar..." aria-label="Search">
                     <label id="search-icon" class="icon" for="inputSearch">
                         <?php echo GetSVG('resources/img/svg/search.svg', ["18px", "18px", "black"]) ?>
                     </label>

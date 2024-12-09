@@ -8,14 +8,14 @@
 ?>
 <h1>Contenido</h1>
 <div class="container">
-    <div class="controles">
-        <select class="program-filter" id="filtroGenero">
+    <div class="controles c1">
+        <select class="program-filter c2" id="filtroGenero">
             <option value="">Todos los géneros</option>
         </select>
-        <select class="program-filter" id="filtroPresentador">
+        <select class="program-filter c2" id="filtroPresentador">
             <option value="">Todos los presentadores</option>
         </select>
-        <input class="program-input" type="text" id="buscadorNombre" placeholder="Buscar por nombre">
+        <input class="program-input c2" type="text" id="buscadorNombre" placeholder="Buscar por nombre">
         <button id="alternarVista" aria-label="Alternar vista">
             <svg class="toggle-view" id="icon" viewBox="0 0 24 24" width="24" height="24">
                 <g id="gridIcon">
@@ -51,28 +51,5 @@
             //     echo "</div>";
             // }
         ?>
-    </div>
-</div>
-
-<div id="modal" class="modal">
-    <div class="contenido-modal">
-        <span class="cerrar">&times;</span>
-        <img id="imagenModal" class="imagen-modal" src="" alt="">
-        <div class="modal-info">
-            <h2 id="nombreModal"></h2>
-            <p id="descripcionModal"></p>
-            <p><strong>Horario:</strong> <span id="horarioModal"></span></p>
-            <p><strong>Presentadores:</strong> <span id="presentadoresModal"></span></p>
-            <p><strong>Género:</strong> <span id="generoModal"></span></p>
-        </div>
-        <div class="formulario-comentario">
-            <h3>Agregar un comentario</h3>
-            <input class="program-input" type="text" id="nombre" placeholder="Tu nombre" maxlength="20" required>
-            <input class="program-input" type="email" id="email" placeholder="Tu correo electrónico" maxlength="20" required>
-            <textarea id="mensaje" placeholder="Tu comentario" maxlength="100" required></textarea>
-            <div id="error-mensaje" class="error"></div>
-            <button onclick="agregarComentario()">Enviar comentario</button>
-        </div>
-        <div id="comentarios"></div>
     </div>
 </div>

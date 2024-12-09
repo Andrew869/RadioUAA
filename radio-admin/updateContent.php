@@ -1,13 +1,6 @@
 <?php
-    session_start();
-    date_default_timezone_set("America/Mexico_City");
-
-    if(!isset($_SESSION['id_user'])){
-        header('Location: login');
-        exit();
-    }
-
-    include "../php/db_connect.php";
+    include "connNCheck.php";
+    include "../php/utilities.php";
 
     $db_token = SQL::Select(SQL::USER, ["id_user" => $_SESSION['id_user']], ["session_token"])->fetchColumn();
 
@@ -94,26 +87,32 @@
         }
         else if($length === 3){ // types: list y img
             if(count($_FILES)){
-                $target_dir = "/resources/uploads/img/";
+                $target_dir = "resources/uploads/img/";
                 $image_path = SQL::Select($_POST['contentName'], [SQL::GetPrimaryKeyName($_POST['contentName']) => $_POST['contentId']], [$_POST['fieldName']])->fetchColumn();
                 $nombrePrograma = null;
-                $version = null;
+                $newVersion = null;
                 
                 $file = $_FILES['newValue'];
-                $regex = '/\/([^\/]+)\[v(\d+)\]\.\w+$/'; // Expresión regular
+                $regex = '/\/([^\/]+)\[v(\d+)\]$/'; // Expresión regular
                 
                 if (preg_match($regex, $image_path, $coincidencias)) {
                     $nombrePrograma = $coincidencias[1];
-                    $version = ((int)$coincidencias[2]) + 1;
+                    $newVersion = ((int)$coincidencias[2]) + 1;
                 }
-                $newImageFileType = strtolower(pathinfo(basename($file["name"]),PATHINFO_EXTENSION));
+                // $newImageFileType = strtolower(pathinfo(basename($file["name"]),PATHINFO_EXTENSION));
                 
-                $target_file = $target_dir . $nombrePrograma . "[v$version]." . $newImageFileType;
-                if(isset($version))
+                $target_file = $target_dir . $nombrePrograma . "[v$newVersion]";
+                if(isset($newVersion))
                     if(ValidateFile($file))
                         if(move_uploaded_file($file["tmp_name"], "../$target_file")){
                             SQL::Update($_POST['contentName'], $_POST['contentId'], [$_POST['fieldName'] => $target_file]);
-                            unlink($image_path);
+
+                            unlink("../" . $image_path);
+                            unlink("../" . $image_path . '.' . "300");
+                            
+                            $lowResWidth = 300;
+                            $lowResPath = $target_file . '.' . $lowResWidth;
+                            resize_image("../".$target_file, "../".$lowResPath, $lowResWidth);
                         }
                 
             }else{

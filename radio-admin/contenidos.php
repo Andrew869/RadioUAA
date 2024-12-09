@@ -39,15 +39,6 @@
     }
 
     function ShowSchedules($primary_key){
-        $dias_semana = [
-            1 => 'Lunes',
-            2 => 'Martes',
-            3 => 'Miércoles',
-            4 => 'Jueves',
-            5 => 'Viernes',
-            6 => 'Sábado',
-            7 => 'Domingo'
-        ];
         $horarios = SQL::Select(SQL::HORARIO, ["id_programa" => $primary_key], [], "dia_semana", SQL::ASCENDANT)->fetchAll(PDO::FETCH_ASSOC);
         $groups = [];
 
@@ -71,7 +62,7 @@
             $days = [];
             echo "<div><ul class='schedule-days'>";
             foreach ($group as $horario) {
-                echo "<li>" . $dias_semana[$horario['dia_semana']] . "</li>";
+                echo "<li>" . DAYS[$horario['dia_semana']] . "</li>";
                 $days[] = $horario['dia_semana'];
                 // if(!isset($retra)) $retra = $horario['es_retransmision'];
                 // echo $horario['dia_semana'] . ($horario['es_retransmision'] ? " (Retrasmision) " : "" ) . "";
@@ -362,10 +353,10 @@
     ?>
         
         <div class="tab">
-            <button id="defaultOpen" class="tablinks" onclick="ShowContent(event, 'programa')">Programas</button>
-            <button class="tablinks" onclick="ShowContent(event, 'presentador')">Presentadores</button>
-            <button class="tablinks" onclick="ShowContent(event, 'genero')">Generos</button>
-            <button class="tablinks" onclick="ShowContent(event, 'user')">Usuarios</button>
+            <button class="tablinks programa" onclick="ShowContent('programa')">Programas</button>
+            <button class="tablinks presentador" onclick="ShowContent('presentador')">Presentadores</button>
+            <button class="tablinks genero" onclick="ShowContent('genero')">Generos</button>
+            <button class="tablinks user" onclick="ShowContent('user')">Usuarios</button>
         </div>
 
         <!-- Tab content -->

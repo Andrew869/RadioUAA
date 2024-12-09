@@ -1,0 +1,91 @@
+.program-container {
+    /* max-width: 1200px;
+    margin: 0 auto; */
+}
+.program-details {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+.program-image {
+    flex: 0 0 300px;
+}
+.program-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    /* object-fit: cover; */
+}
+.program-info {
+    flex: 1;
+}
+.program-title {
+    font-size: 28px;
+    font-weight: bold;
+}
+.program-description {
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+.program-metadata {
+    margin-bottom: 15px;
+}
+.program-metadata strong {
+    font-weight: bold;
+}
+.schedule-group {
+    /* padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px; */
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+.schedule-days {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 5px 0;
+}
+
+.schedule-days li {
+    display: inline-block;
+    padding: 3px 8px;
+    margin-right: 5px;
+    border-radius: 3px;
+    font-size: 14px;
+}
+.schedule-time {
+    font-size: 14px;
+}
+
+.comments-section h2 {
+    margin-bottom: 2px; 
+}
+
+.comment-form input:first-of-type {
+    margin-top: 10px;
+}
+
+.comment-form input,
+.comment-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    /* border: 1px solid #ccc; */
+    border-radius: 4px;
+    /* resize: vertical; */
+    max-width: 100%;
+    border: none;
+}
+.comment-form button {
+    /* background-color: #5eaf4d; */
+    /* color: white; */
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.comment-form button:hover {
+    /* background-color: #3c6229; */
+}

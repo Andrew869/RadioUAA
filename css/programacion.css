@@ -61,8 +61,6 @@ table {
     /* overflow: hidden; */
 }
 thead th{
-    background-color:#027543;
-    color: white;
     padding: 12px;
     font-weight: bold;
     text-transform: uppercase;

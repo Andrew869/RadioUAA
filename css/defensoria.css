@@ -11,9 +11,10 @@
 
 .contenido-defensoria-fondo img {
     display: block;
-    margin: 0 auto 100px; /* Espacio abajo de 20px */
+    margin: 0 auto 30px; /* Espacio abajo de 20px */
     max-width: 100%; 
-    height: auto; 
+    width: 100%;
+    height: auto;
     border-radius: 10px;
     /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
 }
@@ -23,11 +24,11 @@
 .texto-defensoria h2 {
     text-align: justify;
     font-size: 30px;
-    margin:  0px 90px;
+    /* margin:  0px 90px; */
 }
   
 .texto-defensoria p {
-    margin: 20px 90px;
+    /* margin: 20px 90px; */
     list-style: none;
 }
 
@@ -35,21 +36,21 @@
     /* display: flex;  */
     align-items: center;
     margin: 5px 0; 
-    text-decoration: none; 
-    color: #027543; 
+    /* text-decoration: none; */
+    /* color: #027543; */
 }
 
-.texto-defensoria a:hover {
+/* .texto-defensoria a:hover {
     color: inherit;
     text-decoration: underline; 
-}
+} */
 
 .defensoria-container {
     display: flex;
     flex-direction: column; 
     align-items: center; 
     max-width: 100%; 
-    margin: 0 70px;
+    /* margin: 0 70px; */
 }
 
 .defensoria-container img {
@@ -79,21 +80,21 @@
     display: flex; 
     align-items: center;
     margin: 5px 90px; 
-    text-decoration: none; 
-    color: #027543;
+    /* text-decoration: none;  */
+    /* color: #027543; */
 
 }
-.archivo-documentos a:hover {
+/* .archivo-documentos a:hover {
     color: inherit;
     text-decoration: underline; 
-}
+} */
 
   
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
     .new-boton:hover {
         color: var(--obscuro); 
     }
-}
+} */
 .new-boton p{
     color: var(--Blanco);
 }
@@ -111,10 +112,10 @@
     font-size: 3rem;
 } */
 .derechos p{
-    margin: 20px 90px;
+    margin: 0 0 20px 0;
 }
 .derechos ul{
-    margin: 20px 170px;
+    margin: 20px 90px;
 }
 .derechos li{
     list-style-type: circle;
@@ -160,19 +161,18 @@
 
 /* Header Section */
 .izquierda-quejas {
-    text-align: center;
-    margin-bottom: 20px;
+    /* text-align: center;
+    margin-bottom: 20px; */
 }
 
 .izquierda-quejas h1 {
-    font-size: 2.5rem;
+    /* font-size: 2.5rem; */
     /* color: #218838; */
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
 }
 
 .izquierda-quejas h2 {
-    font-size: 1.8rem;
-    margin-bottom: 15px;
+    
     /* color: #027543; */
 }
 
@@ -185,17 +185,13 @@
 /* Formulario Section */
 .formulario {
     width: 100%;
-    max-width: 800px;
     padding: 40px 20px;
-    margin:  0 280px;
-    /* background: linear-gradient(145deg, #027543, #218838); */
+    margin: 0 auto;
     border-radius: 15px;
-    /* color: #ffffff; */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, .9);
 }
 
 /* Form Title */
-.formulario legend {
+.formulario h3 {
     font-size: 2rem;
     text-align: center;
     margin-bottom: 20px;
@@ -242,8 +238,8 @@
     border: none;
     border-radius: 8px;
     /* background-color: #f3eeee; */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, .7);
-    transition: all 0.3s ease;
+    /* box-shadow: 0 4px 10px rgba(0, 0, 0, .7); */
+    /* transition: all 0.3s ease; */
     /* color: #d00000; */
 }
 
@@ -263,8 +259,6 @@
 
 /* Submit Button */
 .new-boton-formulario {
-    /* background-color: #28a745; */
-    /* color: #ffffff; */
     padding: 15px 0;
     font-size: 1.2rem;
     font-weight: bold;
@@ -275,7 +269,7 @@
     text-align: center;
     display: block;
     width: 80%;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, .9);
+    /* box-shadow: 0 4px 10px rgba(0, 0, 0, .9); */
     transition: background-color 0.3s ease, transform 0.3s ease;
     margin: 20px 80px;
 }
@@ -307,11 +301,11 @@
 .texto-transparencia h2 {
     text-align: justify;
     font-size: 30px;
-    margin: 10px 30px;
+    margin: 10px 0;
 }
   
 .texto-transparencia p {
-    margin: 20px 100px;
+    /* margin: 20px 100px; */
     /* list-style: none; */
 }
 
@@ -320,7 +314,7 @@
     display: flex;
     flex-direction: column;
     font-size: 16px;
-    margin: 5px 100px;
+    margin: 5px 30px;
     text-decoration: none;
 }
 
@@ -329,21 +323,21 @@
     flex-direction: column; 
     gap: 10px; 
     font-size: 16px;
-    margin: 0px 70px;
+    /* margin: 0px 70px; */
 }
 
 .texto-transparencia a {
     display: flex; 
     align-items: center;
     margin: 5px 30px; 
-    text-decoration: none; 
-    color: #027543; 
+    /* text-decoration: none;  */
+    /* color: #027543; */
 }
 
-.texto-transparencia a:hover {
+/* .texto-transparencia a:hover {
     color: inherit;
     text-decoration: underline; 
-}
+} */
 
 /* Transparencia fin */
 
@@ -358,11 +352,11 @@
 .texto-politica h2 {
     text-align: justify;
     font-size: 30px;
-    margin:  0px 90px;
+    /* margin:  0px 90px; */
 }
   
 .texto-politica p {
-    margin: 20px 90px;
+    margin: 8px 0 20px 0;
     /* list-style: none; */
 }
 

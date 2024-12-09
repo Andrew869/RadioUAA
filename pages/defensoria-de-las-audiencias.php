@@ -8,13 +8,12 @@
     include_once $jsInitPath . 'php/db_connect.php';
     include_once $jsInitPath . 'php/utilities.php';
 ?>
+<div class="page-content">
 <div class="contenido-defensoria-fondo">
     <h1>Defensoría de las Audiencias</h1>
 
     <img src="/resources/img/defensoria.png" alt="">
 </div>
-
-
 <div class="texto-defensoria">
 
 <h2><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/gallo-min.svg", ["30px", "30px", "black"]) ?></div>¿Qué es la defensoría de las audiencias?</h2>
@@ -113,5 +112,6 @@
         <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px", "black"]) ?></div>
                 Ley federal de telecomunicaciones.
     </a>
+</div>
 </div>
 </div>

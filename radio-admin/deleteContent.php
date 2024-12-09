@@ -13,7 +13,8 @@
                     // Borrar imagen
                     // $image_path = self::Select(self::PROGRAMA, self::GetPrimaryKeyName(self::PROGRAMA), $primary_key, ["url_imagen"])->fetchColumn();
                     $image_path = SQL::Select(SQL::PROGRAMA, $wheres, ['url_img'])->fetchColumn();
-                    unlink($image_path);
+                    unlink("../" . $image_path);
+                    unlink("../" . $image_path . '.' . "300");
                 }
                 break;
             case SQL::PRESENTADOR:

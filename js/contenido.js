@@ -1,5 +1,5 @@
-import { LinkBehavior } from './app.js?v=c40e99';
-import { GetRelativePath } from './utilities.js?v=c40e99';
+import { LinkBehavior } from './app.js?v=ae7eeb';
+import { GetRelativePath } from './utilities.js?v=ae7eeb';
 let programas;
 let filtroGenero;
 let filtroPresentador 
@@ -11,20 +11,8 @@ export function SetupPrograms(){
     filtroPresentador = document.getElementById('filtroPresentador');
     buscadorNombre = document.getElementById('buscadorNombre');
     const alternarVista = document.getElementById('alternarVista');
-    const modal = document.getElementById('modal');
-    const btnCerrar = document.getElementsByClassName('cerrar')[0];
 
     GetProgramsInfo();
-
-    btnCerrar.onclick = function() {
-        modal.style.display = 'none';
-    }
-
-    window.onclick = function(evento) {
-        if (evento.target == modal) {
-            modal.style.display = 'none';
-        }
-    }
 
     filtroGenero.addEventListener('change', renderizarProgramas);
     filtroPresentador.addEventListener('change', renderizarProgramas);
@@ -81,6 +69,7 @@ function crearElementoPrograma(programa) {
     const elemento = document.createElement('a');
     elemento.classList.add('programa');
     elemento.classList.add('internal-link');
+    elemento.classList.add('c1');
     elemento.href = "/programa/" + programa.id;
     elemento.onclick = (e) => {LinkBehavior(e)};
 

@@ -1,8 +1,9 @@
 <?php
     include "connNCheck.php";
-// $dia_semana = $_GET['dia_semana'];
-// $hora_inicio = $_GET['hora_inicio'];
-// $hora_fin = $_GET['hora_fin'];
+    include_once "../php/utilities.php";
+// $dia_semana = $_POST['dia_semana'];
+// $hora_inicio = $_POST['hora_inicio'];
+// $hora_fin = $_POST['hora_fin'];
 
 function Intersect($hi_1,$hf_1,$hi_2,$hf_2) : bool{
     $hi_1 = ToMinutes($hi_1);
@@ -13,29 +14,40 @@ function Intersect($hi_1,$hf_1,$hi_2,$hf_2) : bool{
     return $hi_1 < $hf_2 && $hf_1 > $hi_2;
 }
 
-if(count($_GET)){
-    // $hi_1 = $_GET['hi_1'];
-    // $hf_1 = $_GET['hf_1'];
-    // $hi_2 = $_GET['hi_2'];
-    // $hf_2 = $_GET['hf_2'];
+if(count($_POST)){
+    // $hi_1 = $_POST['hi_1'];
+    // $hf_1 = $_POST['hf_1'];
+    // $hi_2 = $_POST['hi_2'];
+    // $hf_2 = $_POST['hf_2'];
     $horarios = null;
     $collisions = [];
     $flag = 0;
-    foreach (explode(',', $_GET['dias']) as $dia) {
-        $horarios = SQL::Select(SQL::HORARIO, ["dia_semana" => $dia])->fetchAll(PDO::FETCH_ASSOC);
+    foreach (explode(',', $_POST['dias']) as $dia) {
+        $sql = "SELECT p.id_programa, p.nombre_programa, p.url_img, h.dia_semana, h.hora_inicio, h.hora_fin, h.es_retransmision
+            FROM programa p
+            INNER JOIN horario h ON p.id_programa = h.id_programa
+            WHERE $dia = h.dia_semana
+            ORDER BY h.dia_semana, h.hora_inicio;
+        ";
+
+        $stmt = SQL::$conn->prepare($sql);
+        $stmt->execute();
+        $horarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // $horarios = SQL::Select(SQL::HORARIO, ["dia_semana" => $dia])->fetchAll(PDO::FETCH_ASSOC);
         foreach ($horarios as $value) {
-            if(Intersect($_GET['hora_inicio'], $_GET['hora_fin'], $value['hora_inicio'], $value['hora_fin'])){
+            if(Intersect($_POST['hora_inicio'], $_POST['hora_fin'], $value['hora_inicio'], $value['hora_fin'])){
                 $collisions[] = $value;
                 $flag = true;
             }
 
-            // $flag |= Intersect($_GET['hora_inicio'], $_GET['hora_fin'], $value['hora_inicio'], $value['hora_fin']);
+            // $flag |= Intersect($_POST['hora_inicio'], $_POST['hora_fin'], $value['hora_inicio'], $value['hora_fin']);
         }
     }
     if($flag){
-        echo "<div>Solapaciones</div>";
+        echo "<div><b>Solapaciones</b></div>";
         foreach ($collisions as $key => $value) {
-            echo "<div>" . $value['dia_semana'] . " de " . $value['hora_inicio'] . " a " . $value['hora_fin'] . "</div>";
+            // echo "<div>" . $value['dia_semana'] . " de " . $value['hora_inicio'] . " a " . $value['hora_fin'] . "</div>";
+            echo "<div>" . $value['nombre_programa'] . " - " . DAYS[$value['dia_semana']] . " de " . $value['hora_inicio'] . " a " . $value['hora_fin'] . "</div>";
         }
     }else
         echo "No hay solapaciones!";
@@ -62,7 +74,7 @@ if(count($_GET)){
     </form>
     <pre>
     <?php
-        // if(count($_GET)){
+        // if(count($_POST)){
         //     echo "\n$hi_1\n";
         //     echo "$hf_1\n\n";
         //     echo "$hi_2\n";

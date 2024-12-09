@@ -622,6 +622,16 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
                 horaFinDiv.appendChild(horaFinLabel);
                 horaFinDiv.appendChild(horaFinInput);
 
+                horaFinInput.disabled = true;
+
+                horaInicioInput.addEventListener("input", () => {
+                    ScheludeInput1(horaInicioInput, horaFinInput);
+                });
+
+                horaFinInput.addEventListener('input', () => {
+                    ScheduleInput2(horaInicioInput, horaFinInput);
+                });
+
                 // Crear el checkbox de "Es retransmisión"
                 const esRetransmisionDiv = document.createElement('div');
                 esRetransmisionDiv.classList.add('input_time');
@@ -648,10 +658,13 @@ export function CreateInput(inputType, fieldName, classes, inputTitle, tableName
                 // Crear la div de feedback
                 const feedbackDiv = document.createElement('div');
                 feedbackDiv.classList.add('feedback_schedules');
-                feedbackDiv.textContent = 'hay solapaciones';
+                // feedbackDiv.textContent = 'hay solapaciones';
 
                 // Añadir el feedback al contenedor principal
                 scheduleDiv.appendChild(feedbackDiv);
+
+                scheduleDiv.addEventListener('click', CheckSchedules);
+                scheduleDiv.addEventListener('keyup', CheckSchedules);
 
                 element.appendChild(scheduleDiv);
 
@@ -870,7 +883,7 @@ export function CreateEvent(element, eventName, detail) {
 function GetList(container, tableName){
     let args = tableName;
     let list;
-    fetch((currentDir === '' ? "" : "../" ) + "php/jsRequest.php", {
+    fetch(GetRelativePath() + "php/jsRequest.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
@@ -903,7 +916,7 @@ function GetList(container, tableName){
 
 function EnumToList(container, tableName, fieldName, tagName){
     let args = tableName + ',' + fieldName;
-    fetch((currentDir === '' ? "" : "../" ) + "php/jsRequest.php", {
+    fetch(GetRelativePath() + "php/jsRequest.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
@@ -923,11 +936,47 @@ function EnumToList(container, tableName, fieldName, tagName){
     .catch(error => console.error("Error:", error));
 }
 
+function ScheludeInput1(horaInicioInput, horaFinInput) {
+    let inputValue1 = horaInicioInput.value;
+    let inputValue2 = horaFinInput.value;
+
+    let minutes1 = ToMinutes(inputValue1);
+    let minutes2 = ToMinutes(inputValue2);
+
+    // Validar el formato de hora (HH:mm)
+    if (/^\d{2}:\d{2}$/.test(inputValue1)) {
+        if(!inputValue2 || minutes2 <= minutes1){
+            horaFinInput.disabled = false;
+            minutes1++;
+            let hours = ToHours(minutes1);
+            horaFinInput.value = hours;
+        }
+    } else {
+        horaFinInput.disabled = true;
+        horaFinInput.value = 0;
+    }
+}
+
+function ScheduleInput2(horaInicioInput, horaFinInput){
+    let inputValue1 = horaInicioInput.value;
+    let inputValue2 = horaFinInput.value;
+
+    let minutes1 = ToMinutes(inputValue1);
+    let minutes2 = ToMinutes(inputValue2);
+
+    if (/^\d{2}:\d{2}$/.test(inputValue2))
+        if (minutes2 <= minutes1) {
+            minutes1++;
+            let hours = ToHours(minutes1);
+            horaFinInput.value = hours;
+        }
+}
+
 export function CheckSchedules(e) {
     let selected = [];
     let feedback = e.currentTarget.querySelector(".feedback_schedules");
     e.currentTarget.querySelectorAll('.selected').forEach(function(item) {
-        selected.push(item.textContent);
+        selected.push(item.getAttribute('id_day'));
     });
 
     // let times = e.currentTarget.querySelectorAll('[type="time"]').forEach(element => {
@@ -943,14 +992,29 @@ export function CheckSchedules(e) {
         feedback.innerHTML = "Completa todos los campos del horario";
         return;
     } else {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                feedback.innerHTML = this.responseText;
+        // Crear un objeto FormData
+        let formData = new FormData();
+        formData.append('dias', selected.join(',')); // Agregar los días seleccionados
+        formData.append('hora_inicio', times[0].value + ":00"); // Agregar la hora de inicio
+        formData.append('hora_fin', times[1].value + ":00");   // Agregar la hora de fin
+
+        // Usar fetch para enviar la solicitud
+        fetch('checkSchedules.php', {
+            method: 'POST', // Usar el método POST
+            body: formData  // Enviar el FormData como cuerpo
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la respuesta del servidor');
             }
-        };
-        xmlhttp.open("GET","checkSchedules.php?dias=" + selected.join(',') + "&hora_inicio=" + times[0].value + "&hora_fin=" + times[1].value ,true);
-        xmlhttp.send();
+            return response.text(); // Convertir la respuesta a texto
+        })
+        .then(data => {
+            feedback.innerHTML = data; // Actualizar el contenido de feedback
+        })
+        .catch(error => {
+            console.error('Error:', error); // Manejar errores
+        });
     }
 }
 
@@ -969,6 +1033,14 @@ export function CloneSchedule(schedulesContainer, originalschedule, newScheduleB
         element.value = null;
     });
     checkbox.checked = false;
+
+    inputs[0].addEventListener("input", () => {
+        ScheludeInput1(inputs[0], inputs[1]);
+    });
+
+    inputs[1].addEventListener('input', () => {
+        ScheduleInput2(inputs[0], inputs[1]);
+    });
 
     // Cambiando la clase de la lista
     const days_list = replicant.querySelector('.days_list')
@@ -1204,17 +1276,28 @@ export function ToHours(minutes) {
     return hours + ':' + mins;
 }
 
+export function ToMinutes(time) {
+    let parts = time.split(':');
+
+    let hours = parseInt(parts[0], 10);
+    let minutes = parseInt(parts[1], 10);
+    
+    let totalMinutes = hours * 60 + minutes;
+    
+    return totalMinutes;
+}
+
 export function ToSeconds(time) {
     // Separar horas, minutos y segundos
-    let partes = time.split(':');
-    let horas = parseInt(partes[0], 10);
-    let minutos = parseInt(partes[1], 10);
-    let segundos = parseInt(partes[2], 10);
+    let parts = time.split(':');
+    let hours = parseInt(parts[0], 10);
+    let minutes = parseInt(parts[1], 10);
+    let seconds = parseInt(parts[2], 10);
 
     // Calcular los segundos totales
-    let segundosTotales = horas * 3600 + minutos * 60 + segundos;
+    let totalSeconds = hours * 3600 + minutes * 60 + seconds;
 
-    return segundosTotales;
+    return totalSeconds;
 }
 
 export function FormatTime(time) {
