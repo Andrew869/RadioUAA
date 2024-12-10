@@ -1,4 +1,4 @@
-import { GetRelativePath, GetSVG, ToSeconds } from './utilities.js?v=ae7eeb';
+import { GetRelativePath, GetSVG, ToSeconds } from './utilities.js?v=70871d';
 const audio = document.getElementById('audio');
 
 const playPauseBtn = document.getElementById('playPauseBtn');
