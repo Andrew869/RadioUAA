@@ -142,11 +142,10 @@
 /* Defensoria de la audiencia fin */
 
 
-
 /* Quejas inicio */
 
-/* Container */
-.container-quejas {
+/* General container */
+.page-content {
     max-width: 1000px;
     margin: 40px auto;
     padding: 20px;
@@ -154,40 +153,29 @@
     flex-direction: column;
     align-items: center;
     gap: 30px;
-    /* background-color: #ffffff; */
-    border-radius: 15px;
-    /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); */
 }
 
 /* Header Section */
-.izquierda-quejas {
-    /* text-align: center;
-    margin-bottom: 20px; */
-}
-
-.izquierda-quejas h1 {
-    /* font-size: 2.5rem; */
-    /* color: #218838; */
-    /* margin-bottom: 10px; */
-}
-
 .izquierda-quejas h2 {
-    
-    /* color: #027543; */
+    font-size: 1.5rem;
+    text-align: center;
 }
 
 .izquierda-quejas p {
     font-size: 1rem;
-    line-height: 1.8;
-    /* color: white; */
+    text-align: center;
+    line-height: 1.6;
 }
 
 /* Formulario Section */
 .formulario {
     width: 100%;
+    max-width: 800px;
     padding: 40px 20px;
     margin: 0 auto;
     border-radius: 15px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Form Title */
@@ -197,7 +185,6 @@
     margin-bottom: 20px;
     text-transform: uppercase;
     font-weight: bold;
-    letter-spacing: 1px;
 }
 
 /* Field Layout */
@@ -205,88 +192,73 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    justify-content: space-between;
-}
-
-.campo {
-    flex: 1 1 calc(50% - 10px);
-    display: flex;
-    flex-direction: column;
     margin-bottom: 20px;
 }
 
-/* Labels */
+.campo-container.fila {
+    flex-direction: row;
+}
+
+.campo-container.columna {
+    flex-direction: column;
+}
+
+.campo {
+    flex: 1;
+    min-width: 200px;
+}
+
 .campo label {
     font-size: 1rem;
     font-weight: bold;
-    margin-bottom: 10px;
-    /* color: #ffffff; */
+    margin-bottom: 8px;
     text-transform: uppercase;
 }
 
 /* Input Fields */
-.input-group {
-    position: relative;
-    /* color: white; */
-}
-
 .input-group input,
 .input-group textarea {
     width: 100%;
     padding: 12px 15px;
     font-size: 1rem;
-    border: none;
+    border: 1px solid #ccc;
     border-radius: 8px;
-    /* background-color: #f3eeee; */
-    /* box-shadow: 0 4px 10px rgba(0, 0, 0, .7); */
-    /* transition: all 0.3s ease; */
-    /* color: #d00000; */
 }
 
-.input-group input:focus,
-.input-group textarea:focus {
-    /* outline: none; */
-    /* box-shadow: 0 0 5px #28a745; */
-    /* background-color: #ffffff; */
-}
-
-/* Textarea */
-.campo textarea {
+.input-group textarea {
     resize: vertical;
-    height: 120px;
-    
+    height: 100px;
 }
 
 /* Submit Button */
-.new-boton-formulario {
-    padding: 15px 0;
-    font-size: 1.2rem;
+.boton-enviar {
+    padding: 10px 20px;
+    margin-left: 670px;
+    font-size: 1rem;
     font-weight: bold;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     cursor: pointer;
-    text-transform: uppercase;
-    text-align: center;
-    display: block;
-    width: 80%;
-    /* box-shadow: 0 4px 10px rgba(0, 0, 0, .9); */
+    background-color: #28a745;
+    color: white;
+    /* align-self: flex-end; */
     transition: background-color 0.3s ease, transform 0.3s ease;
-    margin: 20px 80px;
 }
 
-.new-boton-formulario:hover {
-    /* background-color: #218838; */
+.boton-enviar:hover {
+    background-color: #218838;
     transform: scale(1.05);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .campo {
-        flex: 1 1 100%;
+    .campo-container {
+        flex-direction: column;
     }
 
-    .formulario {
-        padding: 20px;
+    .boton-enviar {
+        width: 100%;
+        align-self: center;
     }
 }
 /* Quejas fin */
