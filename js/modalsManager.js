@@ -141,6 +141,7 @@ function UpdateContent(contentName, contentId, fieldName, fieldTitle, inputType,
                 for (let i = 0; i < timeInputs.length; i++) {
                     const time = timeInputs[i];
                     time.value = ToHours(timesInMinutes[i]);
+                    time.disabled = false;
                 }
 
                 const checkboxInput = containers[2].querySelector('[type="checkbox"]');
