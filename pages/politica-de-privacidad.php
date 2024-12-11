@@ -31,7 +31,7 @@
             responsabilizamos de que la desactivación de los mismos impida el buen funcionamiento del sitio.
         </p>
 
-        <h2><div class="icon"><div class="icon"><div class="icon"><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/gallo-min.svg", ["30px", "30px", "black"]) ?></div></div></div></div>Marcas Web o Web Beacons</h2>
+        <h2><div class="icon"><div class="icon"><div class="icon"><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/gallo-min.svg", ["30px", "30px", "black"]) ?></div></div></div></div>Marcas Web o Web Beacons.</h2>
 
         <p>
             Al igual que las cookies este sitio también puede contener web beacons, un archivo electrónico gráfico 
@@ -56,7 +56,7 @@
             controlamos las acciones de nuestros visitantes y usuarios.
         </p>
 
-        <h2><div class="icon"><div class="icon"><div class="icon"><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/gallo-min.svg", ["30px", "30px", "black"]) ?></div></div></div></div>Conducta responsable</h2>
+        <h2><div class="icon"><div class="icon"><div class="icon"><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/gallo-min.svg", ["30px", "30px", "black"]) ?></div></div></div></div>Conducta responsable.</h2>
 
         <p>
             Toda la información que facilite deberá ser veraz. A estos efectos, usted garantiza la autenticidad de todos 
@@ -67,7 +67,7 @@
             sitio y a tratar a otros visitantes con respeto.
         </p>
 
-        <h2><div class="icon"><div class="icon"><div class="icon"><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/gallo-min.svg", ["30px", "30px", "black"]) ?></div></div></div></div>Contacto</h2>
+        <h2><div class="icon"><div class="icon"><div class="icon"><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/gallo-min.svg", ["30px", "30px", "black"]) ?></div></div></div></div>Contacto.</h2>
 
         <p class="lista-op">
             Si tiene preguntas o cuestiones sobre esta Política, no dude en contactarse en cualquier momento a través del

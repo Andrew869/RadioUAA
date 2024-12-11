@@ -23,7 +23,7 @@
 
 /* Fondo de imagen parallax */
 .parallax-item::before {
-    content: "";
+    content: " ";
     position: absolute;
     top: 0;
     left: 0;
@@ -39,17 +39,17 @@
 }
 
 .parallax-item:nth-child(1)::before {
-    background-image: url('/resources/img/programa_default.jpg');
+    background-image: url('/resources/img/RadioHis1.jpg');
     background-color: rgba(0, 0, 0, 0.5);
 }
 
 .parallax-item:nth-child(2)::before {
-    background-image: url('/resources/img/img-carru1.4.jpeg');
+    background-image: url('/resources/img/RadioHis2.jpg');
     background-color: rgba(0, 0, 0, 0.5);
 }
 
 .parallax-item:nth-child(3)::before {
-    background-image: url('/resources/img/img-carri1.3.jpg');
+    background-image: url('/resources/img/RadioHis3.jpg');
     background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -70,7 +70,7 @@
     top: 10%;
     right: 60%;
     left: 9%;
-    text-align: center;
+    text-align: justify;
 }
 
 .parrafo2 {
@@ -85,12 +85,11 @@
     left: 9%;
 }
 
-/* Cuando los párrafos están visibles en pantalla */
 .parrafo1.scrolled,
 .parrafo2.scrolled,
 .parrafo3.scrolled {
-    opacity: 1; /* Aparece */
-    transform: translateY(0); /* Se posiciona correctamente */
+    opacity: 1; 
+    transform: translateY(0); 
 }
 
 /* Animaciones para cada letra */
@@ -108,9 +107,9 @@
 .parrafo1.scrolled span,
 .parrafo2.scrolled span,
 .parrafo3.scrolled span {
-    transform: translateY(0); /* Vuelve a su posición */
-    opacity: 1; /* Aparece */
-    transition-delay: calc(var(--index) * 0.05s); /* Diferencia de tiempo entre letras */
+    transform: translateY(0); 
+    opacity: 1; 
+    transition-delay: calc(var(--index) * 0.02s); 
 }
 
 
