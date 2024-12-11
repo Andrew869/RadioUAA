@@ -1,4 +1,5 @@
-<h1>Quejas y Sugerencias</h1>
+<div class="page-content">
+    <h1>Quejas y Sugerencias</h1>
     <div class="izquierda-quejas">
         <h2>¡Estamos para escucharte!</h2>
         <p>¿Tienes algo que compartir con nosotros? Llena el formulario y envíanos tus comentarios. Valoramos tu opinión.</p>
@@ -37,3 +38,4 @@
         <!-- Submit Button -->
         <button class="new-boton-formulario" type="submit">Enviar</button>
     </form>
+</div>

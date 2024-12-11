@@ -1,6 +1,6 @@
 <?php
     include "connNCheck.php";
-    include "php/utilities.php";
+    include "../php/utilities.php";
 
     function LoadImage() : string{
         $uploadOk = 0;

@@ -8,76 +8,71 @@
     include_once $jsInitPath . 'php/db_connect.php';
     include_once $jsInitPath . 'php/utilities.php';
 ?>
-<h1>Consejo Ciudadano</h1>
-<div class="container-consejo">
+<div class="page-content">
+    <h1>Consejo Ciudadano</h1>
+    <div class="container-consejo">
     
-    <div class="img-container">
-            <img src="resources/img/consejo ciudadano.png" alt="Documentos Consejo" class="documentos-img">
-    </div>
-    
-<div class="links-consejo">
-    
-    <div class="texto-consejo">
-        <h2>Actas de Sesión</h2>
-        <a href="/documentos-consejo-ciudadano" class="new-boton internal-link">
-        <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px"]) ?></div>
-        <!-- <img src="resources/img/svg/file pdf.svg" alt="PDF" class="icono-pdf"> -->
-                    Consultar actas de sesión.        
-    </a>
-    </div>
-
-        <div class="texto-consejo">
-            <h2>Informes Anuales</h2>
-            <a href="/documentos-consejo-ciudadano" class="new-boton internal-link">
-            <!-- <img src="resources/img/svg/file pdf.svg" alt="PDF" class="icono-pdf"> -->
-            <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px"]) ?></div>
-                        Consultar informes anuales.
-        </a>
+        <div class="img-container">
+                <img src="resources/img/consejo ciudadano.png" alt="Documentos Consejo" class="documentos-img">
         </div>
-
-
-        <div class="texto-consejo">
-            <h2>Normatividad</h2>
-
-        <a href="resources/docs/Criterios-de-operacion.pdf">
-            <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px"]) ?></div>
-                        Criterios de operación del consejo ciudadano.        
-        </a>
-
-        <a href="resources/docs/Criterios-para-asegurar-independencia-y-una-politica-editorial-imparcial-y-objetiva.pdf">
-            <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px"]) ?></div>
-                        Criterios para asegurar independencia y una política editorial imparcial y objetiva.        
-        </a>
-
-        <a href="resources/docs/Reglas-para-la-expresion-de-diversidades-ideologicas-etnicas-y-culturales.pdf">
-            <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px"]) ?></div>
-                        Reglas para la expresión de diversidades ideológicas, étnicas y culturales.  
-        </a>
-
-        <a href="resources/docs/Mecanismos-para-garantizar-la-participacion-ciudadana-a-fin-de-atender-las-inquietudes-y-propuestas-de-las-audiencias.pdf">
-            <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px"]) ?></div>
-                        Mecanismos para garantizar la participación ciudadana a fin de atender las inquietudes y propuestas de las audiencias.        
-        </a>
-        </div>
-
         
-    </div>
-    
+        <div class="links-consejo">
+            <div class="texto-consejo">
+                <h2>Actas de Sesión</h2>
+                <a href="/documentos-consejo-ciudadano" class="new-boton internal-link">
+                    <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px"]) ?></div>
+                    Consultar actas de sesión.
+                </a>
+            </div>
+
+            <div class="texto-consejo">
+                <h2>Informes Anuales</h2>
+                <a href="/documentos-consejo-ciudadano" class="new-boton internal-link">
+                    <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px"]) ?></div>
+                    Consultar informes anuales.
+                </a>
+            </div>
+
+
+            <div class="texto-consejo">
+                <h2>Normatividad</h2>
+
+            <a href="resources/docs/Criterios-de-operacion.pdf">
+                <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px"]) ?></div>
+                            Criterios de operación del consejo ciudadano.        
+            </a>
+
+            <a href="resources/docs/Criterios-para-asegurar-independencia-y-una-politica-editorial-imparcial-y-objetiva.pdf">
+                <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px"]) ?></div>
+                            Criterios para asegurar independencia y una política editorial imparcial y objetiva.        
+            </a>
+
+            <a href="resources/docs/Reglas-para-la-expresion-de-diversidades-ideologicas-etnicas-y-culturales.pdf">
+                <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px"]) ?></div>
+                            Reglas para la expresión de diversidades ideológicas, étnicas y culturales.  
+            </a>
+
+            <a href="resources/docs/Mecanismos-para-garantizar-la-participacion-ciudadana-a-fin-de-atender-las-inquietudes-y-propuestas-de-las-audiencias.pdf">
+                <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px"]) ?></div>
+                            Mecanismos para garantizar la participación ciudadana a fin de atender las inquietudes y propuestas de las audiencias.        
+            </a>
+            </div>
+        </div>
     </div>
     
     <div class="texto-consejo">
         <h3>¿Qué es el consejo ciudadano?</h3>
-    <p>
-        El Consejo Ciudadano de Radio Universidad de Aguascalientes XHUAA 94.5 FM, es un órgano de consulta, análisis
-        y participación ciudadana que coadyuvará con la radiodifusora universitaria en su funcionamiento, a efecto de
-        lograr la independencia editorial y la expresión de diversidades ideológicas, étnicas y culturales.
-    </p>
-    <p>
-        Sus integrantes contarán con la facultad de opinar y asesorar en las acciones, políticas, programas y proyectos
-        que desarrolle la emisora de Radio. El Consejo Ciudadano estará conformado por un Presidente, un Secretario y un Vocal.
-        Dichos cargos serán conferidos a sus integrantes por un periodo de un año. Los Consejeros formarán parte de este Órgano,
-        por un lapso máximo de tres años, sin derecho a reelección y desempeñarán su cargo de manera honorífica.
-    </p>
+        <p>
+            El Consejo Ciudadano de Radio Universidad de Aguascalientes XHUAA 94.5 FM, es un órgano de consulta, análisis
+            y participación ciudadana que coadyuvará con la radiodifusora universitaria en su funcionamiento, a efecto de
+            lograr la independencia editorial y la expresión de diversidades ideológicas, étnicas y culturales.
+        </p>
+        <p>
+            Sus integrantes contarán con la facultad de opinar y asesorar en las acciones, políticas, programas y proyectos
+            que desarrolle la emisora de Radio. El Consejo Ciudadano estará conformado por un Presidente, un Secretario y un Vocal.
+            Dichos cargos serán conferidos a sus integrantes por un periodo de un año. Los Consejeros formarán parte de este Órgano,
+            por un lapso máximo de tres años, sin derecho a reelección y desempeñarán su cargo de manera honorífica.
+        </p>
     </div>
     
     <div class="consejo-integrantes">
@@ -114,4 +109,4 @@
            </div>
         </div>
     </div>
-    
+</div>

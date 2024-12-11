@@ -11,9 +11,10 @@
 
 .contenido-defensoria-fondo img {
     display: block;
-    margin: 0 auto 100px; /* Espacio abajo de 20px */
+    margin: 0 auto 30px; /* Espacio abajo de 20px */
     max-width: 100%; 
-    height: auto; 
+    width: 100%;
+    height: auto;
     border-radius: 10px;
     /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
 }
@@ -23,11 +24,11 @@
 .texto-defensoria h2 {
     text-align: justify;
     font-size: 30px;
-    margin:  0px 90px;
+    /* margin:  0px 90px; */
 }
   
 .texto-defensoria p {
-    margin: 20px 90px;
+    /* margin: 20px 90px; */
     list-style: none;
 }
 
@@ -49,7 +50,7 @@
     flex-direction: column; 
     align-items: center; 
     max-width: 100%; 
-    margin: 0 70px;
+    /* margin: 0 70px; */
 }
 
 .defensoria-container img {
@@ -111,10 +112,10 @@
     font-size: 3rem;
 } */
 .derechos p{
-    margin: 20px 90px;
+    margin: 0 0 20px 0;
 }
 .derechos ul{
-    margin: 20px 170px;
+    margin: 20px 90px;
 }
 .derechos li{
     list-style-type: circle;
@@ -160,8 +161,8 @@
 
 /* Header Section */
 .izquierda-quejas {
-    text-align: center;
-    margin-bottom: 20px;
+    /* text-align: center;
+    margin-bottom: 20px; */
 }
 
 .izquierda-quejas h1 {
@@ -171,8 +172,7 @@
 }
 
 .izquierda-quejas h2 {
-    font-size: 1.8rem;
-    margin-bottom: 15px;
+    
     /* color: #027543; */
 }
 
@@ -185,12 +185,9 @@
 /* Formulario Section */
 .formulario {
     width: 100%;
-    max-width: 800px;
     padding: 40px 20px;
-    margin:  0 280px;
-    /* background: linear-gradient(145deg, #027543, #218838); */
+    margin: 0 auto;
     border-radius: 15px;
-    /* box-shadow: 0 4px 10px rgba(0, 0, 0, .9); */
 }
 
 /* Form Title */
@@ -304,11 +301,11 @@
 .texto-transparencia h2 {
     text-align: justify;
     font-size: 30px;
-    margin: 10px 30px;
+    margin: 10px 0;
 }
   
 .texto-transparencia p {
-    margin: 20px 100px;
+    /* margin: 20px 100px; */
     /* list-style: none; */
 }
 
@@ -317,7 +314,7 @@
     display: flex;
     flex-direction: column;
     font-size: 16px;
-    margin: 5px 100px;
+    margin: 5px 30px;
     text-decoration: none;
 }
 
@@ -326,7 +323,7 @@
     flex-direction: column; 
     gap: 10px; 
     font-size: 16px;
-    margin: 0px 70px;
+    /* margin: 0px 70px; */
 }
 
 .texto-transparencia a {
@@ -355,11 +352,11 @@
 .texto-politica h2 {
     text-align: justify;
     font-size: 30px;
-    margin:  0px 90px;
+    /* margin:  0px 90px; */
 }
   
 .texto-politica p {
-    margin: 20px 90px;
+    margin: 8px 0 20px 0;
     /* list-style: none; */
 }
 
