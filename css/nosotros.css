@@ -23,7 +23,7 @@
 
 /* Fondo de imagen parallax */
 .parallax-item::before {
-    content: "";
+    content: " ";
     position: absolute;
     top: 0;
     left: 0;
@@ -39,17 +39,17 @@
 }
 
 .parallax-item:nth-child(1)::before {
-    background-image: url('/resources/img/programa_default.jpg');
+    background-image: url('/resources/img/RadioHis1.jpg');
     background-color: rgba(0, 0, 0, 0.5);
 }
 
 .parallax-item:nth-child(2)::before {
-    background-image: url('/resources/img/img-carru1.4.jpeg');
+    background-image: url('/resources/img/RadioHis2.jpg');
     background-color: rgba(0, 0, 0, 0.5);
 }
 
 .parallax-item:nth-child(3)::before {
-    background-image: url('/resources/img/img-carri1.3.jpg');
+    background-image: url('/resources/img/RadioHis3.jpg');
     background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -70,7 +70,7 @@
     top: 10%;
     right: 60%;
     left: 9%;
-    text-align: center;
+    text-align: justify;
 }
 
 .parrafo2 {
@@ -85,12 +85,11 @@
     left: 9%;
 }
 
-/* Cuando los párrafos están visibles en pantalla */
 .parrafo1.scrolled,
 .parrafo2.scrolled,
 .parrafo3.scrolled {
-    opacity: 1; /* Aparece */
-    transform: translateY(0); /* Se posiciona correctamente */
+    opacity: 1; 
+    transform: translateY(0); 
 }
 
 /* Animaciones para cada letra */
@@ -108,9 +107,9 @@
 .parrafo1.scrolled span,
 .parrafo2.scrolled span,
 .parrafo3.scrolled span {
-    transform: translateY(0); /* Vuelve a su posición */
-    opacity: 1; /* Aparece */
-    transition-delay: calc(var(--index) * 0.05s); /* Diferencia de tiempo entre letras */
+    transform: translateY(0); 
+    opacity: 1; 
+    transition-delay: calc(var(--index) * 0.02s); 
 }
 
 
@@ -162,11 +161,11 @@
 }
 
 .links-consejo {
-    display: flex;
+    /* display: flex;
     flex-direction: column; 
-    gap: 10px; 
-    font-size: 16px;
-    margin: 0px 60px;
+    gap: 10px;  */
+    width: 40%;
+    padding-left: 20px;
 }
 
 .texto-consejo a {
@@ -186,29 +185,32 @@
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    gap: 20px;
+    /* gap: 20px; */
     /* max-width: 1200px; */
-    /* margin: auto; */
-    padding: 20px;
+    margin: 10px 0;
+    /* padding: 20px; */
+}
+
+.img-container {
+    width: 60%;
 }
   
 .img-container img {
-    max-width: 600px; 
-    height: 400px;
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
     border-radius: 8px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
-
 
 .consejo-integrantes {
     display: flex;
     flex-direction: column;
     gap: 20px; /* Espaciado entre los contenedores de cada integrante */
     /* max-width: 1200px; */
-    margin: 0;
-    padding: 20px;
+    /* margin: 0; */
+    /* padding: 20px; */
 }
-
 
 .integrante {
     display: flex;
