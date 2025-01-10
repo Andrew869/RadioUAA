@@ -11,13 +11,13 @@
             <div class="campo">
                 <label for="nombre">Nombre:</label>
                 <div class="input-group">
-                    <input id="nombre" type="text" placeholder="Tu nombre completo" required>
+                    <input id="nombre" class="c2" type="text" placeholder="Tu nombre completo" required>
                 </div>
             </div>
             <div class="campo">
                 <label for="email">Email:</label>
                 <div class="input-group">
-                    <input id="email" type="email" placeholder="Ejemplo@correo.com" required>
+                    <input id="email" class="c2" type="email" placeholder="Ejemplo@correo.com" required>
                 </div>
             </div>
         </div>
@@ -25,13 +25,13 @@
             <div class="campo">
                 <label for="asunto">Asunto:</label>
                 <div class="input-group">
-                    <input id="asunto" type="text" placeholder="Motivo del mensaje" required>
+                    <input id="asunto" class="c2" type="text" placeholder="Motivo del mensaje" required>
                 </div>
             </div>
             <div class="campo">
                 <label for="mensaje">Mensaje:</label>
                 <div class="input-group">
-                    <textarea id="mensaje" placeholder="Escribe tu mensaje aquí" required></textarea>
+                    <textarea id="mensaje" class="c2" placeholder="Escribe tu mensaje aquí" required></textarea>
                 </div>
             </div>
         </div>

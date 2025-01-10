@@ -1,4 +1,4 @@
-import { GetSVG } from './utilities.js?v=70871d';
+import { GetSVG } from './utilities.js?v=33b427';
 const body = document.body;
 let toggle = document.getElementById('toggle');
 let label_toggle = document.getElementById('label_toggle');

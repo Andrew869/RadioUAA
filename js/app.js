@@ -18,9 +18,9 @@ const routes = {
     "404": "pages/404.php"
 };
 // Single Page Application (SPA)!!!!
-import { GetRelativePath, ToSeconds, FormatTime } from './utilities.js?v=70871d';
-import { SetupPrograms } from './contenido.js?v=70871d';
-import { slideTimeout, SetupSlideshow } from './slideshowManager.js?v=70871d';
+import { GetRelativePath, ToSeconds, FormatTime } from './utilities.js?v=33b427';
+import { SetupPrograms } from './contenido.js?v=33b427';
+import { slideTimeout, SetupSlideshow } from './slideshowManager.js?v=33b427';
 // import { IsSticky } from './cal.js';
 // Obtener todos los enlaces de navegación
 // const navLinks = document.querySelectorAll('.nav-link');

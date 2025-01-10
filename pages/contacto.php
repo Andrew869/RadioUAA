@@ -11,15 +11,16 @@
 <div class="page-content">
     <h1>Contacto</h1>
     <div class="contact-container">
+        <div class="imagen-container">
+            <img src="resources/img/radiouaa.jpg" alt="" />
+        </div>
         <div class="texto-contacto">
 
             <h2><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/clock.svg", ["20px", "20px", "black"]) ?></div> Horario de Oficina</h2>
             <p>Lunes a viernes de 8:00 hrs a 15:30 hrs</p>
 
             <h2><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/envelope.svg", ["20px", "20px", "black"]) ?></div> Correo Electrónico</h2>
-            <a href="/quejas-sugerencias" class="new-boton internal-link">
-            <div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/pdf.svg", ["20px", "20px", "black"]) ?></div>
-                Comunica tus Quejas y Sugerencias Aquí.</a>
+            <div class="icon">Puedes comunicar tus quejas y sugerencias de nuestros contenidos en el </div><a href="/quejas-sugerencias" class="new-boton internal-link">Formulario de Defensoría de las Audiencias..</a>
         
             <h2><div class="icon"><?php echo GetSVG($jsInitPath."resources/img/svg/phone.svg", ["20px", "20px", "black"]) ?></div> Telefonos</h2>
             <p>449-9-10-74-55 <br>449-9-10-74-59</p>
@@ -29,11 +30,6 @@
             <p>C.P. 20100 Aguascalientes, Ags. México</p>
             <p><b>Edificio 14, Unidad «José Dávila Rodríguez»</b></p>
 
-        </div>
-
-        <!-- Add your image here -->
-        <div class="imagen-container">
-            <img src="resources/img/radiouaa.jpg" alt="" />
         </div>
     </div>
 
