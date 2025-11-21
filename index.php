@@ -10,6 +10,7 @@
     // } else {
     //     echo "La ruta no corresponde a una carpeta válida.";
     // }
+//
 
     function CheckRoutes(&$url) {
         // Eliminar caracteres innecesarios y descomponer la URL en segmentos
