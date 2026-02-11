@@ -18,7 +18,6 @@
         <p class="parrafo1">
             4. Dos son los espacios informativos transmitidos a través de Radio UAA: “UAA Noticias” en colaboración con nuestro canal de Televisión Universitaria «UAA TV», así como la retransmisión del noticiario de Radio Educación «Pulso de la noche”, el cual complementa nuestra barra de información.
         </p>
-    </p>
         <p class="parrafo2">
             5. En análisis y debate de temas de interés, destaca el programa “Prospectiva 94.5”, donde de la mano de los especialistas se analizan los temas en tendencia de forma imparcial y desde la visión académica de la UAA; en contenido histórico, “La Terca Memoria”, así como “Panorama Universitario”, espacio dedicado a difundir producciones radiofónicas de diferentes Radios Universitarias de México.
         </p>
